@@ -76,6 +76,7 @@ dependencies:
   # Using Creating Splash Screen.
   flutter_native_splash: ^2.2.17
 
+  pin_code_fields: ^7.4.0
 
   # App localization
   easy_localization: ^3.0.1
@@ -165,6 +166,7 @@ flutter:
 
   assets:
     - assets/splash/
+    - assets/images/
     - assets/translations/
 
   fonts:

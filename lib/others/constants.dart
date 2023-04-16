@@ -2,10 +2,14 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
 
-const String devBaseURL = "https://ummys-staging.codiantdev.com";
+import '../util/others/size_config.dart';
+
+const String devBaseURL = "";
 const String qaBaseURL = "";
 const String stagingBaseURL = "";
 const String localBaseURL = "";
+
+const String FONT_FAMILY = "Figtree";
 
 String androidDeviceType = "android_customer";
 String iOSDeviceType = "ios_customer";
@@ -30,50 +34,16 @@ const NOTIFICATION_CHANNEL_DESCRIPTION = "Base channel for notification";
 
 const RECENT_COIN_SEARCHED = "RECENT_ITEM";
 
-const List<String> emailDomain = [
-  "com",
-  "in",
-  "org",
-];
-
-//Nested navigation keys
-const KYC_NAVIGATOR = 1;
-const SQUARE_PLAN_NAVIGATOR = 2;
-const WITHDRAW_NAVIGATOR = 3;
-const ADD_FUNDS_NAVIGATOR = 4;
-
-const kBNBBottomIconHeight = 36.0;
-const kBottomDottedDesignHeight = 28.0;
-
-//IntroScreenView
-const kIntroScreenBNBIconWidth = 64.0;
-
-//ReferralCodeView
-const kTopPadding = 18.0;
-
-//BottomNavBar
-const kIndicatorWidth = 24.0;
-const kIndicatorHeight = 4.0;
-const kBottomContainerHeight = 56.0;
-const kExpandableFabVerticalPadding = 25.0;
-
-// ActionButton
-const kActionButtonFontSize = 11.0;
-
-// HomeViewAppBar
-const kHomeViewAppBarHeight = 56.0;
-
-//icon size
-const double kIconSize = 20;
-
-//dynamic font family
-
 String? getFontFamily() {
   return Platform.isAndroid ? "Inter" : null;
 }
 
 const greenBlueColor = Color(0xff18181C);
-
+const mainBlackColor = Colors.black;
+const mainWhiteColor = Colors.white;
+const mainPinkColor = Color(0xffEE356F);
+const mainGrayColor = Color(0xffF2F2F2);
+const independenceColor = Color(0xff48466D);
 const fieldsBackGroundColor = Color(0xff18181C);
 Color mainColor = Colors.blueAccent.shade400;
 
@@ -82,7 +52,7 @@ const fieldsRegularColor = Color(0xff878787);
 const fieldsInActiveColor = Color(0xff6E6E6E);
 
 //text
-const textRegularColor = Color(0xff575656);
+const textRegularColor = Color(0xff676767);
 const textNoticeColor = Color(0xff8E8F90);
 const textUnAvailable = Color(0xff565656);
 
@@ -101,6 +71,12 @@ const lightThemeNoticeColor = Color(0xffD7A575);
 bool validatePassword(String password) => RegExp(
         r"(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&])^[a-zA-Z0-9!@#$%^&]{6,12}$")
     .hasMatch(password);
+bool validatePhone(String phone) => RegExp(
+        r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
+    .hasMatch(phone);
+
+bool validateOtp(int otp) =>
+    RegExp(r"[a-z0-9]*\\d[a-z0-9]*").hasMatch(otp.toString());
 
 bool validateEmail(String email) {
   Pattern pattern =
@@ -109,3 +85,7 @@ bool validateEmail(String email) {
       r"{0,253}[a-zA-Z0-9])?)*$";
   return RegExp(pattern.toString()).hasMatch(email);
 }
+
+EdgeInsets edgeInsetsMargin = EdgeInsets.symmetric(
+  horizontal: SizeConfig.margin_padding_15,
+);

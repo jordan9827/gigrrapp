@@ -1,9 +1,13 @@
+import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../others/constants.dart';
-import '../../others/loading_screen.dart';
+import '../../others/loading_button.dart';
 import '../../others/text_field_widget.dart';
+import '../../util/others/image_constants.dart';
 import '../../util/others/size_config.dart';
+import '../../util/others/text_styles.dart';
 import 'login_view_model.dart';
 
 class LoginView extends StatelessWidget {
@@ -16,96 +20,186 @@ class LoginView extends StatelessWidget {
       viewModelBuilder: () => LoginViewViewModel(),
       builder: (context, viewModel, child) => Scaffold(
         resizeToAvoidBottomInset: false,
-        body: LoadingScreen(
-          loading: viewModel.isBusy,
-          child: Container(),
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: _buildHeading(),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: _buildLoginForm(viewModel),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildLoginForm() {
-    return Column(
+  Widget _buildHeading() {
+    return Container(
+      padding: edgeInsetsMargin,
+      width: double.infinity,
+      color: mainPinkColor.withOpacity(0.04),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            height: SizeConfig.margin_padding_35,
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_40,
+            child: Image.asset(ic_gigrra_name),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
+          Text(
+            "txt_login_as".tr(),
+            style: TSB.semiBoldLarge(),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_4,
+          ),
+          Text(
+            "txt_login_STitle".tr(),
+            style: TSB.regularMedium(),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLoginForm(LoginViewViewModel viewModel) {
+    return Container(
+      padding: edgeInsetsMargin,
+      child: Column(
+        children: [
+          SizedBox(
+            height: SizeConfig.margin_padding_24,
+          ),
+          InputFieldWidget(
+            hint: "Enter Mobile Number",
+            controller: viewModel.mobileController,
+            errorMsgValidation: viewModel.mobileMessage,
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_15,
+          ),
+          InputFieldWidget(
+            hint: "Enter Password",
+            controller: viewModel.passwordController,
+            errorMsgValidation: viewModel.pwdMessage,
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Text(
+              "forgot_password".tr(),
+              style: TSB.regularSmall(textColor: independenceColor),
+            ),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_24,
+          ),
+          Spacer(),
+          _buildLoginActionButton(viewModel),
+          SizedBox(
+            height: SizeConfig.margin_padding_24,
+          ),
+          InkWell(
+            onTap: viewModel.navigationToOTPScreen,
+            child: Text(
+              "login_with_otp".tr(),
+              style: TSB.regularSmall(textColor: mainPinkColor),
+            ),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_24,
+          ),
+          Text(
+            "continue_with".tr(),
+            style: TSB.regularSmall(),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_29,
+          ),
+          _buildSocialLoginView(),
+          SizedBox(
+            height: SizeConfig.margin_padding_29,
+          ),
+          _buildSignUpView(),
+          SizedBox(
+            height: SizeConfig.margin_padding_29,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSocialLoginView() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        _buildImage(ic_google),
         SizedBox(
-          height: SizeConfig.margin_padding_24,
+          width: SizeConfig.margin_padding_10,
         ),
-        InputFieldWidget(
-          hint: "Full Name",
-          labelText: "Full Name",
-          prefixIcon: Icon(
-            Icons.person_2_outlined,
-            color: mainColor,
-          ),
-        ),
+        _buildImage(ic_facebook),
         SizedBox(
-          height: SizeConfig.margin_padding_20,
+          width: SizeConfig.margin_padding_10,
         ),
-        InputFieldWidget(
-          hint: "Email Address",
-          labelText: "Email",
-          prefixIcon: Icon(
-            Icons.alternate_email_outlined,
-            color: mainColor,
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.margin_padding_20,
-        ),
-        InputFieldWidget(
-          hint: "Phone Number",
-          labelText: "Phone",
-          prefixIcon: Icon(
-            Icons.phone_iphone,
-            color: mainColor,
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.margin_padding_20,
-        ),
-        InputFieldWidget(
-          hint: "Password",
-          labelText: "Password",
-          prefixIcon: Icon(
-            Icons.lock_outline_rounded,
-            color: mainColor,
-          ),
-        ),
-        Spacer(),
-        _buildLoginActionButton(),
-        SizedBox(
-          height: SizeConfig.margin_padding_29,
-        ),
-        Text(
-          "I already have an account",
-          style: TextStyle(
-            color: mainColor,
-            fontSize: SizeConfig.textSizeSmall,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.margin_padding_29,
-        ),
+        if (Platform.isIOS) _buildImage(ic_apple),
       ],
     );
   }
 
-  Widget _buildLoginActionButton() {
-    return Container(
+  Widget _buildImage(String image) {
+    return SizedBox(
+      height: SizeConfig.margin_padding_40,
+      child: Image.asset(image),
+    );
+  }
+
+  Widget _buildLoginActionButton(LoginViewViewModel viewModel) {
+    return SizedBox(
       height: kToolbarHeight * 0.80,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          color: mainColor, borderRadius: BorderRadius.circular(20)),
-      child: Center(
-        child: Text(
-          "Sign Up",
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: SizeConfig.textSizeMedium,
+      child: LoadingButton(
+        action: viewModel.login,
+        child: Center(
+          child: Text(
+            "txt_login".tr(),
+            style: TSB.regularSmall(textColor: mainWhiteColor),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSignUpView() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "txt_dont_have_an_acc".tr(),
+          style: TSB.regularSmall(),
+        ),
+        Text(
+          "sign_up".tr(),
+          style: TSB.regularSmall(textColor: mainPinkColor),
+        ),
+      ],
     );
   }
 }

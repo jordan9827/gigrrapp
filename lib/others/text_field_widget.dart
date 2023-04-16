@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'constants.dart';
+
 class InputFieldWidget extends StatelessWidget {
   final IconData? icon;
   final ImageProvider? imageProvider;
@@ -79,29 +81,28 @@ class InputFieldWidget extends StatelessWidget {
           readOnly: readOnly,
           controller: controller,
           decoration: InputDecoration(
-            labelText: labelText,
             counterText: '',
             labelStyle: TextStyle(
               color: Colors.blueAccent.shade400,
             ),
             contentPadding: const EdgeInsets.all(10),
             hintText: hint,
-            hintStyle:
-                TextStyle(color: Theme.of(context).focusColor.withOpacity(0.7)),
-            prefixIcon: prefixIcon,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Theme.of(context).focusColor.withOpacity(0.2),
-              ),
+            filled: true,
+            fillColor: Color(0xffF2F2F2),
+            hintStyle: TextStyle(
+              color: textRegularColor,
             ),
+            prefixIcon: prefixIcon,
             focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: Theme.of(context).focusColor.withOpacity(0.5),
+                color: independenceColor,
               ),
             ),
             enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: Theme.of(context).focusColor.withOpacity(0.2),
+                color: Color(0xffF2F2F2),
               ),
             ),
           ),

@@ -20,25 +20,29 @@ class LoadingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AbsorbPointer(
-      absorbing: loading,
-      child: ElevatedButton(
-        onPressed: enabled ? () => action() : null,
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+    return SizedBox(
+      height: kToolbarHeight * 0.82,
+      width: MediaQuery.of(context).size.height,
+      child: AbsorbPointer(
+        absorbing: loading,
+        child: ElevatedButton(
+          onPressed: enabled ? () => action() : null,
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            backgroundColor: mainPinkColor,
           ),
-          backgroundColor: mainColor,
+          child: loading
+              ? SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: CircularProgressIndicator(
+                    color: progressIndicatorColor,
+                  ),
+                )
+              : child,
         ),
-        child: loading
-            ? SizedBox(
-                height: 25,
-                width: 25,
-                child: CircularProgressIndicator(
-                  color: progressIndicatorColor,
-                ),
-              )
-            : child,
       ),
     );
   }
