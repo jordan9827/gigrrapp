@@ -1,0 +1,8 @@
+builders:
+  json_to_type:
+    import: "package:json_to_type_generator/builder.dart"
+    builder_factories: ["jsonToTypeGenerator"]
+    build_extensions: {".dart": [".json_to_type.dart"]}
+    auto_apply: dependents
+    build_to: source
+    applies_builders: ["source_gen|combining_builder"]

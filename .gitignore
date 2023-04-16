@@ -1,0 +1,75 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+
+#iOS related ignores
+# ios/Flutter/Debug.xcconfig
+# ios/Flutter/Release.xcconfig
+#ios/Podfile
+#ios/Podfile.lock
+#ios/Runner.xcodeproj/project.pbxproj
+
+#Custom ignores
+pubspec.lock
+lib/app/*.locator.dart
+lib/app/*.logger.dart
+lib/app/*.router.dart
+lib/app/*.g.dart
+lib/data/network/dtos/*.freezed.dart
+lib/data/network/dtos/*.g.dart
+lib/data/network/json_converter.dart
+lib/data/network/api_services/*.chopper.dart
+lib/domain/models/*.freezed.dart
+lib/domain/models/*.g.dart
+lib/ui/**/*.form.dart
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+.fvm
+.vscode
+
+# Web related
+lib/generated_plugin_registrant.dart
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+#Fastlane
+android/fastlane/report.xml
+ios/fastlane/report.xml
+*/fastlane/.env

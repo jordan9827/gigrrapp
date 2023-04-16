@@ -1,0 +1,3 @@
+enum RegisterLogin {
+  Register, Login
+}

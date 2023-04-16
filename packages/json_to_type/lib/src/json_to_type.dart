@@ -1,0 +1,3 @@
+class JsonToType {
+  const JsonToType();
+}
