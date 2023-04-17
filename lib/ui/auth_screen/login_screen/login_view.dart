@@ -2,12 +2,12 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import '../../others/constants.dart';
-import '../../others/loading_button.dart';
-import '../../others/text_field_widget.dart';
-import '../../util/others/image_constants.dart';
-import '../../util/others/size_config.dart';
-import '../../util/others/text_styles.dart';
+import '../../../others/constants.dart';
+import '../../../others/loading_button.dart';
+import '../../../others/text_field_widget.dart';
+import '../../../util/others/image_constants.dart';
+import '../../../util/others/size_config.dart';
+import '../../../util/others/text_styles.dart';
 import 'login_view_model.dart';
 
 class LoginView extends StatefulWidget {

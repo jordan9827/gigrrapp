@@ -4,9 +4,9 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:stacked/stacked.dart';
+import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
-import '../../util/others/image_constants.dart';
 import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {

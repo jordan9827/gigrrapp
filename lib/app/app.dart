@@ -4,16 +4,14 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../data/network/app_chopper_client.dart';
 import '../domain/repos/auth_repos.dart';
+import '../ui/auth_screen/login_screen/login_view.dart';
+import '../ui/auth_screen/otp_verify_screen/otp_verify_view.dart';
 import '../ui/home_screen/home_view.dart';
-import '../ui/login_screen/login_view.dart';
 import '../ui/onboading_screen/intro_view.dart';
-import '../ui/otp_verify_screen/otp_verify_view.dart';
-import '../ui/signup_screen/signup_view.dart';
 
 @StackedApp(
   routes: [
     MaterialRoute(page: LoginView),
-    MaterialRoute(page: SignUpView),
     MaterialRoute(page: OTPVerifyScreen),
     MaterialRoute(page: HomeScreenView),
     MaterialRoute(page: IntroScreenView),
