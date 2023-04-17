@@ -10,8 +10,28 @@ import '../../util/others/size_config.dart';
 import '../../util/others/text_styles.dart';
 import 'login_view_model.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
   const LoginView({super.key});
+
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView>
+    with SingleTickerProviderStateMixin {
+  TabController? _tabController;
+
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController!.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +39,10 @@ class LoginView extends StatelessWidget {
     return ViewModelBuilder<LoginViewViewModel>.reactive(
       viewModelBuilder: () => LoginViewViewModel(),
       builder: (context, viewModel, child) => Scaffold(
-        resizeToAvoidBottomInset: false,
         body: SingleChildScrollView(
           child: SizedBox(
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height +
+                (kBottomNavigationBarHeight * 2),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -38,6 +58,36 @@ class LoginView extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget selectProfileTab() {
+    return Container(
+      height: 45,
+      decoration: BoxDecoration(
+        color: Color(0xff48466D).withOpacity(0.12),
+        borderRadius: BorderRadius.circular(
+          12.0,
+        ),
+      ),
+      child: TabBar(
+        padding: EdgeInsets.all(3),
+        controller: _tabController,
+        indicator: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          color: mainWhiteColor,
+        ),
+        labelColor: independenceColor,
+        unselectedLabelColor: textRegularColor,
+        tabs: [
+          Tab(
+            text: "txt_employer".tr(),
+          ),
+          Tab(
+            text: "txt_candidate".tr(),
+          ),
+        ],
       ),
     );
   }
@@ -85,7 +135,11 @@ class LoginView extends StatelessWidget {
       child: Column(
         children: [
           SizedBox(
-            height: SizeConfig.margin_padding_24,
+            height: SizeConfig.margin_padding_20,
+          ),
+          selectProfileTab(),
+          SizedBox(
+            height: SizeConfig.margin_padding_20,
           ),
           InputFieldWidget(
             hint: "Enter Mobile Number",
