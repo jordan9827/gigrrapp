@@ -7,9 +7,11 @@ import 'package:square_demo_architecture/ui/my_app/my_app_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'app/app.locator.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -24,6 +26,7 @@ Future<void> main() async {
       );
     },
   );
+
   await EasyLocalization.ensureInitialized();
   final initialThemeMode =
       (await AdaptiveTheme.getThemeMode()) ?? AdaptiveThemeMode.system;
@@ -37,6 +40,9 @@ Future<void> main() async {
       animationDuration: const Duration(seconds: 1),
     ),
   );
+  Future.delayed(Duration(seconds: 3))
+      .then((value) => FlutterNativeSplash.remove());
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en')],

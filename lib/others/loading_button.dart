@@ -8,12 +8,14 @@ class LoadingButton extends StatelessWidget {
   final bool enabled;
   final Widget child;
   final Color progressIndicatorColor;
+  final Color backgroundColor;
 
   const LoadingButton({
     Key? key,
     this.loading = false,
     this.enabled = true,
     this.progressIndicatorColor = Colors.white,
+    this.backgroundColor = mainPinkColor,
     required this.action,
     required this.child,
   }) : super(key: key);
@@ -31,7 +33,7 @@ class LoadingButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
             ),
-            backgroundColor: mainPinkColor,
+            backgroundColor: backgroundColor,
           ),
           child: loading
               ? SizedBox(

@@ -23,7 +23,7 @@ class _LoginViewState extends State<LoginView>
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 2, vsync: this, initialIndex: 0);
     super.initState();
   }
 
@@ -85,10 +85,10 @@ class _LoginViewState extends State<LoginView>
         unselectedLabelColor: textRegularColor,
         tabs: [
           Tab(
-            text: "txt_employer".tr(),
+            text: "txt_candidate".tr(),
           ),
           Tab(
-            text: "txt_candidate".tr(),
+            text: "txt_employer".tr(),
           ),
         ],
       ),
@@ -196,7 +196,7 @@ class _LoginViewState extends State<LoginView>
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
-          _buildSignUpView(),
+          _buildSignUpView(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
@@ -244,7 +244,7 @@ class _LoginViewState extends State<LoginView>
     );
   }
 
-  Widget _buildSignUpView() {
+  Widget _buildSignUpView(LoginViewViewModel viewModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -252,9 +252,12 @@ class _LoginViewState extends State<LoginView>
           "txt_dont_have_an_acc".tr(),
           style: TSB.regularSmall(),
         ),
-        Text(
-          "sign_up".tr(),
-          style: TSB.regularSmall(textColor: mainPinkColor),
+        InkWell(
+          onTap: () => viewModel.navigationToSignUpView(_tabController!.index),
+          child: Text(
+            "sign_up".tr(),
+            style: TSB.regularSmall(textColor: mainPinkColor),
+          ),
         ),
       ],
     );

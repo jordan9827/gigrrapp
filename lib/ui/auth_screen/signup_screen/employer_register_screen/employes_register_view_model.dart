@@ -15,6 +15,6 @@ class EmployeRegisterViewModel extends BaseViewModel {
   }
 
   void navigationToBusinessFormView() {
-    navigationService.navigateTo(Routes.businessInfoFormView);
+    navigationService.navigateTo(Routes.employBusinessInfoFormView);
   }
 }

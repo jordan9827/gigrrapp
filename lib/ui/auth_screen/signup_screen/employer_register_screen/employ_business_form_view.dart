@@ -6,19 +6,20 @@ import 'package:square_demo_architecture/others/text_field_widget.dart';
 import 'package:square_demo_architecture/ui/auth_screen/signup_screen/employer_register_screen/widget/form_app_bar_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
 import 'employes_register_view_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class BusinessInfoFormView extends StatefulWidget {
-  const BusinessInfoFormView({Key? key}) : super(key: key);
+class EmployBusinessInfoFormView extends StatefulWidget {
+  const EmployBusinessInfoFormView({Key? key}) : super(key: key);
 
   @override
-  State<BusinessInfoFormView> createState() => _BusinessInfoFormViewState();
+  State<EmployBusinessInfoFormView> createState() =>
+      _EmployBusinessInfoFormViewState();
 }
 
-class _BusinessInfoFormViewState extends State<BusinessInfoFormView> {
+class _EmployBusinessInfoFormViewState
+    extends State<EmployBusinessInfoFormView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

@@ -15,6 +15,15 @@ class LoginViewViewModel extends BaseViewModel {
   String mobileMessage = "";
   String pwdMessage = "";
 
+  void navigationToSignUpView(int index) {
+    if (index == 0) {
+      return;
+    } else {
+      navigationService.navigateTo(Routes.employPersonalInfoFormView);
+      return;
+    }
+  }
+
   void mobileNoValidation() {
     String valueText = mobileController.text;
     if (valueText.isEmpty) {

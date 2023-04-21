@@ -8,7 +8,7 @@ class MyAppViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final log = getLogger('Splash Screen View');
   late final bool isFirstTime;
-  var initialRoute = Routes.personalInfoFormView;
+  var initialRoute = Routes.introScreenView;
   final dialogService = locator<DialogService>();
 
   Future<bool> routeUser() async {

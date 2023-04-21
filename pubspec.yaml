@@ -88,21 +88,17 @@ dependencies:
 
 
 # flutter_native_splash-development.yaml
-#flutter_native_splash:
-#  color: "#F9E1CA"
-#  image: assets/splash/cover_splash_logo_light.png
-#  color_dark: "#24252B"
-#  image_dark: assets/splash/cover_splash_logo_dark.png
-#
-#  android_12:
-#    image: assets/splash/cover_splash_logo_light.png
-#    icon_background_color: "#F9E1CA"
-#    image_dark: assets/splash/cover_splash_logo_dark.png
-#    icon_background_color_dark: "#24252B"
-#
+flutter_native_splash:
+  color: "#FFFFFF"
+  image: assets/splash/logo.png
+  branding: assets/splash/branding.png
+
+  android_12:
+    image: assets/splash/logo.png
+
 #  android: true
 #  ios: true
-#  fullscreen: true
+  fullscreen: true
 
 
 dev_dependencies:

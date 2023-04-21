@@ -43,6 +43,7 @@ const mainBlackColor = Colors.black;
 const mainWhiteColor = Colors.white;
 const mainPinkColor = Color(0xffEE356F);
 const mainGrayColor = Color(0xffF2F2F2);
+const mainBlueColor = Color(0xff4263FB);
 const independenceColor = Color(0xff48466D);
 const fieldsBackGroundColor = Color(0xff18181C);
 Color mainColor = Colors.blueAccent.shade400;
