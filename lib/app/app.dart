@@ -6,6 +6,8 @@ import '../data/network/app_chopper_client.dart';
 import '../domain/repos/auth_repos.dart';
 import '../ui/auth_screen/login_screen/login_view.dart';
 import '../ui/auth_screen/otp_verify_screen/otp_verify_view.dart';
+import '../ui/auth_screen/signup_screen/employer_register_screen/business_info_form_view.dart';
+import '../ui/auth_screen/signup_screen/employer_register_screen/personal_info_form_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/onboading_screen/intro_view.dart';
 
@@ -15,6 +17,8 @@ import '../ui/onboading_screen/intro_view.dart';
     MaterialRoute(page: OTPVerifyScreen),
     MaterialRoute(page: HomeScreenView),
     MaterialRoute(page: IntroScreenView),
+    MaterialRoute(page: PersonalInfoFormView),
+    MaterialRoute(page: BusinessInfoFormView),
   ],
   dependencies: [
     Factory(

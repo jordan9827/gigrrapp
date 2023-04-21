@@ -9,6 +9,8 @@
         android:label="Gigrr App"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCCYlqcKcnNXTWv3PYXkBcN_qudZ1kHg6I"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

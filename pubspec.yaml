@@ -51,6 +51,7 @@ dependencies:
   # Shared preferences
   shared_preferences: ^2.0.17
 
+  google_maps_flutter: ^2.2.5
   # Http request
   chopper: 6.1.1
 

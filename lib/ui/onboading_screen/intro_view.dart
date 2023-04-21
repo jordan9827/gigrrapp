@@ -56,7 +56,7 @@ class _IntroScreenViewState extends State<IntroScreenView> {
                     SizeConfig.margin_padding_35,
                   ),
                 ),
-                child: Image.asset(ic_arrow),
+                child: Image.asset(arrow_forword),
               ),
             ),
             SizedBox(

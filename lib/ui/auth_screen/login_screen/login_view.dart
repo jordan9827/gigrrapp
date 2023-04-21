@@ -39,24 +39,27 @@ class _LoginViewState extends State<LoginView>
     return ViewModelBuilder<LoginViewViewModel>.reactive(
       viewModelBuilder: () => LoginViewViewModel(),
       builder: (context, viewModel, child) => Scaffold(
-        body: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height +
-                (kBottomNavigationBarHeight * 2),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: _buildHeading(),
-                ),
-                Expanded(
-                  flex: 3,
-                  child: _buildLoginForm(viewModel),
-                ),
-              ],
-            ),
-          ),
+        backgroundColor: mainWhiteColor,
+        body: ListView(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height +
+                  SizeConfig.margin_padding_35,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: SizeConfig.margin_padding_50 * 2.8,
+                    child: _buildHeading(),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: _buildLoginForm(viewModel),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -101,7 +104,7 @@ class _LoginViewState extends State<LoginView>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: SizeConfig.margin_padding_35,
+            height: SizeConfig.margin_padding_20,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_40,
@@ -147,7 +150,7 @@ class _LoginViewState extends State<LoginView>
             errorMsgValidation: viewModel.mobileMessage,
           ),
           SizedBox(
-            height: SizeConfig.margin_padding_15,
+            height: SizeConfig.margin_padding_18,
           ),
           InputFieldWidget(
             hint: "Enter Password",
