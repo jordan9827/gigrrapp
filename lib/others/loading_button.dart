@@ -1,14 +1,18 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
+
+import '../util/others/text_styles.dart';
 
 //updated according to new ui
 class LoadingButton extends StatelessWidget {
   final bool loading;
   final Function action;
   final bool enabled;
-  final Widget child;
+  final String title;
   final Color progressIndicatorColor;
   final Color backgroundColor;
+  final Color titleColor;
 
   const LoadingButton({
     Key? key,
@@ -16,8 +20,9 @@ class LoadingButton extends StatelessWidget {
     this.enabled = true,
     this.progressIndicatorColor = Colors.white,
     this.backgroundColor = mainPinkColor,
+    this.titleColor = mainWhiteColor,
     required this.action,
-    required this.child,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -43,7 +48,10 @@ class LoadingButton extends StatelessWidget {
                     color: progressIndicatorColor,
                   ),
                 )
-              : child,
+              : Text(
+                  title.tr(),
+                  style: TSB.regularMedium(textColor: titleColor),
+                ),
         ),
       ),
     );

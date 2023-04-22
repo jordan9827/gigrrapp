@@ -35,7 +35,7 @@ const NOTIFICATION_CHANNEL_DESCRIPTION = "Base channel for notification";
 const RECENT_COIN_SEARCHED = "RECENT_ITEM";
 
 String? getFontFamily() {
-  return Platform.isAndroid ? "Inter" : null;
+  return FONT_FAMILY;
 }
 
 const greenBlueColor = Color(0xff18181C);

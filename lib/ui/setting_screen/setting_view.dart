@@ -43,10 +43,8 @@ class _SettingScreenViewState extends State<SettingScreenView> {
               child: LoadingButton(
                 action: () {},
                 backgroundColor: mainPinkColor.withOpacity(0.15),
-                child: Text(
-                  "logout".tr(),
-                  style: TSB.regularMedium(textColor: mainPinkColor),
-                ),
+                title: "logout",
+                titleColor: mainPinkColor,
               ),
             ),
             SizedBox(

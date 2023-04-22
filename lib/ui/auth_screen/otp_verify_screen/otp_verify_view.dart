@@ -142,10 +142,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
           ),
           LoadingButton(
             action: () {},
-            child: Text(
-              "txt_verify".tr(),
-              style: TSB.regularSmall(textColor: mainWhiteColor),
-            ),
+            title: "txt_verify",
           )
         ],
       ),

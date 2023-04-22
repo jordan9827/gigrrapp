@@ -56,10 +56,7 @@ class _EmployBusinessInfoFormViewState
           _buildForm(title: "upload_business_pictures", formWidget: SizedBox()),
           LoadingButton(
             action: () {},
-            child: Text(
-              "create_profile".tr(),
-              style: TSB.regularSmall(textColor: mainWhiteColor),
-            ),
+            title: "create_profile",
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,

@@ -234,12 +234,7 @@ class _LoginViewState extends State<LoginView>
       height: kToolbarHeight * 0.80,
       child: LoadingButton(
         action: viewModel.login,
-        child: Center(
-          child: Text(
-            "txt_login".tr(),
-            style: TSB.regularSmall(textColor: mainWhiteColor),
-          ),
-        ),
+        title: "txt_login",
       ),
     );
   }

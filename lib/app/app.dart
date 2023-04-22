@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/repos/auth_impl.dart';
+import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../data/network/app_chopper_client.dart';
@@ -19,6 +20,7 @@ import '../ui/setting_screen/setting_view.dart';
     MaterialRoute(page: HomeScreenView),
     MaterialRoute(page: IntroScreenView),
     MaterialRoute(page: SettingScreenView),
+    MaterialRoute(page: NotificationScreenView),
     MaterialRoute(page: EmployPersonalInfoFormView),
     MaterialRoute(page: EmployBusinessInfoFormView),
   ],

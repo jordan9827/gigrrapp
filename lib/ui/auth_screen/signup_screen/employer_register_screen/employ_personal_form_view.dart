@@ -55,10 +55,7 @@ class _EmployPersonalInfoFormViewState
           _buildForm(title: "add_pin_map", formWidget: _buildGoogleMap()),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
-            child: Text(
-              "NEXT, ADD BUSINESS".tr(),
-              style: TSB.regularSmall(textColor: mainWhiteColor),
-            ),
+            title: "NEXT, ADD BUSINESS".tr(),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,
