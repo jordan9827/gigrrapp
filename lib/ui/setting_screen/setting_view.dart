@@ -5,7 +5,6 @@ import 'package:square_demo_architecture/ui/setting_screen/setting_view_model.da
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../others/loading_button.dart';
 import '../../util/others/text_styles.dart';
 
@@ -30,8 +29,8 @@ class _SettingScreenViewState extends State<SettingScreenView> {
               padding: edgeInsetsMargin,
               child: Column(
                 children: [
-                  _buildAccountView(),
-                  _buildHelpAndSupportView(),
+                  _buildAccountView(viewModel),
+                  _buildHelpAndSupportView(viewModel),
                 ],
               ),
             ),
@@ -71,7 +70,7 @@ class _SettingScreenViewState extends State<SettingScreenView> {
     );
   }
 
-  Widget _buildAccountView() {
+  Widget _buildAccountView(SettingScreenViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -94,10 +93,17 @@ class _SettingScreenViewState extends State<SettingScreenView> {
           ),
         ),
         _buildListTile(
+          onTap: viewModel.navigationToShareEarnScreen,
           leading: ic_share,
           title: "share_earn",
         ),
         _buildListTile(
+          onTap: viewModel.navigationToLanguageScreen,
+          leading: ic_share,
+          title: "select_language",
+        ),
+        _buildListTile(
+          onTap: viewModel.navigationToPaymentHistoryScreen,
           leading: ic_payment,
           title: "payment_history",
         ),
@@ -105,7 +111,7 @@ class _SettingScreenViewState extends State<SettingScreenView> {
     );
   }
 
-  Widget _buildHelpAndSupportView() {
+  Widget _buildHelpAndSupportView(SettingScreenViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,14 +128,17 @@ class _SettingScreenViewState extends State<SettingScreenView> {
         _buildListTile(
           leading: ic_about,
           title: "about",
+          onTap: viewModel.navigationToAboutScreen,
         ),
         _buildListTile(
           leading: ic_help,
           title: "help_support",
+          onTap: viewModel.navigationToHelpSupportScreen,
         ),
         _buildListTile(
           leading: ic_privacy_blck,
           title: "privacy_policy",
+          onTap: viewModel.navigationToPrivacyPolicyScreen,
         ),
         _buildListTile(
           leading: ic_terms,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -35,6 +36,7 @@ class InputFieldWidget extends StatelessWidget {
   final bool readOnly;
   final String? labelText;
   final int maxLength;
+  final int maxLines;
   const InputFieldWidget({
     Key? key,
     this.icon,
@@ -54,6 +56,7 @@ class InputFieldWidget extends StatelessWidget {
     this.helperText,
     this.onFieldSubmitted,
     this.validator,
+    this.maxLines = 1,
     this.textStyle,
     this.focusNode,
     this.isDense,
@@ -77,6 +80,7 @@ class InputFieldWidget extends StatelessWidget {
       children: [
         TextFormField(
           maxLength: maxLength,
+          maxLines: maxLines,
           keyboardType: keyboardType ?? TextInputType.text,
           readOnly: readOnly,
           controller: controller,
@@ -86,7 +90,7 @@ class InputFieldWidget extends StatelessWidget {
               color: Colors.blueAccent.shade400,
             ),
             contentPadding: const EdgeInsets.all(10),
-            hintText: hint,
+            hintText: hint.tr(),
             filled: true,
             fillColor: Color(0xffF2F2F2),
             hintStyle: TextStyle(

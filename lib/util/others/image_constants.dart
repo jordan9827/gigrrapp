@@ -22,4 +22,6 @@ const String ic_location = _baseUrl + "ic_location.png";
 const String ic_help = _baseUrl + "ic_help_blck.png";
 const String ic_arrow_grey = _baseUrl + "ic_arrow_grey.png";
 const String ic_notification = _baseUrl + "ic_notification_blck.png";
+const String ic_support_email = _baseUrl + "ic_support_email.png";
+const String ic_edit_profile = _baseUrl + "ic_edit_profile.png";
 const String ic_obj_no_notification = _baseUrl + "ic_obj_no_notification.png";

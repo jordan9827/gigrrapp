@@ -11,6 +11,8 @@ import '../ui/auth_screen/signup_screen/employer_register_screen/employ_business
 import '../ui/auth_screen/signup_screen/employer_register_screen/employ_personal_form_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/onboading_screen/intro_view.dart';
+import '../ui/setting_screen/help_support_screen/help_support_view.dart';
+import '../ui/setting_screen/language_screen/language_view.dart';
 import '../ui/setting_screen/setting_view.dart';
 
 @StackedApp(
@@ -20,6 +22,8 @@ import '../ui/setting_screen/setting_view.dart';
     MaterialRoute(page: HomeScreenView),
     MaterialRoute(page: IntroScreenView),
     MaterialRoute(page: SettingScreenView),
+    MaterialRoute(page: HelpSupportScreenView),
+    MaterialRoute(page: LanguageScreenView),
     MaterialRoute(page: NotificationScreenView),
     MaterialRoute(page: EmployPersonalInfoFormView),
     MaterialRoute(page: EmployBusinessInfoFormView),
