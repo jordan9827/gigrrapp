@@ -2,7 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 
 final lightTheme = ThemeData.light().copyWith(
-    appBarTheme: AppBarTheme(backgroundColor: independenceColor),
-    scaffoldBackgroundColor: mainGrayColor);
+  appBarTheme: AppBarTheme(backgroundColor: independenceColor),
+  scaffoldBackgroundColor: Colors.white,
+  colorScheme: ColorScheme.light(
+    background: Colors.white,
+  ),
+);
 
-final darkTheme = ThemeData.dark().copyWith();
+final darkTheme = ThemeData.dark().copyWith(
+  appBarTheme: AppBarTheme(backgroundColor: independenceColor),
+  scaffoldBackgroundColor: Colors.white,
+  colorScheme: ColorScheme.light(
+    background: Colors.white,
+  ),
+);

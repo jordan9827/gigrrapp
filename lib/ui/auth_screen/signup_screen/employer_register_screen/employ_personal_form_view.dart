@@ -45,17 +45,18 @@ class _EmployPersonalInfoFormViewState
       padding: edgeInsetsMargin,
       child: ListView(
         children: [
-          _buildForm(title: "full_name", hintForm: "i.e. Pakiza Garments"),
-          _buildForm(title: "mobile_number", hintForm: "i.e. 989 898 9898"),
-          _buildForm(
+          _buildFormField(title: "full_name", hintForm: "i.e. Jack Milton"),
+          _buildFormField(
+              title: "mobile_number", hintForm: "i.e. 989 898 9898"),
+          _buildFormField(
               title: "address", hintForm: "i.e. House no., Street name, Area"),
-          _buildForm(title: "city", hintForm: "i.e. Indore"),
-          _buildForm(title: "state", hintForm: "i.e. Madhya Pradesh"),
-          _buildForm(title: "pinCode", hintForm: "i.e. 452001"),
-          _buildForm(title: "add_pin_map", formWidget: _buildGoogleMap()),
+          _buildFormField(title: "city", hintForm: "i.e. Indore"),
+          _buildFormField(title: "state", hintForm: "i.e. Madhya Pradesh"),
+          _buildFormField(title: "pinCode", hintForm: "i.e. 452001"),
+          _buildFormField(title: "add_pin_map", formWidget: _buildGoogleMap()),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
-            title: "NEXT, ADD BUSINESS".tr(),
+            title: "next_add_business",
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,
@@ -67,7 +68,7 @@ class _EmployPersonalInfoFormViewState
 
   Widget _buildGoogleMap() {
     return Container(
-      height: SizeConfig.margin_padding_50 * 2.8,
+      height: SizeConfig.margin_padding_50 * 2.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
       ),
@@ -85,7 +86,7 @@ class _EmployPersonalInfoFormViewState
     );
   }
 
-  Widget _buildForm({
+  Widget _buildFormField({
     required String title,
     String hintForm = "",
     TextEditingController? controller,
@@ -94,7 +95,13 @@ class _EmployPersonalInfoFormViewState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildTitle(title),
+        Padding(
+          padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+          child: Text(
+            title.tr(),
+            style: TSB.regularSmall(),
+          ),
+        ),
         formWidget != null
             ? formWidget
             : InputFieldWidget(hint: hintForm, controller: controller),
@@ -102,16 +109,6 @@ class _EmployPersonalInfoFormViewState
           height: SizeConfig.margin_padding_13,
         )
       ],
-    );
-  }
-
-  Widget _buildTitle(String val) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
-      child: Text(
-        val.tr(),
-        style: TSB.regularSmall(),
-      ),
     );
   }
 

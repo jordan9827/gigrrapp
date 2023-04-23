@@ -1,7 +1,7 @@
 import 'dart:io' show Platform;
 
 import 'package:flutter/material.dart';
-
+import 'package:package_info_plus/package_info_plus.dart';
 import '../util/others/size_config.dart';
 
 const String devBaseURL = "";
@@ -90,3 +90,8 @@ bool validateEmail(String email) {
 EdgeInsets edgeInsetsMargin = EdgeInsets.symmetric(
   horizontal: SizeConfig.margin_padding_15,
 );
+
+Future<String> appVersion() async {
+  PackageInfo packageInfo = await PackageInfo.fromPlatform();
+  return packageInfo.version;
+}

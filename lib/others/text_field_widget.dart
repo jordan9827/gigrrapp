@@ -92,7 +92,7 @@ class InputFieldWidget extends StatelessWidget {
             contentPadding: const EdgeInsets.all(10),
             hintText: hint.tr(),
             filled: true,
-            fillColor: Color(0xffF2F2F2),
+            fillColor: mainGrayColor,
             hintStyle: TextStyle(
               color: textRegularColor,
             ),
@@ -106,7 +106,7 @@ class InputFieldWidget extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: Color(0xffF2F2F2),
+                color: mainGrayColor,
               ),
             ),
           ),

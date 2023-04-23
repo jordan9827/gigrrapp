@@ -8,6 +8,7 @@ import '../../others/common_app_bar.dart';
 import '../../util/others/image_constants.dart';
 import '../../util/others/text_styles.dart';
 import 'notification_view_model.dart';
+import 'widget/notification_widget.dart';
 
 class NotificationScreenView extends StatefulWidget {
   const NotificationScreenView({Key? key}) : super(key: key);
@@ -26,21 +27,22 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
           context,
           "notifications",
           showBack: true,
+          onBackPressed: viewModel.navigationToBack,
         ),
         body: ListView(
           children: [
-            // Align(
-            //   alignment: Alignment.center,
-            //   child: _buildEmptyNotificationView(viewModel),
-            // ),
-            _buildNotificationData(viewModel)
+            _buildNotificationData(title: "Today", count: 3),
+            SizedBox(
+              height: SizeConfig.margin_padding_20,
+            ),
+            _buildNotificationData(title: "Oct 16, 2021", count: 8),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNotificationData(NotificationScreenViewModel viewModel) {
+  Widget _buildNotificationData({required String title, int? count}) {
     return Padding(
       padding: edgeInsetsMargin,
       child: Column(
@@ -50,59 +52,16 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
             height: SizeConfig.margin_padding_15,
           ),
           Text(
-            "Today",
+            title,
             style: TSB.semiBoldSmall(textColor: independenceColor),
           ),
           SizedBox(
-            height: SizeConfig.margin_padding_10,
+            height: SizeConfig.margin_padding_5,
           ),
-          ListView.builder(
-              itemCount: 5,
-              shrinkWrap: true,
-              itemBuilder: (context, i) {
-                return _buildMessageUI();
-              })
-        ],
-      ),
-    );
-  }
-
-  Widget _buildMessageUI() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5),
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
-      decoration: BoxDecoration(
-        color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CircleAvatar(
-            backgroundImage: AssetImage(ic_edit_profile),
-            radius: SizeConfig.margin_padding_18,
+          ...List.generate(
+            count!,
+            (index) => NotificationWidget(),
           ),
-          SizedBox(
-            width: SizeConfig.margin_padding_15,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Your Gigrr Suresh Kumar arrived.",
-                maxLines: 3,
-                softWrap: false,
-                style: TSB.regularLarge(),
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
-              ),
-              Text(
-                "Oct 16, 2021",
-                style: TSB.regularSmall(textColor: textNoticeColor),
-              ),
-            ],
-          )
         ],
       ),
     );

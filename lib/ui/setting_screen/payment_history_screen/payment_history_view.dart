@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
+import 'package:square_demo_architecture/ui/setting_screen/payment_history_screen/widget/payment_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../others/constants.dart';
@@ -32,70 +33,31 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
         ),
         body: Container(
           margin: edgeInsetsMargin,
-          child: _buildPaymentList(),
+          child: ListView(
+            children: [
+              _buildPaymentList(title: "Today", count: 3),
+              _buildPaymentList(title: "Oct 16, 2021", count: 8),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildPaymentList() {
-    return ListView(
+  Widget _buildPaymentList({required String title, int? count}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
           height: SizeConfig.margin_padding_15,
         ),
         Text(
-          "Today",
+          title,
           style: TSB.semiBoldMedium(textColor: independenceColor),
         ),
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: 20,
-          physics: PageScrollPhysics(),
-          itemBuilder: (context, i) => Container(
-            margin: EdgeInsets.symmetric(vertical: SizeConfig.margin_padding_5),
-            padding: EdgeInsets.symmetric(
-              horizontal: SizeConfig.margin_padding_10,
-              vertical: SizeConfig.margin_padding_8,
-            ),
-            decoration: BoxDecoration(
-              color: mainWhiteColor,
-              borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
-            ),
-            child: ListTile(
-              contentPadding: EdgeInsets.zero,
-              // contentPadding: EdgeInsets.all(SizeConfig.margin_padding_10),
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(ic_edit_profile),
-                radius: SizeConfig.margin_padding_18,
-              ),
-              title: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Suresh Kumar",
-                    style: TSB.semiBoldMedium(),
-                  ),
-                  Text(
-                    "Successfully Paid",
-                    style: TSB.regularSmall(textColor: textNoticeColor),
-                  ),
-                ],
-              ),
-              trailing: Container(
-                margin: EdgeInsets.all(SizeConfig.margin_padding_8),
-                constraints: const BoxConstraints(minWidth: 70.0, maxWidth: 80),
-                height: double.infinity,
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Text(
-                    "₹ 400",
-                    style: TSB.semiBoldMedium(textColor: Colors.green),
-                  ),
-                ),
-              ),
-            ),
-          ),
+        ...List.generate(
+          count!,
+          (index) => PaymentHistoryWidget(),
         )
       ],
     );
