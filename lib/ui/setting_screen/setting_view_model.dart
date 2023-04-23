@@ -24,7 +24,7 @@ class SettingScreenViewModel extends BaseViewModel {
   }
 
   void navigationToPaymentHistoryScreen() {
-    //  navigationService.navigateTo(Routes.languageScreenView);
+    navigationService.navigateTo(Routes.paymentHistoryScreen);
   }
 
   void navigationToAboutScreen() {

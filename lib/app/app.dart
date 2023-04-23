@@ -13,6 +13,7 @@ import '../ui/home_screen/home_view.dart';
 import '../ui/onboading_screen/intro_view.dart';
 import '../ui/setting_screen/help_support_screen/help_support_view.dart';
 import '../ui/setting_screen/language_screen/language_view.dart';
+import '../ui/setting_screen/payment_history_screen/payment_history_view.dart';
 import '../ui/setting_screen/setting_view.dart';
 
 @StackedApp(
@@ -25,6 +26,7 @@ import '../ui/setting_screen/setting_view.dart';
     MaterialRoute(page: HelpSupportScreenView),
     MaterialRoute(page: LanguageScreenView),
     MaterialRoute(page: NotificationScreenView),
+    MaterialRoute(page: PaymentHistoryScreen),
     MaterialRoute(page: EmployPersonalInfoFormView),
     MaterialRoute(page: EmployBusinessInfoFormView),
   ],
