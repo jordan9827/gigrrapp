@@ -4,6 +4,7 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+
 import '../../others/common_app_bar.dart';
 import '../../util/others/image_constants.dart';
 import '../../util/others/text_styles.dart';
@@ -27,7 +28,7 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
           context,
           "notifications",
           showBack: true,
-          onBackPressed: viewModel.navigationToBack,
+          onBackPressed: () => viewModel.navigationToBack(),
         ),
         body: ListView(
           children: [

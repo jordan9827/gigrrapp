@@ -5,7 +5,7 @@ import '../../app/app.locator.dart';
 import '../../app/app.router.dart';
 import '../../others/constants.dart';
 
-class SettingScreenViewModel extends BaseViewModel {
+class AccountViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   String platformVersion = "";

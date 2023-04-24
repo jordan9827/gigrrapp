@@ -3,6 +3,13 @@ import 'package:square_demo_architecture/data/repos/auth_impl.dart';
 import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+ge:square_demo_architecture/ui/account_screen/language_screen/language_view.dart';
+import 'package:square_demo_architecture/ui/account_screen/payment_history_screen/payment_history_view.dart';
+import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
+import 'package:square_demo_architecture/util/others/bottom_nav_bar_service.dart';
+import 'package:stacked/stacked_annotations.dart';
+import 'package:stacked_services/stacked_services.dart';
+
 import '../data/network/app_chopper_client.dart';
 import '../domain/repos/auth_repos.dart';
 import '../ui/auth_screen/edit_profile_screen/edit_profile_view.dart';
@@ -12,10 +19,6 @@ import '../ui/auth_screen/signup_screen/employer_register_screen/employ_business
 import '../ui/auth_screen/signup_screen/employer_register_screen/employ_personal_form_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/onboading_screen/intro_view.dart';
-import '../ui/setting_screen/help_support_screen/help_support_view.dart';
-import '../ui/setting_screen/language_screen/language_view.dart';
-import '../ui/setting_screen/payment_history_screen/payment_history_view.dart';
-import '../ui/setting_screen/setting_view.dart';
 
 @StackedApp(
   routes: [
@@ -23,7 +26,7 @@ import '../ui/setting_screen/setting_view.dart';
     MaterialRoute(page: OTPVerifyScreen),
     MaterialRoute(page: HomeScreenView),
     MaterialRoute(page: IntroScreenView),
-    MaterialRoute(page: SettingScreenView),
+    MaterialRoute(page: AccountView),
     MaterialRoute(page: HelpSupportScreenView),
     MaterialRoute(page: LanguageScreenView),
     MaterialRoute(page: NotificationScreenView),
@@ -53,6 +56,9 @@ import '../ui/setting_screen/setting_view.dart';
     LazySingleton(
       classType: AppChopperClient,
     ),
+    LazySingleton(
+      classType: BottomNavBarService,
+    )
   ],
   logger: StackedLogger(),
 )

@@ -5,23 +5,24 @@ import 'package:square_demo_architecture/ui/setting_screen/setting_view_model.da
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+
 import '../../others/loading_button.dart';
 import '../../util/others/text_styles.dart';
 import 'widget/profile_widget_screen.dart';
 
-class SettingScreenView extends StatefulWidget {
-  const SettingScreenView({Key? key}) : super(key: key);
+class AccountView extends StatefulWidget {
+  const AccountView({Key? key}) : super(key: key);
 
   @override
-  State<SettingScreenView> createState() => _SettingScreenViewState();
+  State<AccountView> createState() => _AccountViewState();
 }
 
-class _SettingScreenViewState extends State<SettingScreenView> {
+class _AccountViewState extends State<AccountView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => SettingScreenViewModel(),
+      viewModelBuilder: () => AccountViewModel(),
       builder: (context, viewModel, child) => Scaffold(
         body: ListView(
           children: [
@@ -71,7 +72,7 @@ class _SettingScreenViewState extends State<SettingScreenView> {
     );
   }
 
-  Widget _buildAccountView(SettingScreenViewModel viewModel) {
+  Widget _buildAccountView(AccountViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -112,7 +113,7 @@ class _SettingScreenViewState extends State<SettingScreenView> {
     );
   }
 
-  Widget _buildHelpAndSupportView(SettingScreenViewModel viewModel) {
+  Widget _buildHelpAndSupportView(AccountViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
