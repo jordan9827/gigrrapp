@@ -1,13 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/ui/account_screen/account_view_model.dart';
+
 import '../../../others/constants.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
-import '../setting_view_model.dart';
 
 class ProfileWidgetScreen extends StatelessWidget {
-  final SettingScreenViewModel viewModel;
+  final AccountViewModel viewModel;
   const ProfileWidgetScreen({Key? key, required this.viewModel})
       : super(key: key);
 
@@ -86,7 +87,7 @@ class ProfileWidgetScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildEditProfile(SettingScreenViewModel viewModel) {
+  Widget _buildEditProfile(AccountViewModel viewModel) {
     return InkWell(
       onTap: viewModel.navigationToEditProfileScreen,
       child: Container(

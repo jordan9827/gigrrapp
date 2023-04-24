@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/setting_screen/setting_view_model.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../others/loading_button.dart';
 import '../../util/others/text_styles.dart';
-import 'widget/profile_widget_screen.dart';
+import '../setting_screen/widget/profile_widget_screen.dart';
+import 'account_view_model.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
