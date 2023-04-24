@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart'
     show NavigationService, SnackbarService;
-
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../others/constants.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class LoginViewViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -67,5 +69,44 @@ class LoginViewViewModel extends BaseViewModel {
 
   void navigationToOTPScreen() {
     navigationService.navigateTo(Routes.oTPVerifyScreen);
+  }
+
+  Future<void> googleLogin() async {
+    GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+    await googleSignIn.signOut();
+    var account = await googleSignIn.signIn();
+  }
+
+  Future<void> fbLogin(
+      {Function? success, Function? fail, Function? cancel}) async {
+    var facebookLogin = FacebookLogin();
+    await facebookLogin.logOut();
+    var facebookLoginResult = await facebookLogin.logIn(
+      permissions: [
+        FacebookPermission.publicProfile,
+        FacebookPermission.email,
+      ],
+    );
+
+    switch (facebookLoginResult.status) {
+      case FacebookLoginStatus.error:
+        fail!();
+        break;
+      case FacebookLoginStatus.cancel:
+        cancel!();
+        break;
+      case FacebookLoginStatus.success:
+        break;
+    }
+  }
+
+  void appleLogin({Function? success, Function? fail, Function? cancel}) async {
+    var account = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+    if (account != null) {}
   }
 }

@@ -194,7 +194,7 @@ class _LoginViewState extends State<LoginView>
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
-          _buildSocialLoginView(),
+          _buildSocialLoginView(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
@@ -207,27 +207,40 @@ class _LoginViewState extends State<LoginView>
     );
   }
 
-  Widget _buildSocialLoginView() {
+  Widget _buildSocialLoginView(LoginViewViewModel viewModel) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        _buildImage(ic_google),
+        _buildImage(
+          image: ic_google,
+          onTap: viewModel.googleLogin,
+        ),
         SizedBox(
           width: SizeConfig.margin_padding_10,
         ),
-        _buildImage(ic_facebook),
+        _buildImage(
+          image: ic_facebook,
+          onTap: viewModel.fbLogin,
+        ),
         SizedBox(
           width: SizeConfig.margin_padding_10,
         ),
-        if (Platform.isIOS) _buildImage(ic_apple),
+        if (Platform.isIOS)
+          _buildImage(
+            image: ic_apple,
+            onTap: viewModel.appleLogin,
+          ),
       ],
     );
   }
 
-  Widget _buildImage(String image) {
-    return SizedBox(
-      height: SizeConfig.margin_padding_40,
-      child: Image.asset(image),
+  Widget _buildImage({required String image, Function()? onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: SizedBox(
+        height: SizeConfig.margin_padding_40,
+        child: Image.asset(image),
+      ),
     );
   }
 

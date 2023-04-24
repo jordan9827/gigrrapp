@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gigrr App</string>
+    <string name="facebook_app_id">452449059785145</string>
+    <string name="fb_login_protocol_scheme">fb452449059785145</string>
+</resources>

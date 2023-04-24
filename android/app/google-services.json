@@ -1,0 +1,154 @@
+{
+  "project_info": {
+    "project_number": "272612059520",
+    "project_id": "gigrrapp",
+    "storage_bucket": "gigrrapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272612059520:android:8f9da8cc696cc737f97965",
+        "android_client_info": {
+          "package_name": "com.tarch.gigrr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272612059520-29leal1qel08simo8gcajop2m8mj07d6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr",
+            "certificate_hash": "c31fc376e26cc7c8983f37e93db2035c05c8f923"
+          }
+        },
+        {
+          "client_id": "272612059520-4o6esda75roe2daa898fsgvl8enkmd30.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr",
+            "certificate_hash": "a51e871ac14f197a1bf1c1a9db16fa7021f0c60e"
+          }
+        },
+        {
+          "client_id": "272612059520-e7d8h3ts75omk5vdpb44hjki8bclle3a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr",
+            "certificate_hash": "75692a7b916a71c5c2ddea8a638539bad456a906"
+          }
+        },
+        {
+          "client_id": "272612059520-hinur60fsl2pr675v9vd7nc59sun4e2i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr",
+            "certificate_hash": "57286c0755dcc8f189a6efb094b4e9a75300e36c"
+          }
+        },
+        {
+          "client_id": "272612059520-pi2taji1orqcr1p3dkoggrgrmdn9lrta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr",
+            "certificate_hash": "17dc4df6448e8aa10c616795463e9486ce64f264"
+          }
+        },
+        {
+          "client_id": "272612059520-1bsko9s41gf1uk39afa0r872s27f1qm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn_o8BtuQWV3hfs_ajGlY96JTsw5xoLDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272612059520-1bsko9s41gf1uk39afa0r872s27f1qm4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "272612059520-87attlfhjk9hi07oaoia4gdoqc6u72mh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tarch.gigrr"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:272612059520:android:d88476ae9e3567d3f97965",
+        "android_client_info": {
+          "package_name": "com.tarch.gigrr.gigrr_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "272612059520-5aevsg4rtn7jr42s8e5vlcgqr0e1860b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr.gigrr_flutter",
+            "certificate_hash": "57286c0755dcc8f189a6efb094b4e9a75300e36c"
+          }
+        },
+        {
+          "client_id": "272612059520-7i994hs2p8vgv61t1htgj7280ma92u5d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr.gigrr_flutter",
+            "certificate_hash": "17dc4df6448e8aa10c616795463e9486ce64f264"
+          }
+        },
+        {
+          "client_id": "272612059520-8mfstau9sn8ces5c818a4fr210cpum2s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr.gigrr_flutter",
+            "certificate_hash": "a51e871ac14f197a1bf1c1a9db16fa7021f0c60e"
+          }
+        },
+        {
+          "client_id": "272612059520-varuoesj03tgn62429gcmkuse9j9urer.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tarch.gigrr.gigrr_flutter",
+            "certificate_hash": "75692a7b916a71c5c2ddea8a638539bad456a906"
+          }
+        },
+        {
+          "client_id": "272612059520-1bsko9s41gf1uk39afa0r872s27f1qm4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAn_o8BtuQWV3hfs_ajGlY96JTsw5xoLDA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "272612059520-1bsko9s41gf1uk39afa0r872s27f1qm4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "272612059520-87attlfhjk9hi07oaoia4gdoqc6u72mh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tarch.gigrr"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

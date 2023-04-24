@@ -87,6 +87,14 @@ dependencies:
   json_to_type:
     path: packages/json_to_type
 
+# Google Login
+  google_sign_in: ^6.1.0
+
+# FaceBook Login
+  flutter_login_facebook: ^1.8.0
+
+# Apple Login
+  sign_in_with_apple:
 
 # flutter_native_splash-development.yaml
 flutter_native_splash:
