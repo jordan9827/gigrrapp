@@ -1,9 +1,8 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/repos/auth_impl.dart';
-import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
-import 'package:stacked/stacked_annotations.dart';
-import 'package:stacked_services/stacked_services.dart';
-ge:square_demo_architecture/ui/account_screen/language_screen/language_view.dart';
+import 'package:square_demo_architecture/ui/account_screen/account_view.dart';
+import 'package:square_demo_architecture/ui/account_screen/help_support_screen/help_support_view.dart';
+import 'package:square_demo_architecture/ui/account_screen/language_screen/language_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/payment_history_screen/payment_history_view.dart';
 import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
 import 'package:square_demo_architecture/util/others/bottom_nav_bar_service.dart';
