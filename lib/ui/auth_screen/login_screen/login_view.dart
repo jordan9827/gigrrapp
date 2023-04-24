@@ -145,7 +145,9 @@ class _LoginViewState extends State<LoginView>
             height: SizeConfig.margin_padding_20,
           ),
           InputFieldWidget(
+            maxLength: 10,
             hint: "Enter Mobile Number",
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
             controller: viewModel.mobileController,
             errorMsgValidation: viewModel.mobileMessage,
           ),

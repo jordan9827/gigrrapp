@@ -4,7 +4,7 @@
         <bitmap android:gravity="fill" android:src="@drawable/background"/>
     </item>
     <item>
-        <bitmap android:gravity="clip_vertical" android:src="@drawable/splash"/>
+        <bitmap android:gravity="center" android:src="@drawable/splash"/>
     </item>
     <item>
         <bitmap android:gravity="bottom" android:src="@drawable/branding"/>

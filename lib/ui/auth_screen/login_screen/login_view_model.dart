@@ -42,7 +42,7 @@ class LoginViewViewModel extends BaseViewModel {
     if (valueText.isEmpty) {
       pwdMessage = "Field cannot be empty";
     } else if (valueText.isNotEmpty && !validatePassword(valueText)) {
-      pwdMessage = 'pwd_validation';
+      pwdMessage = 'Please enter valid password';
     } else if (valueText.length < 8) {
       pwdMessage = 'Should be 8 characters long';
     } else {

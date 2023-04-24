@@ -8,6 +8,7 @@ import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../util/others/text_styles.dart';
 import 'home_view_model.dart';
 
 class HomeScreenView extends StatefulWidget {
@@ -97,9 +98,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                 ),
                 Text(
                   title,
-                  style: TextStyle(
-                    color: mainWhiteColor,
-                    fontSize: SizeConfig.textSizeVerySmall,
+                  style: TSB.regular(
+                    textSize: SizeConfig.safeBlockHorizontal * 3,
+                    textColor: mainWhiteColor,
                   ),
                 ),
               ],

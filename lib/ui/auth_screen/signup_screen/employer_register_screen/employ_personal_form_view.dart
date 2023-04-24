@@ -45,15 +45,36 @@ class _EmployPersonalInfoFormViewState
       padding: edgeInsetsMargin,
       child: ListView(
         children: [
-          _buildFormField(title: "full_name", hintForm: "i.e. Jack Milton"),
-          _buildFormField(
-              title: "mobile_number", hintForm: "i.e. 989 898 9898"),
-          _buildFormField(
-              title: "address", hintForm: "i.e. House no., Street name, Area"),
-          _buildFormField(title: "city", hintForm: "i.e. Indore"),
-          _buildFormField(title: "state", hintForm: "i.e. Madhya Pradesh"),
-          _buildFormField(title: "pinCode", hintForm: "i.e. 452001"),
-          _buildFormField(title: "add_pin_map", formWidget: _buildGoogleMap()),
+          _buildTextFormField(
+            title: "full_name",
+            hintForm: "i.e. Jack Milton",
+          ),
+          _buildTextFormField(
+            maxLength: 10,
+            title: "mobile_number",
+            hintForm: "i.e. 989 898 9898",
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
+          ),
+          _buildTextFormField(
+            title: "address",
+            hintForm: "i.e. House no., Street name, Area",
+          ),
+          _buildTextFormField(
+            title: "city",
+            hintForm: "i.e. Indore",
+          ),
+          _buildTextFormField(
+            title: "state",
+            hintForm: "i.e. Madhya Pradesh",
+          ),
+          _buildTextFormField(
+            title: "pinCode",
+            hintForm: "i.e. 452001",
+          ),
+          _buildTextFormField(
+            title: "add_pin_map",
+            formWidget: _buildGoogleMap(),
+          ),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
             title: "next_add_business",
@@ -86,10 +107,12 @@ class _EmployPersonalInfoFormViewState
     );
   }
 
-  Widget _buildFormField({
+  Widget _buildTextFormField({
     required String title,
     String hintForm = "",
+    int maxLength = 30,
     TextEditingController? controller,
+    TextInputType keyboardType = TextInputType.text,
     Widget? formWidget,
   }) {
     return Column(
@@ -104,7 +127,12 @@ class _EmployPersonalInfoFormViewState
         ),
         formWidget != null
             ? formWidget
-            : InputFieldWidget(hint: hintForm, controller: controller),
+            : InputFieldWidget(
+                maxLength: maxLength,
+                keyboardType: keyboardType,
+                hint: hintForm,
+                controller: controller,
+              ),
         SizedBox(
           height: SizeConfig.margin_padding_13,
         )

@@ -4,7 +4,6 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../others/loading_button.dart';
 import '../../util/others/text_styles.dart';
 import '../setting_screen/widget/profile_widget_screen.dart';

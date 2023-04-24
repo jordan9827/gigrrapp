@@ -31,7 +31,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   void navigationToShareEarnScreen() {
-    navigationService.navigateTo(Routes.languageScreenView);
+    // navigationService.navigateTo(Routes.languageScreenView);
   }
 
   void navigationToLanguageScreen() {

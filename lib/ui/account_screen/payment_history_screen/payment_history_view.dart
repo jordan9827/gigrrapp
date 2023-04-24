@@ -22,6 +22,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => PaymentHistoryViewModel(),
       builder: (context, viewModel, child) => Scaffold(
+        backgroundColor:mainGrayColor,
         appBar: getAppBar(
           context,
           "payment_history",

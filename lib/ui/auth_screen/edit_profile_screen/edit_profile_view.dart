@@ -53,17 +53,18 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
         SizedBox(
           height: SizeConfig.margin_padding_24,
         ),
-        _buildForm(
+        _buildTextFormField(
           title: "enter_full_name",
           hintForm: "i.e. Jack Milton",
           controller: viewModel.nameController,
         ),
-        _buildForm(
+        _buildTextFormField(
           title: "enter_mobile_no",
           hintForm: "i.e. 989 898 9898",
           controller: viewModel.mobileController,
+          keyboardType: TextInputType.numberWithOptions(decimal: true),
         ),
-        _buildForm(
+        _buildTextFormField(
           title: "enter_full_address",
           hintForm: "i.e. House no., Street name, Area",
           controller: viewModel.addressController,
@@ -84,10 +85,13 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
     );
   }
 
-  Widget _buildForm({
+  Widget _buildTextFormField({
     required String title,
     String hintForm = "",
+    int maxLength = 30,
     TextEditingController? controller,
+    TextInputType keyboardType = TextInputType.text,
+    Widget? formWidget,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +103,12 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
             style: TSB.regularSmall(),
           ),
         ),
-        InputFieldWidget(hint: hintForm, controller: controller),
+        InputFieldWidget(
+          hint: hintForm,
+          maxLength: maxLength,
+          controller: controller,
+          keyboardType: keyboardType,
+        ),
         SizedBox(
           height: SizeConfig.margin_padding_13,
         )
