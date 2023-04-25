@@ -1,18 +1,19 @@
 import 'dart:io' show Platform;
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../util/others/size_config.dart';
 
-const String devBaseURL = "";
+const String devBaseURL = "https://gigrr.in/admin";
 const String qaBaseURL = "";
 const String stagingBaseURL = "";
 const String localBaseURL = "";
 
 const String FONT_FAMILY = "Figtree";
 
-String androidDeviceType = "android_customer";
-String iOSDeviceType = "ios_customer";
+String androidDeviceType = "android";
+String iOSDeviceType = "ios";
 
 const int paginatedDataPerPage = 5;
 const int textFieldMaximumCharacter = 50;
@@ -72,6 +73,7 @@ const lightThemeNoticeColor = Color(0xffD7A575);
 bool validatePassword(String password) => RegExp(
         r"(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&])^[a-zA-Z0-9!@#$%^&]{6,12}$")
     .hasMatch(password);
+
 bool validatePhone(String phone) => RegExp(
         r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
     .hasMatch(phone);
@@ -90,6 +92,23 @@ bool validateEmail(String email) {
 EdgeInsets edgeInsetsMargin = EdgeInsets.symmetric(
   horizontal: SizeConfig.margin_padding_15,
 );
+
+String getDeviceType() {
+  if (Platform.isAndroid) {
+    return androidDeviceType;
+  } else {
+    return iOSDeviceType;
+  }
+}
+
+var deviceInfo = DeviceInfoPlugin();
+
+Future<String> deviceToken() async {
+  if (Platform.isAndroid) {
+    return (await deviceInfo.androidInfo).id;
+  }
+  return (await deviceInfo.iosInfo).identifierForVendor ?? "";
+}
 
 Future<String> appVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();

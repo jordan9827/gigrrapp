@@ -1,6 +1,5 @@
 import 'package:chopper/chopper.dart';
-
-import '../dtos/user_login_response.dart';
+import '../dtos/user_auth_response_data.dart';
 
 part 'auth_service.chopper.dart';
 
@@ -16,5 +15,10 @@ abstract class AuthService extends ChopperService {
   @Post(path: "register")
   Future<Response<Map<String, dynamic>>> register(
     @Body() Map<String, dynamic> credentials,
+  );
+
+  @Post(path: "login")
+  Future<Response<UserLoginResponse>> socialLogin(
+    @Body() Map<String, dynamic> body,
   );
 }

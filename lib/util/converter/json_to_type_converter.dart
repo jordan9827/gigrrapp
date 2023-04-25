@@ -12,7 +12,8 @@ class JsonToTypeConverter extends JsonConverter {
   @override
   Response<BodyType> convertResponse<BodyType, InnerType>(Response response) {
     return response.copyWith(
-      body: fromJsonData<BodyType, InnerType>(response.body, typeToJsonFactoryMap[InnerType]),
+      body: fromJsonData<BodyType, InnerType>(
+          response.body, typeToJsonFactoryMap[InnerType]),
     );
   }
 
@@ -32,8 +33,12 @@ class JsonToTypeConverter extends JsonConverter {
       if (jsonMap.containsKey('type')) {
         jsonMap.update("type", (value) => value.toString().toLowerCase());
       } else {
+        if (jsonMap.containsKey("success")) {
+          bool apiStatus = jsonMap["success"];
+          jsonMap["type"] = apiStatus ? "success" : "error";
+        }
         if (jsonMap.containsKey('data')) {
-          jsonMap.addAll({"type": "success"});
+          //   jsonMap.addAll({"type": "success"});
         } else {
           final response = {'type': 'error'};
           if (!jsonMap.containsKey('status')) {
@@ -56,7 +61,10 @@ class JsonToTypeConverter extends JsonConverter {
 
     if (jsonParser != null) {
       if (jsonMap is List) {
-        return jsonMap.map((item) => jsonParser(item as Map<String, dynamic>) as InnerType).toList() as T;
+        return jsonMap
+            .map(
+                (item) => jsonParser(item as Map<String, dynamic>) as InnerType)
+            .toList() as T;
       }
 
       return jsonParser(jsonMap);

@@ -10,6 +10,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../data/network/app_chopper_client.dart';
+import '../data/network/dtos/user_auth_response_data.dart';
 import '../domain/repos/auth_repos.dart';
 import '../ui/auth_screen/edit_profile_screen/edit_profile_view.dart';
 import '../ui/auth_screen/login_screen/login_view.dart';
@@ -35,6 +36,10 @@ import '../ui/onboading_screen/intro_view.dart';
     MaterialRoute(page: EmployBusinessInfoFormView),
   ],
   dependencies: [
+    Presolve(
+      classType: SharedPreferences,
+      presolveUsing: SharedPreferences.getInstance,
+    ),
     Factory(
       classType: AuthImpl,
       asType: Auth,
@@ -43,8 +48,8 @@ import '../ui/onboading_screen/intro_view.dart';
       classType: NavigationService,
     ),
     Presolve(
-      classType: SharedPreferences,
-      presolveUsing: SharedPreferences.getInstance,
+      classType: UserAuthResponseData,
+      presolveUsing: UserAuthResponseData.getUserData,
     ),
     LazySingleton(
       classType: DialogService,
