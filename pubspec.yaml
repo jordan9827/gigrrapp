@@ -95,6 +95,25 @@ dependencies:
 
 # Apple Login
   sign_in_with_apple:
+# Map Box
+  flutter_mapbox_autocomplete:
+    path: ./packages/flutter_mapbox_autocomplete
+
+  location: 4.4.0
+
+  plugin_platform_interface: ^2.1.4
+  mapbox_search:
+    path: ./packages/mapbox_search-master
+
+  dotted_border: ^2.0.0+3
+# Image Picker
+  image_cropper: ^3.0.2
+  image_picker: ^0.8.7+2
+  cached_network_image: ^3.2.3
+
+# Firebase Auth
+  firebase_auth: ^4.4.0
+
 
 # flutter_native_splash-development.yaml
 flutter_native_splash:

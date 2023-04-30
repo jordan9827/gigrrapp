@@ -2,13 +2,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
+import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/others/text_field_widget.dart';
 import 'package:square_demo_architecture/ui/auth_screen/signup_screen/employer_register_screen/widget/form_app_bar_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../data/network/dtos/business_type_category.dart';
+import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../util/others/text_styles.dart';
 import 'employes_register_view_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'widget/business_type_drop_down.dart';
+import 'widget/pick_business_image_widget.dart';
 
 class EmployBusinessInfoFormView extends StatefulWidget {
   const EmployBusinessInfoFormView({Key? key}) : super(key: key);
@@ -24,38 +31,84 @@ class _EmployBusinessInfoFormViewState
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => EmployeRegisterViewModel(),
-      builder: (context, viewModel, child) => Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildAppBar(),
-            Expanded(
-              flex: 5,
-              child: _buildFormView(),
-            )
-          ],
+      viewModelBuilder: () => EmployerRegisterViewModel(),
+      onViewModelReady: (viewModel) {
+        final user = locator<UserAuthResponseData>();
+        print("Authorization ${user.accessToken}");
+
+        viewModel.businessTypeCategoryApiCall();
+      },
+      builder: (context, viewModel, child) => LoadingScreen(
+        loading: viewModel.isBusy,
+        child: Scaffold(
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildAppBar(),
+              Expanded(
+                flex: 5,
+                child: _buildFormView(viewModel),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildFormView() {
+  Widget _buildFormView(EmployerRegisterViewModel viewModel) {
     return Container(
       padding: edgeInsetsMargin,
       child: ListView(
         children: [
-          _buildForm(title: "business_name", hintForm: "i.e. Pakiza Garments"),
-          _buildForm(title: "business_type", hintForm: "i.e. Shopping Store"),
           _buildForm(
-              title: "address", hintForm: "i.e. House no., Street name, Area"),
-          _buildForm(title: "city", hintForm: "i.e. Indore"),
-          _buildForm(title: "state", hintForm: "i.e. Madhya Pradesh"),
-          _buildForm(title: "pinCode", hintForm: "i.e. 452001"),
-          _buildForm(title: "add_pin_map", formWidget: _buildGoogleMap()),
-          _buildForm(title: "upload_business_pictures", formWidget: SizedBox()),
+            title: "business_name",
+            hintForm: "i.e. Pakiza Garments",
+            controller: viewModel.businessNameController,
+          ),
+          BusinessTypeDropDownWidget(viewModel: viewModel),
+          _buildForm(
+            title: "address",
+            hintForm: "i.e. House no., Street name, Area",
+            controller: viewModel.addressController,
+          ),
+          _buildForm(
+            title: "city",
+            hintForm: "i.e. Indore",
+            controller: viewModel.cityController,
+          ),
+          _buildForm(
+            title: "state",
+            hintForm: "i.e. Madhya Pradesh",
+            controller: viewModel.stateController,
+          ),
+          _buildForm(
+            title: "pinCode",
+            hintForm: "i.e. 452001",
+            controller: viewModel.pinCodeController,
+          ),
+          _buildForm(
+            title: "add_pin_map",
+            formWidget: _buildGoogleMap(),
+          ),
+          _buildForm(
+            title: "upload_business_pictures",
+            formWidget: PickBusinessImageWidget(viewModel: viewModel),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
           LoadingButton(
             action: () {},
+            backgroundColor: mainGrayColor,
+            titleColor: independenceColor,
+            title: "SKIP",
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
+          LoadingButton(
+            action: viewModel.addBusinessProfileApiCall,
             title: "create_profile",
           ),
           SizedBox(

@@ -20,7 +20,7 @@ class UserLoginResponse with _$UserLoginResponse {
   ) = _UserLoginResponse;
 
   @JsonSerializable()
-  const factory UserLoginResponse.error(String status, String message) =
+  const factory UserLoginResponse.error(String message) =
       _UserLoginResponseError;
 
   factory UserLoginResponse.fromJson(Map<String, dynamic> json) =>

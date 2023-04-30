@@ -6,8 +6,8 @@ import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../others/loading_button.dart';
 import '../../util/others/text_styles.dart';
-import '../setting_screen/widget/profile_widget_screen.dart';
 import 'account_view_model.dart';
+import 'widget/profile_widget_screen.dart';
 
 class AccountView extends StatefulWidget {
   const AccountView({Key? key}) : super(key: key);
@@ -41,7 +41,9 @@ class _AccountViewState extends State<AccountView> {
             Container(
               padding: edgeInsetsMargin,
               child: LoadingButton(
-                action: () {},
+                loading: viewModel.isBusy,
+                action: viewModel.logOut,
+                progressIndicatorColor: mainPinkColor,
                 backgroundColor: mainPinkColor.withOpacity(0.15),
                 title: "logout",
                 titleColor: mainPinkColor,
@@ -88,9 +90,10 @@ class _AccountViewState extends State<AccountView> {
         _buildListTile(
           leading: ic_notification,
           title: "notifications",
-          trailingWidget: Image.asset(
-            ic_radio,
-            height: SizeConfig.margin_padding_24,
+          trailingWidget: Switch(
+            value: viewModel.notificationSwitch,
+            activeColor: mainPinkColor,
+            onChanged: viewModel.notificationSwitchAction,
           ),
         ),
         _buildListTile(
@@ -156,7 +159,6 @@ class _AccountViewState extends State<AccountView> {
     Function()? onTap,
   }) {
     return ListTile(
-      onTap: onTap,
       contentPadding: EdgeInsets.only(bottom: SizeConfig.margin_padding_10),
       leading: Container(
         padding: EdgeInsets.all(SizeConfig.margin_padding_10),
@@ -174,11 +176,14 @@ class _AccountViewState extends State<AccountView> {
         title.tr(),
         style: TSB.regularMedium(),
       ),
-      trailing: trailingWidget ??
-          Image.asset(
-            ic_arrow_grey,
-            height: SizeConfig.margin_padding_15,
-          ),
+      trailing: InkWell(
+        onTap: onTap,
+        child: trailingWidget ??
+            Image.asset(
+              ic_arrow_grey,
+              height: SizeConfig.margin_padding_15,
+            ),
+      ),
     );
   }
 }

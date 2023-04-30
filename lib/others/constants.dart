@@ -11,6 +11,8 @@ const String stagingBaseURL = "";
 const String localBaseURL = "";
 
 const String FONT_FAMILY = "Figtree";
+const String MAPBOX_TOKEN =
+    "pk.eyJ1IjoidGFyY2gwNyIsImEiOiJja3luczY0cGwxemd3Mm9xb213Mnp3aW4zIn0.X0dvxOdFnXbdjX97wgM7Ig";
 
 String androidDeviceType = "android";
 String iOSDeviceType = "ios";
@@ -114,3 +116,10 @@ Future<String> appVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
 }
+
+InputBorder inputBorder = OutlineInputBorder(
+  borderRadius: BorderRadius.circular(10),
+  borderSide: BorderSide(
+    color: mainGrayColor,
+  ),
+);

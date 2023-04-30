@@ -36,9 +36,11 @@ class InputFieldWidget extends StatelessWidget {
   final String? labelText;
   final int maxLength;
   final int maxLines;
+  final Function()? onTap;
   const InputFieldWidget({
     Key? key,
     this.icon,
+    this.onTap,
     this.hintStyle,
     this.maxLength = 30,
     this.textCapitalization = TextCapitalization.none,
@@ -78,6 +80,7 @@ class InputFieldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormField(
+          onTap: onTap,
           maxLength: maxLength,
           maxLines: maxLines,
           keyboardType: keyboardType ?? TextInputType.text,
@@ -99,7 +102,7 @@ class InputFieldWidget extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: independenceColor,
+                color: readOnly ? mainGrayColor : independenceColor,
               ),
             ),
             enabledBorder: OutlineInputBorder(

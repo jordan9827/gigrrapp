@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
-import 'package:square_demo_architecture/ui/setting_screen/payment_history_screen/widget/payment_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/text_styles.dart';
 import 'payment_history_view_model.dart';
+import 'widget/payment_widget.dart';
 
 class PaymentHistoryScreen extends StatefulWidget {
   const PaymentHistoryScreen({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => PaymentHistoryViewModel(),
       builder: (context, viewModel, child) => Scaffold(
-        backgroundColor:mainGrayColor,
+        backgroundColor: mainGrayColor,
         appBar: getAppBar(
           context,
           "payment_history",

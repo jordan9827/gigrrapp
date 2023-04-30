@@ -4,6 +4,10 @@ import 'package:square_demo_architecture/others/constants.dart';
 final lightTheme = ThemeData.light().copyWith(
   appBarTheme: AppBarTheme(backgroundColor: independenceColor),
   scaffoldBackgroundColor: Colors.white,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: mainPinkColor,
+    actionTextColor: mainWhiteColor,
+  ),
   colorScheme: ColorScheme.light(
     background: Colors.white,
   ),
@@ -12,6 +16,10 @@ final lightTheme = ThemeData.light().copyWith(
 final darkTheme = ThemeData.dark().copyWith(
   appBarTheme: AppBarTheme(backgroundColor: independenceColor),
   scaffoldBackgroundColor: Colors.white,
+  snackBarTheme: SnackBarThemeData(
+    backgroundColor: mainPinkColor,
+    actionTextColor: mainWhiteColor,
+  ),
   colorScheme: ColorScheme.light(
     background: Colors.white,
   ),

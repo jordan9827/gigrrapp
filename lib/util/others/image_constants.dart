@@ -34,3 +34,6 @@ const String ic_my_gigrr = _baseUrl + "ic_my_gigrr.png";
 const String ic_my_gigs = _baseUrl + "ic_my_gigs.png";
 const String ic_plus = _baseUrl + "ic_plus.png";
 const String ic_info_gigrr = _baseUrl + "ic_info_gigrr.png";
+const String ic_remove_wht = _baseUrl + "ic_remove_wht.png";
+const String upload_image = _baseUrl + "upload_image.png";
+const String butterflies = _baseUrl + "butterflies.jpg";

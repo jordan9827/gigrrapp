@@ -50,7 +50,7 @@ class LoadingButton extends StatelessWidget {
                 )
               : Text(
                   title.tr(),
-                  style: TSB.regularMedium(textColor: titleColor),
+                  style: TSB.regularSmall(textColor: titleColor),
                 ),
         ),
       ),

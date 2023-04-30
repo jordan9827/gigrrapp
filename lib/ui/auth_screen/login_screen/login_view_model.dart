@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -16,7 +15,6 @@ import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-
 import '../../../util/enums/login_type.dart';
 import '../../../util/enums/user.dart';
 import '../../../util/exceptions/failures/failure.dart';
@@ -94,7 +92,7 @@ class LoginViewViewModel extends BaseViewModel {
         name: account.displayName ?? "",
         socialMediaType: LoginType.GOOGLE.name.toLowerCase(),
       );
-      socialApiCall(log);
+      await socialApiCall(log);
     }
   }
 
@@ -138,13 +136,23 @@ class LoginViewViewModel extends BaseViewModel {
       },
       (res) => successBody(res),
     );
+    notifyListeners();
   }
 
   Future<void> successBody(UserAuthResponseData res) async {
     await sharedPreferences.setString(
         PreferenceKeys.USER_DATA.text, json.encode(res));
-    navigationService.clearStackAndShow(Routes.homeScreenView);
+    navigationToSignup(res);
     setBusy(false);
+  }
+
+  void navigationToSignup(UserAuthResponseData res) {
+    if (res.status.toLowerCase() == "incompleted") {
+      if (res.roleId == "3") {
+        navigationService.clearStackAndShow(Routes.employPersonalInfoFormView);
+      } else {}
+    } else
+      navigationService.clearStackAndShow(Routes.homeScreenView);
   }
 
   void navigationToOTPScreen() {

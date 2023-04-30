@@ -11,7 +11,9 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../data/network/app_chopper_client.dart';
 import '../data/network/dtos/user_auth_response_data.dart';
+import '../data/repos/business_impl.dart';
 import '../domain/repos/auth_repos.dart';
+import '../domain/repos/business_repos.dart';
 import '../ui/auth_screen/edit_profile_screen/edit_profile_view.dart';
 import '../ui/auth_screen/login_screen/login_view.dart';
 import '../ui/auth_screen/otp_verify_screen/otp_verify_view.dart';
@@ -43,6 +45,10 @@ import '../ui/onboading_screen/intro_view.dart';
     Factory(
       classType: AuthImpl,
       asType: Auth,
+    ),
+    Factory(
+      classType: BusinessImpl,
+      asType: Business,
     ),
     LazySingleton(
       classType: NavigationService,

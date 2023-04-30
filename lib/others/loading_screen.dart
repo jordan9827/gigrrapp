@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:square_demo_architecture/others/constants.dart';
+import 'package:square_demo_architecture/util/others/size_config.dart';
 
 class LoadingScreen extends StatelessWidget {
   final bool loading;
@@ -28,8 +30,8 @@ class LoadingScreen extends StatelessWidget {
         if (loading)
           Center(
             child: Container(
-              width: 70,
-              height: 70,
+              width: SizeConfig.margin_padding_65,
+              height: SizeConfig.margin_padding_65,
               margin: const EdgeInsets.all(100),
               padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
@@ -40,7 +42,7 @@ class LoadingScreen extends StatelessWidget {
                 heightFactor: 10,
                 child: SpinKitCircle(
                   size: 25,
-                  color: Colors.amber,
+                  color: independenceColor,
                 ),
               ),
             ),

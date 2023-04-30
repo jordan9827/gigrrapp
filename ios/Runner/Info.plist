@@ -66,6 +66,18 @@
     	</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
+        <key>NSCameraUsageDescription</key>
+      	<string>Gigrr app requires permission to use the camera</string>
+      	<key>NSLocationAlwaysAndWhenInUsageDescription</key>
+      	<string>We need your location to provide nearby chefs information to you.</string>
+      	<key>NSLocationAlwaysUsageDescription</key>
+      	<string>We need your location to provide nearby chefs information to you.</string>
+      	<key>NSLocationWhenInUseUsageDescription</key>
+      	<string>We need your location to provide nearby chefs information to you.</string>
+      	<key>NSPhotoLibraryUsageDescription</key>
+      	<string>Need library access in order to upload user profile picture.</string>
+      	<key>UIApplicationSupportsIndirectInputEvents</key>
+      	<true/>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>

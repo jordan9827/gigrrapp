@@ -12,7 +12,7 @@ class MyAppViewModel extends BaseViewModel {
   final userData = locator<UserAuthResponseData>();
 
   late final bool isFirstTime;
-  var initialRoute = Routes.introScreenView;
+  var initialRoute = Routes.loginView;
   final dialogService = locator<DialogService>();
 
   MyAppViewModel() {
@@ -20,7 +20,7 @@ class MyAppViewModel extends BaseViewModel {
   }
 
   void setInitialRoute() {
-    if (userData.accessToken.isNotEmpty) {
+    if (userData.accessToken.isNotEmpty && userData.status != "incompleted") {
       initialRoute = Routes.homeScreenView;
     }
     notifyListeners();

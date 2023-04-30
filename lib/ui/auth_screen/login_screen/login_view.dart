@@ -248,6 +248,7 @@ class _LoginViewState extends State<LoginView>
     return SizedBox(
       height: kToolbarHeight * 0.80,
       child: LoadingButton(
+        loading: viewModel.isBusy,
         action: viewModel.login,
         title: "txt_login",
       ),
