@@ -65,7 +65,7 @@ class _LoginViewState extends State<LoginView>
     );
   }
 
-  Widget selectProfileTab() {
+  Widget selectProfileTab(LoginViewViewModel viewModel) {
     return Container(
       height: 45,
       decoration: BoxDecoration(
@@ -77,6 +77,7 @@ class _LoginViewState extends State<LoginView>
       child: TabBar(
         padding: EdgeInsets.all(3),
         controller: _tabController,
+        onTap: viewModel.setInitialIndex,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
           color: mainWhiteColor,
@@ -140,7 +141,7 @@ class _LoginViewState extends State<LoginView>
           SizedBox(
             height: SizeConfig.margin_padding_20,
           ),
-          selectProfileTab(),
+          selectProfileTab(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_20,
           ),
@@ -264,7 +265,7 @@ class _LoginViewState extends State<LoginView>
           style: TSB.regularSmall(),
         ),
         InkWell(
-          onTap: () => viewModel.navigationToSignUpView(_tabController!.index),
+          onTap: viewModel.navigationToSignUpView,
           child: Text(
             "sign_up".tr(),
             style: TSB.regularSmall(textColor: mainPinkColor),

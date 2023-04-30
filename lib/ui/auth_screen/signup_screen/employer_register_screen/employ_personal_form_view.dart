@@ -52,13 +52,14 @@ class _EmployPersonalInfoFormViewState
       child: ListView(
         children: [
           _buildTextFormField(
-            title: "full_name",
-            hintForm: "i.e. Jack Milton",
-          ),
+              title: "full_name",
+              hintForm: "i.e. Jack Milton",
+              controller: viewModel.fullNameController),
           _buildTextFormField(
             maxLength: 10,
             title: "mobile_number",
             hintForm: "i.e. 989 898 9898",
+            controller: viewModel.mobileController,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           ),
           _buildTextFormField(

@@ -113,6 +113,7 @@ dependencies:
 
 # Firebase Auth
   firebase_auth: ^4.4.0
+  firebase_core: ^2.10.0
 
 
 # flutter_native_splash-development.yaml

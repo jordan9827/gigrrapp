@@ -68,6 +68,7 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "com.google.android.gms:play-services-location:18.0.0"
+    implementation 'com.google.firebase:firebase-auth'
     implementation ("com.mapbox.navigation:android:2.0.1", {
         exclude group: 'com.mapbox.mapboxsdk', module:'mapbox-android-telemetry'
     })

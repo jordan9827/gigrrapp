@@ -18,7 +18,11 @@ import 'widget/business_type_drop_down.dart';
 import 'widget/pick_business_image_widget.dart';
 
 class EmployBusinessInfoFormView extends StatefulWidget {
-  const EmployBusinessInfoFormView({Key? key}) : super(key: key);
+  final String fullName;
+  final String mobileNumber;
+  const EmployBusinessInfoFormView(
+      {Key? key, required this.fullName, required this.mobileNumber})
+      : super(key: key);
 
   @override
   State<EmployBusinessInfoFormView> createState() =>
@@ -31,7 +35,10 @@ class _EmployBusinessInfoFormViewState
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => EmployerRegisterViewModel(),
+      viewModelBuilder: () => EmployerRegisterViewModel(
+        mobile: widget.mobileNumber,
+        fullName: widget.fullName,
+      ),
       onViewModelReady: (viewModel) {
         final user = locator<UserAuthResponseData>();
         print("Authorization ${user.accessToken}");
@@ -99,7 +106,7 @@ class _EmployBusinessInfoFormViewState
             height: SizeConfig.margin_padding_10,
           ),
           LoadingButton(
-            action: () {},
+            action: viewModel.employerCompleteProfileApiCall,
             backgroundColor: mainGrayColor,
             titleColor: independenceColor,
             title: "SKIP",

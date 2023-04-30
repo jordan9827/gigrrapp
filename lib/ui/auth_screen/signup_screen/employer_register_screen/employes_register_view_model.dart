@@ -26,15 +26,16 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();
   final businessRepo = locator<Business>();
-  TextEditingController addressController = TextEditingController();
-  TextEditingController cityController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-  TextEditingController pinCodeController = TextEditingController();
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController businessNameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController pinCodeController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController businessNameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
   LatLng latLng = const LatLng(14.508, 46.048);
   double latitude = 0.0;
+  String country = "+91";
   double longitude = 0.0;
   List<BusinessTypeCategoryList> businessTypeList = [];
   String address = "";
@@ -49,7 +50,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
   bool isListEmpty = true;
   bool fourImagesAdded = false;
 
-  EmployerRegisterViewModel() {
+  EmployerRegisterViewModel({String mobile = "", String fullName = ""}) {
+    fullNameController.text = fullName;
+    mobileController.text = mobile;
     acquireCurrentLocation();
   }
 
@@ -76,7 +79,13 @@ class EmployerRegisterViewModel extends BaseViewModel {
   }
 
   void navigationToBusinessFormView() {
-    navigationService.navigateTo(Routes.employBusinessInfoFormView);
+    if (validationCompleteProfile()) {
+      navigationService.navigateTo(Routes.employBusinessInfoFormView,
+          arguments: EmployBusinessInfoFormViewArguments(
+            fullName: fullNameController.text,
+            mobileNumber: mobileController.text,
+          ));
+    }
   }
 
   void acquireCurrentLocation() async {
@@ -237,6 +246,21 @@ class EmployerRegisterViewModel extends BaseViewModel {
     return true;
   }
 
+  bool validationCompleteProfile() {
+    if (fullNameController.text.isEmpty) {
+      snackBarService.showSnackbar(
+        message: "msg_enter_name".tr(),
+      );
+      return false;
+    } else if (mobileController.text.isEmpty) {
+      snackBarService.showSnackbar(
+        message: "msg_enter_mobile".tr(),
+      );
+      return false;
+    }
+    return true;
+  }
+
   Future<void> addBusinessProfileApiCall() async {
     if (validationAddBusinessProfile()) {
       setBusy(true);
@@ -247,9 +271,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
           snackBarService.showSnackbar(message: fail.errorMsg);
           setBusy(false);
         },
-        (businessTypeResponse) {
-          // snackBarService.showSnackbar(message: "sucess");
-
+        (businessTypeResponse) async {
+          // snackBarService.showSnackbar(message: "");
+          employerCompleteProfileApiCall();
           notifyListeners();
           setBusy(false);
         },
@@ -258,23 +282,26 @@ class EmployerRegisterViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> employerCompleteProfileApiCall() async {
-    if (validationAddBusinessProfile()) {
-      setBusy(true);
-      final response = await authRepo.employerCompleteProfile(
-          await _getRequestForEmployerCompleteProfile());
-      response.fold(
-        (fail) {
-          snackBarService.showSnackbar(message: fail.errorMsg);
-          setBusy(false);
-        },
-        (businessTypeResponse) => successBody(businessTypeResponse),
-      );
-      notifyListeners();
-    }
+  void employerCompleteProfileApiCall() async {
+    setBusy(true);
+    final response = await authRepo
+        .employerCompleteProfile(await _getRequestForEmployerCompleteProfile());
+    response.fold(
+      (fail) {
+        snackBarService.showSnackbar(message: fail.errorMsg);
+        setBusy(false);
+      },
+      (businessTypeResponse) => successBody(businessTypeResponse),
+    );
+    notifyListeners();
   }
 
   Future<void> successBody(UserAuthResponseData res) async {
+    await navigationService.navigateTo(
+      Routes.oTPVerifyScreen,
+      arguments:
+          OTPVerifyScreenArguments(mobile: country + mobileController.text),
+    );
     navigationToSignup(res);
     setBusy(false);
   }

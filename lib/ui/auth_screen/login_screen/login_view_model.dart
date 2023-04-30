@@ -32,9 +32,13 @@ class LoginViewViewModel extends BaseViewModel {
   String pwdMessage = "";
   int initialIndex = 0;
 
-  void navigationToSignUpView(int index) {
+  void setInitialIndex(int index) {
     initialIndex = index;
-    if (index == 0) {
+    notifyListeners();
+  }
+
+  void navigationToSignUpView() {
+    if (initialIndex == 0) {
     } else {
       navigationService.navigateTo(Routes.employPersonalInfoFormView);
     }
@@ -156,7 +160,8 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void navigationToOTPScreen() {
-    navigationService.navigateTo(Routes.oTPVerifyScreen);
+    navigationService.navigateTo(Routes.oTPVerifyScreen,
+        arguments: OTPVerifyScreenArguments(mobile: "+91 8959665050"));
   }
 
   Future<Map<String, String>> _getRequestForLogIn(
@@ -167,7 +172,7 @@ class LoginViewViewModel extends BaseViewModel {
     request['social_type'] = socialData.socialMediaType;
     request['device_token'] = (await deviceToken());
     request['device_type'] = getDeviceType();
-    request['role'] = initialIndex == 0 ? "3" : "4";
+    request['role'] = initialIndex == 1 ? "3" : "4";
     request['full_name'] = socialData.name;
     request['email'] = socialData.email;
     request['country_code'] = "+91";

@@ -72,6 +72,31 @@ class AuthImpl extends Auth {
   }
 
   @override
+  Future<Either<Failure, UserAuthResponseData>> verifyOTP(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await authService.verifyOTPApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Login Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        // locator.unregister<UserAuthResponseData>();
+        // locator.registerSingleton<UserAuthResponseData>(user.data);
+        // await sharedPreferences.setString(
+        //     PreferenceKeys.USER_DATA.text, json.encode(user.data));
+        return Right(user.data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> notificationSwitch(String data) async {
     try {
       final response = await notificationService.notificationSwitch(data);

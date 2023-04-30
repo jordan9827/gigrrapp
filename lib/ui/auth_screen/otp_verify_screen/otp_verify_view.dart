@@ -10,7 +10,9 @@ import '../../../util/others/text_styles.dart';
 import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {
-  const OTPVerifyScreen({Key? key}) : super(key: key);
+  final String mobile;
+  const OTPVerifyScreen({Key? key, this.mobile = "+91 9111872780"})
+      : super(key: key);
 
   @override
   State<OTPVerifyScreen> createState() => _OTPVerifyScreenState();
@@ -21,8 +23,8 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-        onViewModelReady: (viewModel) => viewModel.startCountDownTimer(),
-        viewModelBuilder: () => OTPVerifyScreenModel(),
+        onViewModelReady: (viewModel) => viewModel.sentVerifyOTP(widget.mobile),
+        viewModelBuilder: () => OTPVerifyScreenModel(mobile: widget.mobile),
         builder: (context, viewModel, child) {
           return Scaffold(
             body: SingleChildScrollView(
@@ -81,15 +83,18 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
           Row(
             children: [
               Text(
-                "+91 9874569870".tr(),
+                widget.mobile,
                 style: TSB.semiBoldSmall(),
               ),
               SizedBox(
                 width: SizeConfig.margin_padding_5,
               ),
-              Text(
-                "change_number".tr(),
-                style: TSB.regularSmall(textColor: mainPinkColor),
+              InkWell(
+                onTap: viewModel.navigationToBack,
+                child: Text(
+                  "change_number".tr(),
+                  style: TSB.regularSmall(textColor: mainPinkColor),
+                ),
               ),
             ],
           )
@@ -107,22 +112,22 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             height: SizeConfig.margin_padding_50,
           ),
           PinCodeTextField(
-            onCompleted: viewModel.navigationToHomeView,
-            obscureText: true,
-            length: 4, scrollPadding: EdgeInsets.zero,
-            mainAxisAlignment: MainAxisAlignment.center,
+            // onCompleted: viewModel.navigationToHomeView,
+            // obscureText: true,
+            length: 6, scrollPadding: EdgeInsets.zero,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             animationType: AnimationType.fade,
             enableActiveFill: true,
             cursorColor: mainBlackColor,
-            obscuringCharacter: '0',
-            // validator: widget.validator,
+            // obscuringCharacter: '*',
+            // validator: viewModel.validateInput,
             controller: viewModel.pinController,
             pinTheme: PinTheme(
               activeFillColor: mainGrayColor,
               inactiveFillColor: mainGrayColor,
               fieldHeight: SizeConfig.margin_padding_50,
-              fieldWidth: SizeConfig.margin_padding_24 * 2,
-              fieldOuterPadding: EdgeInsets.symmetric(horizontal: 8),
+              fieldWidth: SizeConfig.margin_padding_24 * 1.8,
+              // fieldOuterPadding: EdgeInsets.symmetric(horizontal: 8),
               activeColor: mainGrayColor,
               inactiveColor: mainGrayColor,
               selectedColor: mainGrayColor,
@@ -141,7 +146,8 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             height: SizeConfig.margin_padding_50,
           ),
           LoadingButton(
-            action: () {},
+            loading: viewModel.isBusy,
+            action: viewModel.verifyOTPCall,
             title: "txt_verify",
           )
         ],

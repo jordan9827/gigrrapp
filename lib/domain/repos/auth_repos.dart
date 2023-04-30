@@ -10,6 +10,9 @@ abstract class Auth {
   Future<Either<Failure, UserAuthResponseData>> socialLogin(
       Map<String, dynamic> data);
 
+  Future<Either<Failure, UserAuthResponseData>> verifyOTP(
+      Map<String, dynamic> data);
+
   Future<Either<Failure, UserAuthResponseData>> employerCompleteProfile(
       Map<String, dynamic> data);
 
