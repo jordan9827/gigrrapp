@@ -6,7 +6,7 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import '../../../../../util/others/image_constants.dart';
-import '../employes_register_view_model.dart';
+import '../employer_register_view_model.dart';
 
 class PickBusinessImageWidget extends StatelessWidget {
   final EmployerRegisterViewModel viewModel;

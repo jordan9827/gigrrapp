@@ -11,8 +11,7 @@ import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {
   final String mobile;
-  const OTPVerifyScreen({Key? key, this.mobile = "+91 9111872780"})
-      : super(key: key);
+  const OTPVerifyScreen({Key? key, required this.mobile}) : super(key: key);
 
   @override
   State<OTPVerifyScreen> createState() => _OTPVerifyScreenState();

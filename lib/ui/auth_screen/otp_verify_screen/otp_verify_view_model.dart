@@ -1,11 +1,9 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
@@ -19,6 +17,8 @@ class OTPVerifyScreenModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
 
   String mobileNumber = "";
+  String isVerificationId = "";
+
   TextEditingController pinController = TextEditingController();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
@@ -46,15 +46,12 @@ class OTPVerifyScreenModel extends BaseViewModel {
     setBusy(true);
     await firebaseAuth.verifyPhoneNumber(
       phoneNumber: mobile,
-      verificationCompleted: (PhoneAuthCredential credential) {
-        print(
-            "SUCCESS>>>>>>>>>\n${credential.smsCode}\n${credential.verificationId} ");
-      },
+      verificationCompleted: (PhoneAuthCredential credential) {},
       verificationFailed: (FirebaseAuthException e) {
-        print("verificationFailed >>> ${e.message}");
+        snackBarService.showSnackbar(message: e.toString());
       },
       codeSent: (String verificationId, int? resendToken) {
-        this.mobileNumber = verificationId;
+        this.isVerificationId = verificationId;
       },
       codeAutoRetrievalTimeout: (String verificationId) {},
     );
@@ -68,7 +65,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
 
       setBusy(true);
       PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: mobileNumber,
+        verificationId: isVerificationId,
         smsCode: pinController.text,
       );
       try {
@@ -78,21 +75,11 @@ class OTPVerifyScreenModel extends BaseViewModel {
           await verifyUserToServerApi();
         }
       } on FirebaseAuthException catch (_, e) {
-        // snackBarService.showSnackbar(message: e.toString());
+        snackBarService.showSnackbar(message: e.toString());
         setBusy(false);
       }
     }
   }
-
-  // void navigationToHomeView(String otpValue) {
-  //   if (double.parse(otpValue) == 111111) {
-  //     navigationService.back(result: true);
-  //   } else {
-  //     snackBarService.showSnackbar(message: "Please enter code 111111");
-  //     navigationService.back(result: false);
-  //     return;
-  //   }
-  // }
 
   Future<void> verifyUserToServerApi() async {
     setBusy(true);

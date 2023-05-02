@@ -4,25 +4,26 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/text_field_widget.dart';
-import 'package:square_demo_architecture/ui/auth_screen/signup_screen/employer_register_screen/widget/form_app_bar_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../others/loading_screen.dart';
 import '../../../../util/others/text_styles.dart';
-import 'employes_register_view_model.dart';
+import '../../../widgets/cvm_text_form_field.dart';
+import '../../../widgets/toggle_app_bar_widget.dart';
+import 'employer_register_view_model.dart';
 import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
     as auto;
 
-class EmployPersonalInfoFormView extends StatefulWidget {
-  const EmployPersonalInfoFormView({Key? key}) : super(key: key);
+class EmployerPersonalInfoFormView extends StatefulWidget {
+  const EmployerPersonalInfoFormView({Key? key}) : super(key: key);
 
   @override
-  State<EmployPersonalInfoFormView> createState() =>
-      _EmployPersonalInfoFormViewState();
+  State<EmployerPersonalInfoFormView> createState() =>
+      _EmployerPersonalInfoFormViewState();
 }
 
-class _EmployPersonalInfoFormViewState
-    extends State<EmployPersonalInfoFormView> {
+class _EmployerPersonalInfoFormViewState
+    extends State<EmployerPersonalInfoFormView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -51,40 +52,41 @@ class _EmployPersonalInfoFormViewState
       padding: edgeInsetsMargin,
       child: ListView(
         children: [
-          _buildTextFormField(
-              title: "full_name",
-              hintForm: "i.e. Jack Milton",
-              controller: viewModel.fullNameController),
-          _buildTextFormField(
+          CVMTextFormField(
+            title: "full_name",
+            hintForm: "i.e. Jack Milton",
+            controller: viewModel.fullNameController,
+          ),
+          CVMTextFormField(
             maxLength: 10,
             title: "mobile_number",
             hintForm: "i.e. 989 898 9898",
             controller: viewModel.mobileController,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           ),
-          _buildTextFormField(
+          CVMTextFormField(
             title: "address",
             readOnly: true,
             controller: viewModel.addressController,
             hintForm: "i.e. House no., Street name, Area",
             onTap: viewModel.mapBoxPlace,
           ),
-          _buildTextFormField(
+          CVMTextFormField(
             title: "city",
             controller: viewModel.cityController,
             hintForm: "i.e. Indore",
           ),
-          _buildTextFormField(
+          CVMTextFormField(
             title: "state",
             controller: viewModel.stateController,
             hintForm: "i.e. Madhya Pradesh",
           ),
-          _buildTextFormField(
+          CVMTextFormField(
             title: "pinCode",
             controller: viewModel.pinCodeController,
             hintForm: "i.e. 452001",
           ),
-          _buildTextFormField(
+          CVMTextFormField(
             title: "add_pin_map",
             formWidget: _buildGoogleMap(viewModel),
           ),
@@ -121,45 +123,11 @@ class _EmployPersonalInfoFormViewState
     );
   }
 
-  Widget _buildTextFormField({
-    required String title,
-    String hintForm = "",
-    int maxLength = 30,
-    bool readOnly = false,
-    TextEditingController? controller,
-    TextInputType keyboardType = TextInputType.text,
-    Widget? formWidget,
-    Function()? onTap,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
-          child: Text(
-            title.tr(),
-            style: TSB.regularSmall(),
-          ),
-        ),
-        formWidget != null
-            ? formWidget
-            : InputFieldWidget(
-                maxLength: maxLength,
-                keyboardType: keyboardType,
-                hint: hintForm,
-                onTap: onTap,
-                readOnly: readOnly,
-                controller: controller,
-              ),
-        SizedBox(
-          height: SizeConfig.margin_padding_13,
-        )
-      ],
-    );
-  }
-
   Widget _buildAppBar(EmployerRegisterViewModel viewModel) {
-    return FormAppBarWidgetView(
+    return ToggleAppBarWidgetView(
+      appBarTitle: "create_your_profile",
+      firstTitle: "personal_info",
+      secondTitle: "business_info",
       isCheck: true,
     );
   }

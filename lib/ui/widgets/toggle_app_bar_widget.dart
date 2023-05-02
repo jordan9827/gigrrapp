@@ -5,12 +5,24 @@ import '../../../../../util/others/image_constants.dart';
 import '../../../../../util/others/size_config.dart';
 import '../../../../../util/others/text_styles.dart';
 
-class FormAppBarWidgetView extends StatelessWidget {
-  bool isCheck;
-  FormAppBarWidgetView({Key? key, this.isCheck = false}) : super(key: key);
+class ToggleAppBarWidgetView extends StatelessWidget {
+  final String appBarTitle;
+  final String firstTitle;
+  final String secondTitle;
+  final bool isCheck;
+  final bool showBack;
+  ToggleAppBarWidgetView({
+    Key? key,
+    this.isCheck = false,
+    this.showBack = false,
+    required this.appBarTitle,
+    required this.firstTitle,
+    required this.secondTitle,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return Container(
       padding: edgeInsetsMargin,
       height: SizeConfig.margin_padding_85 * 1.2,
@@ -22,9 +34,23 @@ class FormAppBarWidgetView extends StatelessWidget {
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
-          Text(
-            "create_your_profile".tr(),
-            style: TSB.regularLarge(textColor: mainWhiteColor),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              if (showBack)
+                InkWell(
+                  onTap: () => Navigator.of(context).pop(),
+                  child: Image.asset(
+                    arrow_back,
+                    height: SizeConfig.margin_padding_10,
+                  ),
+                ),
+              SizedBox(width: SizeConfig.margin_padding_10),
+              Text(
+                appBarTitle.tr(),
+                style: TSB.regularLarge(textColor: mainWhiteColor),
+              ),
+            ],
           ),
           SizedBox(
             height: SizeConfig.margin_padding_10,
@@ -32,12 +58,12 @@ class FormAppBarWidgetView extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildLog(isCheck: isCheck, title: "personal_info"),
+              _buildLog(title: firstTitle, isCheck: isCheck),
               SizedBox(width: 5),
               Image.asset(ic_rectangleLine,
                   width: SizeConfig.margin_padding_50 * 1.5),
               SizedBox(width: 5),
-              _buildLog(title: "business_info", isCheck: !isCheck),
+              _buildLog(title: secondTitle, isCheck: !isCheck),
             ],
           )
         ],

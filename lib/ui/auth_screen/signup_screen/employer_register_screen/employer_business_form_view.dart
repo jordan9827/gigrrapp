@@ -4,33 +4,33 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/others/text_field_widget.dart';
-import 'package:square_demo_architecture/ui/auth_screen/signup_screen/employer_register_screen/widget/form_app_bar_widget.dart';
+import 'package:square_demo_architecture/ui/business_type_drop_down_screen/business_type_drop_down_view.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../data/network/dtos/business_type_category.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../util/others/text_styles.dart';
-import 'employes_register_view_model.dart';
+import '../../../widgets/cvm_text_form_field.dart';
+import '../../../widgets/toggle_app_bar_widget.dart';
+import 'employer_register_view_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import 'widget/business_type_drop_down.dart';
 import 'widget/pick_business_image_widget.dart';
 
-class EmployBusinessInfoFormView extends StatefulWidget {
+class EmployerBusinessInfoFormView extends StatefulWidget {
   final String fullName;
   final String mobileNumber;
-  const EmployBusinessInfoFormView(
+  const EmployerBusinessInfoFormView(
       {Key? key, required this.fullName, required this.mobileNumber})
       : super(key: key);
 
   @override
-  State<EmployBusinessInfoFormView> createState() =>
-      _EmployBusinessInfoFormViewState();
+  State<EmployerBusinessInfoFormView> createState() =>
+      _EmployerBusinessInfoFormViewState();
 }
 
-class _EmployBusinessInfoFormViewState
-    extends State<EmployBusinessInfoFormView> {
+class _EmployerBusinessInfoFormViewState
+    extends State<EmployerBusinessInfoFormView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -42,8 +42,6 @@ class _EmployBusinessInfoFormViewState
       onViewModelReady: (viewModel) {
         final user = locator<UserAuthResponseData>();
         print("Authorization ${user.accessToken}");
-
-        viewModel.businessTypeCategoryApiCall();
       },
       builder: (context, viewModel, child) => LoadingScreen(
         loading: viewModel.isBusy,
@@ -68,37 +66,37 @@ class _EmployBusinessInfoFormViewState
       padding: edgeInsetsMargin,
       child: ListView(
         children: [
-          _buildForm(
+          CVMTextFormField(
             title: "business_name",
             hintForm: "i.e. Pakiza Garments",
             controller: viewModel.businessNameController,
           ),
-          BusinessTypeDropDownWidget(viewModel: viewModel),
-          _buildForm(
+          BusinessTypeDropDownView(),
+          CVMTextFormField(
             title: "address",
             hintForm: "i.e. House no., Street name, Area",
             controller: viewModel.addressController,
           ),
-          _buildForm(
+          CVMTextFormField(
             title: "city",
             hintForm: "i.e. Indore",
             controller: viewModel.cityController,
           ),
-          _buildForm(
+          CVMTextFormField(
             title: "state",
             hintForm: "i.e. Madhya Pradesh",
             controller: viewModel.stateController,
           ),
-          _buildForm(
+          CVMTextFormField(
             title: "pinCode",
             hintForm: "i.e. 452001",
             controller: viewModel.pinCodeController,
           ),
-          _buildForm(
+          CVMTextFormField(
             title: "add_pin_map",
             formWidget: _buildGoogleMap(),
           ),
-          _buildForm(
+          CVMTextFormField(
             title: "upload_business_pictures",
             formWidget: PickBusinessImageWidget(viewModel: viewModel),
           ),
@@ -146,26 +144,6 @@ class _EmployBusinessInfoFormViewState
     );
   }
 
-  Widget _buildForm({
-    required String title,
-    String hintForm = "",
-    TextEditingController? controller,
-    Widget? formWidget,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildTitle(title),
-        formWidget != null
-            ? formWidget
-            : InputFieldWidget(hint: hintForm, controller: controller),
-        SizedBox(
-          height: SizeConfig.margin_padding_13,
-        )
-      ],
-    );
-  }
-
   Widget _buildTitle(String val) {
     return Padding(
       padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
@@ -177,6 +155,10 @@ class _EmployBusinessInfoFormViewState
   }
 
   Widget _buildAppBar() {
-    return FormAppBarWidgetView();
+    return ToggleAppBarWidgetView(
+      appBarTitle: "create_your_profile",
+      firstTitle: "personal_info",
+      secondTitle: "business_info",
+    );
   }
 }

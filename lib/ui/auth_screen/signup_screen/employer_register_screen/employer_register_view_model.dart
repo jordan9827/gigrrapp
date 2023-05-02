@@ -55,6 +55,10 @@ class EmployerRegisterViewModel extends BaseViewModel {
     mobileController.text = mobile;
     acquireCurrentLocation();
   }
+  void setBool(bool val) {
+    setBusy(val);
+    notifyListeners();
+  }
 
   Future<void> markersLoadData() async {
     markers.add(Marker(
@@ -80,8 +84,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   void navigationToBusinessFormView() {
     if (validationCompleteProfile()) {
-      navigationService.navigateTo(Routes.employBusinessInfoFormView,
-          arguments: EmployBusinessInfoFormViewArguments(
+      navigationService.navigateTo(Routes.employerBusinessInfoFormView,
+          arguments: EmployerBusinessInfoFormViewArguments(
             fullName: fullNameController.text,
             mobileNumber: mobileController.text,
           ));
@@ -160,24 +164,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
-  }
-
-  Future<void> businessTypeCategoryApiCall() async {
-    setBusy(true);
-    final response = await authRepo.businessTypeCategory();
-    response.fold(
-      (fail) {
-        snackBarService.showSnackbar(message: fail.errorMsg);
-        setBusy(false);
-      },
-      (businessTypeResponse) {
-        selectedBusinessType = businessTypeResponse.first;
-        businessTypeList = businessTypeResponse;
-        notifyListeners();
-        setBusy(false);
-      },
-    );
-    notifyListeners();
   }
 
   Future pickImage(BuildContext context) async {
@@ -309,7 +295,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
   void navigationToSignup(UserAuthResponseData res) {
     if (res.status.toLowerCase() == "incompleted") {
       if (res.roleId == "3") {
-        navigationService.clearStackAndShow(Routes.employPersonalInfoFormView);
+        navigationService
+            .clearStackAndShow(Routes.employerPersonalInfoFormView);
       } else {}
     } else
       navigationService.clearStackAndShow(Routes.homeScreenView);

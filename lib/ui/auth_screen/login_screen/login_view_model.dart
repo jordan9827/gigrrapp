@@ -40,7 +40,7 @@ class LoginViewViewModel extends BaseViewModel {
   void navigationToSignUpView() {
     if (initialIndex == 0) {
     } else {
-      navigationService.navigateTo(Routes.employPersonalInfoFormView);
+      navigationService.navigateTo(Routes.employerPersonalInfoFormView);
     }
     notifyListeners();
   }
@@ -153,7 +153,8 @@ class LoginViewViewModel extends BaseViewModel {
   void navigationToSignup(UserAuthResponseData res) {
     if (res.status.toLowerCase() == "incompleted") {
       if (res.roleId == "3") {
-        navigationService.clearStackAndShow(Routes.employPersonalInfoFormView);
+        navigationService
+            .clearStackAndShow(Routes.employerPersonalInfoFormView);
       } else {}
     } else
       navigationService.clearStackAndShow(Routes.homeScreenView);
@@ -161,7 +162,7 @@ class LoginViewViewModel extends BaseViewModel {
 
   void navigationToOTPScreen() {
     navigationService.navigateTo(Routes.oTPVerifyScreen,
-        arguments: OTPVerifyScreenArguments(mobile: "+91 8959665050"));
+        arguments: OTPVerifyScreenArguments(mobile: "8959665050"));
   }
 
   Future<Map<String, String>> _getRequestForLogIn(

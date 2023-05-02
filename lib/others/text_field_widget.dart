@@ -98,6 +98,7 @@ class InputFieldWidget extends StatelessWidget {
             hintStyle: TextStyle(
               color: textRegularColor,
             ),
+            suffixIcon: suffixIcon,
             prefixIcon: prefixIcon,
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
