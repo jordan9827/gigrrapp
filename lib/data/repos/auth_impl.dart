@@ -116,26 +116,7 @@ class AuthImpl extends Auth {
     }
   }
 
-  @override
-  Future<Either<Failure, List<BusinessTypeCategoryList>>>
-      businessTypeCategory() async {
-    try {
-      final response = await authService.businessTypeCategory();
 
-      if (response.body == null) {
-        throw Exception(response.error);
-      }
-      log.i("Login Response ${response.body}");
-      return response.body!.map(success: (res) async {
-        return Right(res.businessTypeList);
-      }, error: (error) {
-        return Left(Failure(200, error.message));
-      });
-    } catch (e) {
-      log.e(e);
-      return Left(e.handleException());
-    }
-  }
 
   @override
   Future<Either<Failure, UploadImageResponseData>> uploadImages(

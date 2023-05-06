@@ -71,7 +71,8 @@ class _EmployerBusinessInfoFormViewState
             hintForm: "i.e. Pakiza Garments",
             controller: viewModel.businessNameController,
           ),
-          BusinessTypeDropDownView(),
+          // BusinessTypeDropDownView(
+          //     controller: viewModel.businessTypeController),
           CVMTextFormField(
             title: "address",
             hintForm: "i.e. House no., Street name, Area",

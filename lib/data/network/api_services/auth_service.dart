@@ -34,9 +34,6 @@ abstract class AuthService extends ChopperService {
     @Body() Map<String, dynamic> body,
   );
 
-  @Get(path: "category")
-  Future<Response<BusinessTypeCategoryResponse>> businessTypeCategory();
-
   @Post(path: "upload-image")
   @multipart
   Future<Response<UploadImageResponse>> uploadImages(

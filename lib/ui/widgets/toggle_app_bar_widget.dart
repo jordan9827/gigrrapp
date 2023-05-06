@@ -11,12 +11,14 @@ class ToggleAppBarWidgetView extends StatelessWidget {
   final String secondTitle;
   final bool isCheck;
   final bool showBack;
+  final Function()? backAction;
   ToggleAppBarWidgetView({
     Key? key,
     this.isCheck = false,
     this.showBack = false,
     required this.appBarTitle,
     required this.firstTitle,
+    this.backAction,
     required this.secondTitle,
   }) : super(key: key);
 
@@ -39,7 +41,7 @@ class ToggleAppBarWidgetView extends StatelessWidget {
             children: [
               if (showBack)
                 InkWell(
-                  onTap: () => Navigator.of(context).pop(),
+                  onTap: backAction,
                   child: Image.asset(
                     arrow_back,
                     height: SizeConfig.margin_padding_10,

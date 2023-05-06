@@ -1,5 +1,10 @@
 import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/business_profile_response.dart';
+import '../dtos/base_response.dart';
+import '../dtos/business_type_category.dart';
+import '../dtos/gigrr_type_response.dart';
+import '../dtos/my_gigs_response.dart';
+import '../dtos/web_view_response.dart';
 
 part 'business_service.chopper.dart';
 
@@ -11,4 +16,24 @@ abstract class BusinessService extends ChopperService {
   Future<Response<BusinessProfileResponse>> addBusinessProfileApi(
     @Body() Map<String, dynamic> businessBody,
   );
+
+  @Post(path: "gigs-booking")
+  Future<Response<BaseResponse>> addGigsApi(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Get(path: "my-gigs")
+  Future<Response<MyGigsResponse>> fetchGigsApi();
+
+  @Get(path: "category")
+  Future<Response<BusinessTypeCategoryResponse>> businessTypeCategory();
+
+  @Get(path: "gigrr_types")
+  Future<Response<GigrrTypeCategoryResponse>> gigrrTypeCategory();
+
+  @Get(path: "privacy-policy")
+  Future<Response<WebViewResponse>> privacyPolicyApi();
+
+  @Get(path: "terms-condition")
+  Future<Response<WebViewResponse>> termsAndConditionApi();
 }

@@ -4,23 +4,34 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
+import '../../data/network/dtos/business_type_category.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
+import '../../domain/reactive_services/business_type_service.dart';
+import '../../domain/repos/business_repos.dart';
 
 class MyAppViewModel extends BaseViewModel {
+  final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
+  final businessRepo = locator<BusinessRepo>();
+  final businessTypeService = locator<BusinessTypeService>();
+
   final log = getLogger('Splash Screen View');
   final userData = locator<UserAuthResponseData>();
 
   late final bool isFirstTime;
-  var initialRoute = Routes.addGigsScreenView;
+  var initialRoute = Routes.loginView;
   final dialogService = locator<DialogService>();
 
   MyAppViewModel() {
+    init();
     setInitialRoute();
+  }
+  void init() async {
+    await businessTypeCategoryApiCall();
   }
 
   void setInitialRoute() {
-    if (userData.accessToken.isNotEmpty && userData.status != "incompleted") {
+    if (userData.accessToken.isNotEmpty) {
       initialRoute = Routes.homeScreenView;
     }
     notifyListeners();
@@ -28,5 +39,11 @@ class MyAppViewModel extends BaseViewModel {
 
   Future<bool> routeUser() async {
     return true;
+  }
+
+  Future<void> businessTypeCategoryApiCall() async {
+    setBusy(true);
+    await businessRepo.businessTypeCategory();
+    notifyListeners();
   }
 }

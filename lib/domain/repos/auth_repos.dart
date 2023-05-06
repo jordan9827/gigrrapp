@@ -20,9 +20,6 @@ abstract class Auth {
 
   Future<Either<Failure, bool>> logout();
 
-  Future<Either<Failure, List<BusinessTypeCategoryList>>>
-      businessTypeCategory();
-
   Future<Either<Failure, UploadImageResponseData>> uploadImages(
       String imagePath);
 }

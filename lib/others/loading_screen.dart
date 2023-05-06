@@ -6,14 +6,31 @@ import 'package:square_demo_architecture/util/others/size_config.dart';
 class LoadingScreen extends StatelessWidget {
   final bool loading;
   final Widget child;
+  final bool showDialogLoading;
   const LoadingScreen({
     Key? key,
+    this.showDialogLoading = false,
     required this.loading,
     required this.child,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
+    return !showDialogLoading
+        ? loading
+            ? Center(
+                heightFactor: 10,
+                child: SpinKitCircle(
+                  size: SizeConfig.margin_padding_40,
+                  color: independenceColor,
+                ),
+              )
+            : child
+        : _buildDialogLoading();
+  }
+
+  Widget _buildDialogLoading() {
     return Stack(
       children: [
         Stack(

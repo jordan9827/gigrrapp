@@ -86,7 +86,11 @@ class AccountViewModel extends BaseViewModel {
   }
 
   void navigationToPrivacyPolicyScreen() {
-    //  navigationService.navigateTo(Routes.languageScreenView);
+    navigationService.navigateTo(Routes.privacyPolicyScreenView);
+  }
+
+  void navigationToTermsAndConditionScreen() {
+    navigationService.navigateTo(Routes.termsAndConditionScreenView);
   }
 
   Future<void> logOut() async {

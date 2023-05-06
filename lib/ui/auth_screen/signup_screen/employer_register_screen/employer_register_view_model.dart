@@ -6,17 +6,14 @@ import 'package:mapbox_search/mapbox_search.dart' as search;
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:square_demo_architecture/data/network/dtos/business_type_category.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
     as auto;
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
-import '../../../../data/local/preference_keys.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../widgets/image_picker_util.dart';
@@ -25,7 +22,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();
-  final businessRepo = locator<Business>();
+  final businessRepo = locator<BusinessRepo>();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
@@ -33,13 +30,12 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
+  final TextEditingController businessTypeController = TextEditingController();
   LatLng latLng = const LatLng(14.508, 46.048);
   double latitude = 0.0;
   String country = "+91";
   double longitude = 0.0;
-  List<BusinessTypeCategoryList> businessTypeList = [];
   String address = "";
-  BusinessTypeCategoryList? selectedBusinessType;
   final Set<Marker> markers = {};
   XFile? _imageFile;
 
@@ -139,6 +135,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
     cityController.text = addressData[2].text ?? "";
     stateController.text = addressData[4].text ?? "";
     pinCodeController.text = addressData[0].text ?? "";
+    setBusy(false);
+
     notifyListeners();
   }
 
@@ -280,6 +278,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
       (businessTypeResponse) => successBody(businessTypeResponse),
     );
     notifyListeners();
+    setBusy(false);
   }
 
   Future<void> successBody(UserAuthResponseData res) async {
@@ -305,7 +304,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForAddBusiness() async {
     Map<String, String> request = {};
-    request['business_type'] = selectedBusinessType!.id.toString();
+    request['business_type'] = businessTypeController.text.toString();
     request['business_name'] = businessNameController.text;
     request['business_address'] = addressController.text;
     request['business_latitude'] = latLng.latitude.toString();

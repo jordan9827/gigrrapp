@@ -147,6 +147,7 @@ class _AccountViewState extends State<AccountView> {
         _buildListTile(
           leading: ic_terms,
           title: "terms_condition",
+          onTap: viewModel.navigationToTermsAndConditionScreen,
         ),
       ],
     );

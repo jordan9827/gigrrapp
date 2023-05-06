@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/ui/account_screen/account_view.dart';
+import 'package:square_demo_architecture/ui/add_gigs/add_gigs_view.dart';
 import 'package:square_demo_architecture/ui/gigrrs_view/gigrrs_view.dart';
 import 'package:square_demo_architecture/ui/my_gigrrs/my_gigrrs_view.dart';
 import 'package:square_demo_architecture/ui/my_gigs/my_gigs_view.dart';
@@ -22,7 +23,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   List<Widget> screens = [
     GigrrsView(),
     MyGigss(),
-    MyGirrsView(),
+    AddGigsScreenView(),
+    // MyGirrsView(),
     AccountView(),
   ];
 
