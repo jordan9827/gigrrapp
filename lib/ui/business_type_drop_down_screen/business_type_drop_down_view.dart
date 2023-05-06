@@ -11,8 +11,9 @@ import '../widgets/drop_down_widget.dart';
 import 'business_type_drop_down_view_model.dart';
 
 class BusinessTypeDropDownView extends StatelessWidget {
-  Function(String?)? onCallBack;
-  BusinessTypeDropDownView({Key? key, this.onCallBack}) : super(key: key);
+  final TextEditingController controller;
+  BusinessTypeDropDownView({Key? key, required this.controller})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +22,7 @@ class BusinessTypeDropDownView extends StatelessWidget {
       onViewModelReady: (v) async {
         await v.setBusinessTypeList();
       },
-      viewModelBuilder: () => BusinessTypeDropDownViewModel(),
+      viewModelBuilder: () => BusinessTypeDropDownViewModel(controller),
       builder: (context, viewModel, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -32,10 +33,7 @@ class BusinessTypeDropDownView extends StatelessWidget {
             visible: viewModel.isVisible,
             groupValue: viewModel.groupValue,
             onVisible: viewModel.onVisibleAction,
-            selectSingleItemsAction: (val) {
-              viewModel.onItemSelect(val);
-              onCallBack!(viewModel.onSelectId());
-            },
+            selectSingleItemsAction: viewModel.onItemSelect,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_13,

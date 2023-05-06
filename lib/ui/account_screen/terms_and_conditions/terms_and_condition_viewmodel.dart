@@ -1,16 +1,13 @@
-import 'dart:convert';
-
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
-import '../../../domain/repos/business_repos.dart';
+import '../../../domain/repos/account_repos.dart';
 
 class TermsAndConditionViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
-
-  final businessRepo = locator<BusinessRepo>();
+  final accountRepo = locator<AccountRepo>();
 
   String _content = "";
 
@@ -23,7 +20,7 @@ class TermsAndConditionViewModel extends BaseViewModel {
 
   Future<void> getTermsAndCondition() async {
     setBusy(true);
-    final response = await businessRepo.termsAndCondition();
+    final response = await accountRepo.termsAndCondition();
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);

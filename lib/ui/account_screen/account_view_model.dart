@@ -3,7 +3,6 @@ import 'package:square_demo_architecture/data/local/preference_keys.dart';
 import 'package:square_demo_architecture/util/exceptions/failures/failure.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../app/app.locator.dart';
 import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
@@ -65,8 +64,12 @@ class AccountViewModel extends BaseViewModel {
     navigationService.navigateTo(Routes.editProfileScreenView);
   }
 
+  void navigationToBusinessesScreen() {
+    navigationService.navigateTo(Routes.businessesScreenView);
+  }
+
   void navigationToShareEarnScreen() {
-    // navigationService.navigateTo(Routes.languageScreenView);
+    // navigationService.navigateTo(Routes.);
   }
 
   void navigationToLanguageScreen() {

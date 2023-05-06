@@ -1,18 +1,13 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
-import 'package:square_demo_architecture/others/text_field_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../others/loading_screen.dart';
-import '../../../../util/others/text_styles.dart';
 import '../../../widgets/cvm_text_form_field.dart';
 import '../../../widgets/toggle_app_bar_widget.dart';
 import 'employer_register_view_model.dart';
-import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
-    as auto;
 
 class EmployerPersonalInfoFormView extends StatefulWidget {
   const EmployerPersonalInfoFormView({Key? key}) : super(key: key);
@@ -31,6 +26,7 @@ class _EmployerPersonalInfoFormViewState
       viewModelBuilder: () => EmployerRegisterViewModel(),
       builder: (context, viewModel, child) => LoadingScreen(
         loading: viewModel.isBusy,
+        showDialogLoading: true,
         child: Scaffold(
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

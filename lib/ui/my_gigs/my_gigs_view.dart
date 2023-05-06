@@ -62,14 +62,4 @@ class MyGigss extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildLoading() {
-    return Center(
-      heightFactor: 10,
-      child: SpinKitCircle(
-        size: SizeConfig.margin_padding_40,
-        color: independenceColor,
-      ),
-    );
-  }
 }

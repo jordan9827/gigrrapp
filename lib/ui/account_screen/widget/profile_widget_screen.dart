@@ -76,9 +76,12 @@ class ProfileWidgetScreen extends StatelessWidget {
                 "your_businesses".tr(),
                 style: TSB.regularMedium(),
               ),
-              Image.asset(
-                ic_pink_arrow_forword,
-                height: SizeConfig.margin_padding_15,
+              InkWell(
+                onTap: viewModel.navigationToBusinessesScreen,
+                child: Image.asset(
+                  ic_pink_arrow_forword,
+                  height: SizeConfig.margin_padding_15,
+                ),
               )
             ],
           ),

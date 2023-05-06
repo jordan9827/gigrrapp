@@ -38,11 +38,9 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void navigationToSignUpView() {
-    if (initialIndex == 0) {
-    } else {
+    if (initialIndex == 1) {
       navigationService.navigateTo(Routes.employerPersonalInfoFormView);
     }
-    notifyListeners();
   }
 
   void mobileNoValidation() {
@@ -151,13 +149,14 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void navigationToSignup(UserAuthResponseData res) {
-    // if (res.status.toLowerCase() == "incompleted") {
-    //   if (res.roleId == "3") {
-    //     navigationService
-    //         .clearStackAndShow(Routes.employerPersonalInfoFormView);
-    //   } else {}
-    // } else
-    navigationService.clearStackAndShow(Routes.homeScreenView);
+    if (res.status.toLowerCase() == "incompleted") {
+      if (res.roleId == "3") {
+        navigationService
+            .clearStackAndShow(Routes.employerPersonalInfoFormView);
+      }
+    } else if (res.status.toLowerCase() == "active") {
+      navigationService.clearStackAndShow(Routes.homeScreenView);
+    }
   }
 
   void navigationToOTPScreen() {

@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/business_profile_response.dart';
 import '../dtos/base_response.dart';
 import '../dtos/business_type_category.dart';
+import '../dtos/get_businesses_response.dart';
 import '../dtos/gigrr_type_response.dart';
 import '../dtos/my_gigs_response.dart';
 import '../dtos/web_view_response.dart';
@@ -31,9 +32,6 @@ abstract class BusinessService extends ChopperService {
   @Get(path: "gigrr_types")
   Future<Response<GigrrTypeCategoryResponse>> gigrrTypeCategory();
 
-  @Get(path: "privacy-policy")
-  Future<Response<WebViewResponse>> privacyPolicyApi();
-
-  @Get(path: "terms-condition")
-  Future<Response<WebViewResponse>> termsAndConditionApi();
+  @Get(path: "get_all_business_profile")
+  Future<Response<GetBusinessesResponse>> fetchAllBusinesses();
 }

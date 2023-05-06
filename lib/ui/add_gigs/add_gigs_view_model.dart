@@ -38,6 +38,7 @@ class AddGigsViewModel extends BaseViewModel {
 
   AddGigsViewModel() {
     setInitialDataTime();
+    print("businessTypeController.text ${businessTypeController.text}");
   }
 
   void setInitialDataTime() {
@@ -204,9 +205,11 @@ class AddGigsViewModel extends BaseViewModel {
           snackBarService.showSnackbar(message: fail.errorMsg);
           setBusy(false);
         },
-        (success) async {
-          snackBarService.showSnackbar(message: "success");
-          // employerCompleteProfileApiCall();
+        (gigs) async {
+          snackBarService.showSnackbar(message: gigs.message);
+          onWillPop();
+          gigrrNameController.clear();
+          priceController.clear();
           notifyListeners();
           setBusy(false);
         },

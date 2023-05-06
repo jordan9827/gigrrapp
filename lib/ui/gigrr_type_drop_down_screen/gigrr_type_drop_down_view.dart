@@ -9,7 +9,7 @@ import '../widgets/drop_down_widget.dart';
 import 'gigrr_type_drop_down_view_model.dart';
 
 class GigrrTypeDropDownView extends StatelessWidget {
-  TextEditingController controller;
+  final TextEditingController controller;
   GigrrTypeDropDownView({Key? key, required this.controller}) : super(key: key);
 
   @override

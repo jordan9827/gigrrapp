@@ -29,7 +29,10 @@ class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
           actions: [
-            Image.asset(ic_filter_wht, scale: 3.5),
+            InkWell(
+              onTap: () => viewModel.showFilterDialog(viewModel),
+              child: Image.asset(ic_filter_wht, scale: 3.5),
+            ),
           ],
         ),
         body: Container(

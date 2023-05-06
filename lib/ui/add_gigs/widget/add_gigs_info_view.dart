@@ -33,10 +33,7 @@ class AddGigsInfoScreenView extends StatelessWidget {
             hintForm: "i.e. Kirana Shop Delivery Boy",
           ),
           BusinessTypeDropDownView(
-            onCallBack: (val) {
-              viewModel.gigrrNameController.text = val!;
-              print("objectjdkji${viewModel.gigrrNameController.text}");
-            },
+            controller: viewModel.businessTypeController,
           ),
           GigrrTypeDropDownView(
             controller: viewModel.gigrrTypeController,
@@ -54,8 +51,9 @@ class AddGigsInfoScreenView extends StatelessWidget {
           ),
           CVMTextFormField(
             title: "",
-            controller: viewModel.priceController,
             hintForm: "i.e. ₹ 400",
+            keyboardType: TextInputType.number,
+            controller: viewModel.priceController,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,

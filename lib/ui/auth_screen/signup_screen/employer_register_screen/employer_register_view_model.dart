@@ -15,6 +15,7 @@ import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../widgets/image_picker_util.dart';
 
@@ -23,6 +24,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();
   final businessRepo = locator<BusinessRepo>();
+  final businessTypeService = locator<BusinessTypeService>();
+
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
@@ -49,6 +52,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
   EmployerRegisterViewModel({String mobile = "", String fullName = ""}) {
     fullNameController.text = fullName;
     mobileController.text = mobile;
+    businessTypeController.text =
+        businessTypeService.businessTypeList.first.id.toString();
     acquireCurrentLocation();
   }
   void setBool(bool val) {
@@ -109,6 +114,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
       }
     }
     final locationData = await location.getLocation();
+    print("locationData ${locationData.latitude}");
+
     var geoCodingService = search.ReverseGeoCoding(
       apiKey: MAPBOX_TOKEN,
     );
@@ -118,8 +125,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
       lng: locationData.longitude ?? 0.0,
     ));
     search.MapBoxPlace addressData = getAddress!.first;
-
+    print("addressData ${addressData}");
     await setAddressPlace(addressData);
+
     latLng =
         LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0);
     setBusy(false);

@@ -39,3 +39,5 @@ const String upload_image = _baseUrl + "upload_image.png";
 const String butterflies = _baseUrl + "butterflies.jpg";
 const String ic_calender_blck = _baseUrl + "ic_calender_blck.png";
 const String ic_clock_blck = _baseUrl + "ic_clock_blck.png";
+const String ic_close_blck = _baseUrl + "ic_close_blck.png";
+const String ic_search_blck = _baseUrl + "ic_search_blck.png";

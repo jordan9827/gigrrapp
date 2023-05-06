@@ -9,7 +9,9 @@ import '../../domain/reactive_services/business_type_service.dart';
 import '../../domain/repos/business_repos.dart';
 import '../../util/exceptions/failures/failure.dart';
 import '../network/app_chopper_client.dart';
+import '../network/dtos/base_response.dart';
 import '../network/dtos/business_type_category.dart';
+import '../network/dtos/get_businesses_response.dart';
 import '../network/dtos/gigrr_type_response.dart';
 import '../network/dtos/web_view_response.dart';
 
@@ -94,47 +96,8 @@ class BusinessImpl extends BusinessRepo {
   }
 
   @override
-  Future<Either<Failure, WebViewResponseData>> privacyPolicy() async {
-    try {
-      final response = await businessService.privacyPolicyApi();
-
-      if (response.body == null) {
-        throw Exception(response.error);
-      }
-      // log.i("privacyPolicy Response ${response.body}");
-      return response.body!.map(success: (res) async {
-        return Right(res.data);
-      }, error: (error) {
-        return Left(Failure(200, error.message));
-      });
-    } catch (e) {
-      log.e(e);
-      return Left(e.handleException());
-    }
-  }
-
-  @override
-  Future<Either<Failure, WebViewResponseData>> termsAndCondition() async {
-    try {
-      final response = await businessService.termsAndConditionApi();
-
-      if (response.body == null) {
-        throw Exception(response.error);
-      }
-      // log.i("termsAndCondition Response ${response.body}");
-      return response.body!.map(success: (res) async {
-        return Right(res.data);
-      }, error: (error) {
-        return Left(Failure(200, error.message));
-      });
-    } catch (e) {
-      log.e(e);
-      return Left(e.handleException());
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> addGigs(Map<String, dynamic> data) async {
+  Future<Either<Failure, BaseResponse>> addGigs(
+      Map<String, dynamic> data) async {
     try {
       final response = await businessService.addGigsApi(data);
 
@@ -143,7 +106,7 @@ class BusinessImpl extends BusinessRepo {
       }
       log.i("addGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
-        return Right(true);
+        return Right(res);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });
@@ -157,6 +120,27 @@ class BusinessImpl extends BusinessRepo {
   Future<Either<Failure, MyGigsResponseData>> fetchMyGigs() async {
     try {
       final response = await businessService.fetchGigsApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("addGigrr Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.responseData);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetBusinessesResponseData>>
+      fetchAllBusinessesApi() async {
+    try {
+      final response = await businessService.fetchAllBusinesses();
 
       if (response.body == null) {
         throw Exception(response.error);

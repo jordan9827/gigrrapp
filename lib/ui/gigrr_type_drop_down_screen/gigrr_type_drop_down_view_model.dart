@@ -15,14 +15,14 @@ class GigrrTypeDropDownViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   final businessRepo = locator<BusinessRepo>();
   final businessTypeService = locator<BusinessTypeService>();
-  TextEditingController controller = TextEditingController();
+  TextEditingController textController = TextEditingController();
   List<GigrrTypeCategoryList> gigrrTypeList = [];
 
   List<String> selectedItemList = [];
   List<String> itemsList = [];
   bool isVisible = false;
   GigrrTypeDropDownViewModel(TextEditingController controller) {
-    this.controller = controller;
+    this.textController = controller;
   }
   void onVisibleAction() {
     isVisible = !isVisible;
@@ -55,7 +55,7 @@ class GigrrTypeDropDownViewModel extends BaseViewModel {
       for (var p in selectedItemList) {
         if (i.name == p) {
           id.add(i.id);
-          controller.text = id.join(", ");
+          textController.text = id.join(", ");
         }
       }
       notifyListeners();

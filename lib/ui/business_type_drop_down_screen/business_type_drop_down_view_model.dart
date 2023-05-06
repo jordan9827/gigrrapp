@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../../app/app.locator.dart';
@@ -9,10 +10,15 @@ class BusinessTypeDropDownViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();
   final businessTypeService = locator<BusinessTypeService>();
+  TextEditingController textController = TextEditingController();
+
   String groupValue = "";
   List<String> itemsList = [];
   bool isVisible = false;
 
+  BusinessTypeDropDownViewModel(TextEditingController controller) {
+    this.textController = controller;
+  }
   void onVisibleAction() {
     isVisible = !isVisible;
     notifyListeners();
@@ -28,15 +34,16 @@ class BusinessTypeDropDownViewModel extends BaseViewModel {
 
   void onItemSelect(String? val) {
     groupValue = val!;
+    onSelectId();
     notifyListeners();
   }
 
-  String? onSelectId() {
+  void onSelectId() {
     for (var i in businessTypeService.businessTypeList) {
       if (i.name == groupValue) {
-        return i.id.toString();
+        textController.text = i.id.toString();
+        notifyListeners();
       }
     }
-    return null;
   }
 }

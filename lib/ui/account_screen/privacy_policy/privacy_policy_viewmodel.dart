@@ -1,13 +1,13 @@
+import 'package:square_demo_architecture/domain/repos/account_repos.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
-import '../../../domain/repos/business_repos.dart';
 
 class PrivacyPolicyViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
-  final businessRepo = locator<BusinessRepo>();
+  final accountRepo = locator<AccountRepo>();
 
   String _content = "";
 
@@ -21,7 +21,7 @@ class PrivacyPolicyViewModel extends BaseViewModel {
 
   Future<void> getPrivacyPolicy() async {
     setBusy(true);
-    final response = await businessRepo.privacyPolicy();
+    final response = await accountRepo.privacyPolicy();
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);

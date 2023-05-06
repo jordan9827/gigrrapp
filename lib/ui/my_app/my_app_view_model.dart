@@ -44,6 +44,5 @@ class MyAppViewModel extends BaseViewModel {
   Future<void> businessTypeCategoryApiCall() async {
     setBusy(true);
     await businessRepo.businessTypeCategory();
-    notifyListeners();
   }
 }

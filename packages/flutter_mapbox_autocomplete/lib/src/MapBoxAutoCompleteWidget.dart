@@ -121,38 +121,6 @@ class _MapBoxAutoCompleteWidgetState extends State<MapBoxAutoCompleteWidget> {
         ),
       ),
     );
-
-    /*Scaffold(
-      appBar: AppBar(
-        title: CustomTextField(
-          hintText: widget.hint,
-          textController: _searchFieldTextController,
-          onChanged: (input) => _getPlaces(input),
-          focusNode: _searchFieldTextFocus,
-          onFieldSubmitted: (value) => _searchFieldTextFocus.unfocus(),
-          // onChanged: (input) => print(input),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.clear),
-            onPressed: () => _searchFieldTextController.clear(),
-          )
-        ],
-      ),
-      body: ListView.separated(
-        separatorBuilder: (cx, _) => Divider(),
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        itemCount: _placePredictions!.features!.length,
-        itemBuilder: (ctx, i) {
-          MapBoxPlace _singlePlace = _placePredictions!.features![i];
-          return ListTile(
-            title: Text(_singlePlace.text!),
-            subtitle: Text(_singlePlace.placeName!),
-            onTap: () => _selectPlace(_singlePlace),
-          );
-        },
-      ),
-    );*/
   }
 
   Widget _buildSearchBar(BuildContext context) {

@@ -45,6 +45,7 @@ class _EmployerBusinessInfoFormViewState
       },
       builder: (context, viewModel, child) => LoadingScreen(
         loading: viewModel.isBusy,
+        showDialogLoading: true,
         child: Scaffold(
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,8 +72,9 @@ class _EmployerBusinessInfoFormViewState
             hintForm: "i.e. Pakiza Garments",
             controller: viewModel.businessNameController,
           ),
-          // BusinessTypeDropDownView(
-          //     controller: viewModel.businessTypeController),
+          BusinessTypeDropDownView(
+            controller: viewModel.businessTypeController,
+          ),
           CVMTextFormField(
             title: "address",
             hintForm: "i.e. House no., Street name, Area",

@@ -8,7 +8,6 @@ import 'package:square_demo_architecture/ui/my_gigs/my_gigs_view.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../util/others/text_styles.dart';
 import 'home_view_model.dart';
 

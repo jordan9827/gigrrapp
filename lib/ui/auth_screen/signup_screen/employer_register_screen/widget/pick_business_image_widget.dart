@@ -134,7 +134,7 @@ class PickBusinessImageWidget extends StatelessWidget {
       width: SizeConfig.margin_padding_50 * 2,
       margin: EdgeInsets.only(right: SizeConfig.margin_padding_8),
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colors.white,
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),

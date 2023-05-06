@@ -18,7 +18,7 @@ class MyGigsViewWidget extends StatelessWidget {
       width: double.infinity,
       margin: edgeInsetsMargin.copyWith(top: SizeConfig.margin_padding_10),
       child: Container(
-        padding: EdgeInsets.all(SizeConfig.margin_padding_13),
+        padding: EdgeInsets.all(SizeConfig.margin_padding_17),
         decoration: BoxDecoration(
           color: mainWhiteColor,
           borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
@@ -44,6 +44,7 @@ class MyGigsViewWidget extends StatelessWidget {
                   child: Text(
                     myGigs.gigAddress,
                     maxLines: 2,
+                    overflow: TextOverflow.fade,
                     style: TSB.regularSmall(textColor: textNoticeColor),
                   ),
                 ),

@@ -30,12 +30,8 @@ class MyGigsResponseData with _$MyGigsResponseData {
   const factory MyGigsResponseData(
     @JsonKey(name: "current_page") int currentPage,
     @JsonKey(name: "data") List<MyGigsResponseList> gigsResponseList,
-    @JsonKey(name: "first_page_url", defaultValue: "") String firstPageUrl,
     @JsonKey(name: "from", defaultValue: 0) int from,
     @JsonKey(name: "last_page", defaultValue: 0) int lastPage,
-    @JsonKey(name: "last_page_url", defaultValue: "") String lastPageUrl,
-    @JsonKey(name: "next_page_url", defaultValue: "") String nextPageUrl,
-    @JsonKey(name: "path", defaultValue: "") String path,
     @JsonKey(name: "per_page", defaultValue: 0) int perPage,
     @JsonKey(name: "to", defaultValue: 0) int to,
     @JsonKey(name: "total", defaultValue: 0) int total,

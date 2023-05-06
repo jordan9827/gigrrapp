@@ -1,4 +1,5 @@
 import 'package:chopper/chopper.dart';
+import 'package:square_demo_architecture/data/network/api_services/account_service.dart';
 import '../../others/constants.dart';
 import '../../util/converter/json_to_type_converter.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +18,7 @@ class AppChopperClient extends ChopperClient {
           converter: JsonToTypeConverter(),
           services: [
             AuthService.create(),
+            AccountService.create(),
             BusinessService.create(),
             NotificationService.create(),
           ],
