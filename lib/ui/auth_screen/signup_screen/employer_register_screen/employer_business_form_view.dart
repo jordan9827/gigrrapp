@@ -15,7 +15,7 @@ import '../../../widgets/cvm_text_form_field.dart';
 import '../../../widgets/toggle_app_bar_widget.dart';
 import 'employer_register_view_model.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'widget/pick_business_image_widget.dart';
+import 'widget/pick_business_image_view.dart';
 
 class EmployerBusinessInfoFormView extends StatefulWidget {
   final String fullName;
@@ -77,8 +77,10 @@ class _EmployerBusinessInfoFormViewState
           ),
           CVMTextFormField(
             title: "address",
-            hintForm: "i.e. House no., Street name, Area",
+            readOnly: true,
             controller: viewModel.addressController,
+            hintForm: "i.e. House no., Street name, Area",
+            onTap: viewModel.mapBoxPlace,
           ),
           CVMTextFormField(
             title: "city",
@@ -101,7 +103,9 @@ class _EmployerBusinessInfoFormViewState
           ),
           CVMTextFormField(
             title: "upload_business_pictures",
-            formWidget: PickBusinessImageWidget(viewModel: viewModel),
+            formWidget: PickBusinessImageWidget(
+              imageList: viewModel.imageList,
+            ),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_10,

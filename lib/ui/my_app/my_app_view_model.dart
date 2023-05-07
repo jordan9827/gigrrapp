@@ -4,7 +4,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
-import '../../data/network/dtos/business_type_category.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/reactive_services/business_type_service.dart';
 import '../../domain/repos/business_repos.dart';

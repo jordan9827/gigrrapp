@@ -17,6 +17,7 @@ import '../domain/repos/account_repos.dart';
 import '../domain/repos/auth_repos.dart';
 import '../domain/repos/business_repos.dart';
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
+import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
 import '../ui/account_screen/privacy_policy/privacy_policy_view.dart';
 import '../ui/account_screen/terms_and_conditions/terms_and_condition_view.dart';
 import '../ui/add_gigs/add_gigs_view.dart';
@@ -38,6 +39,7 @@ import '../ui/onboading_screen/intro_view.dart';
     MaterialRoute(page: MyGigss),
     MaterialRoute(page: AccountView),
     MaterialRoute(page: BusinessesScreenView),
+    MaterialRoute(page: EditBusinessesScreenView),
     MaterialRoute(page: AddGigsScreenView),
     MaterialRoute(page: PrivacyPolicyScreenView),
     MaterialRoute(page: TermsAndConditionScreenView),

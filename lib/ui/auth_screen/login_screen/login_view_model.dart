@@ -84,18 +84,21 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   Future<void> googleLogin() async {
-    GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-    await googleSignIn.signOut();
-    var account = await googleSignIn.signIn();
-    if (account != null) {
-      var log = SocialSignInData(
-        email: account.email,
-        googleId: account.id,
-        name: account.displayName ?? "",
-        socialMediaType: LoginType.GOOGLE.name.toLowerCase(),
-      );
-      await socialApiCall(log);
-    }
+    if (initialIndex == 1) {
+      GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+      await googleSignIn.signOut();
+      var account = await googleSignIn.signIn();
+      if (account != null) {
+        var log = SocialSignInData(
+          email: account.email,
+          googleId: account.id,
+          name: account.displayName ?? "",
+          socialMediaType: LoginType.GOOGLE.name.toLowerCase(),
+        );
+        await socialApiCall(log);
+      }
+    } else
+      snackBarService.showSnackbar(message: "Coming Soon");
   }
 
   Future<void> fbLogin() async {
@@ -153,7 +156,8 @@ class LoginViewViewModel extends BaseViewModel {
       if (res.roleId == "3") {
         navigationService
             .clearStackAndShow(Routes.employerPersonalInfoFormView);
-      }
+      } else
+        snackBarService.showSnackbar(message: "Coming Soon");
     } else if (res.status.toLowerCase() == "active") {
       navigationService.clearStackAndShow(Routes.homeScreenView);
     }
@@ -161,7 +165,7 @@ class LoginViewViewModel extends BaseViewModel {
 
   void navigationToOTPScreen() {
     navigationService.navigateTo(Routes.oTPVerifyScreen,
-        arguments: OTPVerifyScreenArguments(mobile: "8959665050"));
+        arguments: OTPVerifyScreenArguments(mobile: "+916565656565"));
   }
 
   Future<Map<String, String>> _getRequestForLogIn(

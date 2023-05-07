@@ -46,6 +46,7 @@ class _BusinessesScreenViewState extends State<BusinessesScreenView> {
                 .map(
                   (e) => BusinessesViewWidget(
                     businesses: e,
+                    viewModel: viewModel,
                   ),
                 )
                 .toList(),

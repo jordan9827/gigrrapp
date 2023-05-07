@@ -22,51 +22,53 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   List<Widget> screens = [
     GigrrsView(),
     MyGigss(),
-    AddGigsScreenView(),
-    // MyGirrsView(),
+    MyGirrsView(),
     AccountView(),
   ];
 
   Widget _buildAddBottomBarTab({
-    required Function onTap,
+    required Function() onTap,
   }) {
-    return Container(
-      height: kToolbarHeight * 1.5,
-      width: kToolbarHeight * 1.5,
-      child: Column(
-        children: [
-          Container(
-            height: SizeConfig.margin_padding_50 * 1.01,
-            width: SizeConfig.margin_padding_50,
-            decoration: BoxDecoration(
-              color: mainPinkColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(
-                  SizeConfig.margin_padding_20,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: kToolbarHeight * 1.5,
+        width: kToolbarHeight * 1.5,
+        child: Column(
+          children: [
+            Container(
+              height: SizeConfig.margin_padding_50 * 1.01,
+              width: SizeConfig.margin_padding_50,
+              decoration: BoxDecoration(
+                color: mainPinkColor,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(
+                    SizeConfig.margin_padding_20,
+                  ),
+                ),
+              ),
+              child: Center(
+                child: SizedBox(
+                  height: SizeConfig.margin_padding_20,
+                  width: SizeConfig.margin_padding_20,
+                  child: Image.asset(
+                    ic_plus,
+                  ),
                 ),
               ),
             ),
-            child: Center(
-              child: SizedBox(
-                height: SizeConfig.margin_padding_20,
-                width: SizeConfig.margin_padding_20,
-                child: Image.asset(
-                  ic_plus,
-                ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
+            Text(
+              "Create Gig",
+              style: TextStyle(
+                color: mainPinkColor,
+                fontSize: SizeConfig.textSizeVerySmall,
               ),
             ),
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_5,
-          ),
-          Text(
-            "Create Gig",
-            style: TextStyle(
-              color: mainPinkColor,
-              fontSize: SizeConfig.textSizeVerySmall,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -170,7 +172,9 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                       isSelected:
                           1 == viewModel.bottomNavBarService.currentIndex,
                     ),
-                    _buildAddBottomBarTab(onTap: () {}),
+                    _buildAddBottomBarTab(
+                      onTap: viewModel.navigatorToAddGigsView,
+                    ),
                     _buildBottomBarTab(
                       onTap: () => viewModel.changeScreenIndex(2),
                       image: ic_my_gigrr,

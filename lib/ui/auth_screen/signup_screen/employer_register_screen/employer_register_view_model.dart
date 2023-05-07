@@ -275,6 +275,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   }
 
   void employerCompleteProfileApiCall() async {
+    print("employerCompleteProfileApiCall  ${imageList!.first}");
     setBusy(true);
     final response = await authRepo
         .employerCompleteProfile(await _getRequestForEmployerCompleteProfile());

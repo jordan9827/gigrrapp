@@ -86,7 +86,8 @@ class AddGigsViewModel extends BaseViewModel {
   void navigatorToBack() {
     if (pageIndex == 1) {
       onWillPop();
-    }
+    } else
+      navigationService.back();
   }
 
   bool validateToGigrrInfo() {

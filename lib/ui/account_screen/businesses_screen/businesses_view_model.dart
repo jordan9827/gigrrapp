@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/business_repos.dart';
@@ -18,6 +19,14 @@ class BusinessesViewModel extends BaseViewModel {
     if (!isBusy) {
       navigationService.back();
     }
+  }
+
+  Future<void> navigatorToEditBusinessesView(GetBusinessesList e) async {
+    await navigationService.navigateTo(
+      Routes.editBusinessesScreenView,
+      arguments: EditBusinessesScreenViewArguments(businessData: e),
+    );
+    await fetchAllBusinessesApi();
   }
 
   Future<void> fetchAllBusinessesApi() async {

@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/ui/account_screen/businesses_screen/businesses_view_model.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import '../../../../data/network/dtos/get_businesses_response.dart';
 import '../../../../others/constants.dart';
@@ -7,10 +9,14 @@ import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
 
 class BusinessesViewWidget extends StatelessWidget {
+  final BusinessesViewModel viewModel;
   final GetBusinessesList businesses;
 
-  const BusinessesViewWidget({Key? key, required this.businesses})
-      : super(key: key);
+  const BusinessesViewWidget({
+    Key? key,
+    required this.businesses,
+    required this.viewModel,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -101,18 +107,21 @@ class BusinessesViewWidget extends StatelessWidget {
   }
 
   Widget _buildEditView() {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.margin_padding_18,
-        vertical: SizeConfig.margin_padding_8,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: mainPinkColor, width: 1.5),
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_8),
-      ),
-      child: Text(
-        "txt_edit".tr(),
-        style: TSB.regularVSmall(textColor: mainPinkColor),
+    return InkWell(
+      onTap: () => viewModel.navigatorToEditBusinessesView(businesses),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.margin_padding_18,
+          vertical: SizeConfig.margin_padding_8,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: mainPinkColor, width: 1.5),
+          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_8),
+        ),
+        child: Text(
+          "txt_edit".tr(),
+          style: TSB.regularVSmall(textColor: mainPinkColor),
+        ),
       ),
     );
   }

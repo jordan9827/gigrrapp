@@ -116,7 +116,25 @@ class AuthImpl extends Auth {
     }
   }
 
+  @override
+  Future<Either<Failure, bool>> deleteImage(String data) async {
+    try {
+      final response = await authService.deleteImage({"image": data});
 
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Login Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        return Right(true);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
 
   @override
   Future<Either<Failure, UploadImageResponseData>> uploadImages(
