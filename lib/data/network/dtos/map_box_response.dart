@@ -1,4 +1,5 @@
-part of mapbox_search;
+import 'dart:convert';
+import '../../../util/enums/place_types.dart';
 
 class Predictions {
   String? type;
@@ -12,9 +13,9 @@ class Predictions {
   });
 
   Predictions.empty() {
-    this.type = '';
-    this.features = [];
-    this.query = [];
+    type = '';
+    features = [];
+    query = [];
   }
 
   factory Predictions.fromRawJson(String str) =>
@@ -41,8 +42,6 @@ class MapBoxPlace {
   String? id;
   FeatureType? type;
   List<PlaceType>? placeType;
-
-  // dynamic relevance;
   String? addressNumber;
   Properties? properties;
   String? text;
@@ -51,8 +50,6 @@ class MapBoxPlace {
   List<double>? center;
   Geometry? geometry;
   List<Context>? context;
-  String? matchingText;
-  String? matchingPlaceName;
 
   MapBoxPlace({
     this.id,
@@ -67,8 +64,6 @@ class MapBoxPlace {
     this.center,
     this.geometry,
     this.context,
-    this.matchingText,
-    this.matchingPlaceName,
   });
 
   factory MapBoxPlace.fromRawJson(String str) =>
@@ -83,7 +78,6 @@ class MapBoxPlace {
             ? null
             : List<PlaceType>.from(
                 json["place_type"].map((x) => placeTypeValues.map[x])),
-        // relevance: json["relevance"] == null ? null : json["relevance"],
         addressNumber: json["address"],
         properties: json["properties"] == null
             ? null
@@ -103,8 +97,6 @@ class MapBoxPlace {
             ? null
             : List<Context>.from(
                 json["context"].map((x) => Context.fromJson(x))),
-        matchingText: json["matching_text"],
-        matchingPlaceName: json["matching_place_name"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -112,7 +104,6 @@ class MapBoxPlace {
         "type": featureTypeValues.reverse![type!],
         "place_type": List<dynamic>.from(
             placeType!.map((x) => placeTypeValues.reverse![x])),
-        // "relevance": relevance,
         "address": addressNumber,
         "properties": properties!.toJson(),
         "text": text,
@@ -123,9 +114,6 @@ class MapBoxPlace {
         "context": context == null
             ? null
             : List<dynamic>.from(context!.map((x) => x.toJson())),
-        "matching_text": matchingText == null ? null : matchingText,
-        "matching_place_name":
-            matchingPlaceName == null ? null : matchingPlaceName,
       };
 
   @override
@@ -223,13 +211,13 @@ class Properties {
   String toRawJson() => json.encode(toJson());
 
   factory Properties.fromJson(Map<String, dynamic> json) => Properties(
-        shortCode: json["short_code"] == null ? null : json["short_code"],
+        shortCode: json["short_code"],
         wikidata: json["wikidata"],
         address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
-        "short_code": shortCode == null ? null : shortCode,
+        "short_code": shortCode,
         "wikidata": wikidata,
         "address": address,
       };
@@ -246,9 +234,7 @@ class EnumValues<T> {
   EnumValues(this.map);
 
   Map<T, String>? get reverse {
-    if (reverseMap == null) {
-      reverseMap = map.map((k, v) => MapEntry(v, k));
-    }
+    reverseMap ??= map.map((k, v) => MapEntry(v, k));
     return reverseMap;
   }
 }

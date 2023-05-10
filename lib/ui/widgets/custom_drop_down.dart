@@ -104,7 +104,7 @@ class CustomDropDownWidget extends StatelessWidget {
                               ),
                             ),
                           if (!enableMultiSelected)
-                            Radio<String>(
+                            Radio(
                               value: e,
                               activeColor: independenceColor,
                               groupValue: groupValue,

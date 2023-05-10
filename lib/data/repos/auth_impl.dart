@@ -47,6 +47,29 @@ class AuthImpl extends Auth {
   }
 
   @override
+  Future<Either<Failure, UserLoginResponse>> editProfile(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await authService.editProfile(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Edit Profile Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        locator.unregister<UserAuthResponseData>();
+        locator.registerSingleton<UserAuthResponseData>(user.data);
+        return Right(user);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
   Future<Either<Failure, UserAuthResponseData>> employerCompleteProfile(
       Map<String, dynamic> data) async {
     try {

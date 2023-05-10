@@ -18,6 +18,11 @@ abstract class BusinessService extends ChopperService {
     @Body() Map<String, dynamic> businessBody,
   );
 
+  @Post(path: "update_business_profile")
+  Future<Response<BusinessProfileResponse>> updateBusinessProfileApi(
+    @Body() Map<String, dynamic> businessBody,
+  );
+
   @Post(path: "gigs-booking")
   Future<Response<BaseResponse>> addGigsApi(
     @Body() Map<String, dynamic> body,

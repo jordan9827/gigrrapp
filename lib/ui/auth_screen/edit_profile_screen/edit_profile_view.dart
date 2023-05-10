@@ -38,7 +38,7 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
               SizedBox(
                 height: SizeConfig.margin_padding_24,
               ),
-              _buildSaveButton()
+              _buildSaveButton(viewModel)
             ],
           ),
         ),
@@ -56,7 +56,7 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
         _buildTextFormField(
           title: "enter_full_name",
           hintForm: "i.e. Jack Milton",
-          controller: viewModel.nameController,
+          controller: viewModel.fullNameController,
         ),
         _buildTextFormField(
           title: "enter_mobile_no",
@@ -68,6 +68,8 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
           title: "enter_full_address",
           hintForm: "i.e. House no., Street name, Area",
           controller: viewModel.addressController,
+          readOnly: true,
+          onTap: viewModel.mapBoxPlace,
         ),
         _buildTitle("add_pin_map"),
         _buildGoogleMap(),
@@ -92,6 +94,8 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
     TextEditingController? controller,
     TextInputType keyboardType = TextInputType.text,
     Widget? formWidget,
+    Function()? onTap,
+    bool readOnly = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -108,6 +112,8 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
           maxLength: maxLength,
           controller: controller,
           keyboardType: keyboardType,
+          readOnly: readOnly,
+          onTap: onTap,
         ),
         SizedBox(
           height: SizeConfig.margin_padding_13,
@@ -136,10 +142,11 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
     );
   }
 
-  Widget _buildSaveButton() {
+  Widget _buildSaveButton(EditProfileViewModel viewModel) {
     return LoadingButton(
+      loading: viewModel.isBusy,
       title: "save",
-      action: () {},
+      action: viewModel.editProfileApiCall,
     );
   }
 }

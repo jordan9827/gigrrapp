@@ -79,9 +79,7 @@ class MapBoxPlace {
   factory MapBoxPlace.fromJson(Map<String, dynamic> json) => MapBoxPlace(
         id: json["id"] == null ? null : json["id"],
         type: json["type"] == null ? null : featureTypeValues.map[json["type"]],
-        placeType: json["place_type"] == null
-            ? []
-            : [],
+        placeType: json["place_type"] == null ? [] : [],
         // relevance: json["relevance"] == null ? null : json["relevance"],
         properties: json["properties"] == null
             ? null
@@ -191,7 +189,7 @@ enum GeometryType { POINT }
 
 final geometryTypeValues = EnumValues({"Point": GeometryType.POINT});
 
-enum PlaceType { REGION, COUNTRY, PLACE }
+enum PlaceType { REGION, COUNTRY, PLACE, address }
 
 final placeTypeValues = EnumValues({
   "country": PlaceType.COUNTRY,

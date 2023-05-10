@@ -58,7 +58,7 @@ class MyGigsViewWidget extends StatelessWidget {
               style: TSB.semiBoldLarge(textColor: independenceColor),
             ),
             SizedBox(
-              height: SizeConfig.margin_padding_8,
+              height: SizeConfig.margin_padding_10,
             ),
             Row(
               children: [

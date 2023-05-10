@@ -1,3 +1,4 @@
+import 'package:location/location.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -26,6 +27,7 @@ class MyAppViewModel extends BaseViewModel {
     setInitialRoute();
   }
   void init() async {
+    await checkLocation();
     await businessTypeCategoryApiCall();
   }
 
@@ -43,5 +45,27 @@ class MyAppViewModel extends BaseViewModel {
   Future<void> businessTypeCategoryApiCall() async {
     setBusy(true);
     await businessRepo.businessTypeCategory();
+  }
+
+  Future<void> checkLocation() async {
+    setBusy(true);
+    Location location = Location();
+    bool serviceEnabled;
+    PermissionStatus permissionGranted;
+
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return null;
+      }
+    }
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
+      permissionGranted = await location.requestPermission();
+      if (permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
+    }
   }
 }

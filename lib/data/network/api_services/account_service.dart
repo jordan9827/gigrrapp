@@ -12,4 +12,7 @@ abstract class AccountService extends ChopperService {
 
   @Get(path: "terms-condition")
   Future<Response<WebViewResponse>> termsAndConditionApi();
+
+  @Get(path: "about-us")
+  Future<Response<WebViewResponse>> aboutUsApi();
 }

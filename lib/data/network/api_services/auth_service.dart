@@ -24,6 +24,10 @@ abstract class AuthService extends ChopperService {
   Future<Response<Map<String, dynamic>>> register(
     @Body() Map<String, dynamic> credentials,
   );
+  @Post(path: "update_profile")
+  Future<Response<UserLoginResponse>> editProfile(
+    @Body() Map<String, dynamic> body,
+  );
 
   @Post(path: "login")
   Future<Response<UserLoginResponse>> socialLogin(

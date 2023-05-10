@@ -9,7 +9,8 @@ import '../network/app_chopper_client.dart';
 import '../network/dtos/web_view_response.dart';
 
 class AccountImpl extends AccountRepo {
-  final accountService = locator<AppChopperClient>().getService<AccountService>();
+  final accountService =
+      locator<AppChopperClient>().getService<AccountService>();
   final log = getLogger("AccountImpl");
 
   @override
@@ -36,6 +37,26 @@ class AccountImpl extends AccountRepo {
   Future<Either<Failure, WebViewResponseData>> termsAndCondition() async {
     try {
       final response = await accountService.termsAndConditionApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      // log.i("termsAndCondition Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, WebViewResponseData>> aboutUs() async {
+    try {
+      final response = await accountService.aboutUsApi();
 
       if (response.body == null) {
         throw Exception(response.error);

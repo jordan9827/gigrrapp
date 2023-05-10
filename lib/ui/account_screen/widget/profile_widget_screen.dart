@@ -46,6 +46,7 @@ class ProfileWidgetScreen extends StatelessWidget {
                 height: SizeConfig.margin_padding_8,
               ),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image.asset(ic_location,
@@ -53,9 +54,13 @@ class ProfileWidgetScreen extends StatelessWidget {
                   SizedBox(
                     width: SizeConfig.margin_padding_3,
                   ),
-                  Text(
-                    "25, Pardeshipura, Near Shiv Mandir, Indore",
-                    style: TSB.regularSmall(textColor: textRegularColor),
+                  Expanded(
+                    child: Text(
+                      viewModel.user.address,
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+                      style: TSB.regularVSmall(textColor: textRegularColor),
+                    ),
                   ),
                 ],
               )

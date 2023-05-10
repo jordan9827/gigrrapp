@@ -104,8 +104,8 @@ dependencies:
   location: 4.4.0
 
   plugin_platform_interface: ^2.1.4
-  mapbox_search:
-    path: ./packages/mapbox_search-master
+#  mapbox_search:
+#    path: ./packages/mapbox_search-master
 
   dotted_border: ^2.0.0+3
 # Image Picker

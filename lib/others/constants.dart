@@ -57,6 +57,7 @@ const fieldsInActiveColor = Color(0xff6E6E6E);
 
 //text
 const textRegularColor = Color(0xff676767);
+const textRegularColor1 = Color(0xff1E1B1B);
 const textNoticeColor = Color(0xff656565);
 const textUnAvailable = Color(0xff565656);
 

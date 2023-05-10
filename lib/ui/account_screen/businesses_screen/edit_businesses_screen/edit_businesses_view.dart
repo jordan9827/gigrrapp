@@ -47,7 +47,7 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
               SizedBox(
                 height: SizeConfig.margin_padding_24,
               ),
-              _buildSaveButton(),
+              _buildSaveButton(viewModel),
               SizedBox(
                 height: SizeConfig.margin_padding_29,
               ),
@@ -144,10 +144,11 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
     );
   }
 
-  Widget _buildSaveButton() {
+  Widget _buildSaveButton(EditBusinessesViewModel viewModel) {
     return LoadingButton(
+      loading: viewModel.isBusy,
       title: "save",
-      action: () {},
+      action: viewModel.updateBusinessProfileApiCall,
     );
   }
 }

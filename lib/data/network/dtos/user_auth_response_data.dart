@@ -17,6 +17,7 @@ class UserLoginResponse with _$UserLoginResponse {
   @JsonSerializable()
   const factory UserLoginResponse.success(
     UserAuthResponseData data,
+    String message,
   ) = _UserLoginResponse;
 
   @JsonSerializable()
@@ -35,6 +36,7 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "full_name") String fullName,
     @JsonKey(name: "id") int id,
     @JsonKey(name: "role_id", defaultValue: "") String roleId,
+    @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "phone_number", defaultValue: "") String phoneNumber,
     @JsonKey(name: "country_code", defaultValue: "") String countryCode,
     @JsonKey(name: "status", defaultValue: "") String status,
@@ -65,6 +67,6 @@ class UserAuthResponseData with _$UserAuthResponseData {
 
   static Future<UserAuthResponseData> getEmptyUser() async {
     return const UserAuthResponseData(
-        "", 0, "", "", "", "", "", "", "", "", "", 0, 0, "", "", "", "");
+        "", 0, "", "", "", "", "", "", "", "", "", "", 0, 0, "", "", "", "");
   }
 }

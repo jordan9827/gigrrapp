@@ -81,7 +81,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   void navigationToAboutScreen() {
-    //  navigationService.navigateTo(Routes.languageScreenView);
+    navigationService.navigateTo(Routes.aboutUsScreenView);
   }
 
   void navigationToHelpSupportScreen() {

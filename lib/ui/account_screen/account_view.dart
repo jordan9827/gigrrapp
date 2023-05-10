@@ -44,7 +44,7 @@ class _AccountViewState extends State<AccountView> {
                 loading: viewModel.isBusy,
                 action: viewModel.logOut,
                 progressIndicatorColor: mainPinkColor,
-                backgroundColor: mainPinkColor.withOpacity(0.15),
+                backgroundColor: mainPinkColor.withOpacity(0.10),
                 title: "logout",
                 titleColor: mainPinkColor,
               ),

@@ -20,7 +20,8 @@ class BusinessTypeDropDownView extends StatelessWidget {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       onViewModelReady: (v) async {
-        await v.setBusinessTypeList();
+        v.setBusinessTypeList();
+        await v.setInitalIndex();
       },
       viewModelBuilder: () => BusinessTypeDropDownViewModel(controller),
       builder: (context, viewModel, child) => Column(

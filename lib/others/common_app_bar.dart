@@ -11,6 +11,7 @@ PreferredSizeWidget getAppBar(
   onBackPressed,
   List<Widget>? actions,
   Color? backgroundColor,
+  PreferredSizeWidget? bottom,
 }) {
   SizeConfig.init(context);
   return AppBar(
@@ -33,6 +34,7 @@ PreferredSizeWidget getAppBar(
             onTap: onBackPressed,
           )
         : null,
+    bottom: bottom,
     titleSpacing: showBack ? 0 : NavigationToolbar.kMiddleSpacing,
     automaticallyImplyLeading: showBack,
     elevation: 0,

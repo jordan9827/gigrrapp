@@ -41,6 +41,27 @@ class BusinessImpl extends BusinessRepo {
     }
   }
 
+  @override
+  Future<Either<Failure, BusinessProfileResponse>> updateBusinessProfile(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await businessService.updateBusinessProfileApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Business Profile Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        return Right(user);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
   static Future<BusinessImpl> getBusinessRepoImpl() {
     final businessRepo = BusinessImpl();
     return Future.value(businessRepo);

@@ -35,11 +35,11 @@ class LoadingButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: enabled ? () => action() : null,
           style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
-            ),
-            backgroundColor: backgroundColor,
-          ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              backgroundColor: backgroundColor,
+              shadowColor: backgroundColor),
           child: loading
               ? SizedBox(
                   height: 25,
@@ -50,7 +50,7 @@ class LoadingButton extends StatelessWidget {
                 )
               : Text(
                   title.tr(),
-                  style: TSB.regularSmall(textColor: titleColor),
+                  style: TSB.regularMedium(textColor: titleColor),
                 ),
         ),
       ),

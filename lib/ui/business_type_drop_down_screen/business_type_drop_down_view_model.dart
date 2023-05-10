@@ -25,15 +25,28 @@ class BusinessTypeDropDownViewModel extends BaseViewModel {
   }
 
   Future<void> setBusinessTypeList() async {
+    print("setBusinessTypeList--------? ${textController.text}");
     for (var i in businessTypeService.businessTypeList) {
       itemsList.add(i.name);
-      groupValue = itemsList.first;
-      notifyListeners();
+    }
+    notifyListeners();
+  }
+
+  Future<void> setInitalIndex() async {
+    for (var i in businessTypeService.businessTypeList) {
+      if (textController.text == i.id.toString()) {
+        groupValue = i.name;
+        print("groupValue $groupValue");
+        return;
+      } else {
+        groupValue = itemsList.first;
+      }
     }
   }
 
   void onItemSelect(String? val) {
     groupValue = val!;
+    print(val);
     onSelectId();
     notifyListeners();
   }

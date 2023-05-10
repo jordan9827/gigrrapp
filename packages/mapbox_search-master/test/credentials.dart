@@ -1,2 +1,0 @@
-const MAPBOX_KEY =
-    "";

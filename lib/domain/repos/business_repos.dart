@@ -11,6 +11,9 @@ abstract class BusinessRepo {
   Future<Either<Failure, BusinessProfileData>> addBusinessProfile(
       Map<String, dynamic> data);
 
+  Future<Either<Failure, BusinessProfileResponse>> updateBusinessProfile(
+      Map<String, dynamic> data);
+
   Future<Either<Failure, List<BusinessTypeCategoryList>>>
       businessTypeCategory();
 

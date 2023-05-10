@@ -34,7 +34,7 @@ class BusinessesViewWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              businesses.businessName,
+              businesses.categoryResp.name,
               style: TSB.semiBoldSmall(textColor: mainBlueColor),
             ),
             SizedBox(
