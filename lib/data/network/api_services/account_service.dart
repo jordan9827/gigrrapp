@@ -1,5 +1,6 @@
 import 'package:chopper/chopper.dart';
 
+import '../dtos/chat_response.dart';
 import '../dtos/web_view_response.dart';
 part 'account_service.chopper.dart';
 
@@ -15,4 +16,14 @@ abstract class AccountService extends ChopperService {
 
   @Get(path: "about-us")
   Future<Response<WebViewResponse>> aboutUsApi();
+
+  @Post(path: "save-chat")
+  Future<Response<ChatResponse>> saveChatApi(
+    @Body() Map<String, dynamic> credentials,
+  );
+
+  @Get(path: "get-chat")
+  Future<Response<ChatResponse>> getChatApi(
+    @Query('page') String id,
+  );
 }

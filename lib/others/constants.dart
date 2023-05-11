@@ -45,6 +45,7 @@ const greenBlueColor = Color(0xff18181C);
 const mainBlackColor = Colors.black;
 const mainWhiteColor = Colors.white;
 const mainPinkColor = Color(0xffEE356F);
+const lightPinkColor = Color(0xffFEEAF0);
 const mainGrayColor = Color(0xffF2F2F2);
 const mainBlueColor = Color(0xff4263FB);
 const independenceColor = Color(0xff48466D);
@@ -54,6 +55,7 @@ Color mainColor = Colors.blueAccent.shade400;
 const fieldsActiveElementColor = Color(0xff303239);
 const fieldsRegularColor = Color(0xff878787);
 const fieldsInActiveColor = Color(0xff6E6E6E);
+const fieldsActiveElementColor2 = Color(0xffB3B3B3);
 
 //text
 const textRegularColor = Color(0xff676767);

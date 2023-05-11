@@ -2,7 +2,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-// import 'package:mapbox_search/mapbox_search.dart' as search;
+import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -15,7 +15,6 @@ import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
     as auto;
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
-import '../../../../data/network/dtos/map_box_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
@@ -104,11 +103,16 @@ class EmployerRegisterViewModel extends BaseViewModel {
       final locationData = await location.getLocation();
       print("locationData ${locationData.latitude}");
 
-      var geoCodingService = ReverseGeoCoding(
+      var map = mapBox.ReverseGeoCoding(
         apiKey: MAPBOX_TOKEN,
       );
 
-      var getAddress = await geoCodingService.getAddress(locationData);
+      var getAddress = await map.getAddress(
+        mapBox.Location(
+          lat: locationData.latitude ?? 0.0,
+          lng: locationData.longitude ?? 0.0,
+        ),
+      );
       var addressData = getAddress!.first;
       print("addressData $addressData");
       await setAddressPlace(addressData);
@@ -124,7 +128,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> setAddressPlace(MapBoxPlace mapBoxPlace) async {
+  Future<void> setAddressPlace(mapBox.MapBoxPlace mapBoxPlace) async {
     print("$mapBoxPlace");
     setBusy(true);
     var addressData = mapBoxPlace.context ?? [];
@@ -134,7 +138,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
     stateController.text = addressData[4].text ?? "";
     pinCodeController.text = addressData[0].text ?? "";
     setBusy(false);
-
     notifyListeners();
   }
 
@@ -144,6 +147,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
         language: "en",
+        country: "in",
         onSelect: (place) async {
           var addressData = place.context!;
           setBusy(true);
