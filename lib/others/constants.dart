@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../util/others/size_config.dart';
 
-const String devBaseURL = "https://gigrr.in/admin";
+const String devBaseURL = "https://gigrr.in/development";
 const String qaBaseURL = "";
-const String stagingBaseURL = "";
+const String stagingBaseURL = "https://gigrr.in/admin";
 const String localBaseURL = "";
 
 const String FONT_FAMILY = "Figtree";
