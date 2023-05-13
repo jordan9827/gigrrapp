@@ -31,6 +31,8 @@ class ChatResponseData with _$ChatResponseData {
     @JsonKey(name: "to_user_id", defaultValue: 0) int toUserId,
     @JsonKey(name: "gigs_id", defaultValue: "") String gigsId,
     @JsonKey(name: "message", defaultValue: "") String message,
+    @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
+    @JsonKey(name: "created_at", defaultValue: "") String createdAt,
   ) = _ChatResponseData;
 
   factory ChatResponseData.fromJson(Map<String, dynamic> json) =>

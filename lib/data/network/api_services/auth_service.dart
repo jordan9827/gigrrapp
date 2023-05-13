@@ -15,7 +15,7 @@ abstract class AuthService extends ChopperService {
     @Body() Map<String, dynamic> credentials,
   );
 
-  @Post(path: "v1/verify_otp")
+  @Post(path: "v2/verify_otp")
   Future<Response<UserLoginResponse>> verifyOTPApi(
     @Body() Map<String, dynamic> credentials,
   );

@@ -93,9 +93,9 @@ class EditProfileViewModel extends BaseViewModel {
         (resp) {
           snackBarService.showSnackbar(message: resp.message);
           navigationService.back();
+          notifyListeners();
         },
       );
-      notifyListeners();
     }
   }
 

@@ -20,23 +20,18 @@ class PickBusinessImageViewModel extends BaseViewModel {
 
   XFile? get imageFile => _imageFile;
 
-  List<String>? imageList = [];
+  List<String> imageList = [];
   bool isListEmpty = true;
   bool fourImagesAdded = false;
 
   void updateImageList(List<String> list) {
     imageList = list;
-    if (list.isNotEmpty) updateEmptyItem(false);
+    updateEmptyItemList();
     print("updateImageList ${list.length}");
     notifyListeners();
   }
 
   Future pickImage(BuildContext context) async {
-    if (imageList!.length < 3) {
-      fourImagesAdded = false;
-    } else {
-      fourImagesAdded = true;
-    }
     XFile pickImage = await _showImagePicker(context);
     final imageFile = await cropImage(PickedFile(pickImage.path));
     if (imageFile != null) {
@@ -76,9 +71,9 @@ class PickBusinessImageViewModel extends BaseViewModel {
     response.fold((failure) {
       setBusy(false);
     }, (response) {
-      imageList!.add(response.imageList.first);
-      print("imageList ---${imageList!.length}");
-      updateEmptyItem(false);
+      imageList.add(response.imageList.first);
+      print("imageList ---${imageList.length}");
+      updateEmptyItemList();
       notifyListeners();
     });
   }
@@ -88,12 +83,13 @@ class PickBusinessImageViewModel extends BaseViewModel {
     final response = await authRepo.deleteImage(image);
 
     response.fold((failure) {
-      imageList!.removeAt(imageList!.indexOf(image));
-      updateEmptyItem(true);
+      imageList.removeAt(imageList.indexOf(image));
+      updateEmptyItemList();
+
       setBusy(false);
     }, (response) {
-      imageList!.removeAt(imageList!.indexOf(image));
-      updateEmptyItem(true);
+      imageList.removeAt(imageList.indexOf(image));
+      updateEmptyItemList();
       setBusy(false);
       notifyListeners();
     });
@@ -101,6 +97,19 @@ class PickBusinessImageViewModel extends BaseViewModel {
 
   void updateEmptyItem(val) {
     isListEmpty = val;
+    notifyListeners();
+  }
+
+  void updateEmptyItemList() {
+    if (imageList.isEmpty) {
+      updateEmptyItem(true);
+    } else if (imageList.isNotEmpty && imageList.length < 3) {
+      updateEmptyItem(false);
+      fourImagesAdded = false;
+    } else {
+      updateEmptyItem(false);
+      fourImagesAdded = true;
+    }
     notifyListeners();
   }
 }

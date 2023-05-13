@@ -40,6 +40,7 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "phone_number", defaultValue: "") String phoneNumber,
     @JsonKey(name: "country_code", defaultValue: "") String countryCode,
     @JsonKey(name: "status", defaultValue: "") String status,
+    @JsonKey(name: "profile_status", defaultValue: "") String profileStatus,
     @JsonKey(name: "email", defaultValue: "") String email,
     @JsonKey(name: "access_token", defaultValue: "") String accessToken,
     @JsonKey(name: "is_notification", defaultValue: "") String notificationType,
@@ -66,7 +67,7 @@ class UserAuthResponseData with _$UserAuthResponseData {
   }
 
   static Future<UserAuthResponseData> getEmptyUser() async {
-    return const UserAuthResponseData(
-        "", 0, "", "", "", "", "", "", "", "", "", "", 0, 0, "", "", "", "");
+    return const UserAuthResponseData("", 0, "", "", "", "", "", "", "", "", "",
+        "", "", 0, 0, "", "", "", "");
   }
 }

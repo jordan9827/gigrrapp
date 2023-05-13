@@ -19,7 +19,11 @@ class OTPVerifyScreenModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final authRepo = locator<Auth>();
   final user = locator<UserAuthResponseData>();
-
+  var enableResend = false;
+  final totalWaitTime = 10;
+  var min = 5;
+  Timer? timer;
+  var seconds = 0;
   String mobileNumber = "";
   String isVerificationId = "";
 
@@ -84,6 +88,27 @@ class OTPVerifyScreenModel extends BaseViewModel {
     }
   }
 
+  void startCountDownTimer() {
+    enableResend = false;
+    min = totalWaitTime ~/ 60;
+    seconds = totalWaitTime % 60;
+
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      final time = totalWaitTime - timer.tick;
+      min = time ~/ 60;
+      seconds = time % 60;
+      if (timer.tick == totalWaitTime) {
+        enableResend = true;
+        timer.cancel();
+      }
+      notifyListeners();
+    });
+  }
+
+  String get timerText {
+    return " $min:${seconds.toString().length == 1 ? "0$seconds" : seconds}";
+  }
+
   Future<void> verifyUserToServerApi() async {
     setBusy(true);
     final response = await authRepo.verifyOTP(await _getRequestForVerifyOtp());
@@ -106,12 +131,20 @@ class OTPVerifyScreenModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForVerifyOtp() async {
     Map<String, String> request = {};
+    request['role'] = user.roleId;
     request['country_code'] = "+91";
+    request['otp'] = pinController.text;
     request['mobile_no'] = mobileNumber;
     request['device_token'] = (await deviceToken());
     request['device_type'] = getDeviceType();
     request['certification_type'] = "development";
     log('Body Verify OTP :: $request');
     return request;
+  }
+
+  @override
+  void dispose() {
+    timer!.cancel();
+    super.dispose();
   }
 }

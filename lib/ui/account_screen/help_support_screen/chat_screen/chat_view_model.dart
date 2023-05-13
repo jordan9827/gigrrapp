@@ -34,15 +34,23 @@ class ChatViewModel extends BaseViewModel {
   }
 
   Future<void> fetchChatList() async {
-    setBusy(true);
-    final response = await accountRepo.getChat(user.id);
+    // setBusy(true);
+    _isLoading = true;
+    final response = await accountRepo.getChat();
 
     response.fold((failure) {
       setBusy(false);
     }, (response) {
       chatTextController.clear();
       helpChatList.clear();
-      helpChatList.insert(0, response);
+      helpChatList.addAll(response.chatList);
+
+      // if (!loadMore) {
+      //   helpChatList = response.chatList;
+      // } else {
+      //   helpChatList.addAll(response.chatList);
+      // }
+      _isLoading = false;
       setBusy(false);
       notifyListeners();
     });
@@ -50,21 +58,20 @@ class ChatViewModel extends BaseViewModel {
 
   Future<void> sentChat() async {
     if (validateInput()) {
-      _isLoading = true;
-
+      setBusy(true);
       final response =
           await accountRepo.saveChat(await _getRequestForSendChat());
 
       response.fold((failure) {
-        _isLoading = false;
+        setBusy(false);
       }, (response) {
         chatTextController.clear();
-        helpChatList.clear();
         helpChatList.insert(0, response);
-        _isLoading = false;
+        notifyListeners();
+        setBusy(false);
+        log("message Response--------->>>>\n $response");
       });
     }
-    notifyListeners();
   }
 
   Future<Map<String, String>> _getRequestForSendChat() async {

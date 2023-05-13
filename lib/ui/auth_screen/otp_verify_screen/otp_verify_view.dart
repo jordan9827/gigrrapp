@@ -22,7 +22,10 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-        onViewModelReady: (viewModel) => viewModel.sentVerifyOTP(widget.mobile),
+        onViewModelReady: (viewModel) {
+          //   viewModel.sentVerifyOTP(widget.mobile);
+          viewModel.startCountDownTimer();
+        },
         viewModelBuilder: () => OTPVerifyScreenModel(mobile: widget.mobile),
         builder: (context, viewModel, child) {
           return Scaffold(
@@ -148,9 +151,30 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             loading: viewModel.isBusy,
             action: viewModel.verifyOTPCall,
             title: "txt_verify",
-          )
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_24,
+          ),
+          _buildResendOTPView(viewModel)
         ],
       ),
     );
+  }
+
+  Widget _buildResendOTPView(OTPVerifyScreenModel viewModel) {
+    return viewModel.enableResend
+        ? InkWell(
+            onTap: viewModel.startCountDownTimer,
+            child: Text(
+              "resend_otp_text".tr(),
+              style: TSB.regularSmall(textColor: mainPinkColor),
+            ),
+          )
+        : Text(
+            "resend_otp_in_text".tr(
+              args: [viewModel.timerText],
+            ),
+            style: TSB.regularSmall(),
+          );
   }
 }

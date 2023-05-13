@@ -100,6 +100,9 @@
  "chat_content": "Start a conversation GiGi now!",
  "help_support_headline_1": "Frequently Asked Questions",
  "type_here": "Type here...",
+ "resend_otp_in_text": "Resend in {}",
+ "resend_otp_text": "Resend OTP",
+
  "": "",
  "": "",
  "": "",

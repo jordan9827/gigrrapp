@@ -7,6 +7,7 @@ import '../../util/exceptions/failures/failure.dart';
 import '../network/api_services/account_service.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/chat_response.dart';
+import '../network/dtos/get_chat_response.dart';
 import '../network/dtos/web_view_response.dart';
 
 class AccountImpl extends AccountRepo {
@@ -36,9 +37,9 @@ class AccountImpl extends AccountRepo {
   }
 
   @override
-  Future<Either<Failure, ChatResponseData>> getChat(int id) async {
+  Future<Either<Failure, GetChatResponseData>> getChat() async {
     try {
-      final response = await accountService.getChatApi(id.toString());
+      final response = await accountService.getChatApi();
 
       if (response.body == null) {
         throw Exception(response.error);
@@ -63,7 +64,6 @@ class AccountImpl extends AccountRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      // log.i("privacyPolicy Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res.data);
       }, error: (error) {
@@ -83,7 +83,6 @@ class AccountImpl extends AccountRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      // log.i("termsAndCondition Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res.data);
       }, error: (error) {
@@ -103,9 +102,27 @@ class AccountImpl extends AccountRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      // log.i("termsAndCondition Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> contactUS(Map<String, dynamic> data) async {
+    try {
+      final response = await accountService.contactUSApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(true);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

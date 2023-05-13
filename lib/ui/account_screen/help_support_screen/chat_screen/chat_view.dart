@@ -29,7 +29,7 @@ class _ChatScreenViewState extends State<ChatScreenView> {
       viewModelBuilder: () => ChatViewModel(),
       builder: (_, viewModel, child) => LoadingScreen(
         showDialogLoading: true,
-        loading: viewModel.isBusy,
+        loading: viewModel.isLoading,
         child: Scaffold(
           appBar: getAppBar(
             context,
@@ -76,7 +76,9 @@ class _ChatScreenViewState extends State<ChatScreenView> {
                 height: SizeConfig.margin_padding_10,
               ),
               Expanded(
-                child: _buildChatList(viewModel),
+                child: viewModel.helpChatList.isEmpty
+                    ? _buildEmptyList()
+                    : _buildChatList(viewModel),
               ),
               _buildBottomBar(viewModel),
             ],
@@ -88,6 +90,7 @@ class _ChatScreenViewState extends State<ChatScreenView> {
 
   Widget _buildChatList(ChatViewModel viewModel) {
     return ListView(
+      reverse: true,
       shrinkWrap: true,
       controller: viewModel.controller,
       children: viewModel.helpChatList.map(
@@ -128,7 +131,7 @@ class _ChatScreenViewState extends State<ChatScreenView> {
                 borderRadius:
                     BorderRadius.circular(SizeConfig.margin_padding_10),
               ),
-              child: viewModel.isLoading
+              child: viewModel.isBusy
                   ? SpinKitCircle(
                       size: SizeConfig.margin_padding_20,
                       color: Colors.white,
@@ -140,6 +143,15 @@ class _ChatScreenViewState extends State<ChatScreenView> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyList() {
+    return Center(
+      child: Image.asset(
+        ic_obj_no_data,
+        scale: 3,
       ),
     );
   }

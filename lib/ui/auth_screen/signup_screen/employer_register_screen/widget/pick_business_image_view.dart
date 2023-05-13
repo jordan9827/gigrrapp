@@ -49,10 +49,10 @@ class _PickBusinessImageWidgetState extends State<PickBusinessImageWidget> {
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
                         itemCount: viewModel.fourImagesAdded
-                            ? viewModel.imageList!.length
-                            : viewModel.imageList!.length + 1,
+                            ? viewModel.imageList.length
+                            : viewModel.imageList.length + 1,
                         itemBuilder: (BuildContext context, int index) {
-                          if (index == viewModel.imageList!.length) {
+                          if (index == viewModel.imageList.length) {
                             if (!viewModel.fourImagesAdded)
                               return _buildAddMorePicture(context, viewModel);
                           }
@@ -170,7 +170,7 @@ class _PickBusinessImageWidgetState extends State<PickBusinessImageWidget> {
             //   fit: BoxFit.cover,
             // ),
             child: CachedNetworkImage(
-              imageUrl: viewModel.imageList![index],
+              imageUrl: viewModel.imageList[index],
               alignment: Alignment.center,
               height: double.infinity,
               width: double.infinity,
@@ -185,7 +185,7 @@ class _PickBusinessImageWidgetState extends State<PickBusinessImageWidget> {
               padding: const EdgeInsets.all(5.0),
               child: InkWell(
                 onTap: () {
-                  viewModel.deleteImageApi(viewModel.imageList![index]);
+                  viewModel.deleteImageApi(viewModel.imageList[index]);
                 },
                 child: Container(
                   width: SizeConfig.margin_padding_24,

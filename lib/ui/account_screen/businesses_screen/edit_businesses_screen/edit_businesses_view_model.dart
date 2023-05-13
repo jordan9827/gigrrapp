@@ -95,7 +95,7 @@ class EditBusinessesViewModel extends BaseViewModel {
         (resp) {
           snackBarService.showSnackbar(message: resp.message);
           navigationService.back();
-          setBusy(false);
+          notifyListeners();
         },
       );
       notifyListeners();

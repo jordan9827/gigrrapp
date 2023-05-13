@@ -85,9 +85,11 @@ class LoginViewViewModel extends BaseViewModel {
 
   Future<void> googleLogin() async {
     if (initialIndex == 1) {
+      setBusy(true);
       GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
       await googleSignIn.signOut();
       var account = await googleSignIn.signIn();
+      setBusy(false);
       if (account != null) {
         var log = SocialSignInData(
           email: account.email,
@@ -147,19 +149,40 @@ class LoginViewViewModel extends BaseViewModel {
   Future<void> successBody(UserAuthResponseData res) async {
     await sharedPreferences.setString(
         PreferenceKeys.USER_DATA.text, json.encode(res));
-    navigationToSignup(res);
+    checkStatus(res);
     setBusy(false);
   }
 
-  void navigationToSignup(UserAuthResponseData res) {
-    if (res.status.toLowerCase() == "incompleted") {
-      if (res.roleId == "3") {
-        navigationService
-            .clearStackAndShow(Routes.employerPersonalInfoFormView);
-      } else
-        snackBarService.showSnackbar(message: "Coming Soon");
-    } else if (res.status.toLowerCase() == "active") {
-      navigationService.clearStackAndShow(Routes.homeScreenView);
+  void navigationToSignup(UserAuthResponseData res) {}
+
+  void checkStatus(UserAuthResponseData res) {
+    var value = res.profileStatus.toLowerCase();
+    switch (value) {
+      case "login":
+        if (res.roleId == "3") {
+          navigationService
+              .clearStackAndShow(Routes.employerPersonalInfoFormView);
+        } else {
+          snackBarService.showSnackbar(message: "Coming Soon");
+        }
+        break;
+      case "profile-completed":
+        if (res.roleId == "3") {
+          navigationService.clearStackAndShow(
+            Routes.oTPVerifyScreen,
+            arguments: OTPVerifyScreenArguments(
+              mobile: res.phoneNumber,
+            ),
+          );
+        } else {
+          snackBarService.showSnackbar(message: "Coming Soon");
+        }
+        break;
+      default:
+        if (res.roleId == "3") {
+          navigationService.clearStackAndShow(Routes.homeScreenView);
+        }
+        break;
     }
   }
 
