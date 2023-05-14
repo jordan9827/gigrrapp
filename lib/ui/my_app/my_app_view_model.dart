@@ -1,14 +1,17 @@
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
+import '../../data/local/preference_keys.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/reactive_services/business_type_service.dart';
 import '../../domain/repos/business_repos.dart';
 
 class MyAppViewModel extends BaseViewModel {
+  final sharedPreferences = locator<SharedPreferences>();
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
   final businessRepo = locator<BusinessRepo>();
@@ -25,16 +28,23 @@ class MyAppViewModel extends BaseViewModel {
     init();
     setInitialRoute();
   }
+
   void init() async {
     await checkLocation();
     await businessTypeCategoryApiCall();
   }
 
   void setInitialRoute() {
-    if (userData.accessToken.isNotEmpty) {
-      initialRoute = Routes.ratingReviewScreenView;
+    if (navigatorToIntroScreen()) {
+      initialRoute = Routes.introScreenView;
+    } else if (userData.accessToken.isNotEmpty) {
+      initialRoute = Routes.homeScreenView;
     }
     notifyListeners();
+  }
+
+  bool navigatorToIntroScreen() {
+    return sharedPreferences.getBool(PreferenceKeys.FIRST_TIME.text) ?? true;
   }
 
   Future<bool> routeUser() async {

@@ -39,4 +39,9 @@ abstract class BusinessService extends ChopperService {
 
   @Get(path: "get_all_business_profile")
   Future<Response<GetBusinessesResponse>> fetchAllBusinesses();
+
+  @Post(path: "rating-review")
+  Future<Response<BaseResponse>> ratingReviewApi(
+    @Body() Map<String, dynamic> body,
+  );
 }

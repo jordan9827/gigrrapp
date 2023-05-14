@@ -21,6 +21,8 @@ abstract class BusinessRepo {
 
   Future<Either<Failure, BaseResponse>> addGigs(Map<String, dynamic> data);
 
+  Future<Either<Failure, BaseResponse>> ratingReview(Map<String, dynamic> data);
+
   Future<Either<Failure, MyGigsResponseData>> fetchMyGigs();
 
   Future<Either<Failure, GetBusinessesResponseData>> fetchAllBusinessesApi();

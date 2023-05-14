@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../others/constants.dart';
 import '../../util/others/image_constants.dart';
 import '../../util/others/size_config.dart';
@@ -44,26 +44,38 @@ class _IntroScreenViewState extends State<IntroScreenView> {
             SizedBox(
               height: SizeConfig.margin_padding_20,
             ),
-            InkWell(
-              onTap: viewModel.navigationToLoginView,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                width: SizeConfig.margin_padding_40,
-                height: SizeConfig.margin_padding_40,
-                decoration: BoxDecoration(
-                  color: mainPinkColor,
-                  borderRadius: BorderRadius.circular(
-                    SizeConfig.margin_padding_35,
-                  ),
-                ),
-                child: Image.asset(arrow_forword),
-              ),
-            ),
+            _buildSkipButton(viewModel),
             SizedBox(
               height: SizeConfig.margin_padding_20,
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildSkipButton(IntroScreenViewModel viewModel) {
+    return InkWell(
+      onTap: viewModel.navigationToLoginView,
+      child: Container(
+        padding: EdgeInsets.all(10),
+        width: SizeConfig.margin_padding_20 * 2.2,
+        height: SizeConfig.margin_padding_20 * 2.2,
+        decoration: BoxDecoration(
+          color: mainPinkColor,
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_35,
+          ),
+        ),
+        child: viewModel.isBusy
+            ? Center(
+                heightFactor: 10,
+                child: SpinKitCircle(
+                  size: SizeConfig.margin_padding_18,
+                  color: mainWhiteColor,
+                ),
+              )
+            : Image.asset(arrow_forword),
       ),
     );
   }

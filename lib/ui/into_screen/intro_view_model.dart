@@ -16,8 +16,10 @@ class IntroScreenViewModel extends BaseViewModel {
   PageController pageController = PageController();
 
   Future<void> navigationToLoginView() async {
-    // await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
+    setBusy(true);
+    await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
     navigationService.replaceWith(Routes.loginView);
+    setBusy(false);
   }
 
   void scrollPageList(double size) async {

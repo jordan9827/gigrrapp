@@ -138,6 +138,27 @@ class BusinessImpl extends BusinessRepo {
   }
 
   @override
+  Future<Either<Failure, BaseResponse>> ratingReview(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await businessService.ratingReviewApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("addGigrr Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
   Future<Either<Failure, MyGigsResponseData>> fetchMyGigs() async {
     try {
       final response = await businessService.fetchGigsApi();

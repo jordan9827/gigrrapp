@@ -32,8 +32,8 @@ import '../ui/auth_screen/otp_verify_screen/otp_verify_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_business_form_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_personal_form_view.dart';
 import '../ui/home_screen/home_view.dart';
+import '../ui/into_screen/intro_view.dart';
 import '../ui/my_gigs/my_gigs_view.dart';
-import '../ui/onboading_screen/intro_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
 
 @StackedApp(
