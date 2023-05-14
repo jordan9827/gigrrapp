@@ -79,7 +79,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   void navigationToPaymentHistoryScreen() {
-    navigationService.navigateTo(Routes.paymentHistoryScreen);
+    navigationService.navigateTo(Routes.paymentHistoryScreenView);
   }
 
   void navigationToAboutScreen() {

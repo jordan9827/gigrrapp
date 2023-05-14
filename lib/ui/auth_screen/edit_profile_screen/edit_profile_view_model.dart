@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,7 +8,6 @@ import '../../../app/app.locator.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
     as auto;
-
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 

@@ -3,12 +3,12 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/auth_screen/signup_screen/employer_register_screen/widget/pick_business_image_view_model.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../../util/others/image_constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'pick_business_image_view_model.dart';
 
 class PickBusinessImageWidget extends StatefulWidget {
   final List<String>? imageList;

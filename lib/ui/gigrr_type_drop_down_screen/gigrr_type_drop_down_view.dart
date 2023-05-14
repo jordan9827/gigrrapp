@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../../util/others/text_styles.dart';
-import '../../data/network/dtos/gigrr_type_response.dart';
 import '../widgets/custom_drop_down.dart';
-import '../widgets/drop_down_widget.dart';
 import 'gigrr_type_drop_down_view_model.dart';
 
 class GigrrTypeDropDownView extends StatelessWidget {
   final TextEditingController controller;
+
   GigrrTypeDropDownView({Key? key, required this.controller}) : super(key: key);
 
   @override

@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../../../app/app.locator.dart';
-import '../../../../../data/network/dtos/business_type_category.dart';
 import '../../../../../domain/repos/auth_repos.dart';
 import '../../../../../domain/repos/business_repos.dart';
 import '../../data/network/dtos/gigrr_type_response.dart';
@@ -21,9 +19,11 @@ class GigrrTypeDropDownViewModel extends BaseViewModel {
   List<String> selectedItemList = [];
   List<String> itemsList = [];
   bool isVisible = false;
+
   GigrrTypeDropDownViewModel(TextEditingController controller) {
     this.textController = controller;
   }
+
   void onVisibleAction() {
     isVisible = !isVisible;
     notifyListeners();

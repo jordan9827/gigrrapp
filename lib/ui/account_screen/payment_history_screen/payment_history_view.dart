@@ -8,14 +8,15 @@ import '../../../util/others/text_styles.dart';
 import 'payment_history_view_model.dart';
 import 'widget/payment_widget.dart';
 
-class PaymentHistoryScreen extends StatefulWidget {
-  const PaymentHistoryScreen({Key? key}) : super(key: key);
+class PaymentHistoryScreenView extends StatefulWidget {
+  const PaymentHistoryScreenView({Key? key}) : super(key: key);
 
   @override
-  State<PaymentHistoryScreen> createState() => _PaymentHistoryScreenState();
+  State<PaymentHistoryScreenView> createState() =>
+      _PaymentHistoryScreenViewState();
 }
 
-class _PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
+class _PaymentHistoryScreenViewState extends State<PaymentHistoryScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

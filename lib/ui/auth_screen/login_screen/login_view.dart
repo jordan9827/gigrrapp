@@ -147,7 +147,7 @@ class _LoginViewState extends State<LoginView>
           ),
           InputFieldWidget(
             maxLength: 10,
-            hint: "Enter Mobile Number",
+            hint: "enter_mobile_no",
             keyboardType: TextInputType.numberWithOptions(decimal: true),
             controller: viewModel.mobileController,
             errorMsgValidation: viewModel.mobileMessage,
@@ -156,7 +156,7 @@ class _LoginViewState extends State<LoginView>
             height: SizeConfig.margin_padding_18,
           ),
           InputFieldWidget(
-            hint: "Enter Password",
+            hint: "enter_pwd",
             controller: viewModel.passwordController,
             errorMsgValidation: viewModel.pwdMessage,
           ),
@@ -165,9 +165,12 @@ class _LoginViewState extends State<LoginView>
           ),
           Align(
             alignment: Alignment.topRight,
-            child: Text(
-              "forgot_password".tr(),
-              style: TSB.regularSmall(textColor: independenceColor),
+            child: InkWell(
+              onTap: viewModel.navigationToForgetPwdView,
+              child: Text(
+                "forgot_password".tr(),
+                style: TSB.regularSmall(textColor: independenceColor),
+              ),
             ),
           ),
           SizedBox(

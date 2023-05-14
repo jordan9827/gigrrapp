@@ -6,6 +6,7 @@ import 'package:square_demo_architecture/ui/account_screen/help_support_screen/c
 import 'package:square_demo_architecture/ui/account_screen/help_support_screen/help_support_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/language_screen/language_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/payment_history_screen/payment_history_view.dart';
+import 'package:square_demo_architecture/ui/auth_screen/forgetpassword_screen/forgetPassword_view.dart';
 import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
 import 'package:square_demo_architecture/util/others/bottom_nav_bar_service.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -39,6 +40,7 @@ import '../ui/rating_review_screen/rating_review_view.dart';
 @StackedApp(
   routes: [
     MaterialRoute(page: LoginView),
+    MaterialRoute(page: ForgetPasswordView),
     MaterialRoute(page: OTPVerifyScreen),
     MaterialRoute(page: HomeScreenView),
     MaterialRoute(page: IntroScreenView),
@@ -57,7 +59,7 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: LanguageScreenView),
     MaterialRoute(page: NotificationScreenView),
     MaterialRoute(page: EditProfileScreenView),
-    MaterialRoute(page: PaymentHistoryScreen),
+    MaterialRoute(page: PaymentHistoryScreenView),
     MaterialRoute(page: EmployerPersonalInfoFormView),
     MaterialRoute(page: EmployerBusinessInfoFormView),
   ],

@@ -8,7 +8,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/widgets/map_box/reverse_geocoding.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'

@@ -35,7 +35,7 @@ class MyAppViewModel extends BaseViewModel {
   }
 
   void setInitialRoute() {
-    if (navigatorToIntroScreen()) {
+    if (icCheckIntroScreen()) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
       initialRoute = Routes.homeScreenView;
@@ -43,7 +43,7 @@ class MyAppViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  bool navigatorToIntroScreen() {
+  bool icCheckIntroScreen() {
     return sharedPreferences.getBool(PreferenceKeys.FIRST_TIME.text) ?? true;
   }
 

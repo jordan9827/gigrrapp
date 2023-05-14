@@ -16,8 +16,6 @@ import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../../util/enums/login_type.dart';
-import '../../../util/enums/user.dart';
-import '../../../util/exceptions/failures/failure.dart';
 
 class LoginViewViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -41,6 +39,10 @@ class LoginViewViewModel extends BaseViewModel {
     if (initialIndex == 1) {
       navigationService.navigateTo(Routes.employerPersonalInfoFormView);
     }
+  }
+
+  void navigationToForgetPwdView() {
+    navigationService.navigateTo(Routes.forgetPasswordView);
   }
 
   void mobileNoValidation() {
@@ -187,8 +189,8 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void navigationToOTPScreen() {
-    navigationService.navigateTo(Routes.oTPVerifyScreen,
-        arguments: OTPVerifyScreenArguments(mobile: "+916565656565"));
+    // navigationService.navigateTo(Routes.oTPVerifyScreen,
+    //     arguments: OTPVerifyScreenArguments(mobile: "+916565656565"));
   }
 
   Future<Map<String, String>> _getRequestForLogIn(

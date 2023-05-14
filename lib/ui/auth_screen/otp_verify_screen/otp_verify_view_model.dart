@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,7 +7,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
-import '../../../data/local/preference_keys.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
@@ -156,7 +154,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
       },
       (res) {
         navigationService.clearStackAndShow(Routes.homeScreenView);
-        setBusy(false);
       },
     );
     notifyListeners();
