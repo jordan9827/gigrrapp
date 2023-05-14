@@ -46,4 +46,7 @@ const String ic_search_blck = _baseUrl + "ic_search_blck.png";
 const String ic_chat = _baseUrl + "ic_chat.png";
 const String support_email = _baseUrl + "support_email.png";
 const String ic_send_wht = _baseUrl + "ic_send_wht.png";
+const String defalut = _baseUrl + "defalut.png";
+const String ic_select_rating = _baseUrl + "ic_select_rating.png";
+const String ic_unselect_rating = _baseUrl + "ic_unselect_rating.png";
 const String ic_obj_no_data = _baseUrl + "ic_obj_no_data.png";

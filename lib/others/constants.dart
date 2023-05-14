@@ -123,6 +123,7 @@ Future<String> appVersion() async {
 InputBorder inputBorder = OutlineInputBorder(
   borderRadius: BorderRadius.circular(10),
   borderSide: BorderSide(
+    width: 1.5,
     color: mainGrayColor,
   ),
 );

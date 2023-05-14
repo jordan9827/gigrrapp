@@ -20,7 +20,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   final user = locator<UserAuthResponseData>();
   var enableResend = false;
-  final totalWaitTime = 10;
+  final totalWaitTime = 300;
   var min = 5;
   Timer? timer;
   var seconds = 0;
@@ -50,45 +50,50 @@ class OTPVerifyScreenModel extends BaseViewModel {
     return true;
   }
 
-  void sentVerifyOTP(String mobile) async {
-    setBusy(true);
-    await firebaseAuth.verifyPhoneNumber(
-      phoneNumber: mobile,
-      verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {
-        snackBarService.showSnackbar(message: e.toString());
-      },
-      codeSent: (String verificationId, int? resendToken) {
-        this.isVerificationId = verificationId;
-      },
-      codeAutoRetrievalTimeout: (String verificationId) {},
-    );
-    setBusy(false);
-    notifyListeners();
-  }
-
-  void verifyOTPCall() async {
-    if (validateInput()) {
-      print("isVerificationId $isVerificationId");
-      setBusy(true);
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: isVerificationId,
-        smsCode: pinController.text,
-      );
-      try {
-        var result = await firebaseAuth.signInWithCredential(credential);
-        print("firebaseAuth result " + result.toString());
-        if (result.user != null) {
-          await verifyUserToServerApi();
-        }
-      } on FirebaseAuthException catch (_, e) {
-        snackBarService.showSnackbar(message: e.toString());
-        setBusy(false);
-      }
-    }
+  // void sentVerifyOTP(String mobile) async {
+  //   setBusy(true);
+  //   await firebaseAuth.verifyPhoneNumber(
+  //     phoneNumber: mobile,
+  //     verificationCompleted: (PhoneAuthCredential credential) {},
+  //     verificationFailed: (FirebaseAuthException e) {
+  //       snackBarService.showSnackbar(message: e.toString());
+  //     },
+  //     codeSent: (String verificationId, int? resendToken) {
+  //       this.isVerificationId = verificationId;
+  //     },
+  //     codeAutoRetrievalTimeout: (String verificationId) {},
+  //   );
+  //   setBusy(false);
+  //   notifyListeners();
+  // }
+  //
+  // void verifyOTPCall() async {
+  //   if (validateInput()) {
+  //     print("isVerificationId $isVerificationId");
+  //     setBusy(true);
+  //     PhoneAuthCredential credential = PhoneAuthProvider.credential(
+  //       verificationId: isVerificationId,
+  //       smsCode: pinController.text,
+  //     );
+  //     try {
+  //       var result = await firebaseAuth.signInWithCredential(credential);
+  //       print("firebaseAuth result " + result.toString());
+  //       if (result.user != null) {
+  //         await verifyUserToServerApi();
+  //       }
+  //     } on FirebaseAuthException catch (_, e) {
+  //       snackBarService.showSnackbar(message: e.toString());
+  //       setBusy(false);
+  //     }
+  //   }
+  // }
+  void init() async {
+    await sendOTP();
+    startCountDownTimer();
   }
 
   void startCountDownTimer() {
+    setBusy(true);
     enableResend = false;
     min = totalWaitTime ~/ 60;
     seconds = totalWaitTime % 60;
@@ -102,6 +107,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
         timer.cancel();
       }
       notifyListeners();
+      setBusy(false);
     });
   }
 
@@ -109,24 +115,51 @@ class OTPVerifyScreenModel extends BaseViewModel {
     return " $min:${seconds.toString().length == 1 ? "0$seconds" : seconds}";
   }
 
-  Future<void> verifyUserToServerApi() async {
+  Future<void> sendOTP() async {
     setBusy(true);
-    final response = await authRepo.verifyOTP(await _getRequestForVerifyOtp());
+    final response = await authRepo.sendOTP(await _getRequestForSendOtp());
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
       },
-      (res) => successBody(res),
+      (res) async {
+        snackBarService.showSnackbar(message: res.message);
+        setBusy(false);
+      },
     );
     notifyListeners();
   }
 
-  Future<void> successBody(UserAuthResponseData res) async {
-    // await sharedPreferences.setString(
-    //     PreferenceKeys.USER_DATA.text, json.encode(res));
-    navigationService.clearStackAndShow(Routes.homeScreenView);
-    setBusy(false);
+  void verifyOtpApiCall() {
+    if (pinController.text.length == 4) {
+      if (!enableResend) {
+        verifyOTP();
+      } else {
+        pinController.text = "";
+        FocusManager.instance.primaryFocus?.unfocus();
+        snackBarService.showSnackbar(message: "please Resend OTP");
+      }
+    }
+  }
+
+  void verifyOTP() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    setBusy(true);
+    final response = await authRepo.verifyOTP(await _getRequestForVerifyOtp());
+    response.fold(
+      (fail) {
+        pinController.clear();
+        snackBarService.showSnackbar(message: fail.errorMsg);
+        setBusy(false);
+        notifyListeners();
+      },
+      (res) {
+        navigationService.clearStackAndShow(Routes.homeScreenView);
+        setBusy(false);
+      },
+    );
+    notifyListeners();
   }
 
   Future<Map<String, String>> _getRequestForVerifyOtp() async {
@@ -139,6 +172,16 @@ class OTPVerifyScreenModel extends BaseViewModel {
     request['device_type'] = getDeviceType();
     request['certification_type'] = "development";
     log('Body Verify OTP :: $request');
+    return request;
+  }
+
+  Future<Map<String, String>> _getRequestForSendOtp() async {
+    Map<String, String> request = {};
+    request['role'] = user.roleId;
+    request['country_code'] = "+91";
+    request['mobile_no'] = mobileNumber;
+    request['otp_type'] = "sms";
+    log('Body Send OTP :: $request');
     return request;
   }
 

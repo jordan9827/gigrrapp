@@ -7,6 +7,7 @@ import '../../app/app.locator.dart';
 import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/repos/auth_repos.dart';
+import '../../domain/repos/notification_repos.dart';
 import '../../others/constants.dart';
 
 class AccountViewModel extends BaseViewModel {
@@ -15,6 +16,7 @@ class AccountViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final user = locator<UserAuthResponseData>();
   final authRepo = locator<Auth>();
+  final notificationRepo = locator<NotificationRepo>();
   bool notificationSwitch = true;
   String platformVersion = "";
 
@@ -28,7 +30,7 @@ class AccountViewModel extends BaseViewModel {
     notificationSwitch = !notificationSwitch;
     notifyListeners();
     var data = notificationSwitch ? "on" : "off";
-    var res = await authRepo.notificationSwitch(data);
+    var res = await notificationRepo.notificationSwitch(data);
     res.fold((l) => failRes(l), (r) => successForNotificationSwitch());
   }
 

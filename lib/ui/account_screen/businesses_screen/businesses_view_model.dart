@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -8,6 +7,9 @@ import '../../../app/app.router.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/business_repos.dart';
+
+final GlobalKey<RefreshIndicatorState> businessRefreshKey =
+    GlobalKey<RefreshIndicatorState>();
 
 class BusinessesViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -21,6 +23,12 @@ class BusinessesViewModel extends BaseViewModel {
     if (!isBusy) {
       navigationService.back();
     }
+  }
+
+  Future<void> refreshScreen() async {
+    businessesList = [];
+    await fetchAllBusinessesApi();
+    notifyListeners();
   }
 
   Future<void> navigatorToEditBusinessesView(GetBusinessesList e) async {

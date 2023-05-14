@@ -32,7 +32,7 @@ class MyAppViewModel extends BaseViewModel {
 
   void setInitialRoute() {
     if (userData.accessToken.isNotEmpty) {
-      initialRoute = Routes.homeScreenView;
+      initialRoute = Routes.ratingReviewScreenView;
     }
     notifyListeners();
   }

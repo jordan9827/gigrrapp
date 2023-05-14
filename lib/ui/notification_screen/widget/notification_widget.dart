@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../../data/network/dtos/get_notification_response.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 
 class NotificationWidget extends StatelessWidget {
-  NotificationWidget();
+  final NotificationList item;
+  NotificationWidget({required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +29,23 @@ class NotificationWidget extends StatelessWidget {
           SizedBox(
             width: SizeConfig.margin_padding_15,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Your Gigrr Suresh Kumar arrived.",
-                maxLines: 3,
-                softWrap: false,
-                style: TSB.regularLarge(),
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
-              ),
-              Text(
-                "Oct 16, 2021",
-                style: TSB.regularSmall(textColor: textNoticeColor),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.message,
+                  style: TSB.regularLarge(),
+                ),
+                SizedBox(
+                  height: SizeConfig.margin_padding_5,
+                ),
+                Text(
+                  "Oct 16, 2021",
+                  style: TSB.regularSmall(textColor: textNoticeColor),
+                ),
+              ],
+            ),
           )
         ],
       ),

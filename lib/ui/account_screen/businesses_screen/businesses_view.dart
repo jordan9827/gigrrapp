@@ -29,9 +29,13 @@ class _BusinessesScreenViewState extends State<BusinessesScreenView> {
           showBack: true,
           onBackPressed: viewModel.navigatorToBack,
         ),
-        body: LoadingScreen(
-          loading: viewModel.isBusy,
-          child: _buildMyGigsList(viewModel),
+        body: RefreshIndicator(
+          key: businessRefreshKey,
+          onRefresh: viewModel.refreshScreen,
+          child: LoadingScreen(
+            loading: viewModel.isBusy,
+            child: _buildMyGigsList(viewModel),
+          ),
         ),
       ),
     );

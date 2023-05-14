@@ -1,6 +1,6 @@
 import 'package:chopper/chopper.dart';
-
 import '../dtos/base_response.dart';
+import '../dtos/get_notification_response.dart';
 
 part 'notification_service.chopper.dart';
 
@@ -13,6 +13,9 @@ abstract class NotificationService extends ChopperService {
     @Query('status') String data,
   );
 
-  @Post(path: "logout")
-  Future<Response<BaseResponse>> logout();
+  @Get(path: "delete-notification")
+  Future<Response<BaseResponse>> deleteNotification();
+
+  @Get(path: "notifications")
+  Future<Response<GetNotificationResponse>> fetchNotifications();
 }

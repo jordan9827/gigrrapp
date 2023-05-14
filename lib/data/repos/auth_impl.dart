@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/network/dtos/upload_image_response.dart';
@@ -12,7 +11,7 @@ import '../local/preference_keys.dart';
 import '../network/api_services/auth_service.dart';
 import '../network/api_services/notification_service.dart';
 import '../network/app_chopper_client.dart';
-import '../network/dtos/business_type_category.dart';
+import '../network/dtos/base_response.dart';
 import '../network/dtos/user_auth_response_data.dart';
 
 class AuthImpl extends Auth {
@@ -95,6 +94,27 @@ class AuthImpl extends Auth {
   }
 
   @override
+  Future<Either<Failure, BaseResponse>> sendOTP(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await authService.sendOTPApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Login Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        return Right(user);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
   Future<Either<Failure, UserAuthResponseData>> verifyOTP(
       Map<String, dynamic> data) async {
     try {
@@ -110,26 +130,6 @@ class AuthImpl extends Auth {
         // await sharedPreferences.setString(
         //     PreferenceKeys.USER_DATA.text, json.encode(user.data));
         return Right(user.data);
-      }, error: (error) {
-        return Left(Failure(200, error.message));
-      });
-    } catch (e) {
-      log.e(e);
-      return Left(e.handleException());
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> notificationSwitch(String data) async {
-    try {
-      final response = await notificationService.notificationSwitch(data);
-
-      if (response.body == null) {
-        throw Exception(response.error);
-      }
-      log.i("Login Response ${response.body}");
-      return response.body!.map(success: (user) async {
-        return Right(true);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });
@@ -183,7 +183,7 @@ class AuthImpl extends Auth {
   @override
   Future<Either<Failure, bool>> logout() async {
     try {
-      final response = await notificationService.logout();
+      final response = await authService.logout();
 
       if (response.body == null) {
         throw Exception(response.error);

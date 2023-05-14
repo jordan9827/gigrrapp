@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/data/network/dtos/get_notification_response.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
+import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../others/common_app_bar.dart';
@@ -21,29 +23,53 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.fetchAllNotificationApi(),
       viewModelBuilder: () => NotificationScreenViewModel(),
       builder: (context, viewModel, child) => Scaffold(
-        backgroundColor:mainGrayColor,
+        backgroundColor: mainGrayColor,
         appBar: getAppBar(
           context,
           "notifications",
           showBack: true,
-          onBackPressed: () => viewModel.navigationToBack(),
-        ),
-        body: ListView(
-          children: [
-            _buildNotificationData(title: "Today", count: 3),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            _buildNotificationData(title: "Oct 16, 2021", count: 8),
+          onBackPressed: viewModel.navigationToBack,
+          actions: [
+            InkWell(
+              onTap: viewModel.deleteNotificationApi,
+              child: Container(
+                padding: EdgeInsets.only(
+                  right: SizeConfig.margin_padding_5,
+                ),
+                alignment: Alignment.center,
+                child: Text(
+                  "clear_all".tr(),
+                  style: TSB.regularSmall(textColor: mainWhiteColor),
+                ),
+              ),
+            )
           ],
+        ),
+        body: LoadingScreen(
+          loading: viewModel.isBusy,
+          child: ListView(
+            children: [
+              _buildNotificationData(
+                title: "Today",
+                list: viewModel.notificationList,
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildNotificationData({required String title, int? count}) {
+  Widget _buildNotificationData({
+    required String title,
+    required List<NotificationList> list,
+  }) {
     return Padding(
       padding: edgeInsetsMargin,
       child: Column(
@@ -54,15 +80,20 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
           ),
           Text(
             title,
-            style: TSB.semiBoldSmall(textColor: independenceColor),
+            style: TSB.semiBoldSmall(
+              textColor: independenceColor,
+            ),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_5,
           ),
-          ...List.generate(
-            count!,
-            (index) => NotificationWidget(),
-          ),
+          Column(
+            children: list
+                .map(
+                  (e) => NotificationWidget(item: e),
+                )
+                .toList(),
+          )
         ],
       ),
     );

@@ -7,23 +7,30 @@ import '../../util/exceptions/failures/failure.dart';
 
 abstract class Auth {
   Future<Either<Failure, UserAuthResponseData>> socialLogin(
-      Map<String, dynamic> data);
+    Map<String, dynamic> data,
+  );
 
   Future<Either<Failure, UserLoginResponse>> editProfile(
-      Map<String, dynamic> data);
+    Map<String, dynamic> data,
+  );
 
   Future<Either<Failure, UserAuthResponseData>> verifyOTP(
-      Map<String, dynamic> data);
+    Map<String, dynamic> data,
+  );
+
+  Future<Either<Failure, BaseResponse>> sendOTP(
+    Map<String, dynamic> data,
+  );
 
   Future<Either<Failure, UserAuthResponseData>> employerCompleteProfile(
-      Map<String, dynamic> data);
-
-  Future<Either<Failure, bool>> notificationSwitch(String data);
+    Map<String, dynamic> data,
+  );
 
   Future<Either<Failure, bool>> logout();
 
   Future<Either<Failure, UploadImageResponseData>> uploadImages(
-      String imagePath);
+    String imagePath,
+  );
 
   Future<Either<Failure, bool>> deleteImage(String imagePath);
 }

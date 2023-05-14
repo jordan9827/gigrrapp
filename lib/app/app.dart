@@ -1,5 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/repos/auth_impl.dart';
+import 'package:square_demo_architecture/data/repos/notification_impl.dart';
 import 'package:square_demo_architecture/ui/account_screen/account_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/help_support_screen/chat_screen/chat_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/help_support_screen/help_support_view.dart';
@@ -17,6 +18,7 @@ import '../domain/reactive_services/business_type_service.dart';
 import '../domain/repos/account_repos.dart';
 import '../domain/repos/auth_repos.dart';
 import '../domain/repos/business_repos.dart';
+import '../domain/repos/notification_repos.dart';
 import '../ui/account_screen/about_us_screen/about_us_view.dart';
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
 import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
@@ -32,6 +34,7 @@ import '../ui/auth_screen/signup_screen/employer_register_screen/employer_person
 import '../ui/home_screen/home_view.dart';
 import '../ui/my_gigs/my_gigs_view.dart';
 import '../ui/onboading_screen/intro_view.dart';
+import '../ui/rating_review_screen/rating_review_view.dart';
 
 @StackedApp(
   routes: [
@@ -41,6 +44,7 @@ import '../ui/onboading_screen/intro_view.dart';
     MaterialRoute(page: IntroScreenView),
     MaterialRoute(page: MyGigss),
     MaterialRoute(page: AccountView),
+    MaterialRoute(page: RatingReviewScreenView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: EditBusinessesScreenView),
     MaterialRoute(page: AboutUsScreenView),
@@ -70,10 +74,10 @@ import '../ui/onboading_screen/intro_view.dart';
       classType: AccountImpl,
       asType: AccountRepo,
     ),
-    // Factory(
-    //   classType: BusinessImpl,
-    //   asType: BusinessRepo,
-    // ),
+    Factory(
+      classType: NotificationImpl,
+      asType: NotificationRepo,
+    ),
     LazySingleton(
       classType: NavigationService,
     ),

@@ -59,6 +59,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
         businessTypeService.businessTypeList.first.id.toString();
     acquireCurrentLocation();
   }
+
   void setBool(bool val) {
     setBusy(val);
     notifyListeners();
@@ -287,8 +288,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
   Future<void> successBody(UserAuthResponseData res) async {
     await navigationService.navigateTo(
       Routes.oTPVerifyScreen,
-      arguments:
-          OTPVerifyScreenArguments(mobile: country + mobileController.text),
+      arguments: OTPVerifyScreenArguments(
+        mobile: mobileController.text,
+      ),
     );
     navigationToSignup(res);
     setBusy(false);

@@ -4,6 +4,7 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:stacked/stacked.dart';
+import '../../../others/loading_screen.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
@@ -11,6 +12,7 @@ import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {
   final String mobile;
+
   const OTPVerifyScreen({Key? key, required this.mobile}) : super(key: key);
 
   @override
@@ -22,27 +24,28 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-        onViewModelReady: (viewModel) {
-          //   viewModel.sentVerifyOTP(widget.mobile);
-          viewModel.startCountDownTimer();
-        },
+        onViewModelReady: (viewModel) => viewModel.init(),
         viewModelBuilder: () => OTPVerifyScreenModel(mobile: widget.mobile),
         builder: (context, viewModel, child) {
           return Scaffold(
-            body: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: _buildHeadingVerifyOTP(viewModel),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: _buildOTPField(viewModel),
-                    ),
-                  ],
+            body: LoadingScreen(
+              loading: viewModel.isBusy,
+              showDialogLoading: true,
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: _buildHeadingVerifyOTP(viewModel),
+                      ),
+                      Expanded(
+                        flex: 4,
+                        child: _buildOTPField(viewModel),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -114,22 +117,20 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             height: SizeConfig.margin_padding_50,
           ),
           PinCodeTextField(
-            // onCompleted: viewModel.navigationToHomeView,
-            // obscureText: true,
-            length: 6, scrollPadding: EdgeInsets.zero,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            obscureText: true,
+            length: 4,
+            scrollPadding: EdgeInsets.zero,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             animationType: AnimationType.fade,
             enableActiveFill: true,
             cursorColor: mainBlackColor,
-            // obscuringCharacter: '*',
-            // validator: viewModel.validateInput,
+            obscuringCharacter: '*',
             controller: viewModel.pinController,
             pinTheme: PinTheme(
               activeFillColor: mainGrayColor,
               inactiveFillColor: mainGrayColor,
               fieldHeight: SizeConfig.margin_padding_50,
               fieldWidth: SizeConfig.margin_padding_24 * 1.8,
-              // fieldOuterPadding: EdgeInsets.symmetric(horizontal: 8),
               activeColor: mainGrayColor,
               inactiveColor: mainGrayColor,
               selectedColor: mainGrayColor,
@@ -140,7 +141,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             backgroundColor: Colors.transparent,
             keyboardType: TextInputType.number,
             animationDuration: const Duration(milliseconds: 300),
-            onChanged: (onChanged) {},
+            onChanged: (value) => viewModel.verifyOtpApiCall(),
             textStyle: const TextStyle(color: Colors.black),
             appContext: context,
           ),
@@ -148,14 +149,23 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             height: SizeConfig.margin_padding_50,
           ),
           LoadingButton(
-            loading: viewModel.isBusy,
-            action: viewModel.verifyOTPCall,
-            title: "txt_verify",
+            // loading: viewModel.isBusy,
+            action: viewModel.init,
+            title: viewModel.enableResend
+                ? "resend_otp_text"
+                : "resend_otp_in_text".tr(
+                    args: [viewModel.timerText],
+                  ),
+            backgroundColor: viewModel.enableResend
+                ? mainPinkColor
+                : mainPinkColor.withOpacity(0.1),
+            titleColor:
+                viewModel.enableResend ? mainWhiteColor : mainBlackColor,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_24,
           ),
-          _buildResendOTPView(viewModel)
+          //  _buildResendOTPView(viewModel)
         ],
       ),
     );

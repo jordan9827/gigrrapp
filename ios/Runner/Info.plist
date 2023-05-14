@@ -38,7 +38,8 @@
     	<string>$(CURRENT_PROJECT_VERSION)</string>
     	<key>FacebookAppID</key>
     	<string>452449059785145</string>
-
+	    <key>FacebookClientToken</key>
+        <string>b454a74bc3e9a79e55d3254bf525a1d6</string>
     	<key>FacebookDisplayName</key>
     	<string>Gigrr App</string>
     	<key>FirebaseAppDelegateProxyEnabled</key>
