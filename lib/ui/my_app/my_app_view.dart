@@ -48,7 +48,6 @@ class MyAppView extends StatelessWidget {
                   ),
                   title: "Gigger App",
                   initialRoute: viewModel.initialRoute,
-                  //initialRoute: Routes.noInternetView,
                   locale: context.locale,
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,

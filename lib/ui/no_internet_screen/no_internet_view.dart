@@ -54,7 +54,8 @@ class NoInternetView extends StatelessWidget {
                       InkWell(
                         onTap: viewModel.checkInterNetStatus,
                         child: Container(
-                          height: kToolbarHeight * 0.7,
+                          height: kToolbarHeight * 0.75,
+                          width: double.infinity,
                           decoration: BoxDecoration(
                             color: mainPinkColor,
                             borderRadius: BorderRadius.circular(
