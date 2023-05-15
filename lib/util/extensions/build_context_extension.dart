@@ -8,4 +8,6 @@ extension BuildContextExtension on BuildContext {
   Brightness get platformBrightness => MediaQuery.of(this).platformBrightness;
 
   Size get dimension => MediaQuery.of(this).size;
+
+  MediaQueryData get mediaQueryData => MediaQuery.of(this);
 }

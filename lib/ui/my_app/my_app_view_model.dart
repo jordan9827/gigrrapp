@@ -2,6 +2,7 @@ import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
@@ -21,7 +22,7 @@ class MyAppViewModel extends BaseViewModel {
   final userData = locator<UserAuthResponseData>();
 
   late final bool isFirstTime;
-  var initialRoute = Routes.loginView;
+  var initialRoute = Routes.homeView;
   final dialogService = locator<DialogService>();
 
   MyAppViewModel() {
@@ -38,7 +39,7 @@ class MyAppViewModel extends BaseViewModel {
     if (icCheckIntroScreen()) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
-      initialRoute = Routes.homeScreenView;
+      initialRoute = Routes.homeView;
     }
     notifyListeners();
   }

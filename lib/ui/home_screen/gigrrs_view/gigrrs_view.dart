@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/gigrrs_view/gigrrs_view_model.dart';
+import 'package:square_demo_architecture/ui/home_screen/gigrrs_view/gigrrs_view_model.dart';
 import 'package:square_demo_architecture/ui/widgets/gigrr_card_widget.dart';
 import 'package:square_demo_architecture/ui/widgets/notification_icon.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
@@ -71,10 +71,18 @@ class GigrrsView extends StatelessWidget {
             scrollDirection: Axis.vertical,
             controller: viewModel.pageController,
             children: [
-              GiggrCardWidget(),
-              GiggrCardWidget(),
-              GiggrCardWidget(),
-              GiggrCardWidget(),
+              GiggrCardWidget(
+                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
+              ),
+              GiggrCardWidget(
+                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
+              ),
+              GiggrCardWidget(
+                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
+              ),
+              GiggrCardWidget(
+                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
+              ),
             ],
           ),
         );

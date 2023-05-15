@@ -8,7 +8,7 @@ import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/repos/business_repos.dart';
 
-class HomeScreenViewModel extends BaseViewModel {
+class HomeViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   BottomNavBarService bottomNavBarService = locator<BottomNavBarService>();
   final user = locator<UserAuthResponseData>();

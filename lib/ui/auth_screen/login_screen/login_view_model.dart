@@ -1,12 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_login_facebook/flutter_login_facebook.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart'
     show NavigationService, SnackbarService;
-import 'package:google_sign_in/google_sign_in.dart';
+
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../data/local/preference_keys.dart';
@@ -14,7 +17,6 @@ import '../../../data/network/dtos/social_login_data.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
-import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../../../util/enums/login_type.dart';
 
 class LoginViewViewModel extends BaseViewModel {
@@ -80,7 +82,7 @@ class LoginViewViewModel extends BaseViewModel {
     validation();
     if (pwdMessage.isEmpty && mobileMessage.isEmpty) {
       navigationService.navigateTo(
-        Routes.homeScreenView,
+        Routes.homeView,
       );
     }
   }
@@ -182,7 +184,7 @@ class LoginViewViewModel extends BaseViewModel {
         break;
       default:
         if (res.roleId == "3") {
-          navigationService.clearStackAndShow(Routes.homeScreenView);
+          navigationService.clearStackAndShow(Routes.homeView);
         }
         break;
     }

@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/ui/account_screen/account_view.dart';
-import 'package:square_demo_architecture/ui/gigrrs_view/gigrrs_view.dart';
-import 'package:square_demo_architecture/ui/my_gigrrs/my_gigrrs_view.dart';
-import 'package:square_demo_architecture/ui/my_gigs/my_gigs_view.dart';
+import 'package:square_demo_architecture/ui/home_screen/gigrrs_view/gigrrs_view.dart';
+import 'package:square_demo_architecture/ui/home_screen/my_gigrrs/my_gigrrs_view.dart';
+import 'package:square_demo_architecture/ui/home_screen/my_gigs/my_gigs_view.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+
 import '../../util/others/text_styles.dart';
 import 'home_view_model.dart';
 
-class HomeScreenView extends StatefulWidget {
-  const HomeScreenView({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
-  State<HomeScreenView> createState() => _HomeScreenViewState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomeScreenViewState extends State<HomeScreenView> {
+class _HomeViewState extends State<HomeView> {
   List<Widget> screens = [
     GigrrsView(),
     MyGigss(),
@@ -125,7 +126,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     final ThemeData themeData = Theme.of(context);
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => HomeScreenViewModel(),
+      viewModelBuilder: () => HomeViewModel(),
       builder: (context, viewModel, child) => Scaffold(
         backgroundColor: mainWhiteColor,
         body: Stack(

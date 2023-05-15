@@ -1,14 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/my_gigs/my_gigs_view_model.dart';
-import 'package:square_demo_architecture/ui/my_gigs/widget/my_gigs_view_widget.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:square_demo_architecture/ui/home_screen/my_gigs/widget/my_gigs_view_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
+import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
-import '../../others/loading_screen.dart';
-import '../../util/others/text_styles.dart';
-import '../widgets/notification_icon.dart';
+
+import '../../../others/loading_screen.dart';
+import '../../widgets/notification_icon.dart';
+import 'my_gigs_view_model.dart';
 
 class MyGigss extends StatelessWidget {
   const MyGigss({Key? key}) : super(key: key);

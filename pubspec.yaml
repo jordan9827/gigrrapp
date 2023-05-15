@@ -102,6 +102,9 @@ dependencies:
   flutter_mapbox_autocomplete:
     path: ./packages/flutter_mapbox_autocomplete
 
+  #to check internet connectivity
+  internet_connection_checker: ^1.0.0+1
+
   location: 4.4.0
 
   plugin_platform_interface: ^2.1.4

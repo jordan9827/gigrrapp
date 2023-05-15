@@ -302,7 +302,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
             .clearStackAndShow(Routes.employerPersonalInfoFormView);
       } else {}
     } else
-      navigationService.clearStackAndShow(Routes.homeScreenView);
+      navigationService.clearStackAndShow(Routes.homeView);
     setBusy(false);
   }
 

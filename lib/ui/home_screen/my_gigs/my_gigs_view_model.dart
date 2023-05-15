@@ -1,9 +1,8 @@
+import 'package:square_demo_architecture/app/app.locator.dart';
+import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart';
+import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../../app/app.locator.dart';
-import '../../data/network/dtos/my_gigs_response.dart';
-import '../../domain/repos/business_repos.dart';
 
 class MyGigsViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();

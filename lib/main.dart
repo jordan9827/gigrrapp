@@ -4,11 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:square_demo_architecture/ui/my_app/my_app_view.dart';
+import 'package:square_demo_architecture/util/others/internet_check_service.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 import 'app/app.locator.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,7 +47,7 @@ Future<void> main() async {
   );
   Future.delayed(Duration(seconds: 3))
       .then((value) => FlutterNativeSplash.remove());
-
+  locator<InternetCheckService>().initializeInternetCheckServices();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en')],

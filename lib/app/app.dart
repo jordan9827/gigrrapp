@@ -7,10 +7,15 @@ import 'package:square_demo_architecture/ui/account_screen/help_support_screen/h
 import 'package:square_demo_architecture/ui/account_screen/language_screen/language_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/payment_history_screen/payment_history_view.dart';
 import 'package:square_demo_architecture/ui/auth_screen/forgetpassword_screen/forgetPassword_view.dart';
+import 'package:square_demo_architecture/ui/home_screen/gigrr_detail_view/gigrr_detail_view.dart';
+import 'package:square_demo_architecture/ui/home_screen/my_gigs/my_gigs_view.dart';
+import 'package:square_demo_architecture/ui/no_internet_screen/no_internet_view.dart';
 import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
 import 'package:square_demo_architecture/util/others/bottom_nav_bar_service.dart';
+import 'package:square_demo_architecture/util/others/internet_check_service.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+
 import '../data/network/app_chopper_client.dart';
 import '../data/network/dtos/user_auth_response_data.dart';
 import '../data/repos/account_impl.dart';
@@ -34,7 +39,6 @@ import '../ui/auth_screen/signup_screen/employer_register_screen/employer_busine
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_personal_form_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/into_screen/intro_view.dart';
-import '../ui/my_gigs/my_gigs_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
 
 @StackedApp(
@@ -42,7 +46,7 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: LoginView),
     MaterialRoute(page: ForgetPasswordView),
     MaterialRoute(page: OTPVerifyScreen),
-    MaterialRoute(page: HomeScreenView),
+    MaterialRoute(page: HomeView),
     MaterialRoute(page: IntroScreenView),
     MaterialRoute(page: MyGigss),
     MaterialRoute(page: AccountView),
@@ -62,6 +66,8 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: PaymentHistoryScreenView),
     MaterialRoute(page: EmployerPersonalInfoFormView),
     MaterialRoute(page: EmployerBusinessInfoFormView),
+    MaterialRoute(page: GigrrDetailView),
+    MaterialRoute(page: NoInternetView),
   ],
   dependencies: [
     Presolve(
@@ -101,6 +107,9 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     ),
     LazySingleton(
       classType: BottomNavBarService,
+    ),
+    LazySingleton(
+      classType: InternetCheckService,
     ),
     Presolve(
       classType: BusinessImpl,

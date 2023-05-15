@@ -3,7 +3,12 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 
 class GiggrCardWidget extends StatefulWidget {
-  const GiggrCardWidget({Key? key}) : super(key: key);
+  final Function navigateToDetailScreen;
+
+  const GiggrCardWidget({
+    Key? key,
+    required this.navigateToDetailScreen,
+  }) : super(key: key);
 
   @override
   State<GiggrCardWidget> createState() => _GiggrCardWidgetState();
@@ -162,27 +167,30 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                       _buildSpacing(
                         width: SizeConfig.margin_padding_5,
                       ),
-                      Container(
-                        height: SizeConfig.margin_padding_29,
-                        width: SizeConfig.margin_padding_29,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                            color: mainWhiteColor,
-                            width: SizeConfig.margin_padding_2,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              SizeConfig.margin_padding_8,
+                      InkWell(
+                        onTap: () => widget.navigateToDetailScreen(),
+                        child: Container(
+                          height: SizeConfig.margin_padding_29,
+                          width: SizeConfig.margin_padding_29,
+                          decoration: BoxDecoration(
+                            color: Colors.transparent,
+                            border: Border.all(
+                              color: mainWhiteColor,
+                              width: SizeConfig.margin_padding_2,
+                            ),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(
+                                SizeConfig.margin_padding_8,
+                              ),
                             ),
                           ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "i",
-                            style: TextStyle(
-                              color: mainWhiteColor,
-                              fontSize: SizeConfig.textSizeSmall,
+                          child: Center(
+                            child: Text(
+                              "i",
+                              style: TextStyle(
+                                color: mainWhiteColor,
+                                fontSize: SizeConfig.textSizeSmall,
+                              ),
                             ),
                           ),
                         ),

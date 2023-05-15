@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/my_gigrrs/my_gigrrs_view_model.dart';
+import 'package:square_demo_architecture/ui/home_screen/my_gigrrs/my_gigrrs_view_model.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 
