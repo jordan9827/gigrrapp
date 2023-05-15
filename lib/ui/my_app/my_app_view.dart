@@ -1,7 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,8 +10,10 @@ import 'my_app_view_model.dart';
 
 class MyAppView extends StatelessWidget {
   final AdaptiveThemeMode initialThemeMode;
-  const MyAppView(
-      {super.key, this.initialThemeMode = AdaptiveThemeMode.system});
+  const MyAppView({
+    super.key,
+    this.initialThemeMode = AdaptiveThemeMode.system,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +48,7 @@ class MyAppView extends StatelessWidget {
                   ),
                   title: "Gigger App",
                   initialRoute: viewModel.initialRoute,
+                  //initialRoute: Routes.noInternetView,
                   locale: context.locale,
                   localizationsDelegates: context.localizationDelegates,
                   supportedLocales: context.supportedLocales,

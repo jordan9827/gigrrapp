@@ -4,32 +4,25 @@ import 'package:square_demo_architecture/app/app.router.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class InternetCheckService {
-  final internetConnectionChecker = InternetConnectionChecker();
-  final navigationService = locator<NavigationService>();
-  bool isNoInternetScreenPushed = false;
+  final _internetConnectionChecker = InternetConnectionChecker();
+  final _navigationService = locator<NavigationService>();
 
   void initializeInternetCheckServices() {
-    internetConnectionChecker.onStatusChange.listen((status) {
+    _internetConnectionChecker.onStatusChange.listen((status) {
       if (status == InternetConnectionStatus.disconnected) {
-        isNoInternetScreenPushed = true;
         navigateToNoInternetScreen();
-      } else if (isNoInternetScreenPushed) {
-        navigationService.back();
       }
     });
   }
 
-  Future<void> checkInterNetConnection() async {
+  Future<bool> checkInterNetConnection() async {
     final internetConnectionStatus =
-        await internetConnectionChecker.connectionStatus;
-    if (internetConnectionStatus == InternetConnectionStatus.connected &&
-        isNoInternetScreenPushed) {
-      navigationService.back();
-    }
+        await _internetConnectionChecker.connectionStatus;
+    return internetConnectionStatus == InternetConnectionStatus.connected;
   }
 
   void navigateToNoInternetScreen() {
-    navigationService.navigateTo(
+    _navigationService.navigateTo(
       Routes.noInternetView,
     );
   }
