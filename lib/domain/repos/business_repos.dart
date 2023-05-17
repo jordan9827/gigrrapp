@@ -8,7 +8,7 @@ import '../../data/network/dtos/gigrr_type_response.dart';
 import '../../util/exceptions/failures/failure.dart';
 
 abstract class BusinessRepo {
-  Future<Either<Failure, BusinessProfileData>> addBusinessProfile(
+  Future<Either<Failure, BusinessProfileResponse>> addBusinessProfile(
       Map<String, dynamic> data);
 
   Future<Either<Failure, BusinessProfileResponse>> updateBusinessProfile(

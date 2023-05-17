@@ -1,44 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
-import 'package:stacked/stacked.dart';
 import '../../../../others/loading_screen.dart';
 import '../../../widgets/cvm_text_form_field.dart';
-import '../../../widgets/toggle_app_bar_widget.dart';
+import '../../../widgets/map_box/google_map_box_view.dart';
 import 'employer_register_view_model.dart';
 
-class EmployerPersonalInfoFormView extends StatefulWidget {
-  const EmployerPersonalInfoFormView({Key? key}) : super(key: key);
+class EmployerPersonalInfoFormView extends StatelessWidget {
+  final EmployerRegisterViewModel viewModel;
 
-  @override
-  State<EmployerPersonalInfoFormView> createState() =>
-      _EmployerPersonalInfoFormViewState();
-}
+  const EmployerPersonalInfoFormView({Key? key, required this.viewModel})
+      : super(key: key);
 
-class _EmployerPersonalInfoFormViewState
-    extends State<EmployerPersonalInfoFormView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    return ViewModelBuilder.reactive(
-      viewModelBuilder: () => EmployerRegisterViewModel(),
-      builder: (context, viewModel, child) => LoadingScreen(
-        loading: viewModel.isBusy,
-        showDialogLoading: true,
-        child: Scaffold(
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildAppBar(viewModel),
-              Expanded(
-                flex: 5,
-                child: _buildFormView(viewModel),
-              )
-            ],
-          ),
-        ),
+    return LoadingScreen(
+      loading: viewModel.isBusy,
+      showDialogLoading: true,
+      child: Scaffold(
+        body: _buildFormView(viewModel),
       ),
     );
   }
@@ -99,32 +81,10 @@ class _EmployerPersonalInfoFormViewState
   }
 
   Widget _buildGoogleMap(EmployerRegisterViewModel viewModel) {
-    return Container(
-      height: SizeConfig.margin_padding_50 * 2.5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
-        child: GoogleMap(
-          zoomControlsEnabled: false,
-          mapType: MapType.terrain,
-          markers: viewModel.markers,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(viewModel.latitude, viewModel.longitude),
-            zoom: 1.4746,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAppBar(EmployerRegisterViewModel viewModel) {
-    return ToggleAppBarWidgetView(
-      appBarTitle: "create_your_profile",
-      firstTitle: "personal_info",
-      secondTitle: "business_info",
-      isCheck: true,
+    var latLng = viewModel.latLng;
+    return GoogleMapBoxScreen(
+      lat: latLng.latitude.toString(),
+      lng: latLng.longitude.toString(),
     );
   }
 }

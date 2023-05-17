@@ -21,7 +21,7 @@ class BusinessImpl extends BusinessRepo {
   final log = getLogger("BusinessImpl");
 
   @override
-  Future<Either<Failure, BusinessProfileData>> addBusinessProfile(
+  Future<Either<Failure, BusinessProfileResponse>> addBusinessProfile(
       Map<String, dynamic> data) async {
     try {
       final response = await businessService.addBusinessProfileApi(data);
@@ -31,7 +31,7 @@ class BusinessImpl extends BusinessRepo {
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
-        return Right(user.businessProfileData);
+        return Right(user);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

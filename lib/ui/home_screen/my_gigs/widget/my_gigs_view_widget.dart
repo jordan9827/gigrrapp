@@ -17,7 +17,7 @@ class MyGigsViewWidget extends StatelessWidget {
       width: double.infinity,
       margin: edgeInsetsMargin.copyWith(top: SizeConfig.margin_padding_10),
       child: Container(
-        padding: EdgeInsets.all(SizeConfig.margin_padding_17),
+        padding: EdgeInsets.all(SizeConfig.margin_padding_15),
         decoration: BoxDecoration(
           color: mainWhiteColor,
           borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),

@@ -19,6 +19,10 @@ class BusinessesViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   List<GetBusinessesList> businessesList = <GetBusinessesList>[];
 
+  BusinessesViewModel() {
+    fetchAllBusinessesApi();
+  }
+
   void navigatorToBack() {
     if (!isBusy) {
       navigationService.back();
@@ -29,6 +33,10 @@ class BusinessesViewModel extends BaseViewModel {
     businessesList = [];
     await fetchAllBusinessesApi();
     notifyListeners();
+  }
+
+  void navigationToAddBusinessView() {
+    navigationService.navigateTo(Routes.addBusinessesScreenView);
   }
 
   Future<void> navigatorToEditBusinessesView(GetBusinessesList e) async {

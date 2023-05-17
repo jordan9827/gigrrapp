@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
@@ -11,31 +12,26 @@ import '../../../../util/others/text_styles.dart';
 import '../../../auth_screen/signup_screen/employer_register_screen/widget/pick_business_image_view.dart';
 import '../../../business_type_drop_down_screen/business_type_drop_down_view.dart';
 import '../../../widgets/cvm_text_form_field.dart';
-import '../../../widgets/map_box/google_map_box_view.dart';
-import 'edit_businesses_view_model.dart';
+import 'add_businesses_view_model.dart';
 
-class EditBusinessesScreenView extends StatefulWidget {
-  final GetBusinessesList businessData;
-  const EditBusinessesScreenView({Key? key, required this.businessData})
-      : super(key: key);
+class AddBusinessesScreenView extends StatefulWidget {
+  const AddBusinessesScreenView({Key? key}) : super(key: key);
 
   @override
-  State<EditBusinessesScreenView> createState() =>
-      _EditBusinessesScreenViewState();
+  State<AddBusinessesScreenView> createState() =>
+      _AddBusinessesScreenViewState();
 }
 
-class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
+class _AddBusinessesScreenViewState extends State<AddBusinessesScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) =>
-          viewModel.initialDataLoad(widget.businessData),
-      viewModelBuilder: () => EditBusinessesViewModel(widget.businessData),
+      viewModelBuilder: () => AddBusinessesViewModel(),
       builder: (context, viewModel, child) => Scaffold(
         appBar: getAppBar(
           context,
-          "edit_businesses",
+          "add_businesses",
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
@@ -43,7 +39,7 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
           padding: edgeInsetsMargin,
           child: ListView(
             children: [
-              _buildEditBusinessForm(viewModel),
+              _buildAddBusinessForm(viewModel),
               SizedBox(
                 height: SizeConfig.margin_padding_24,
               ),
@@ -58,7 +54,7 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
     );
   }
 
-  Widget _buildEditBusinessForm(EditBusinessesViewModel viewModel) {
+  Widget _buildAddBusinessForm(AddBusinessesViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -82,7 +78,7 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
         ),
         CVMTextFormField(
           title: "add_pin_map",
-          formWidget: _buildGoogleMap(viewModel),
+          formWidget: _buildGoogleMap(),
         ),
         CVMTextFormField(
           title: "upload_business_pictures",
@@ -124,19 +120,31 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
     );
   }
 
-  Widget _buildGoogleMap(EditBusinessesViewModel viewModel) {
-    var latLng = widget.businessData;
-    return GoogleMapBoxScreen(
-      lat: latLng.latitude.toString(),
-      lng: latLng.longitude.toString(),
+  Widget _buildGoogleMap() {
+    return Container(
+      height: SizeConfig.margin_padding_50 * 2.5,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
+        child: GoogleMap(
+          zoomControlsEnabled: false,
+          mapType: MapType.terrain,
+          initialCameraPosition: CameraPosition(
+            target: LatLng(0.0, 0.0),
+            zoom: 1.4746,
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildSaveButton(EditBusinessesViewModel viewModel) {
+  Widget _buildSaveButton(AddBusinessesViewModel viewModel) {
     return LoadingButton(
       loading: viewModel.isBusy,
       title: "save",
-      action: viewModel.updateBusinessProfileApiCall,
+      action: viewModel.addBusinessProfileApiCall,
     );
   }
 }

@@ -4,6 +4,7 @@ import 'package:stacked/stacked.dart';
 import '../../../others/common_app_bar.dart';
 import '../../../others/loading_screen.dart';
 import '../../../util/others/size_config.dart';
+import '../../widgets/empty_data_screen.dart';
 import 'businesses_view_model.dart';
 import 'widget/businesses_view_widget.dart';
 
@@ -19,7 +20,7 @@ class _BusinessesScreenViewState extends State<BusinessesScreenView> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.fetchAllBusinessesApi(),
+      // onViewModelReady: (viewModel) => viewModel.fetchAllBusinessesApi(),
       viewModelBuilder: () => BusinessesViewModel(),
       builder: (_, viewModel, child) => Scaffold(
         backgroundColor: mainGrayColor,
@@ -28,6 +29,22 @@ class _BusinessesScreenViewState extends State<BusinessesScreenView> {
           "businesses",
           showBack: true,
           onBackPressed: viewModel.navigatorToBack,
+          actions: [
+            Container(
+              alignment: Alignment.center,
+              padding: EdgeInsets.only(
+                right: SizeConfig.margin_padding_10,
+              ),
+              child: InkWell(
+                onTap: viewModel.navigationToAddBusinessView,
+                child: Icon(
+                  Icons.add,
+                  size: SizeConfig.margin_padding_24,
+                  color: mainWhiteColor,
+                ),
+              ),
+            )
+          ],
         ),
         body: RefreshIndicator(
           key: businessRefreshKey,
@@ -45,6 +62,7 @@ class _BusinessesScreenViewState extends State<BusinessesScreenView> {
     return Container(
       child: ListView(
         children: [
+          if (viewModel.businessesList.isEmpty) EmptyDataScreenView(),
           Column(
             children: viewModel.businessesList
                 .map(

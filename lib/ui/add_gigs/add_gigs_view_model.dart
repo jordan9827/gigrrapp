@@ -52,10 +52,14 @@ class AddGigsViewModel extends BaseViewModel {
   }
 
   bool onWillPop() {
-    controller.previousPage(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.linear,
-    );
+    if (pageIndex == 0) {
+      navigationService.back();
+    } else {
+      controller.previousPage(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+    }
     return false;
   }
 

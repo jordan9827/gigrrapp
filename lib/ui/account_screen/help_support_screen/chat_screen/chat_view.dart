@@ -150,7 +150,7 @@ class _ChatScreenViewState extends State<ChatScreenView> {
   Widget _buildEmptyList() {
     return Center(
       child: Image.asset(
-        ic_obj_no_data,
+        ic_empty_data,
         scale: 3,
       ),
     );

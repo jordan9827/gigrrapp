@@ -9,6 +9,7 @@ import 'package:stacked/stacked.dart';
 import '../../others/common_app_bar.dart';
 import '../../util/others/image_constants.dart';
 import '../../util/others/text_styles.dart';
+import '../widgets/empty_data_screen.dart';
 import 'notification_view_model.dart';
 import 'widget/notification_widget.dart';
 
@@ -23,7 +24,6 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.fetchAllNotificationApi(),
       viewModelBuilder: () => NotificationScreenViewModel(),
       builder: (context, viewModel, child) => Scaffold(
         backgroundColor: mainGrayColor,
@@ -52,6 +52,7 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
           loading: viewModel.isBusy,
           child: ListView(
             children: [
+              if (viewModel.notificationList.isEmpty) EmptyDataScreenView(),
               _buildNotificationData(
                 title: "Today",
                 list: viewModel.notificationList,

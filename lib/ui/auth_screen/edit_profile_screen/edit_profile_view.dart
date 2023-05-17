@@ -8,6 +8,7 @@ import '../../../others/common_app_bar.dart';
 import '../../../others/loading_button.dart';
 import '../../../others/text_field_widget.dart';
 import '../../../util/others/text_styles.dart';
+import '../../widgets/map_box/google_map_box_view.dart';
 import 'edit_profile_view_model.dart';
 
 class EditProfileScreenView extends StatefulWidget {
@@ -72,7 +73,7 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
           onTap: viewModel.mapBoxPlace,
         ),
         _buildTitle("add_pin_map"),
-        _buildGoogleMap(),
+        _buildGoogleMap(viewModel),
       ],
     );
   }
@@ -122,23 +123,11 @@ class _EditProfileScreenViewState extends State<EditProfileScreenView> {
     );
   }
 
-  Widget _buildGoogleMap() {
-    return Container(
-      height: SizeConfig.margin_padding_50 * 2.5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
-        child: GoogleMap(
-          zoomControlsEnabled: false,
-          mapType: MapType.terrain,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(0.0, 0.0),
-            zoom: 1.4746,
-          ),
-        ),
-      ),
+  Widget _buildGoogleMap(EditProfileViewModel viewModel) {
+    var latLng = viewModel.latLng;
+    return GoogleMapBoxScreen(
+      lat: latLng.latitude.toString(),
+      lng: latLng.longitude.toString(),
     );
   }
 

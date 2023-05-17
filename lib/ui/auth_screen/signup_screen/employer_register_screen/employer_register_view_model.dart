@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:flutter/cupertino.dart';
@@ -17,7 +16,6 @@ import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
-import '../../../widgets/image_picker_util.dart';
 
 class EmployerRegisterViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -40,12 +38,10 @@ class EmployerRegisterViewModel extends BaseViewModel {
   double longitude = 0.0;
   String address = "";
   Location location = Location();
+  PageController controller = PageController();
 
   final Set<Marker> markers = {};
-  XFile? _imageFile;
-
-  XFile? get imageFile => _imageFile;
-  List<String>? serverImageList = [];
+  int pageIndex = 0;
 
   List<String>? imageList = [];
   bool isListEmpty = true;
@@ -59,17 +55,36 @@ class EmployerRegisterViewModel extends BaseViewModel {
     acquireCurrentLocation();
   }
 
+  bool onWillPop() {
+    if (pageIndex == 0) {
+      navigationService.back();
+    } else {
+      controller.previousPage(
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+    }
+    return false;
+  }
+
   void setBool(bool val) {
     setBusy(val);
     notifyListeners();
   }
 
+  void setPageIndex(int? val) {
+    pageIndex = val!;
+    notifyListeners();
+  }
+
   Future<void> markersLoadData() async {
-    markers.add(Marker(
-      markerId: MarkerId(""),
-      icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(latitude, longitude),
-    ));
+    markers.add(
+      Marker(
+        markerId: MarkerId(""),
+        icon: BitmapDescriptor.defaultMarker,
+        position: LatLng(latitude, longitude),
+      ),
+    );
 
     notifyListeners();
   }
@@ -88,11 +103,18 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   void navigationToBusinessFormView() {
     if (validationCompleteProfile()) {
-      navigationService.navigateTo(Routes.employerBusinessInfoFormView,
-          arguments: EmployerBusinessInfoFormViewArguments(
-            fullName: fullNameController.text,
-            mobileNumber: mobileController.text,
-          ));
+      controller.animateToPage(
+        1,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.linear,
+      );
+      // navigationService.navigateTo(
+      //   Routes.employerBusinessInfoFormView,
+      //   arguments: EmployerBusinessInfoFormViewArguments(
+      //     fullName: fullNameController.text,
+      //     mobileNumber: mobileController.text,
+      //   ),
+      // );
     }
   }
 
@@ -164,57 +186,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
-  }
-
-  Future pickImage(BuildContext context) async {
-    if (imageList!.length < 3) {
-      fourImagesAdded = false;
-    } else {
-      fourImagesAdded = true;
-    }
-    XFile pickImage = await _showImagePicker(context);
-    final imageFile = await cropImage(PickedFile(pickImage.path));
-    if (imageFile != null) {
-      _imageFile = XFile(imageFile.path);
-      await uploadMediaForBusiness(imageFile.path);
-      setBusy(false);
-      notifyListeners();
-    }
-  }
-
-  Future<XFile> _showImagePicker(context) async {
-    return await ImagePickerUtil.showCameraOrGalleryChooser(context);
-  }
-
-  Future<CroppedFile?> cropImage(PickedFile imageFile) async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarColor: mainWhiteColor,
-        ),
-      ],
-      aspectRatio: const CropAspectRatio(
-        ratioX: 1.0,
-        ratioY: 1.0,
-      ),
-      sourcePath: imageFile.path,
-      maxWidth: 512,
-      maxHeight: 512,
-    );
-    return croppedFile;
-  }
-
-  Future<void> uploadMediaForBusiness(String image) async {
-    setBusy(true);
-    final response = await authRepo.uploadImages(image);
-
-    response.fold((failure) {
-      setBusy(false);
-    }, (response) {
-      imageList!.add(response.imageList.first);
-      updateEmptyItem(false);
-      notifyListeners();
-    });
   }
 
   bool validationAddBusinessProfile() {
@@ -298,8 +269,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   void navigationToSignup(UserAuthResponseData res) {
     if (res.status.toLowerCase() == "incompleted") {
       if (res.roleId == "3") {
-        navigationService
-            .clearStackAndShow(Routes.employerPersonalInfoFormView);
+        navigationService.clearStackAndShow(Routes.employerRegisterScreenView);
       } else {}
     } else
       navigationService.clearStackAndShow(Routes.homeView);

@@ -26,6 +26,7 @@ import '../domain/repos/auth_repos.dart';
 import '../domain/repos/business_repos.dart';
 import '../domain/repos/notification_repos.dart';
 import '../ui/account_screen/about_us_screen/about_us_view.dart';
+import '../ui/account_screen/businesses_screen/add_businesses_screen/add_businesses_view.dart';
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
 import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
 import '../ui/account_screen/help_support_screen/support_email_screen/support_email_view.dart';
@@ -37,6 +38,7 @@ import '../ui/auth_screen/login_screen/login_view.dart';
 import '../ui/auth_screen/otp_verify_screen/otp_verify_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_business_form_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_personal_form_view.dart';
+import '../ui/auth_screen/signup_screen/employer_register_screen/employer_register_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/into_screen/intro_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
@@ -50,9 +52,11 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: IntroScreenView),
     MaterialRoute(page: MyGigss),
     MaterialRoute(page: AccountView),
+    MaterialRoute(page: EmployerRegisterScreenView),
     MaterialRoute(page: RatingReviewScreenView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: EditBusinessesScreenView),
+    MaterialRoute(page: AddBusinessesScreenView),
     MaterialRoute(page: AboutUsScreenView),
     MaterialRoute(page: AddGigsScreenView),
     MaterialRoute(page: PrivacyPolicyScreenView),
@@ -64,8 +68,6 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: NotificationScreenView),
     MaterialRoute(page: EditProfileScreenView),
     MaterialRoute(page: PaymentHistoryScreenView),
-    MaterialRoute(page: EmployerPersonalInfoFormView),
-    MaterialRoute(page: EmployerBusinessInfoFormView),
     MaterialRoute(page: GigrrDetailView),
     MaterialRoute(page: NoInternetView),
   ],

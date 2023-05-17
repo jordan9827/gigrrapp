@@ -83,13 +83,14 @@ class InputFieldWidget extends StatelessWidget {
           onTap: onTap,
           maxLength: maxLength,
           maxLines: maxLines,
+          style: TextStyle(color: mainBlackColor),
           keyboardType: keyboardType ?? TextInputType.text,
           readOnly: readOnly,
           controller: controller,
           decoration: InputDecoration(
             counterText: '',
             labelStyle: TextStyle(
-              color: Colors.blueAccent.shade400,
+              color: mainBlackColor,
             ),
             contentPadding: const EdgeInsets.all(10),
             hintText: hint.tr(),

@@ -39,7 +39,7 @@ class LoginViewViewModel extends BaseViewModel {
 
   void navigationToSignUpView() {
     if (initialIndex == 1) {
-      navigationService.navigateTo(Routes.employerPersonalInfoFormView);
+      navigationService.navigateTo(Routes.employerRegisterScreenView);
     }
   }
 
@@ -165,7 +165,7 @@ class LoginViewViewModel extends BaseViewModel {
       case "login":
         if (res.roleId == "3") {
           navigationService
-              .clearStackAndShow(Routes.employerPersonalInfoFormView);
+              .clearStackAndShow(Routes.employerRegisterScreenView);
         } else {
           snackBarService.showSnackbar(message: "Coming Soon");
         }

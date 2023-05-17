@@ -10,6 +10,10 @@ class NotificationScreenViewModel extends BaseViewModel {
   final notificationRepo = locator<NotificationRepo>();
   List<NotificationList> notificationList = <NotificationList>[];
 
+  NotificationScreenViewModel() {
+    fetchAllNotificationApi();
+  }
+
   void navigationToBack() {
     if (!isBusy) {
       navigationService.back();

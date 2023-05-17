@@ -18,7 +18,13 @@ class BusinessTypeDropDownViewModel extends BaseViewModel {
 
   BusinessTypeDropDownViewModel(TextEditingController controller) {
     this.textController = controller;
+    int();
   }
+  void int() async {
+    setBusinessTypeList();
+    await setInitialIndex();
+  }
+
   void onVisibleAction() {
     isVisible = !isVisible;
     notifyListeners();
@@ -32,16 +38,20 @@ class BusinessTypeDropDownViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> setInitalIndex() async {
-    for (var i in businessTypeService.businessTypeList) {
-      if (textController.text == i.id.toString()) {
+  Future<void> setInitialIndex() async {
+    var list = businessTypeService.businessTypeList;
+    for (var i in list) {
+      if (textController.text.toString() == i.id.toString()) {
+        print("setInitialIndex 11@ ${textController.text}");
         groupValue = i.name;
-        print("groupValue $groupValue");
         return;
-      } else {
+      } else if (textController.text.isEmpty) {
+        print("setInitialIndex 22@ ${textController.text}");
         groupValue = itemsList.first;
+        textController.text = list.first.id.toString();
       }
     }
+    notifyListeners();
   }
 
   void onItemSelect(String? val) {
