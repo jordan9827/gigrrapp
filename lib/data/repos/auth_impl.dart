@@ -33,9 +33,11 @@ class AuthImpl extends Auth {
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
+        var employer = (user.data.roleId == "3" ? true : false);
+        UserAuthResponseData data = user.data.copyWith(isEmployer: employer);
         locator.unregister<UserAuthResponseData>();
-        locator.registerSingleton<UserAuthResponseData>(user.data);
-        return Right(user.data);
+        locator.registerSingleton<UserAuthResponseData>(data);
+        return Right(data);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

@@ -22,7 +22,7 @@ class AccountViewModel extends BaseViewModel {
 
   AccountViewModel() {
     notificationSwitch = getNotificationSwitch();
-    print("token---->>> ${user.accessToken}");
+    print("token---->>> ${user.accessToken} ${user.isEmployer}");
     initPlatformVersion();
   }
 

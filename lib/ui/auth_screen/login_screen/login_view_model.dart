@@ -161,9 +161,10 @@ class LoginViewViewModel extends BaseViewModel {
 
   void checkStatus(UserAuthResponseData res) {
     var value = res.profileStatus.toLowerCase();
+    print("checkStatus --- ${res.isEmployer}");
     switch (value) {
       case "login":
-        if (res.roleId == "3") {
+        if (res.isEmployer) {
           navigationService
               .clearStackAndShow(Routes.employerRegisterScreenView);
         } else {
@@ -171,7 +172,7 @@ class LoginViewViewModel extends BaseViewModel {
         }
         break;
       case "profile-completed":
-        if (res.roleId == "3") {
+        if (res.isEmployer) {
           navigationService.clearStackAndShow(
             Routes.oTPVerifyScreen,
             arguments: OTPVerifyScreenArguments(
@@ -183,7 +184,7 @@ class LoginViewViewModel extends BaseViewModel {
         }
         break;
       default:
-        if (res.roleId == "3") {
+        if (res.isEmployer) {
           navigationService.clearStackAndShow(Routes.homeView);
         }
         break;

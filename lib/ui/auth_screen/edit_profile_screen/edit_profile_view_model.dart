@@ -33,7 +33,10 @@ class EditProfileViewModel extends BaseViewModel {
     fullNameController.text = user.fullName;
     mobileController.text = user.phoneNumber;
     addressController.text = user.address;
-    latLng = LatLng(double.parse(user.latitude), double.parse(user.longitude));
+    latLng = LatLng(
+      double.parse(user.latitude),
+      double.parse(user.longitude),
+    );
   }
 
   void navigationToBack() {

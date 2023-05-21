@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-import '../../../../data/network/dtos/get_businesses_response.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/loading_button.dart';
 import '../../../../others/text_field_widget.dart';
@@ -12,6 +10,7 @@ import '../../../../util/others/text_styles.dart';
 import '../../../auth_screen/signup_screen/employer_register_screen/widget/pick_business_image_view.dart';
 import '../../../business_type_drop_down_screen/business_type_drop_down_view.dart';
 import '../../../widgets/cvm_text_form_field.dart';
+import '../../../widgets/map_box/google_map_box_view.dart';
 import 'add_businesses_view_model.dart';
 
 class AddBusinessesScreenView extends StatefulWidget {
@@ -78,7 +77,7 @@ class _AddBusinessesScreenViewState extends State<AddBusinessesScreenView> {
         ),
         CVMTextFormField(
           title: "add_pin_map",
-          formWidget: _buildGoogleMap(),
+          formWidget: _buildGoogleMap(viewModel),
         ),
         CVMTextFormField(
           title: "upload_business_pictures",
@@ -120,23 +119,12 @@ class _AddBusinessesScreenViewState extends State<AddBusinessesScreenView> {
     );
   }
 
-  Widget _buildGoogleMap() {
-    return Container(
-      height: SizeConfig.margin_padding_50 * 2.5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_20),
-        child: GoogleMap(
-          zoomControlsEnabled: false,
-          mapType: MapType.terrain,
-          initialCameraPosition: CameraPosition(
-            target: LatLng(0.0, 0.0),
-            zoom: 1.4746,
-          ),
-        ),
-      ),
+  Widget _buildGoogleMap(AddBusinessesViewModel viewModel) {
+    var latLng = viewModel.latLng;
+    print("_buildGoogleMap----->>>  ${latLng.longitude}");
+    return GoogleMapBoxScreen(
+      lat: latLng.latitude.toString(),
+      lng: latLng.longitude.toString(),
     );
   }
 

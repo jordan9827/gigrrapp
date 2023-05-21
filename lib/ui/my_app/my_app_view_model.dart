@@ -22,7 +22,7 @@ class MyAppViewModel extends BaseViewModel {
   final userData = locator<UserAuthResponseData>();
 
   late final bool isFirstTime;
-  var initialRoute = Routes.homeView;
+  var initialRoute = Routes.loginView;
   final dialogService = locator<DialogService>();
 
   MyAppViewModel() {

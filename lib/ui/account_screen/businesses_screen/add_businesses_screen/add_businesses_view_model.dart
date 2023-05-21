@@ -45,9 +45,10 @@ class AddBusinessesViewModel extends BaseViewModel {
           setBusy(true);
           addressController.text = place.placeName ?? "";
           latLng = LatLng(
-              place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
+            place.geometry!.coordinates![1],
+            place.geometry!.coordinates![0],
+          );
           setBusy(false);
-
           notifyListeners();
         },
         limit: 7,

@@ -28,6 +28,7 @@ class _GoogleMapBoxScreenState extends State<GoogleMapBoxScreen> {
       "https%3A%2F%2Fdocs.mapbox.com%2Fapi%2Fimg%2Fcustom-marker.png";
   @override
   void initState() {
+    print("Google map ");
     String latLng = "${widget.lng},${widget.lat}";
     String url =
         "$baseUrl/url-$marker($latLng)/$latLng,${widget.zoom}/${widget.size}?access_token=$MAPBOX_TOKEN";
