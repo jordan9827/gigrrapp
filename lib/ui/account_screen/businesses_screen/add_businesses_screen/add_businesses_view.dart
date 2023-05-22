@@ -7,8 +7,8 @@ import '../../../../others/common_app_bar.dart';
 import '../../../../others/loading_button.dart';
 import '../../../../others/text_field_widget.dart';
 import '../../../../util/others/text_styles.dart';
-import '../../../auth_screen/signup_screen/employer_register_screen/widget/pick_business_image_view.dart';
 import '../../../business_type_drop_down_screen/business_type_drop_down_view.dart';
+import '../../../widgets/custom_image_picker/custom_image_picker_view.dart';
 import '../../../widgets/cvm_text_form_field.dart';
 import '../../../widgets/map_box/google_map_box_view.dart';
 import 'add_businesses_view_model.dart';
@@ -81,7 +81,7 @@ class _AddBusinessesScreenViewState extends State<AddBusinessesScreenView> {
         ),
         CVMTextFormField(
           title: "upload_business_pictures",
-          formWidget: PickBusinessImageWidget(
+          formWidget: CustomImagePickerView(
             imageList: viewModel.imageList,
           ),
         ),

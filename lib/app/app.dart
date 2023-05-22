@@ -36,8 +36,8 @@ import '../ui/add_gigs/add_gigs_view.dart';
 import '../ui/auth_screen/edit_profile_screen/edit_profile_view.dart';
 import '../ui/auth_screen/login_screen/login_view.dart';
 import '../ui/auth_screen/otp_verify_screen/otp_verify_view.dart';
-import '../ui/auth_screen/signup_screen/employer_register_screen/employer_business_form_view.dart';
-import '../ui/auth_screen/signup_screen/employer_register_screen/employer_personal_form_view.dart';
+import '../ui/auth_screen/signup_screen/candidate_register_screen/candidate_register_view.dart';
+import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candidate_kyc_screen/candidate_kyc_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_register_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/into_screen/intro_view.dart';
@@ -45,29 +45,37 @@ import '../ui/rating_review_screen/rating_review_view.dart';
 
 @StackedApp(
   routes: [
+    ///// Auth /////
     MaterialRoute(page: LoginView),
     MaterialRoute(page: ForgetPasswordView),
     MaterialRoute(page: OTPVerifyScreen),
+    MaterialRoute(page: EditProfileScreenView),
+    MaterialRoute(page: CandidateKYCScreenView),
+    MaterialRoute(page: EmployerRegisterScreenView),
+    MaterialRoute(page: CandidateRegisterScreenView),
+
+    ///// Businesses /////
+    MaterialRoute(page: BusinessesScreenView),
+    MaterialRoute(page: AddBusinessesScreenView),
+    MaterialRoute(page: EditBusinessesScreenView),
+
+    ///// Account /////
+    MaterialRoute(page: AccountView),
+    MaterialRoute(page: ChatScreenView),
+    MaterialRoute(page: AboutUsScreenView),
+    MaterialRoute(page: PaymentHistoryScreenView),
+    MaterialRoute(page: PrivacyPolicyScreenView),
+    MaterialRoute(page: HelpSupportScreenView),
+    MaterialRoute(page: SupportEmailScreenView),
+    MaterialRoute(page: TermsAndConditionScreenView),
+
     MaterialRoute(page: HomeView),
     MaterialRoute(page: IntroScreenView),
     MaterialRoute(page: MyGigss),
-    MaterialRoute(page: AccountView),
-    MaterialRoute(page: EmployerRegisterScreenView),
     MaterialRoute(page: RatingReviewScreenView),
-    MaterialRoute(page: BusinessesScreenView),
-    MaterialRoute(page: EditBusinessesScreenView),
-    MaterialRoute(page: AddBusinessesScreenView),
-    MaterialRoute(page: AboutUsScreenView),
     MaterialRoute(page: AddGigsScreenView),
-    MaterialRoute(page: PrivacyPolicyScreenView),
-    MaterialRoute(page: TermsAndConditionScreenView),
-    MaterialRoute(page: HelpSupportScreenView),
-    MaterialRoute(page: ChatScreenView),
-    MaterialRoute(page: SupportEmailScreenView),
     MaterialRoute(page: LanguageScreenView),
     MaterialRoute(page: NotificationScreenView),
-    MaterialRoute(page: EditProfileScreenView),
-    MaterialRoute(page: PaymentHistoryScreenView),
     MaterialRoute(page: GigrrDetailView),
     MaterialRoute(page: NoInternetView),
   ],

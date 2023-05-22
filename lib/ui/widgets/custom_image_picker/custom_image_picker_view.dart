@@ -8,24 +8,24 @@ import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../../util/others/image_constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'pick_business_image_view_model.dart';
 
-class PickBusinessImageWidget extends StatefulWidget {
+import 'custom_image_picker_view_model.dart';
+
+class CustomImagePickerView extends StatefulWidget {
   final List<String>? imageList;
-  const PickBusinessImageWidget({Key? key, this.imageList}) : super(key: key);
+  const CustomImagePickerView({Key? key, this.imageList}) : super(key: key);
 
   @override
-  State<PickBusinessImageWidget> createState() =>
-      _PickBusinessImageWidgetState();
+  State<CustomImagePickerView> createState() => _CustomImagePickerViewState();
 }
 
-class _PickBusinessImageWidgetState extends State<PickBusinessImageWidget> {
+class _CustomImagePickerViewState extends State<CustomImagePickerView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) =>
           viewModel.updateImageList(widget.imageList ?? []),
-      viewModelBuilder: () => PickBusinessImageViewModel(),
+      viewModelBuilder: () => CustomImagePickerViewModel(),
       builder: (_, viewModel, child) => viewModel.isBusy
           ? Center(
               heightFactor: 5,
@@ -114,7 +114,7 @@ class _PickBusinessImageWidgetState extends State<PickBusinessImageWidget> {
   }
 
   Widget _buildAddMorePicture(
-      BuildContext context, PickBusinessImageViewModel viewModel) {
+      BuildContext context, CustomImagePickerViewModel viewModel) {
     return InkWell(
       onTap: () => viewModel.pickImage(context),
       child: ClipRRect(
@@ -151,7 +151,7 @@ class _PickBusinessImageWidgetState extends State<PickBusinessImageWidget> {
     );
   }
 
-  Widget _buildListOfImages(PickBusinessImageViewModel viewModel, int index) {
+  Widget _buildListOfImages(CustomImagePickerViewModel viewModel, int index) {
     return Container(
       width: SizeConfig.margin_padding_50 * 2,
       margin: EdgeInsets.only(right: SizeConfig.margin_padding_8),

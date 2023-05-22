@@ -34,7 +34,7 @@ class ToggleAppBarWidgetView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: SizeConfig.margin_padding_29,
+            height: SizeConfig.margin_padding_35,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -47,7 +47,7 @@ class ToggleAppBarWidgetView extends StatelessWidget {
                     height: SizeConfig.margin_padding_10,
                   ),
                 ),
-              SizedBox(width: SizeConfig.margin_padding_10),
+              if (showBack) SizedBox(width: SizeConfig.margin_padding_10),
               Text(
                 appBarTitle.tr(),
                 style: TSB.regularLarge(textColor: mainWhiteColor),

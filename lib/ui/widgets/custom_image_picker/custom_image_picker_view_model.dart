@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:square_demo_architecture/ui/widgets/image_picker_util.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../../app/app.locator.dart';
@@ -8,9 +9,8 @@ import '../../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../../domain/repos/auth_repos.dart';
 import '../../../../../domain/repos/business_repos.dart';
 import '../../../../../others/constants.dart';
-import '../../../../widgets/image_picker_util.dart';
 
-class PickBusinessImageViewModel extends BaseViewModel {
+class CustomImagePickerViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();

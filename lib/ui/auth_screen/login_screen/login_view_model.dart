@@ -79,12 +79,12 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void login() {
-    validation();
-    if (pwdMessage.isEmpty && mobileMessage.isEmpty) {
-      navigationService.navigateTo(
-        Routes.homeView,
-      );
-    }
+    // validation();
+    // if (pwdMessage.isEmpty && mobileMessage.isEmpty) {
+    navigationService.navigateTo(
+      Routes.candidateRegisterScreenView,
+    );
+    //}
   }
 
   Future<void> googleLogin() async {

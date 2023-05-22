@@ -18,7 +18,7 @@ class MyAppViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   final businessTypeService = locator<BusinessTypeService>();
 
-  final log = getLogger('Splash Screen View');
+  final log = getLogger('My App View');
   final userData = locator<UserAuthResponseData>();
 
   late final bool isFirstTime;

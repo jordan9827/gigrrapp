@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../widgets/toggle_app_bar_widget.dart';
-import 'widget/employer_business_form_view.dart';
-import 'employer_register_view_model.dart';
-import 'widget/employer_personal_form_view.dart';
+import 'widget/candidate_role_form_view.dart';
+import 'candidate_register_view_model.dart';
+import 'widget/candidate_personal_form_view.dart';
 
-class EmployerRegisterScreenView extends StatefulWidget {
-  const EmployerRegisterScreenView({Key? key}) : super(key: key);
+class CandidateRegisterScreenView extends StatefulWidget {
+  const CandidateRegisterScreenView({Key? key}) : super(key: key);
 
   @override
-  State<EmployerRegisterScreenView> createState() =>
-      _EmployerRegisterScreenViewState();
+  State<CandidateRegisterScreenView> createState() =>
+      _CandidateRegisterScreenViewState();
 }
 
-class _EmployerRegisterScreenViewState
-    extends State<EmployerRegisterScreenView> {
+class _CandidateRegisterScreenViewState
+    extends State<CandidateRegisterScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => EmployerRegisterViewModel(),
+      viewModelBuilder: () => CandidateRegisterViewModel(),
       builder: (_, viewModel, child) => WillPopScope(
         onWillPop: () => Future.sync(viewModel.onWillPop),
         child: Scaffold(
@@ -32,10 +32,10 @@ class _EmployerRegisterScreenViewState
                   onPageChanged: viewModel.setPageIndex,
                   controller: viewModel.controller,
                   children: [
-                    EmployerPersonalInfoFormView(
+                    CandidatePersonalInfoFormView(
                       viewModel: viewModel,
                     ),
-                    EmployerBusinessInfoFormView(
+                    CandidateRoleFormView(
                       viewModel: viewModel,
                     )
                   ],
@@ -48,15 +48,13 @@ class _EmployerRegisterScreenViewState
     );
   }
 
-  Widget _buildAppBar(EmployerRegisterViewModel viewModel) {
+  Widget _buildAppBar(CandidateRegisterViewModel viewModel) {
     var isCheckIndex = viewModel.pageIndex == 0 ? true : false;
     return ToggleAppBarWidgetView(
       appBarTitle: "create_your_profile",
       firstTitle: "personal_info",
-      secondTitle: "business_info",
+      secondTitle: "role_availability",
       isCheck: isCheckIndex,
-      backAction: viewModel.navigatorToBack,
-      showBack: true,
     );
   }
 }

@@ -95,7 +95,9 @@ class CustomDropDownWidget extends StatelessWidget {
                           if (enableMultiSelected)
                             Checkbox(
                               onChanged: (val) => selectMultipleItemsAction!(
-                                  val ?? false, itemList.indexOf(e)),
+                                val ?? false,
+                                itemList.indexOf(e),
+                              ),
                               value: onMultiSelectedList!.contains(e),
                               activeColor: independenceColor,
                               visualDensity: VisualDensity(

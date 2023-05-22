@@ -1,20 +1,16 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
-import 'package:square_demo_architecture/ui/business_type_drop_down_screen/business_type_drop_down_view.dart';
+import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
+import 'package:square_demo_architecture/ui/widgets/map_box/google_map_box_view.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
-import '../../../../util/others/text_styles.dart';
-import '../../../widgets/cvm_text_form_field.dart';
-import '../../../widgets/map_box/google_map_box_view.dart';
-import 'employer_register_view_model.dart';
-import 'widget/pick_business_image_view.dart';
+import '../employer_register_view_model.dart';
 
-class EmployerBusinessInfoFormView extends StatelessWidget {
+class EmployerPersonalInfoFormView extends StatelessWidget {
   final EmployerRegisterViewModel viewModel;
 
-  const EmployerBusinessInfoFormView({Key? key, required this.viewModel})
+  const EmployerPersonalInfoFormView({Key? key, required this.viewModel})
       : super(key: key);
 
   @override
@@ -35,12 +31,16 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
       child: ListView(
         children: [
           CVMTextFormField(
-            title: "business_name",
-            hintForm: "i.e. Pakiza Garments",
-            controller: viewModel.businessNameController,
+            title: "full_name",
+            hintForm: "i.e. Jack Milton",
+            controller: viewModel.fullNameController,
           ),
-          BusinessTypeDropDownView(
-            controller: viewModel.businessTypeController,
+          CVMTextFormField(
+            maxLength: 10,
+            title: "mobile_number",
+            hintForm: "i.e. 989 898 9898",
+            controller: viewModel.mobileController,
+            keyboardType: TextInputType.numberWithOptions(decimal: true),
           ),
           CVMTextFormField(
             title: "address",
@@ -51,44 +51,26 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
           ),
           CVMTextFormField(
             title: "city",
-            hintForm: "i.e. Indore",
             controller: viewModel.cityController,
+            hintForm: "i.e. Indore",
           ),
           CVMTextFormField(
             title: "state",
-            hintForm: "i.e. Madhya Pradesh",
             controller: viewModel.stateController,
+            hintForm: "i.e. Madhya Pradesh",
           ),
           CVMTextFormField(
             title: "pinCode",
-            hintForm: "i.e. 452001",
             controller: viewModel.pinCodeController,
+            hintForm: "i.e. 452001",
           ),
           CVMTextFormField(
             title: "add_pin_map",
             formWidget: _buildGoogleMap(viewModel),
           ),
-          CVMTextFormField(
-            title: "upload_business_pictures",
-            formWidget: PickBusinessImageWidget(
-              imageList: viewModel.imageList,
-            ),
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
           LoadingButton(
-            action: viewModel.employerCompleteProfileApiCall,
-            backgroundColor: mainGrayColor,
-            titleColor: independenceColor,
-            title: "SKIP",
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
-          LoadingButton(
-            action: viewModel.addBusinessProfileApiCall,
-            title: "create_profile",
+            action: viewModel.navigationToBusinessFormView,
+            title: "next_add_business",
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,
