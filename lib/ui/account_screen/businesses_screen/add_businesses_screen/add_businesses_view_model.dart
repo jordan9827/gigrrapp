@@ -8,8 +8,7 @@ import '../../../../app/app.locator.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/business_repos.dart';
 import '../../../../others/constants.dart';
-import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
-    as auto;
+import 'package:mapbox_search/mapbox_search.dart' as auto;
 
 class AddBusinessesViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();

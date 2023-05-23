@@ -6,8 +6,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
-import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
-    as auto;
+import 'package:mapbox_search/mapbox_search.dart' as auto;
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 

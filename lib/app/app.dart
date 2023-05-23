@@ -20,15 +20,18 @@ import '../data/network/app_chopper_client.dart';
 import '../data/network/dtos/user_auth_response_data.dart';
 import '../data/repos/account_impl.dart';
 import '../data/repos/business_impl.dart';
+import '../data/repos/candidate_impl.dart';
 import '../domain/reactive_services/business_type_service.dart';
 import '../domain/repos/account_repos.dart';
 import '../domain/repos/auth_repos.dart';
 import '../domain/repos/business_repos.dart';
+import '../domain/repos/candidate_repos.dart';
 import '../domain/repos/notification_repos.dart';
 import '../ui/account_screen/about_us_screen/about_us_view.dart';
 import '../ui/account_screen/businesses_screen/add_businesses_screen/add_businesses_view.dart';
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
 import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
+import '../ui/account_screen/candidate_preferences_screen/candidate_preferences_view.dart';
 import '../ui/account_screen/help_support_screen/support_email_screen/support_email_view.dart';
 import '../ui/account_screen/privacy_policy/privacy_policy_view.dart';
 import '../ui/account_screen/terms_and_conditions/terms_and_condition_view.dart';
@@ -68,6 +71,7 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: HelpSupportScreenView),
     MaterialRoute(page: SupportEmailScreenView),
     MaterialRoute(page: TermsAndConditionScreenView),
+    MaterialRoute(page: CandidatePreferenceScreenView),
 
     MaterialRoute(page: HomeView),
     MaterialRoute(page: IntroScreenView),
@@ -91,6 +95,10 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     Factory(
       classType: AccountImpl,
       asType: AccountRepo,
+    ),
+    Factory(
+      classType: CandidateImpl,
+      asType: CandidateRepo,
     ),
     Factory(
       classType: NotificationImpl,

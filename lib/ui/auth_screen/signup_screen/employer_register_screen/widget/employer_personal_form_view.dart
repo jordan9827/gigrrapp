@@ -68,6 +68,9 @@ class EmployerPersonalInfoFormView extends StatelessWidget {
             title: "add_pin_map",
             formWidget: _buildGoogleMap(viewModel),
           ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
             title: "next_add_business",

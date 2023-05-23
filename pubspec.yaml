@@ -99,9 +99,9 @@ dependencies:
 
 # Apple Login
   sign_in_with_apple:
-# Map Box
-  flutter_mapbox_autocomplete:
-    path: ./packages/flutter_mapbox_autocomplete
+## Map Box
+#  flutter_mapbox_autocomplete:
+#    path: ./packages/flutter_mapbox_autocomplete
 
   #to check internet connectivity
   internet_connection_checker: ^1.0.0+1
@@ -110,7 +110,7 @@ dependencies:
 
   plugin_platform_interface: ^2.1.4
   mapbox_search:
-    path: ./packages/mapbox_address
+    path: ./packages/mapbox
 
   dotted_border: ^2.0.0+3
 # Image Picker

@@ -5,6 +5,7 @@ import '../../util/converter/json_to_type_converter.dart';
 import 'package:http/http.dart' as http;
 import 'api_services/auth_service.dart';
 import 'api_services/business_service.dart';
+import 'api_services/candidate_service.dart';
 import 'api_services/notification_service.dart';
 import 'interceptors/user_token_interceptor.dart';
 
@@ -20,6 +21,7 @@ class AppChopperClient extends ChopperClient {
             AuthService.create(),
             AccountService.create(),
             BusinessService.create(),
+            CandidateService.create(),
             NotificationService.create(),
           ],
         );

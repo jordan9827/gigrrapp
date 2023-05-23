@@ -8,8 +8,7 @@ import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:flutter_mapbox_autocomplete/flutter_mapbox_autocomplete.dart'
-    as auto;
+import 'package:mapbox_search/mapbox_search.dart' as auto;
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
@@ -151,7 +150,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
       final locationData = await location.getLocation();
       print("locationData ${locationData.latitude}");
 
-      var map = mapBox.ReverseGeoCoding(
+      var map = mapBox.MapBoxGeoCoding(
         apiKey: MAPBOX_TOKEN,
       );
 
@@ -163,7 +162,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
       );
       var addressData = getAddress!.first;
       print("addressData $addressData");
-      await setAddressPlace(addressData as auto.MapBoxPlace);
+      await setAddressPlace(addressData);
       notifyListeners();
     } else {
       serviceEnabled = await location.requestService();

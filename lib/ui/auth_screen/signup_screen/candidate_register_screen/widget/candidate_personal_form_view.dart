@@ -95,6 +95,9 @@ class CandidatePersonalInfoFormView extends StatelessWidget {
               imageList: viewModel.imageList,
             ),
           ),
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
           LoadingButton(
             action: viewModel.navigationToRoleFormView,
             title: "next_to_role_avail",

@@ -11,6 +11,7 @@ PreferredSizeWidget getAppBar(
   onBackPressed,
   List<Widget>? actions,
   Color? backgroundColor,
+  Color textColor = Colors.white,
   PreferredSizeWidget? bottom,
 }) {
   SizeConfig.init(context);
@@ -21,7 +22,7 @@ PreferredSizeWidget getAppBar(
       child: Text(
         title.tr(),
         style: TSB.regularLarge(
-          textColor: Colors.white,
+          textColor: textColor,
         ),
       ),
     ),
