@@ -34,7 +34,7 @@ class PreferenceCustomUIWidget extends StatelessWidget {
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(
-            SizeConfig.margin_padding_13,
+            SizeConfig.margin_padding_15,
           ),
           decoration: BoxDecoration(
             color: mainWhiteColor,

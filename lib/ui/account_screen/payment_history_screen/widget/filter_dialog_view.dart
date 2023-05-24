@@ -8,6 +8,7 @@ import '../../../../others/text_field_widget.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/size_config.dart';
 import '../../../../util/others/text_styles.dart';
+import '../../../widgets/custom_date_picker.dart';
 import '../payment_history_view_model.dart';
 
 class FilterDialogView extends StatefulWidget {
@@ -69,22 +70,18 @@ class FilterDialogViewState extends State<FilterDialogView> {
             ),
             Row(
               children: [
-                _buildDataPicker(
+                CustomDatePickerWidget(
                   dataType: "from_date",
+                  initialDate: widget.viewModel.selectedDate,
                   data: widget.viewModel.formDateController.text,
-                  onTap: () => selectDatePicker(
-                    context,
-                    onPicked: widget.viewModel.pickFormDate,
-                  ),
+                  onTap: widget.viewModel.pickFormDate,
                 ),
                 SizedBox(width: SizeConfig.margin_padding_10),
-                _buildDataPicker(
+                CustomDatePickerWidget(
                   dataType: "to_date",
+                  initialDate: widget.viewModel.selectedDate,
                   data: widget.viewModel.toDateController.text,
-                  onTap: () => selectDatePicker(
-                    context,
-                    onPicked: widget.viewModel.pickToDate,
-                  ),
+                  onTap: widget.viewModel.pickToDate,
                 )
               ],
             ),
@@ -124,88 +121,5 @@ class FilterDialogViewState extends State<FilterDialogView> {
         ),
       ),
     );
-  }
-
-  Widget _buildDataPicker({
-    required String dataType,
-    required String data,
-    Function()? onTap,
-  }) {
-    return Expanded(
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          padding: EdgeInsets.all(
-            SizeConfig.margin_padding_10,
-          ),
-          decoration: BoxDecoration(
-            color: mainGrayColor,
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                dataType.tr(),
-                style: TextStyle(color: textNoticeColor),
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    ic_calender_blck,
-                    height: SizeConfig.margin_padding_15,
-                    color: mainPinkColor,
-                  ),
-                  SizedBox(
-                    width: SizeConfig.margin_padding_5,
-                  ),
-                  Text(
-                    data,
-                    style: TSB.regularSmall(),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> selectDatePicker(
-    BuildContext context, {
-    Function(DateTime)? onPicked,
-  }) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: widget.viewModel.selectedDate,
-      initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime(2015),
-      lastDate: DateTime(2101),
-      builder: (context, child) {
-        return Theme(
-          data: Theme.of(context).copyWith(
-            colorScheme: ColorScheme.light(
-              primary: independenceColor, // <-- SEE HERE
-              onPrimary: Colors.white, // <-- SEE HERE
-              onSurface: Colors.black, // <-- SEE HERE
-            ),
-            textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(
-                foregroundColor: independenceColor, // button text color
-              ),
-            ),
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (picked != null) {
-      onPicked!(picked);
-      setState(() {});
-    }
   }
 }

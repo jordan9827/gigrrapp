@@ -8,6 +8,7 @@ import '../../../others/loading_button.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
+import '../../widgets/custom_date_picker.dart';
 import 'candidate_preferences_view_model.dart';
 import 'preference_custom_ui_widget.dart';
 
@@ -25,7 +26,9 @@ class _CandidatePreferenceScreenViewState
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (v) => v.init(),
+      onViewModelReady: (viewModel) async {
+        viewModel.init();
+      },
       viewModelBuilder: () => CandidatePreferenceViewModel(),
       builder: (_, viewModel, child) => LoadingScreen(
         loading: viewModel.isBusy,
@@ -58,6 +61,7 @@ class _CandidatePreferenceScreenViewState
                 _buildLocationView(),
                 _buildDistanceView(viewModel),
                 _buildPayRangeView(viewModel),
+                _buildAvailabilityDateView(viewModel),
                 _buildAvailabilityShiftView(viewModel),
                 _buildSkillsView(viewModel),
                 SizedBox(
@@ -137,7 +141,9 @@ class _CandidatePreferenceScreenViewState
             ),
             child: SliderTheme(
               data: SliderThemeData(
+                trackShape: CustomTrackShape(),
                 overlayShape: SliderComponentShape.noThumb,
+                valueIndicatorColor: Colors.pink,
               ),
               child: Slider(
                 value: viewModel.maxDiscount.toDouble(),
@@ -185,13 +191,18 @@ class _CandidatePreferenceScreenViewState
             ),
             child: SliderTheme(
               data: SliderThemeData(
+                rangeTickMarkShape: const RoundRangeSliderTickMarkShape(
+                  tickMarkRadius: 0,
+                ),
+                valueIndicatorColor: Colors.pink,
                 overlayShape: SliderComponentShape.noThumb,
               ),
               child: RangeSlider(
                 activeColor: mainPinkColor,
                 inactiveColor: mainGrayColor,
                 values: viewModel.currentRangeValues,
-                max: viewModel.max,
+                min: 0,
+                max: 1000,
                 divisions: 10,
                 labels: RangeLabels(
                   viewModel.currentRangeValues.start.round().toString(),
@@ -222,35 +233,52 @@ class _CandidatePreferenceScreenViewState
           Row(
             children: viewModel.availShitList.map(
               (e) {
-                var isCheck = viewModel.initialAvailShit == e;
+                var isSelect = viewModel.initialAvailShit == e;
                 return InkWell(
                   onTap: () => viewModel.setAvailShit(e),
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.margin_padding_8,
-                      horizontal: SizeConfig.margin_padding_13,
-                    ),
-                    margin: EdgeInsets.only(
-                      right: SizeConfig.margin_padding_10,
-                    ),
-                    decoration: BoxDecoration(
-                      color: mainWhiteColor,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: isCheck ? mainPinkColor : independenceColor,
-                      ),
-                    ),
-                    child: Text(
-                      e,
-                      style: TSB.regularVSmall(
-                        textColor: isCheck ? mainPinkColor : independenceColor,
-                      ),
-                    ),
+                  child: _buildCustomSelectBox(
+                    text: e,
+                    isSelect: isSelect,
                   ),
                 );
               },
             ).toList(),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAvailabilityDateView(CandidatePreferenceViewModel viewModel) {
+    return PreferenceCustomUIWidget(
+      title: 'availability',
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "set_payment_range".tr(),
+            style: TSB.regularSmall(),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_15,
+          ),
+          Row(
+            children: [
+              CustomDatePickerWidget(
+                dataType: "from_date",
+                data: viewModel.formDateController.text,
+                onTap: viewModel.pickFormDate,
+                initialDate: viewModel.selectedDate,
+              ),
+              SizedBox(width: SizeConfig.margin_padding_10),
+              CustomDatePickerWidget(
+                dataType: "to_date",
+                initialDate: viewModel.selectedDate,
+                data: viewModel.toDateController.text,
+                onTap: viewModel.pickToDate,
+              )
+            ],
+          ),
         ],
       ),
     );
@@ -269,31 +297,20 @@ class _CandidatePreferenceScreenViewState
           SizedBox(
             height: SizeConfig.margin_padding_15,
           ),
-          Row(
+          Wrap(
+            alignment: WrapAlignment.start,
             children: viewModel.businessTypeService.gigrrTypeList.map(
               (e) {
+                var isSelect = viewModel.addSkillItemList.contains(e);
                 return InkWell(
-                  onTap: () => viewModel.setGigrrTypeSkills(e),
+                  onTap: () => viewModel.setSkillsItem(e),
                   child: Container(
-                    padding: EdgeInsets.symmetric(
-                      vertical: SizeConfig.margin_padding_8,
-                      horizontal: SizeConfig.margin_padding_13,
-                    ),
                     margin: EdgeInsets.only(
-                      right: SizeConfig.margin_padding_10,
+                      bottom: SizeConfig.margin_padding_13,
                     ),
-                    decoration: BoxDecoration(
-                      color: mainWhiteColor,
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(
-                        color: mainPinkColor,
-                      ),
-                    ),
-                    child: Text(
-                      e.name,
-                      style: TSB.regularVSmall(
-                        textColor: mainPinkColor,
-                      ),
+                    child: _buildCustomSelectBox(
+                      text: e.name,
+                      isSelect: isSelect,
                     ),
                   ),
                 );
@@ -301,6 +318,31 @@ class _CandidatePreferenceScreenViewState
             ).toList(),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _buildCustomSelectBox({bool isSelect = false, String text = ""}) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        vertical: SizeConfig.margin_padding_8,
+        horizontal: SizeConfig.margin_padding_13,
+      ),
+      margin: EdgeInsets.only(
+        right: SizeConfig.margin_padding_10,
+      ),
+      decoration: BoxDecoration(
+        color: mainWhiteColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: isSelect ? mainPinkColor : independenceColor,
+        ),
+      ),
+      child: Text(
+        text,
+        style: TSB.regularVSmall(
+          textColor: isSelect ? mainPinkColor : mainBlackColor,
+        ),
       ),
     );
   }

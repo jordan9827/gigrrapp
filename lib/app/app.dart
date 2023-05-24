@@ -28,6 +28,7 @@ import '../domain/repos/business_repos.dart';
 import '../domain/repos/candidate_repos.dart';
 import '../domain/repos/notification_repos.dart';
 import '../ui/account_screen/about_us_screen/about_us_view.dart';
+import '../ui/account_screen/bank_account_screen/bank_account_view.dart';
 import '../ui/account_screen/businesses_screen/add_businesses_screen/add_businesses_view.dart';
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
 import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
@@ -66,6 +67,7 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: AccountView),
     MaterialRoute(page: ChatScreenView),
     MaterialRoute(page: AboutUsScreenView),
+    MaterialRoute(page: BankAccountScreenView),
     MaterialRoute(page: PaymentHistoryScreenView),
     MaterialRoute(page: PrivacyPolicyScreenView),
     MaterialRoute(page: HelpSupportScreenView),

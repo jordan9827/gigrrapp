@@ -15,7 +15,7 @@ class HomeViewModel extends BaseViewModel {
   final log = getLogger("HomeScreenViewModel");
   final businessRepo = locator<BusinessRepo>();
 
-  HomeScreenViewModel() {
+  HomeViewModel() {
     gigrrTypeApiCall();
     log.i(
         "User Response --------------------------\nId= ${user.id}\nStatus= ${user.status}\nRole= ${user.roleId}\nToken= ${user.accessToken}\n--------------------");

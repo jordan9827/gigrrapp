@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/data/network/dtos/gigrr_type_response.dart';
 import 'package:stacked/stacked.dart';
@@ -17,15 +18,18 @@ class CandidatePreferenceViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   int maxDiscount = 20;
   double max = 1000;
-
+  List<GigrrTypeCategoryList> addSkillItemList = [];
   RangeValues currentRangeValues = const RangeValues(100, 400);
   final List<String> availShitList = ["Day", "Evening", "Night"];
   String initialAvailShit = "Day";
+  TextEditingController formDateController = TextEditingController();
+  TextEditingController toDateController = TextEditingController();
+  var dateNow = DateFormat('dd MMM yyyy').format(DateTime.now());
+  DateTime selectedDate = DateTime.now();
 
-  Future<void> init() async {
-    setBusy(true);
-    await businessRepo.gigrrTypeCategory();
-    setBusy(false);
+  CandidatePreferenceViewModel() {
+    formDateController.text = dateNow;
+    toDateController.text = dateNow;
   }
 
   void navigationToBack() {
@@ -33,6 +37,12 @@ class CandidatePreferenceViewModel extends BaseViewModel {
       navigationService.back();
     }
     return;
+  }
+
+  init() async {
+    // setBusy(true);
+    // await businessRepo.gigrrTypeCategory();
+    // setBusy(false);
   }
 
   void setDistance(double? value) {
@@ -51,6 +61,27 @@ class CandidatePreferenceViewModel extends BaseViewModel {
   }
 
   void setGigrrTypeSkills(GigrrTypeCategoryList value) {
+    notifyListeners();
+  }
+
+  void setSkillsItem(GigrrTypeCategoryList e) {
+    var isItem = addSkillItemList.contains(e);
+    if (!isItem) {
+      addSkillItemList.add(e);
+    } else {
+      addSkillItemList.remove(e);
+    }
+    print("Add List ${addSkillItemList.toList()}");
+    notifyListeners();
+  }
+
+  void pickFormDate(DateTime dateTime) {
+    formDateController.text = DateFormat("dd MMM yyyy").format(dateTime);
+    notifyListeners();
+  }
+
+  void pickToDate(DateTime dateTime) {
+    toDateController.text = DateFormat("dd MMM yyyy").format(dateTime);
     notifyListeners();
   }
 

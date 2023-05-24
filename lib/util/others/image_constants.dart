@@ -13,6 +13,7 @@ const String ic_dotSelect = _baseUrl + "dot_select.png";
 const String ic_dotUnSelect = _baseUrl + "dot_unselect.png";
 const String ic_rectangleLine = _baseUrl + "rectangle_line.png";
 const String ic_payment = _baseUrl + "ic_payment_blck.png";
+const String ic_bank_account = _baseUrl + "ic_bank_account.png";
 const String ic_pink_arrow_forword = _baseUrl + "ic_pink_arrow_forword.png";
 const String ic_privacy_blck = _baseUrl + "ic_privacy_blck.png";
 const String ic_setting = _baseUrl + "ic_setting.png";

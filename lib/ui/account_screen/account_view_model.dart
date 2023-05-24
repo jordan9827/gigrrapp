@@ -70,6 +70,10 @@ class AccountViewModel extends BaseViewModel {
     navigationService.navigateTo(Routes.businessesScreenView);
   }
 
+  void navigationToCandidatePreferencesScreen() {
+    navigationService.navigateTo(Routes.candidatePreferenceScreenView);
+  }
+
   void navigationToShareEarnScreen() {
     // navigationService.navigateTo(Routes.);
   }
@@ -84,6 +88,10 @@ class AccountViewModel extends BaseViewModel {
 
   void navigationToAboutScreen() {
     navigationService.navigateTo(Routes.aboutUsScreenView);
+  }
+
+  void navigationToBankAccountScreen() {
+    navigationService.navigateTo(Routes.bankAccountScreenView);
   }
 
   void navigationToHelpSupportScreen() {

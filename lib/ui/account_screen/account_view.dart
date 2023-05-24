@@ -97,6 +97,11 @@ class _AccountViewState extends State<AccountView> {
           ),
         ),
         _buildListTile(
+          onTap: viewModel.navigationToBankAccountScreen,
+          leading: ic_bank_account,
+          title: "bank_account",
+        ),
+        _buildListTile(
           onTap: viewModel.navigationToShareEarnScreen,
           leading: ic_share,
           title: "share_earn",
