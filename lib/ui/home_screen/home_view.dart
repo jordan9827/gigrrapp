@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/ui/account_screen/account_view.dart';
@@ -19,15 +20,21 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<Widget> screens = [
+  List<Widget> employerScreens = [
     GigrrsView(),
-    MyGigss(),
+    MyGigs(),
     MyGirrsView(),
+    AccountView(),
+  ];
+  List<Widget> candidateScreens = [
+    MyGigs(),
     AccountView(),
   ];
 
   Widget _buildAddBottomBarTab({
     required Function() onTap,
+    required String icon,
+    required String title,
   }) {
     return InkWell(
       onTap: onTap,
@@ -52,7 +59,8 @@ class _HomeViewState extends State<HomeView> {
                   height: SizeConfig.margin_padding_20,
                   width: SizeConfig.margin_padding_20,
                   child: Image.asset(
-                    ic_plus,
+                    icon,
+                    color: mainWhiteColor,
                   ),
                 ),
               ),
@@ -61,7 +69,7 @@ class _HomeViewState extends State<HomeView> {
               height: SizeConfig.margin_padding_5,
             ),
             Text(
-              "Create Gig",
+              title.tr(),
               style: TextStyle(
                 color: mainPinkColor,
                 fontSize: SizeConfig.textSizeVerySmall,
@@ -100,7 +108,7 @@ class _HomeViewState extends State<HomeView> {
                   height: SizeConfig.margin_padding_3,
                 ),
                 Text(
-                  title,
+                  title.tr(),
                   style: TSB.regular(
                     textSize: SizeConfig.safeBlockHorizontal * 3,
                     textColor: mainWhiteColor,
@@ -127,75 +135,110 @@ class _HomeViewState extends State<HomeView> {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => HomeViewModel(),
-      builder: (context, viewModel, child) => Scaffold(
-        backgroundColor: mainWhiteColor,
-        body: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              child: SizedBox(
-                height: mediaQueryData.size.height - (kToolbarHeight),
-                width: mediaQueryData.size.width,
-                child: screens[viewModel.bottomNavBarService.currentIndex],
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                height: kToolbarHeight,
-                width: mediaQueryData.size.width,
-                color: mainBlackColor,
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                height: kToolbarHeight * 1.5,
-                width: mediaQueryData.size.width,
-                alignment: Alignment.bottomCenter,
-                color: Colors.transparent,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _buildBottomBarTab(
-                      onTap: () => viewModel.changeScreenIndex(0),
-                      image: ic_home,
-                      title: "Gigrrs",
-                      isSelected:
-                          0 == viewModel.bottomNavBarService.currentIndex,
-                    ),
-                    _buildBottomBarTab(
-                      onTap: () => viewModel.changeScreenIndex(1),
-                      image: ic_my_gigs,
-                      title: "My Gigs",
-                      isSelected:
-                          1 == viewModel.bottomNavBarService.currentIndex,
-                    ),
-                    _buildAddBottomBarTab(
-                      onTap: viewModel.navigatorToAddGigsView,
-                    ),
-                    _buildBottomBarTab(
-                      onTap: () => viewModel.changeScreenIndex(2),
-                      image: ic_my_gigrr,
-                      title: "My Gigrrs",
-                      isSelected:
-                          2 == viewModel.bottomNavBarService.currentIndex,
-                    ),
-                    _buildBottomBarTab(
-                      onTap: () => viewModel.changeScreenIndex(3),
-                      image: ic_account,
-                      title: "Account",
-                      isSelected:
-                          3 == viewModel.bottomNavBarService.currentIndex,
-                    ),
-                  ],
+      builder: (context, viewModel, child) {
+        var isEmployer = viewModel.user.isEmployer;
+        return Scaffold(
+          backgroundColor: mainWhiteColor,
+          body: Stack(
+            children: [
+              Positioned(
+                top: 0,
+                child: SizedBox(
+                  height: mediaQueryData.size.height - (kToolbarHeight),
+                  width: mediaQueryData.size.width,
+                  child: isEmployer
+                      ? employerScreens[
+                          viewModel.bottomNavBarService.currentIndex]
+                      : candidateScreens[
+                          viewModel.bottomNavBarService.currentIndex],
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  height: kToolbarHeight,
+                  width: mediaQueryData.size.width,
+                  color: mainBlackColor,
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                child: Container(
+                  // padding: EdgeInsets.symmetric(horizontal: 15),
+                  height: kToolbarHeight * 1.5,
+                  width: mediaQueryData.size.width,
+                  alignment: Alignment.bottomCenter,
+                  color: Colors.transparent,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      if (isEmployer) ..._buildEmployerList(viewModel),
+                      if (!isEmployer) ..._buildCandidateList(viewModel),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
+  }
+
+  List<Widget> _buildEmployerList(HomeViewModel viewModel) {
+    return [
+      _buildBottomBarTab(
+        onTap: () => viewModel.changeScreenIndex(0),
+        image: ic_home,
+        title: "gigrrs",
+        isSelected: 0 == viewModel.bottomNavBarService.currentIndex,
+      ),
+      _buildBottomBarTab(
+        onTap: () => viewModel.changeScreenIndex(1),
+        image: ic_my_gigs,
+        title: "my_gigs",
+        isSelected: 1 == viewModel.bottomNavBarService.currentIndex,
+      ),
+      _buildAddBottomBarTab(
+        title: "create_gig",
+        icon: ic_plus,
+        onTap: viewModel.navigatorToAddGigsView,
+      ),
+      _buildBottomBarTab(
+        onTap: () => viewModel.changeScreenIndex(2),
+        image: ic_my_gigrr,
+        title: "my_gigrrs",
+        isSelected: 2 == viewModel.bottomNavBarService.currentIndex,
+      ),
+      _buildBottomBarTab(
+        onTap: () => viewModel.changeScreenIndex(3),
+        image: ic_account,
+        title: "account",
+        isSelected: 3 == viewModel.bottomNavBarService.currentIndex,
+      ),
+    ];
+  }
+
+  List<Widget> _buildCandidateList(HomeViewModel viewModel) {
+    return [
+      _buildBottomBarTab(
+        onTap: () => viewModel.changeScreenIndex(0),
+        image: ic_my_gigs,
+        title: "my_gigs",
+        isSelected: 0 == viewModel.bottomNavBarService.currentIndex,
+      ),
+      _buildAddBottomBarTab(
+        title: "find_gig",
+        icon: ic_search_blck,
+        onTap: () {},
+      ),
+      _buildBottomBarTab(
+        onTap: () => viewModel.changeScreenIndex(1),
+        image: ic_account,
+        title: "account",
+        isSelected: 1 == viewModel.bottomNavBarService.currentIndex,
+      ),
+    ];
   }
 }

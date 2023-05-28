@@ -17,7 +17,7 @@ abstract class BusinessRepo {
   Future<Either<Failure, List<BusinessTypeCategoryList>>>
       businessTypeCategory();
 
-  Future<Either<Failure, List<GigrrTypeCategoryList>>> gigrrTypeCategory();
+  Future<Either<Failure, List<GigrrTypeCategoryData>>> gigrrTypeCategory();
 
   Future<Either<Failure, BaseResponse>> addGigs(Map<String, dynamic> data);
 

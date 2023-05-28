@@ -4,6 +4,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../util/others/size_config.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const String devBaseURL = "https://gigrr.in/development";
 const String qaBaseURL = "";
@@ -127,6 +128,15 @@ InputBorder inputBorder = OutlineInputBorder(
     color: mainGrayColor,
   ),
 );
+Widget showLoading([double size = 25]) {
+  return Center(
+    heightFactor: 2,
+    child: SpinKitCircle(
+      size: size,
+      color: independenceColor,
+    ),
+  );
+}
 
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   @override

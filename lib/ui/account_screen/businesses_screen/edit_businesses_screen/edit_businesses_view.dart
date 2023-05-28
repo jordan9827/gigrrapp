@@ -15,7 +15,7 @@ import '../../../widgets/map_box/google_map_box_view.dart';
 import 'edit_businesses_view_model.dart';
 
 class EditBusinessesScreenView extends StatefulWidget {
-  final GetBusinessesList businessData;
+  final GetBusinessesData businessData;
   const EditBusinessesScreenView({Key? key, required this.businessData})
       : super(key: key);
 

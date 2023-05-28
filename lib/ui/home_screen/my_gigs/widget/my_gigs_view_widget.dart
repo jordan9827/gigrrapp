@@ -7,7 +7,7 @@ import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 
 class MyGigsViewWidget extends StatelessWidget {
-  final MyGigsResponseList myGigs;
+  final MyGigsData myGigs;
   const MyGigsViewWidget({Key? key, required this.myGigs}) : super(key: key);
 
   @override
@@ -15,7 +15,6 @@ class MyGigsViewWidget extends StatelessWidget {
     SizeConfig.init(context);
     return Container(
       width: double.infinity,
-      margin: edgeInsetsMargin.copyWith(top: SizeConfig.margin_padding_10),
       child: Container(
         padding: EdgeInsets.all(SizeConfig.margin_padding_15),
         decoration: BoxDecoration(

@@ -28,9 +28,9 @@ class EditBusinessesViewModel extends BaseViewModel {
   double longitude = 0.0;
   List<String>? imageList = [];
 
-  EditBusinessesViewModel(GetBusinessesList data) {}
+  EditBusinessesViewModel(GetBusinessesData data) {}
 
-  void initialDataLoad(GetBusinessesList e) {
+  void initialDataLoad(GetBusinessesData e) {
     businessNameController.text = e.businessName;
     addressController.text = e.businessAddress;
     businessTypeController.text = e.categoryResp.id.toString();

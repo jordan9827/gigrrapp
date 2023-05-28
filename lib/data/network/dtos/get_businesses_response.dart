@@ -28,7 +28,7 @@ class GetBusinessesResponseData with _$GetBusinessesResponseData {
   @JsonSerializable(explicitToJson: true)
   const factory GetBusinessesResponseData(
     @JsonKey(name: "current_page") int currentPage,
-    @JsonKey(name: "data") List<GetBusinessesList> businessesList,
+    @JsonKey(name: "data") List<GetBusinessesData> businessesList,
     @JsonKey(name: "from", defaultValue: 0) int from,
     @JsonKey(name: "last_page", defaultValue: 0) int lastPage,
     @JsonKey(name: "per_page", defaultValue: "") String perPage,
@@ -42,9 +42,9 @@ class GetBusinessesResponseData with _$GetBusinessesResponseData {
 
 @freezed
 @JsonToType()
-class GetBusinessesList with _$GetBusinessesList {
+class GetBusinessesData with _$GetBusinessesData {
   @JsonSerializable(explicitToJson: true)
-  const factory GetBusinessesList(
+  const factory GetBusinessesData(
     @JsonKey(name: "id") int id,
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
     @JsonKey(name: "category_id", defaultValue: 0) int categoryId,
@@ -55,10 +55,10 @@ class GetBusinessesList with _$GetBusinessesList {
     @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "category") CategoryResp categoryResp,
     @JsonKey(name: "business_images") List<BusinessesImageList> businessesImage,
-  ) = _GetBusinessesList;
+  ) = _GetBusinessesData;
 
-  factory GetBusinessesList.fromJson(Map<String, dynamic> json) =>
-      _$GetBusinessesListFromJson(json);
+  factory GetBusinessesData.fromJson(Map<String, dynamic> json) =>
+      _$GetBusinessesDataFromJson(json);
 }
 
 @freezed

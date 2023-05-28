@@ -14,7 +14,7 @@ class GigrrTypeDropDownViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   final businessTypeService = locator<BusinessTypeService>();
   TextEditingController textController = TextEditingController();
-  List<GigrrTypeCategoryList> gigrrTypeList = [];
+  List<GigrrTypeCategoryData> gigrrTypeList = [];
 
   List<String> selectedItemList = [];
   List<String> itemsList = [];

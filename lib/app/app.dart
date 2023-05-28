@@ -77,7 +77,6 @@ import '../ui/rating_review_screen/rating_review_view.dart';
 
     MaterialRoute(page: HomeView),
     MaterialRoute(page: IntroScreenView),
-    MaterialRoute(page: MyGigss),
     MaterialRoute(page: RatingReviewScreenView),
     MaterialRoute(page: AddGigsScreenView),
     MaterialRoute(page: LanguageScreenView),

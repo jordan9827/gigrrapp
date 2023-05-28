@@ -10,7 +10,7 @@ part 'gigrr_type_response.g.dart';
 class GigrrTypeCategoryResponse with _$GigrrTypeCategoryResponse {
   @JsonSerializable()
   const factory GigrrTypeCategoryResponse.success(
-    @JsonKey(name: "data") List<GigrrTypeCategoryList> gigrrTypeList,
+    @JsonKey(name: "data") List<GigrrTypeCategoryData> gigrrTypeList,
     @JsonKey(name: "message") String message,
   ) = _GigrrTypeCategoryResponse;
 
@@ -24,16 +24,16 @@ class GigrrTypeCategoryResponse with _$GigrrTypeCategoryResponse {
 
 @freezed
 @JsonToType()
-class GigrrTypeCategoryList with _$GigrrTypeCategoryList {
+class GigrrTypeCategoryData with _$GigrrTypeCategoryData {
   @JsonSerializable(explicitToJson: true)
-  const factory GigrrTypeCategoryList(
+  const factory GigrrTypeCategoryData(
     @JsonKey(name: "id") int id,
     @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "name", defaultValue: "") String name,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "created_at", defaultValue: "") String createdAt,
-  ) = _GigrrTypeCategoryList;
+  ) = _GigrrTypeCategoryData;
 
-  factory GigrrTypeCategoryList.fromJson(Map<String, dynamic> json) =>
-      _$GigrrTypeCategoryListFromJson(json);
+  factory GigrrTypeCategoryData.fromJson(Map<String, dynamic> json) =>
+      _$GigrrTypeCategoryDataFromJson(json);
 }

@@ -45,7 +45,7 @@ Future<void> main() async {
       animationDuration: const Duration(seconds: 1),
     ),
   );
-  Future.delayed(Duration(seconds: 3))
+  Future.delayed(Duration(seconds: 1))
       .then((value) => FlutterNativeSplash.remove());
   locator<InternetCheckService>().initializeInternetCheckServices();
   runApp(

@@ -18,7 +18,7 @@ class CandidatePreferenceViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   int maxDiscount = 20;
   double max = 1000;
-  List<GigrrTypeCategoryList> addSkillItemList = [];
+  List<GigrrTypeCategoryData> addSkillItemList = [];
   RangeValues currentRangeValues = const RangeValues(100, 400);
   final List<String> availShitList = ["Day", "Evening", "Night"];
   String initialAvailShit = "Day";
@@ -60,11 +60,11 @@ class CandidatePreferenceViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setGigrrTypeSkills(GigrrTypeCategoryList value) {
+  void setGigrrTypeSkills(GigrrTypeCategoryData value) {
     notifyListeners();
   }
 
-  void setSkillsItem(GigrrTypeCategoryList e) {
+  void setSkillsItem(GigrrTypeCategoryData e) {
     var isItem = addSkillItemList.contains(e);
     if (!isItem) {
       addSkillItemList.add(e);

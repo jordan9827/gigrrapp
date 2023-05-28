@@ -17,7 +17,7 @@ class BusinessesViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final user = locator<UserAuthResponseData>();
   final businessRepo = locator<BusinessRepo>();
-  List<GetBusinessesList> businessesList = <GetBusinessesList>[];
+  List<GetBusinessesData> businessesList = <GetBusinessesData>[];
 
   BusinessesViewModel() {
     fetchAllBusinessesApi();
@@ -39,7 +39,7 @@ class BusinessesViewModel extends BaseViewModel {
     navigationService.navigateTo(Routes.addBusinessesScreenView);
   }
 
-  Future<void> navigatorToEditBusinessesView(GetBusinessesList e) async {
+  Future<void> navigatorToEditBusinessesView(GetBusinessesData e) async {
     await navigationService.navigateTo(
       Routes.editBusinessesScreenView,
       arguments: EditBusinessesScreenViewArguments(businessData: e),

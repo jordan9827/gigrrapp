@@ -95,7 +95,7 @@ class BusinessImpl extends BusinessRepo {
   }
 
   @override
-  Future<Either<Failure, List<GigrrTypeCategoryList>>>
+  Future<Either<Failure, List<GigrrTypeCategoryData>>>
       gigrrTypeCategory() async {
     try {
       final response = await businessService.gigrrTypeCategory();

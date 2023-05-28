@@ -43,8 +43,7 @@ class _LoginViewState extends State<LoginView>
         body: ListView(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height +
-                  SizeConfig.margin_padding_35,
+              height: MediaQuery.of(context).size.height,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -155,45 +154,55 @@ class _LoginViewState extends State<LoginView>
           SizedBox(
             height: SizeConfig.margin_padding_18,
           ),
-          InputFieldWidget(
-            hint: "enter_pwd",
-            controller: viewModel.passwordController,
-            errorMsgValidation: viewModel.pwdMessage,
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: InkWell(
-              onTap: viewModel.navigationToForgetPwdView,
-              child: Text(
-                "forgot_password".tr(),
-                style: TSB.regularSmall(textColor: independenceColor),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_24,
-          ),
+          _buildSelectShiftView(viewModel),
+          // InputFieldWidget(
+          //   hint: "enter_pwd",
+          //   controller: viewModel.passwordController,
+          //   errorMsgValidation: viewModel.pwdMessage,
+          // ),
+          // SizedBox(
+          //   height: SizeConfig.margin_padding_10,
+          // ),
+          // Align(
+          //   alignment: Alignment.topRight,
+          //   child: InkWell(
+          //     onTap: viewModel.navigationToForgetPwdView,
+          //     child: Text(
+          //       "forgot_password".tr(),
+          //       style: TSB.regularSmall(textColor: independenceColor),
+          //     ),
+          //   ),
+          // ),
           Spacer(),
           _buildLoginActionButton(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_24,
           ),
-          InkWell(
-            onTap: viewModel.navigationToOTPScreen,
-            child: Text(
-              "login_with_otp".tr(),
-              style: TSB.regularSmall(textColor: mainPinkColor),
-            ),
-          ),
+          // InkWell(
+          //   onTap: viewModel.navigationToOTPScreen,
+          //   child: Text(
+          //     "login_with_otp".tr(),
+          //     style: TSB.regularSmall(textColor: mainPinkColor),
+          //   ),
+          // ),
           SizedBox(
             height: SizeConfig.margin_padding_24,
           ),
-          Text(
-            "continue_with".tr(),
-            style: TSB.regularSmall(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildDivider(),
+              Container(
+                margin: EdgeInsets.symmetric(
+                  horizontal: SizeConfig.margin_padding_15,
+                ),
+                child: Text(
+                  "continue_with".tr(),
+                  style: TSB.regularSmall(),
+                ),
+              ),
+              _buildDivider(),
+            ],
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,
@@ -202,11 +211,20 @@ class _LoginViewState extends State<LoginView>
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
-          _buildSignUpView(viewModel),
+          // _buildSignUpView(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildDivider() {
+    return Expanded(
+      child: Divider(
+        thickness: 1.6,
+        color: mainGrayColor,
       ),
     );
   }
@@ -275,6 +293,42 @@ class _LoginViewState extends State<LoginView>
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildSelectShiftView(LoginViewViewModel viewModel) {
+    return Row(
+      children: viewModel.sendOTPTypeList
+          .map(
+            (e) => Container(
+              margin: EdgeInsets.only(
+                right: SizeConfig.margin_padding_20,
+              ),
+              child: Row(
+                children: [
+                  Radio<String>(
+                    visualDensity: const VisualDensity(
+                      horizontal: VisualDensity.minimumDensity,
+                      vertical: VisualDensity.minimumDensity,
+                    ),
+                    activeColor: mainPinkColor,
+                    value: e,
+                    groupValue: viewModel.initialOTPType,
+                    onChanged: viewModel.setOTPType,
+                  ),
+                  Text(
+                    e.tr(),
+                    style: TSB.regularSmall(
+                      textColor: viewModel.initialOTPType != e
+                          ? textRegularColor
+                          : mainBlackColor,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+          .toList(),
     );
   }
 }

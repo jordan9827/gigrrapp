@@ -32,6 +32,9 @@ class LoginViewViewModel extends BaseViewModel {
   String pwdMessage = "";
   int initialIndex = 0;
 
+  List<String> sendOTPTypeList = ["SMS OTP", "Whatsapp OTP"];
+  String initialOTPType = "SMS OTP";
+
   void setInitialIndex(int index) {
     initialIndex = index;
     notifyListeners();
@@ -45,6 +48,12 @@ class LoginViewViewModel extends BaseViewModel {
 
   void navigationToForgetPwdView() {
     navigationService.navigateTo(Routes.forgetPasswordView);
+  }
+
+  void setOTPType(String? val) {
+    initialOTPType = val!;
+    print("initialOTPType $initialOTPType");
+    notifyListeners();
   }
 
   void mobileNoValidation() {
@@ -88,23 +97,23 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   Future<void> googleLogin() async {
-    if (initialIndex == 1) {
-      setBusy(true);
-      GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
-      await googleSignIn.signOut();
-      var account = await googleSignIn.signIn();
-      setBusy(false);
-      if (account != null) {
-        var log = SocialSignInData(
-          email: account.email,
-          googleId: account.id,
-          name: account.displayName ?? "",
-          socialMediaType: LoginType.GOOGLE.name.toLowerCase(),
-        );
-        await socialApiCall(log);
-      }
-    } else
-      snackBarService.showSnackbar(message: "Coming Soon");
+    // if (initialIndex == 1) {
+    setBusy(true);
+    GoogleSignIn googleSignIn = GoogleSignIn(scopes: ['email']);
+    await googleSignIn.signOut();
+    var account = await googleSignIn.signIn();
+    setBusy(false);
+    if (account != null) {
+      var log = SocialSignInData(
+        email: account.email,
+        googleId: account.id,
+        name: account.displayName ?? "",
+        socialMediaType: LoginType.GOOGLE.name.toLowerCase(),
+      );
+      await socialApiCall(log);
+    }
+    // } else
+    //   snackBarService.showSnackbar(message: "Coming Soon");
   }
 
   Future<void> fbLogin() async {
@@ -145,16 +154,16 @@ class LoginViewViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
       },
-      (res) => successBody(res),
+      (res) async {
+        await sharedPreferences.setString(
+          PreferenceKeys.USER_DATA.text,
+          json.encode(res),
+        );
+        checkStatus(res);
+        setBusy(false);
+      },
     );
     notifyListeners();
-  }
-
-  Future<void> successBody(UserAuthResponseData res) async {
-    await sharedPreferences.setString(
-        PreferenceKeys.USER_DATA.text, json.encode(res));
-    checkStatus(res);
-    setBusy(false);
   }
 
   void navigationToSignup(UserAuthResponseData res) {}
@@ -168,7 +177,7 @@ class LoginViewViewModel extends BaseViewModel {
           navigationService
               .clearStackAndShow(Routes.employerRegisterScreenView);
         } else {
-          snackBarService.showSnackbar(message: "Coming Soon");
+          snackBarService.showSnackbar(message: "Coming Soon 0");
         }
         break;
       case "profile-completed":
@@ -180,13 +189,11 @@ class LoginViewViewModel extends BaseViewModel {
             ),
           );
         } else {
-          snackBarService.showSnackbar(message: "Coming Soon");
+          snackBarService.showSnackbar(message: "Coming Soon 1");
         }
         break;
       default:
-        if (res.isEmployer) {
-          navigationService.clearStackAndShow(Routes.homeView);
-        }
+        navigationService.clearStackAndShow(Routes.homeView);
         break;
     }
   }

@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
 
+import 'get_businesses_response.dart';
 import 'gigrr_type_response.dart';
 
 part 'my_gigs_response.freezed.dart';
@@ -29,7 +30,7 @@ class MyGigsResponseData with _$MyGigsResponseData {
   @JsonSerializable(explicitToJson: true)
   const factory MyGigsResponseData(
     @JsonKey(name: "current_page") int currentPage,
-    @JsonKey(name: "data") List<MyGigsResponseList> gigsResponseList,
+    @JsonKey(name: "data") List<MyGigsData> myGigsData,
     @JsonKey(name: "from", defaultValue: 0) int from,
     @JsonKey(name: "last_page", defaultValue: 0) int lastPage,
     @JsonKey(name: "per_page", defaultValue: 0) int perPage,
@@ -43,9 +44,9 @@ class MyGigsResponseData with _$MyGigsResponseData {
 
 @freezed
 @JsonToType()
-class MyGigsResponseList with _$MyGigsResponseList {
+class MyGigsData with _$MyGigsData {
   @JsonSerializable(explicitToJson: true)
-  const factory MyGigsResponseList(
+  const factory MyGigsData(
     @JsonKey(name: "id") int id,
     @JsonKey(name: "business_id", defaultValue: 0) int businessId,
     @JsonKey(name: "gigs_id", defaultValue: "") String gigsId,
@@ -60,19 +61,52 @@ class MyGigsResponseList with _$MyGigsResponseList {
     @JsonKey(name: "to_amount", defaultValue: "") String toAmount,
     @JsonKey(name: "gigs_start_date", defaultValue: "") String gigsStartDate,
     @JsonKey(name: "gigs_end_date", defaultValue: "") String gigsEndDate,
-    @JsonKey(name: "status", defaultValue: "") String createdAt,
-    @JsonKey(name: "created_at", defaultValue: "") String status,
+    @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "gigs_starttime", defaultValue: "") String gigsStartTime,
     @JsonKey(name: "gigs_endtime", defaultValue: "") String gigsEndTime,
     @JsonKey(name: "price_criteria", defaultValue: "") String priceCriteria,
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
-    @JsonKey(name: "skills") List<GigrrTypeCategoryList> businessTypeList,
+    @JsonKey(name: "skills") List<GigrrTypeCategoryData> skillsTypeCategoryList,
+    // @JsonKey(name: "gigrr_business") GetBusinessesData businessList,
+    @JsonKey(name: "gigs_request", defaultValue: [])
+        List<GigsRequestData> gigsRequestData,
     @JsonKey(name: "duration", defaultValue: 0) int duration,
     @JsonKey(name: "gender", defaultValue: "") String gender,
     @JsonKey(name: "state_id", defaultValue: 0) int stateId,
     @JsonKey(name: "roster_count", defaultValue: 0) int rosterCount,
     @JsonKey(name: "city_id") int cityId,
-  ) = _MyGigsResponseList;
-  factory MyGigsResponseList.fromJson(Map<String, dynamic> json) =>
-      _$MyGigsResponseListFromJson(json);
+    @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
+    @JsonKey(name: "created_at", defaultValue: "") String createdAt,
+  ) = _MyGigsData;
+
+  factory MyGigsData.fromJson(Map<String, dynamic> json) =>
+      _$MyGigsDataFromJson(json);
+}
+
+@freezed
+@JsonToType()
+class GigsRequestData with _$GigsRequestData {
+  @JsonSerializable(explicitToJson: true)
+  const factory GigsRequestData(
+    @JsonKey(name: "id") int id,
+    @JsonKey(name: "gigs_id") int gigsId,
+    @JsonKey(name: "user_id", defaultValue: 0) int userId,
+    @JsonKey(name: "employe_id", defaultValue: 0) int employeId,
+    @JsonKey(name: "employee_name", defaultValue: "") String employeeName,
+    @JsonKey(name: "offer_amount", defaultValue: "") String offerAmount,
+    @JsonKey(name: "agreed_amount", defaultValue: "") String agreedAmount,
+    @JsonKey(name: "start_otp", defaultValue: "") String startOTP,
+    @JsonKey(name: "end_otp", defaultValue: "") String endOTP,
+    @JsonKey(name: "status", defaultValue: "") String status,
+    @JsonKey(name: "candidate_rating", defaultValue: 0.0)
+        double candidateRating,
+    @JsonKey(name: "payment_status", defaultValue: "") String paymentStatus,
+    @JsonKey(name: "rating_from_employer", defaultValue: "")
+        String ratingFromEmployer,
+    @JsonKey(name: "rating_to_employer", defaultValue: "")
+        String ratingToEmployer,
+  ) = _GigsRequestData;
+
+  factory GigsRequestData.fromJson(Map<String, dynamic> json) =>
+      _$GigsRequestDataFromJson(json);
 }
