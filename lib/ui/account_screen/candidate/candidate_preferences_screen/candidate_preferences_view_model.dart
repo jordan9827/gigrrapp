@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/data/network/dtos/gigrr_type_response.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import '../../../app/app.locator.dart';
-import '../../../data/network/dtos/user_auth_response_data.dart';
-import '../../../domain/reactive_services/business_type_service.dart';
-import '../../../domain/repos/auth_repos.dart';
-import '../../../domain/repos/business_repos.dart';
+import '../../../../app/app.locator.dart';
+import '../../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../../domain/reactive_services/business_type_service.dart';
+import '../../../../domain/repos/auth_repos.dart';
+import '../../../../domain/repos/business_repos.dart';
 
 class CandidatePreferenceViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();

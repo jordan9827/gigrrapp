@@ -82,6 +82,10 @@ class AccountViewModel extends BaseViewModel {
     navigationService.navigateTo(Routes.languageScreenView);
   }
 
+  void navigationToManageAddressScreen() {
+    navigationService.navigateTo(Routes.manageAddressScreenView);
+  }
+
   void navigationToPaymentHistoryScreen() {
     navigationService.navigateTo(Routes.paymentHistoryScreenView);
   }

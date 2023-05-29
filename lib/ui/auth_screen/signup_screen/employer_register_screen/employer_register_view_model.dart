@@ -1,6 +1,5 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -9,7 +8,6 @@ import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:mapbox_search/mapbox_search.dart' as auto;
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
@@ -164,7 +162,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   void mapBoxPlace() {
     navigationService.navigateWithTransition(
-      auto.MapBoxAutoCompleteWidget(
+      mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
         language: "en",

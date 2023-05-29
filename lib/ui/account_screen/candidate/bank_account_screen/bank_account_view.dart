@@ -5,8 +5,8 @@ import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-import '../../../others/constants.dart';
-import '../../../util/others/text_styles.dart';
+import '../../../../others/constants.dart';
+import '../../../../util/others/text_styles.dart';
 import 'bank_account_view_model.dart';
 
 class BankAccountScreenView extends StatefulWidget {

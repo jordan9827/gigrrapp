@@ -1,0 +1,23 @@
+import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+import '../../../../app/app.locator.dart';
+import '../../../../app/app.router.dart';
+import '../../../../data/network/dtos/user_auth_response_data.dart';
+
+class ManageAddressViewModel extends BaseViewModel {
+  final navigationService = locator<NavigationService>();
+  final snackBarService = locator<SnackbarService>();
+  final user = locator<UserAuthResponseData>();
+
+  void navigationToBack() {
+    if (!isBusy) {
+      navigationService.back();
+    }
+    return;
+  }
+
+  void navigationToAddAddressView() {
+    navigationService.navigateTo(Routes.addAddressScreenView);
+  }
+}

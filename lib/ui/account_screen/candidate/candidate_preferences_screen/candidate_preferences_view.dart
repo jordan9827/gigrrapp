@@ -4,11 +4,11 @@ import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:stacked/stacked.dart';
-import '../../../others/loading_button.dart';
-import '../../../util/others/image_constants.dart';
-import '../../../util/others/size_config.dart';
-import '../../../util/others/text_styles.dart';
-import '../../widgets/custom_date_picker.dart';
+import '../../../../others/loading_button.dart';
+import '../../../../util/others/image_constants.dart';
+import '../../../../util/others/size_config.dart';
+import '../../../../util/others/text_styles.dart';
+import '../../../widgets/custom_date_picker.dart';
 import 'candidate_preferences_view_model.dart';
 import 'preference_custom_ui_widget.dart';
 
@@ -41,15 +41,18 @@ class _CandidatePreferenceScreenViewState
             textColor: mainBlackColor,
             backgroundColor: mainWhiteColor,
             actions: [
-              Container(
-                margin: EdgeInsets.only(
-                  right: SizeConfig.margin_padding_15,
-                ),
-                height: SizeConfig.margin_padding_15,
-                width: SizeConfig.margin_padding_15,
-                child: Image.asset(
-                  ic_close_blck,
-                  color: mainBlackColor,
+              InkWell(
+                onTap: viewModel.navigationToBack,
+                child: Container(
+                  margin: EdgeInsets.only(
+                    right: SizeConfig.margin_padding_15,
+                  ),
+                  height: SizeConfig.margin_padding_15,
+                  width: SizeConfig.margin_padding_15,
+                  child: Image.asset(
+                    ic_close_blck,
+                    color: mainBlackColor,
+                  ),
                 ),
               ),
             ],

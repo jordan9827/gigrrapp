@@ -16,7 +16,7 @@ class ProfileWidgetScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    var isEmployer = !viewModel.user.isEmployer;
+    var isEmployer = viewModel.user.isEmployer;
     Color textColor = isEmployer ? independenceColor : mainWhiteColor;
     Color textColor1 =
         isEmployer ? textRegularColor : mainWhiteColor.withOpacity(0.70);

@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
-import '../../../others/constants.dart';
-import '../../../util/others/size_config.dart';
-import '../../../util/others/text_styles.dart';
+import '../../../../others/constants.dart';
+import '../../../../util/others/size_config.dart';
+import '../../../../util/others/text_styles.dart';
 
 class PreferenceCustomUIWidget extends StatelessWidget {
   final String title;

@@ -74,6 +74,7 @@ class _AccountViewState extends State<AccountView> {
   }
 
   Widget _buildAccountView(AccountViewModel viewModel) {
+    var isEmployer = viewModel.user.isEmployer;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,16 +97,23 @@ class _AccountViewState extends State<AccountView> {
             onChanged: viewModel.notificationSwitchAction,
           ),
         ),
-        _buildListTile(
-          onTap: viewModel.navigationToBankAccountScreen,
-          leading: ic_bank_account,
-          title: "bank_account",
-        ),
+        if (!isEmployer)
+          _buildListTile(
+            onTap: viewModel.navigationToBankAccountScreen,
+            leading: ic_bank_account,
+            title: "bank_account",
+          ),
         _buildListTile(
           onTap: viewModel.navigationToShareEarnScreen,
           leading: ic_share,
           title: "share_earn",
         ),
+        if (!isEmployer)
+          _buildListTile(
+            onTap: viewModel.navigationToManageAddressScreen,
+            leading: ic_share,
+            title: "manage_address",
+          ),
         _buildListTile(
           onTap: viewModel.navigationToLanguageScreen,
           leading: ic_share,

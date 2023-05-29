@@ -177,7 +177,8 @@ class LoginViewViewModel extends BaseViewModel {
           navigationService
               .clearStackAndShow(Routes.employerRegisterScreenView);
         } else {
-          snackBarService.showSnackbar(message: "Coming Soon 0");
+          navigationService
+              .clearStackAndShow(Routes.candidateRegisterScreenView);
         }
         break;
       case "profile-completed":

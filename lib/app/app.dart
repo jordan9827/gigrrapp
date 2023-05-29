@@ -28,11 +28,14 @@ import '../domain/repos/business_repos.dart';
 import '../domain/repos/candidate_repos.dart';
 import '../domain/repos/notification_repos.dart';
 import '../ui/account_screen/about_us_screen/about_us_view.dart';
-import '../ui/account_screen/bank_account_screen/bank_account_view.dart';
 import '../ui/account_screen/businesses_screen/add_businesses_screen/add_businesses_view.dart';
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
 import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
-import '../ui/account_screen/candidate_preferences_screen/candidate_preferences_view.dart';
+import '../ui/account_screen/candidate/bank_account_screen/add_bank_account_screen/add_bank_account_view.dart';
+import '../ui/account_screen/candidate/bank_account_screen/bank_account_view.dart';
+import '../ui/account_screen/candidate/candidate_preferences_screen/candidate_preferences_view.dart';
+import '../ui/account_screen/candidate/manage_address_screen/add_address_screen/add_address_view.dart';
+import '../ui/account_screen/candidate/manage_address_screen/manage_address_view.dart';
 import '../ui/account_screen/help_support_screen/support_email_screen/support_email_view.dart';
 import '../ui/account_screen/privacy_policy/privacy_policy_view.dart';
 import '../ui/account_screen/terms_and_conditions/terms_and_condition_view.dart';
@@ -68,6 +71,9 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: ChatScreenView),
     MaterialRoute(page: AboutUsScreenView),
     MaterialRoute(page: BankAccountScreenView),
+    MaterialRoute(page: ManageAddressScreenView),
+    MaterialRoute(page: AddBankAccountScreenView),
+    MaterialRoute(page: AddAddressScreenView),
     MaterialRoute(page: PaymentHistoryScreenView),
     MaterialRoute(page: PrivacyPolicyScreenView),
     MaterialRoute(page: HelpSupportScreenView),

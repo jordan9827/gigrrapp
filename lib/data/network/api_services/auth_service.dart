@@ -1,5 +1,4 @@
 import 'package:chopper/chopper.dart';
-import 'package:square_demo_architecture/data/network/dtos/business_type_category.dart';
 import 'package:square_demo_architecture/data/network/dtos/upload_image_response.dart';
 import '../dtos/base_response.dart';
 import '../dtos/user_auth_response_data.dart';
