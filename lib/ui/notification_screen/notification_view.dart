@@ -52,7 +52,6 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
           loading: viewModel.isBusy,
           child: ListView(
             children: [
-              if (viewModel.notificationList.isEmpty) EmptyDataScreenView(),
               _buildNotificationData(
                 title: "Today",
                 list: viewModel.notificationList,
@@ -71,33 +70,39 @@ class _NotificationScreenViewState extends State<NotificationScreenView> {
     required String title,
     required List<NotificationList> list,
   }) {
-    return Padding(
-      padding: edgeInsetsMargin,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
-          ),
-          Text(
-            title,
-            style: TSB.semiBoldSmall(
-              textColor: independenceColor,
+    if (list.isEmpty) {
+      return EmptyDataScreenView(
+        enableBackButton: true,
+      );
+    } else {
+      return Padding(
+        padding: edgeInsetsMargin,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: SizeConfig.margin_padding_15,
             ),
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_5,
-          ),
-          Column(
-            children: list
-                .map(
-                  (e) => NotificationWidget(item: e),
-                )
-                .toList(),
-          )
-        ],
-      ),
-    );
+            Text(
+              title,
+              style: TSB.semiBoldSmall(
+                textColor: independenceColor,
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
+            Column(
+              children: list
+                  .map(
+                    (e) => NotificationWidget(item: e),
+                  )
+                  .toList(),
+            )
+          ],
+        ),
+      );
+    }
   }
 
   Widget _buildEmptyNotificationView(NotificationScreenViewModel viewModel) {

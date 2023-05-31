@@ -19,6 +19,7 @@ const String MAPBOX_TOKEN =
 String androidDeviceType = "android";
 String iOSDeviceType = "ios";
 
+String countryCode = "+91";
 const int paginatedDataPerPage = 5;
 const int textFieldMaximumCharacter = 50;
 const int textFieldNumberMaximumCharacter = 10;

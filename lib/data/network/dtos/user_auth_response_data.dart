@@ -33,10 +33,11 @@ class UserLoginResponse with _$UserLoginResponse {
 class UserAuthResponseData with _$UserAuthResponseData {
   @JsonSerializable(explicitToJson: true)
   const factory UserAuthResponseData(
-    @JsonKey(name: "full_name") String fullName,
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "full_name", defaultValue: "") String fullName,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "otp", defaultValue: 0) int otp,
     @JsonKey(name: "role_id", defaultValue: "") String roleId,
+    @JsonKey(name: "mobile", defaultValue: "") String mobile,
     @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "phone_number", defaultValue: "") String phoneNumber,
     @JsonKey(name: "country_code", defaultValue: "") String countryCode,
@@ -44,6 +45,7 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "profile_status", defaultValue: "") String profileStatus,
     @JsonKey(name: "email", defaultValue: "") String email,
     @JsonKey(name: "access_token", defaultValue: "") String accessToken,
+    @JsonKey(name: "token", defaultValue: "") String token,
     @JsonKey(name: "is_notification", defaultValue: "") String notificationType,
     @JsonKey(name: "serve_job", defaultValue: "") String serveJob,
     @JsonKey(name: "image_url", defaultValue: "") String imageUrl,
@@ -70,6 +72,6 @@ class UserAuthResponseData with _$UserAuthResponseData {
 
   static Future<UserAuthResponseData> getEmptyUser() async {
     return const UserAuthResponseData("", 0, 0, "", "", "", "", "", "", "", "",
-        "", "", "", 0, 0, "", "", "", false);
+        "", "", "", "", "", 0, 0, "", "", "", false);
   }
 }

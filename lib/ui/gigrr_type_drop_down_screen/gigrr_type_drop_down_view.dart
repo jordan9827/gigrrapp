@@ -8,8 +8,10 @@ import 'gigrr_type_drop_down_view_model.dart';
 
 class GigrrTypeDropDownView extends StatelessWidget {
   final TextEditingController controller;
-
-  GigrrTypeDropDownView({Key? key, required this.controller}) : super(key: key);
+  final String title;
+  GigrrTypeDropDownView(
+      {Key? key, required this.controller, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,7 @@ class GigrrTypeDropDownView extends StatelessWidget {
       builder: (context, viewModel, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitle("gigrr_type"),
+          _buildTitle(title),
           CustomDropDownWidget(
             hintText: "i.e. Civil Engineer, Superviser",
             itemList: viewModel.itemsList,

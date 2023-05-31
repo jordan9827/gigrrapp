@@ -27,16 +27,16 @@ class LoginViewViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
 
   TextEditingController mobileController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
   String mobileMessage = "";
-  String pwdMessage = "";
   int initialIndex = 0;
+  String roleId = "4";
 
-  List<String> sendOTPTypeList = ["SMS OTP", "Whatsapp OTP"];
-  String initialOTPType = "SMS OTP";
+  List<String> sendOTPTypeList = ["sms", "whatsapp"];
+  String initialOTPType = "sms";
 
   void setInitialIndex(int index) {
     initialIndex = index;
+    roleId = initialIndex == 1 ? "3" : "4";
     notifyListeners();
   }
 
@@ -68,32 +68,30 @@ class LoginViewViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void passwordValidation() {
-    String valueText = passwordController.text;
-    if (valueText.isEmpty) {
-      pwdMessage = "Field cannot be empty";
-    } else if (valueText.isNotEmpty && !validatePassword(valueText)) {
-      pwdMessage = 'Please enter valid password';
-    } else if (valueText.length < 8) {
-      pwdMessage = 'Should be 8 characters long';
-    } else {
-      pwdMessage = "";
-    }
-    notifyListeners();
-  }
-
-  void validation() {
+  Future<void> login() async {
     mobileNoValidation();
-    passwordValidation();
+    if (mobileMessage.isEmpty) {
+      bool result = await navigationService.navigateTo(
+        Routes.oTPVerifyScreen,
+        arguments: OTPVerifyScreenArguments(
+          mobile: mobileController.text,
+          otpType: initialOTPType,
+          roleId: roleId,
+        ),
+      );
+      print("OTPVerifyScreenArguments $result");
+      if (result) {
+        _navigationToStatusLogin();
+      }
+    }
   }
 
-  void login() {
-    // validation();
-    // if (pwdMessage.isEmpty && mobileMessage.isEmpty) {
-    navigationService.navigateTo(
-      Routes.candidateRegisterScreenView,
-    );
-    //}
+  void _navigationToStatusLogin() {
+    if (roleId == "3") {
+      navigationService.clearStackAndShow(Routes.employerRegisterScreenView);
+    } else {
+      navigationService.clearStackAndShow(Routes.candidateRegisterScreenView);
+    }
   }
 
   Future<void> googleLogin() async {
@@ -159,7 +157,7 @@ class LoginViewViewModel extends BaseViewModel {
           PreferenceKeys.USER_DATA.text,
           json.encode(res),
         );
-        checkStatus(res);
+        _navigationToStatusSocialLogin(res);
         setBusy(false);
       },
     );
@@ -168,7 +166,7 @@ class LoginViewViewModel extends BaseViewModel {
 
   void navigationToSignup(UserAuthResponseData res) {}
 
-  void checkStatus(UserAuthResponseData res) {
+  Future<void> _navigationToStatusSocialLogin(UserAuthResponseData res) async {
     var value = res.profileStatus.toLowerCase();
     print("checkStatus --- ${res.isEmployer}");
     switch (value) {
@@ -183,10 +181,12 @@ class LoginViewViewModel extends BaseViewModel {
         break;
       case "profile-completed":
         if (res.isEmployer) {
-          navigationService.clearStackAndShow(
+          await navigationService.clearStackAndShow(
             Routes.oTPVerifyScreen,
             arguments: OTPVerifyScreenArguments(
-              mobile: res.phoneNumber,
+              mobile: res.mobile,
+              otpType: initialOTPType,
+              roleId: res.roleId,
             ),
           );
         } else {
@@ -207,12 +207,11 @@ class LoginViewViewModel extends BaseViewModel {
   Future<Map<String, String>> _getRequestForLogIn(
       SocialSignInData socialData) async {
     Map<String, String> request = Map();
-
+    request['role'] = roleId;
     request['social_id'] = socialType(socialData);
     request['social_type'] = socialData.socialMediaType;
     request['device_token'] = (await deviceToken());
     request['device_type'] = getDeviceType();
-    request['role'] = initialIndex == 1 ? "3" : "4";
     request['full_name'] = socialData.name;
     request['email'] = socialData.email;
     request['country_code'] = "+91";

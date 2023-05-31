@@ -38,6 +38,52 @@ class _BankAccountScreenViewState extends State<BankAccountScreenView> {
                 height: SizeConfig.margin_padding_10,
               ),
               Text(
+                "your_upi_bank_acc".tr(),
+                style: TSB.semiBoldMedium(textColor: independenceColor),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_10,
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+                decoration: BoxDecoration(
+                  color: mainWhiteColor,
+                  borderRadius:
+                      BorderRadius.circular(SizeConfig.margin_padding_10),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "HDFC Bank".tr(),
+                          style: TSB.semiBoldSmall(),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.margin_padding_5,
+                        ),
+                        Text(
+                          "vxxxx xxxx 1234".tr(),
+                          style: TSB.regularSmall(),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(ic_arrow_grey, scale: 2.5),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_10,
+              ),
+              Text(
                 "your_save_bank_acc".tr(),
                 style: TSB.semiBoldMedium(textColor: independenceColor),
               ),

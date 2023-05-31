@@ -12,8 +12,15 @@ import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {
   final String mobile;
+  final String otpType;
+  final String roleId;
 
-  const OTPVerifyScreen({Key? key, required this.mobile}) : super(key: key);
+  const OTPVerifyScreen({
+    Key? key,
+    required this.mobile,
+    this.otpType = "",
+    this.roleId = "",
+  }) : super(key: key);
 
   @override
   State<OTPVerifyScreen> createState() => _OTPVerifyScreenState();
@@ -25,7 +32,11 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
         onViewModelReady: (viewModel) => viewModel.init(),
-        viewModelBuilder: () => OTPVerifyScreenModel(mobile: widget.mobile),
+        viewModelBuilder: () => OTPVerifyScreenModel(
+              mobile: widget.mobile,
+              roleId: widget.roleId,
+              otpType: widget.otpType,
+            ),
         builder: (context, viewModel, child) {
           return Scaffold(
             body: LoadingScreen(
@@ -88,7 +99,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
           Row(
             children: [
               Text(
-                widget.mobile,
+                "$countryCode ${widget.mobile}",
                 style: TSB.semiBoldSmall(),
               ),
               SizedBox(

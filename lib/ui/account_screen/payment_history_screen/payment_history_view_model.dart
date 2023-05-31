@@ -39,7 +39,9 @@ class PaymentHistoryViewModel extends BaseViewModel {
 
     dialogService.registerCustomDialogBuilders(builders);
 
-    dialogService.showCustomDialog(variant: DialogType.paymentFilter);
+    dialogService.showCustomDialog(
+      variant: DialogType.paymentFilter,
+    );
   }
 
   void pickFormDate(DateTime dateTime) {

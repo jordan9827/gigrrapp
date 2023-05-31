@@ -25,13 +25,18 @@ class OTPVerifyScreenModel extends BaseViewModel {
   Timer? timer;
   var seconds = 0;
   String mobileNumber = "";
+  String otpType = "";
+  String roleId = "";
   String isVerificationId = "";
 
   TextEditingController pinController = TextEditingController();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
-  OTPVerifyScreenModel({required String mobile}) {
-    mobileNumber = mobile;
+  OTPVerifyScreenModel(
+      {required String mobile, String otpType = "", String roleId = ""}) {
+    this.mobileNumber = mobile;
+    this.otpType = otpType;
+    this.roleId = roleId;
     notifyListeners();
   }
 
@@ -124,7 +129,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
         setBusy(false);
       },
       (res) async {
-        snackBarService.showSnackbar(message: res.message);
         setBusy(false);
       },
     );
@@ -155,7 +159,10 @@ class OTPVerifyScreenModel extends BaseViewModel {
         notifyListeners();
       },
       (res) {
-        navigationService.clearStackAndShow(Routes.homeView);
+        print("verifyOTP ::::-----------------");
+        navigationService.back(result: true);
+        setBusy(false);
+        notifyListeners();
       },
     );
     notifyListeners();
@@ -163,8 +170,8 @@ class OTPVerifyScreenModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForVerifyOtp() async {
     Map<String, String> request = {};
-    request['role'] = user.roleId;
-    request['country_code'] = "+91";
+    request['role'] = roleId;
+    request['country_code'] = countryCode;
     request['otp'] = pinController.text;
     request['mobile_no'] = mobileNumber;
     request['device_token'] = (await deviceToken());
@@ -176,10 +183,10 @@ class OTPVerifyScreenModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForSendOtp() async {
     Map<String, String> request = {};
-    request['role'] = user.roleId;
-    request['country_code'] = "+91";
+    request['role'] = roleId;
+    request['country_code'] = countryCode;
     request['mobile_no'] = mobileNumber;
-    request['otp_type'] = "sms";
+    request['otp_type'] = otpType;
     log('Body Send OTP :: $request');
     return request;
   }

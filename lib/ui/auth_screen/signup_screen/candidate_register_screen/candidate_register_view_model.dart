@@ -21,6 +21,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   final businessRepo = locator<BusinessRepo>();
   final businessTypeService = locator<BusinessTypeService>();
+  TextEditingController gigrrTypeController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
@@ -96,6 +97,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
     } else {
       myAvailableSelectList.remove(myAvailableList[index]);
     }
+    print(
+        "onAvailableItemSelect  ${myAvailableSelectList.toList().toString()}");
     notifyListeners();
   }
 
@@ -257,8 +260,9 @@ class CandidateRegisterViewModel extends BaseViewModel {
   void employerCompleteProfileApiCall() async {
     // print("employerCompleteProfileApiCall  ${imageList!.first}");
     setBusy(true);
-    final response = await authRepo
-        .employerCompleteProfile(await _getRequestForEmployerCompleteProfile());
+    final response = await authRepo.candidatesCompleteProfile(
+      await _getRequestForCompleteCandidateProfile(),
+    );
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);
@@ -291,15 +295,26 @@ class CandidateRegisterViewModel extends BaseViewModel {
     setBusy(false);
   }
 
-  Future<Map<String, String>> _getRequestForEmployerCompleteProfile() async {
-    Map<String, String> request = {};
+  Future<Map<String, String>> _getRequestForCompleteCandidateProfile() async {
+    Map<String, String> request = Map();
     request['full_name'] = fullNameController.text;
-    request['country_code'] = "+91";
+    request['country_code'] = countryCode;
     request['mobile_no'] = mobileController.text;
-    request['address'] = addressController.text;
+    request['email'] = "";
+    request['address'] = address;
     request['latitude'] = latitude.toString();
     request['longitude'] = longitude.toString();
-    log("Body Complete Profile >>> $request");
+    request['gender'] = initialGender.toLowerCase();
+    request['dob'] = dobController.text;
+    // request['experience_year'] = year;
+    // request['experience_month'] =month;
+    // request['price_from'] = currentRangeValues.start.toString();
+    // request['price_to'] = currentRangeValues.end.toString();
+    // request['price_criteria'] = costCriteria;
+    request['skills'] = gigrrTypeController.text;
+    request['avaliblity'] = myAvailableSelectList.join(",");
+    request['shift'] = initialShift.toLowerCase();
+    request['images'] = imageList!.join(',');
     return request;
   }
 }

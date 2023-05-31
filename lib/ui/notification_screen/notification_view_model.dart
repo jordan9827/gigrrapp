@@ -47,6 +47,7 @@ class NotificationScreenViewModel extends BaseViewModel {
         setBusy(false);
       },
       (response) async {
+        notificationList.clear();
         setBusy(false);
       },
     );

@@ -6,6 +6,7 @@ import '../../../../others/constants.dart';
 import '../../../../others/loading_screen.dart';
 import '../../../../util/others/size_config.dart';
 import '../../../../util/others/text_styles.dart';
+import '../../../widgets/empty_data_screen.dart';
 import '../../../widgets/notification_icon.dart';
 import '../widget/my_gigs_view_widget.dart';
 import 'employer_gigs_view_model.dart';
@@ -51,15 +52,17 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     return Container(
       child: ListView(
         children: [
-          Column(
-            children: viewModel.myGigsList
-                .map(
-                  (gigs) => MyGigsViewWidget(
-                    myGigs: gigs,
-                  ),
-                )
-                .toList(),
-          ),
+          if (viewModel.myGigsList.isNotEmpty)
+            Column(
+              children: viewModel.myGigsList
+                  .map(
+                    (gigs) => MyGigsViewWidget(
+                      myGigs: gigs,
+                    ),
+                  )
+                  .toList(),
+            ),
+          if (viewModel.myGigsList.isEmpty) EmptyDataScreenView(),
           SizedBox(
             height: SizeConfig.margin_padding_10,
           )

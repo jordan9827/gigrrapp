@@ -33,10 +33,7 @@ class AuthImpl extends Auth {
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
-        var employer = (user.data.roleId == "3" ? true : false);
-        UserAuthResponseData data = user.data.copyWith(isEmployer: employer);
-        locator.unregister<UserAuthResponseData>();
-        locator.registerSingleton<UserAuthResponseData>(data);
+        var data = await setUserResponse(user.data);
         return Right(data);
       }, error: (error) {
         return Left(Failure(200, error.message));
@@ -58,8 +55,7 @@ class AuthImpl extends Auth {
       }
       log.i("Edit Profile Response ${response.body}");
       return response.body!.map(success: (user) async {
-        locator.unregister<UserAuthResponseData>();
-        locator.registerSingleton<UserAuthResponseData>(user.data);
+        await setUserResponse(user.data);
         return Right(user);
       }, error: (error) {
         return Left(Failure(200, error.message));
@@ -81,11 +77,8 @@ class AuthImpl extends Auth {
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
-        locator.unregister<UserAuthResponseData>();
-        locator.registerSingleton<UserAuthResponseData>(user.data);
-        await sharedPreferences.setString(
-            PreferenceKeys.USER_DATA.text, json.encode(user.data));
-        return Right(user.data);
+        var data = await setUserResponse(user.data);
+        return Right(data);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });
@@ -96,7 +89,29 @@ class AuthImpl extends Auth {
   }
 
   @override
-  Future<Either<Failure, BaseResponse>> sendOTP(
+  Future<Either<Failure, UserAuthResponseData>> candidatesCompleteProfile(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await authService.candidatesProfileApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Login Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        var data = await setUserResponse(user.data);
+        return Right(data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserAuthResponseData>> sendOTP(
       Map<String, dynamic> data) async {
     try {
       final response = await authService.sendOTPApi(data);
@@ -106,7 +121,10 @@ class AuthImpl extends Auth {
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
-        return Right(user);
+        UserAuthResponseData data =
+            user.data.copyWith(accessToken: user.data.token);
+        await setUserResponse(data);
+        return Right(data);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });
@@ -127,11 +145,8 @@ class AuthImpl extends Auth {
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
-        // locator.unregister<UserAuthResponseData>();
-        // locator.registerSingleton<UserAuthResponseData>(user.data);
-        // await sharedPreferences.setString(
-        //     PreferenceKeys.USER_DATA.text, json.encode(user.data));
-        return Right(user.data);
+        var data = await setUserResponse(user.data);
+        return Right(data);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });
@@ -200,5 +215,16 @@ class AuthImpl extends Auth {
       log.e(e);
       return Left(e.handleException());
     }
+  }
+
+  Future<UserAuthResponseData> setUserResponse(
+      UserAuthResponseData user) async {
+    var employer = (user.roleId == "3" ? true : false);
+    UserAuthResponseData data = user.copyWith(isEmployer: employer);
+    locator.unregister<UserAuthResponseData>();
+    locator.registerSingleton<UserAuthResponseData>(data);
+    await sharedPreferences.setString(
+        PreferenceKeys.USER_DATA.text, json.encode(data));
+    return data;
   }
 }

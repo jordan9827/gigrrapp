@@ -41,7 +41,7 @@ class EmptyDataScreenView extends StatelessWidget {
             ),
             if (enableBackButton)
               LoadingButton(
-                action: () {},
+                action: () => Navigator.of(context).pop(),
                 title: "go_to_home",
               )
           ],

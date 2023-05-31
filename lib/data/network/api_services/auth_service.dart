@@ -15,11 +15,11 @@ abstract class AuthService extends ChopperService {
   );
 
   @Post(path: "v2/send-otp")
-  Future<Response<BaseResponse>> sendOTPApi(
+  Future<Response<UserLoginResponse>> sendOTPApi(
     @Body() Map<String, dynamic> body,
   );
 
-  @Post(path: "v2/verify_otp")
+  @Post(path: "v2/verify-otp")
   Future<Response<UserLoginResponse>> verifyOTPApi(
     @Body() Map<String, dynamic> body,
   );
@@ -41,6 +41,11 @@ abstract class AuthService extends ChopperService {
 
   @Post(path: "complete_profile")
   Future<Response<UserLoginResponse>> completeProfileApi(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "candidates/profile")
+  Future<Response<UserLoginResponse>> candidatesProfileApi(
     @Body() Map<String, dynamic> body,
   );
 

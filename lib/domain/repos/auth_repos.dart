@@ -18,11 +18,15 @@ abstract class Auth {
     Map<String, dynamic> data,
   );
 
-  Future<Either<Failure, BaseResponse>> sendOTP(
+  Future<Either<Failure, UserAuthResponseData>> sendOTP(
     Map<String, dynamic> data,
   );
 
   Future<Either<Failure, UserAuthResponseData>> employerCompleteProfile(
+    Map<String, dynamic> data,
+  );
+
+  Future<Either<Failure, UserAuthResponseData>> candidatesCompleteProfile(
     Map<String, dynamic> data,
   );
 

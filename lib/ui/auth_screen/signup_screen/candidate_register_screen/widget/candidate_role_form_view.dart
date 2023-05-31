@@ -5,6 +5,7 @@ import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import '../../../../../util/others/text_styles.dart';
+import '../../../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
 import '../candidate_register_view_model.dart';
 
@@ -29,14 +30,11 @@ class CandidateRoleFormView extends StatelessWidget {
   Widget _buildFormView(CandidateRegisterViewModel viewModel) {
     return Container(
       padding: edgeInsetsMargin,
-      child: Column(
+      child: ListView(
         children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_24,
-          ),
-          CVMTextFormField(
-            title: "i_can_be",
-            hintForm: "Delivery Boy, Sales Man",
+          GigrrTypeDropDownView(
+            title: "I Can Be (*select multiple)",
+            controller: viewModel.gigrrTypeController,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_10,
@@ -49,9 +47,11 @@ class CandidateRoleFormView extends StatelessWidget {
             title: "select_shift",
             child: _buildSelectShiftView(),
           ),
-          Spacer(),
+          SizedBox(
+            height: SizeConfig.margin_padding_35,
+          ),
           LoadingButton(
-            action: viewModel.addProfileApiCall,
+            action: viewModel.employerCompleteProfileApiCall,
             title: "create_profile",
           ),
           SizedBox(

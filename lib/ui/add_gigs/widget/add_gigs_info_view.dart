@@ -36,6 +36,7 @@ class AddGigsInfoScreenView extends StatelessWidget {
             controller: viewModel.businessTypeController,
           ),
           GigrrTypeDropDownView(
+            title: "gigrr_type",
             controller: viewModel.gigrrTypeController,
           ),
           Text(
