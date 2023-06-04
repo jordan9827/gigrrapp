@@ -54,6 +54,13 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "longitude", defaultValue: "") String longitude,
     @JsonKey(name: "gender", defaultValue: "") String gender,
+    @JsonKey(name: "dob", defaultValue: "") String dob,
+    @JsonKey(name: "aadhaar_verify_status", defaultValue: "")
+        String aadhaarVerifyStatus,
+    @JsonKey(name: "rajorpay_customer_id", defaultValue: "")
+        String razorpayCustomerId,
+    @JsonKey(name: "aadhar_image", defaultValue: "") String aadhaarImage,
+    @JsonKey(name: "aadhar_number", defaultValue: "") String aadhaarNumber,
     // @JsonKey(name: "age", defaultValue: "") String age,
     @JsonKey(name: "employer", defaultValue: false) bool isEmployer,
   ) = _UserAuthResponseData;
@@ -72,6 +79,6 @@ class UserAuthResponseData with _$UserAuthResponseData {
 
   static Future<UserAuthResponseData> getEmptyUser() async {
     return const UserAuthResponseData("", 0, 0, "", "", "", "", "", "", "", "",
-        "", "", "", "", "", 0, 0, "", "", "", false);
+        "", "", "", "", "", 0, 0, "", "", "", "", "", "", "", "", false);
   }
 }

@@ -87,10 +87,21 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void _navigationToStatusLogin() {
-    if (roleId == "3") {
-      navigationService.clearStackAndShow(Routes.employerRegisterScreenView);
+    var isEmployer = (roleId == "3" ? true : false);
+    if (isEmployer) {
+      navigationService.clearStackAndShow(
+        Routes.employerRegisterScreenView,
+        arguments: EmployerRegisterScreenViewArguments(
+          phoneNumber: mobileController.text,
+        ),
+      );
     } else {
-      navigationService.clearStackAndShow(Routes.candidateRegisterScreenView);
+      navigationService.clearStackAndShow(
+        Routes.candidateRegisterScreenView,
+        arguments: CandidateRegisterScreenViewArguments(
+          phoneNumber: mobileController.text,
+        ),
+      );
     }
   }
 

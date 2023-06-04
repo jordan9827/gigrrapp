@@ -82,6 +82,9 @@ bool validatePassword(String password) => RegExp(
         r"(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&])^[a-zA-Z0-9!@#$%^&]{6,12}$")
     .hasMatch(password);
 
+bool validateAadhaarCard(String aadhaar) =>
+    RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(aadhaar);
+
 bool validatePhone(String phone) => RegExp(
         r"^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$")
     .hasMatch(phone);
@@ -130,6 +133,7 @@ InputBorder inputBorder = OutlineInputBorder(
     color: mainGrayColor,
   ),
 );
+
 Widget showLoading([double size = 25]) {
   return Center(
     heightFactor: 2,

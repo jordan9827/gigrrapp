@@ -44,8 +44,13 @@ abstract class AuthService extends ChopperService {
     @Body() Map<String, dynamic> body,
   );
 
-  @Post(path: "candidates/profile")
+  @Post(path: "candidate_profile")
   Future<Response<UserLoginResponse>> candidatesProfileApi(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "candidate_kyc")
+  Future<Response<UserLoginResponse>> candidatesKYCApi(
     @Body() Map<String, dynamic> body,
   );
 

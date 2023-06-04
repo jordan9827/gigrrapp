@@ -19,7 +19,7 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return LoadingScreen(
-      loading: viewModel.isBusy,
+      loading: viewModel.loading,
       showDialogLoading: true,
       child: Scaffold(
         body: _buildFormView(viewModel),
@@ -62,12 +62,12 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
             hintForm: "i.e. 452001",
             controller: viewModel.pinCodeController,
           ),
+          // CVMTextFormField(
+          //   title: "add_pin_map",
+          //   formWidget: _buildGoogleMap(viewModel),
+          // ),
           CVMTextFormField(
-            title: "add_pin_map",
-            formWidget: _buildGoogleMap(viewModel),
-          ),
-          CVMTextFormField(
-            title: "upload_business_pictures",
+            title: "upload_Profile_pictures",
             formWidget: CustomImagePickerView(
               imageList: viewModel.imageList,
             ),
@@ -76,6 +76,7 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
             height: SizeConfig.margin_padding_10,
           ),
           LoadingButton(
+            loading: viewModel.isBusy,
             action: viewModel.employerCompleteProfileApiCall,
             backgroundColor: mainGrayColor,
             titleColor: independenceColor,
@@ -85,6 +86,7 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
             height: SizeConfig.margin_padding_10,
           ),
           LoadingButton(
+            loading: viewModel.isBusy,
             action: viewModel.addBusinessProfileApiCall,
             title: "create_profile",
           ),
@@ -93,14 +95,6 @@ class EmployerBusinessInfoFormView extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  Widget _buildGoogleMap(EmployerRegisterViewModel viewModel) {
-    var latLng = viewModel.latLng;
-    return GoogleMapBoxScreen(
-      lat: latLng.latitude.toString(),
-      lng: latLng.longitude.toString(),
     );
   }
 }

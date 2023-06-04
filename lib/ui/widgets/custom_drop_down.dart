@@ -15,6 +15,7 @@ class CustomDropDownWidget extends StatelessWidget {
   final bool visible;
   final bool enableMultiSelected;
   final String groupValue;
+  final double? size;
   CustomDropDownWidget({
     Key? key,
     required this.itemList,
@@ -27,6 +28,7 @@ class CustomDropDownWidget extends StatelessWidget {
     this.removeItems,
     this.selectSingleItemsAction,
     this.selectMultipleItemsAction,
+    this.size,
   }) : super(key: key);
 
   @override
@@ -68,7 +70,7 @@ class CustomDropDownWidget extends StatelessWidget {
         Visibility(
           visible: visible,
           child: Container(
-            height: SizeConfig.margin_padding_50 * 5,
+            height: size ?? SizeConfig.margin_padding_50 * 5,
             decoration: BoxDecoration(
               color: mainGrayColor,
               border: Border(top: BorderSide(color: Colors.black38, width: 1)),
@@ -99,7 +101,7 @@ class CustomDropDownWidget extends StatelessWidget {
                                 itemList.indexOf(e),
                               ),
                               value: onMultiSelectedList!.contains(e),
-                              activeColor: independenceColor,
+                              activeColor: mainPinkColor,
                               visualDensity: VisualDensity(
                                 horizontal: VisualDensity.minimumDensity,
                                 vertical: VisualDensity.minimumDensity,
@@ -108,7 +110,7 @@ class CustomDropDownWidget extends StatelessWidget {
                           if (!enableMultiSelected)
                             Radio(
                               value: e,
-                              activeColor: independenceColor,
+                              activeColor: mainPinkColor,
                               groupValue: groupValue,
                               onChanged: selectSingleItemsAction,
                             ),
@@ -163,7 +165,8 @@ class CustomDropDownWidget extends StatelessWidget {
                   element,
                   style: TextStyle(color: Colors.white),
                 ),
-                SizedBox(width: SizeConfig.margin_padding_5),
+                if (enableMultiSelected)
+                  SizedBox(width: SizeConfig.margin_padding_5),
                 if (enableMultiSelected)
                   InkWell(
                     onTap: () =>

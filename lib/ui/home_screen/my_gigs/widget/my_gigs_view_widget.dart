@@ -9,7 +9,12 @@ import 'package:square_demo_architecture/util/others/text_styles.dart';
 
 class MyGigsViewWidget extends StatelessWidget {
   final MyGigsData myGigs;
-  const MyGigsViewWidget({Key? key, required this.myGigs}) : super(key: key);
+  final Widget bottomView;
+  const MyGigsViewWidget({
+    Key? key,
+    required this.myGigs,
+    required this.bottomView,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class MyGigsViewWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(ic_location, scale: 3),
+              Image.asset(ic_location, scale: 2.8),
               SizedBox(
                 width: SizeConfig.margin_padding_5,
               ),
@@ -77,7 +82,7 @@ class MyGigsViewWidget extends StatelessWidget {
           SizedBox(
             height: SizeConfig.margin_padding_15,
           ),
-          _buildDetailView()
+          bottomView
         ],
       ),
     );

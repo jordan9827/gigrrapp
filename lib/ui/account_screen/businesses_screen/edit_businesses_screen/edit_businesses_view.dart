@@ -85,7 +85,7 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
           formWidget: _buildGoogleMap(viewModel),
         ),
         CVMTextFormField(
-          title: "upload_business_pictures",
+          title: "upload_Profile_pictures",
           formWidget: CustomImagePickerView(
             imageList: viewModel.imageList,
           ),

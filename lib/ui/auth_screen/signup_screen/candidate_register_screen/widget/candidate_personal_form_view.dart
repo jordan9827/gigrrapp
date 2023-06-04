@@ -4,11 +4,11 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
-import 'package:square_demo_architecture/ui/widgets/map_box/google_map_box_view.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import '../../../../../util/others/image_constants.dart';
 import '../../../../widgets/custom_image_picker/custom_image_picker_view.dart';
+import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import '../candidate_register_view_model.dart';
 
 class CandidatePersonalInfoFormView extends StatelessWidget {
@@ -23,7 +23,7 @@ class CandidatePersonalInfoFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return LoadingScreen(
-      loading: viewModel.isBusy,
+      loading: viewModel.loading,
       showDialogLoading: true,
       child: Scaffold(
         body: _buildFormView(context, viewModel),
@@ -45,6 +45,7 @@ class CandidatePersonalInfoFormView extends StatelessWidget {
           CVMTextFormField(
             maxLength: 10,
             title: "mobile_number",
+            readOnly: viewModel.isMobileRead,
             hintForm: "i.e. 989 898 9898",
             controller: viewModel.mobileController,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -67,30 +68,17 @@ class CandidatePersonalInfoFormView extends StatelessWidget {
             ),
           ),
           _buildSetGender(viewModel),
-          CVMTextFormField(
-            title: "address",
-            readOnly: true,
-            controller: viewModel.addressController,
-            hintForm: "i.e. House no., Street name, Area",
-            onTap: viewModel.mapBoxPlace,
+          MapBoxAddressFormViewWidget(
+            isMapEnable: false,
+            latLng: viewModel.latLng,
+            cityController: viewModel.cityController,
+            addressController: viewModel.addressController,
+            stateController: viewModel.stateController,
+            pinController: viewModel.pinCodeController,
+            mapBoxPlace: viewModel.mapBoxPlace,
           ),
           CVMTextFormField(
-            title: "city",
-            controller: viewModel.cityController,
-            hintForm: "i.e. Indore",
-          ),
-          CVMTextFormField(
-            title: "state",
-            controller: viewModel.stateController,
-            hintForm: "i.e. Madhya Pradesh",
-          ),
-          CVMTextFormField(
-            title: "pinCode",
-            controller: viewModel.pinCodeController,
-            hintForm: "i.e. 452001",
-          ),
-          CVMTextFormField(
-            title: "upload_business_pictures",
+            title: "upload_Profile_pictures",
             formWidget: CustomImagePickerView(
               imageList: viewModel.imageList,
             ),
@@ -169,7 +157,7 @@ class CandidatePersonalInfoFormView extends StatelessWidget {
       context: context,
       initialDate: viewModel.selectedDate,
       initialDatePickerMode: DatePickerMode.day,
-      firstDate: DateTime(2015),
+      firstDate: DateTime(1950),
       lastDate: DateTime(2101),
       builder: (context, child) {
         return Theme(

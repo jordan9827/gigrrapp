@@ -11,8 +11,29 @@ class EmployerGigsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final businessRepo = locator<BusinessRepo>();
   final user = locator<UserAuthResponseData>();
-
+  int responseCount = 0;
   List<MyGigsData> myGigsList = [];
+
+  List<String> setStackedImage(MyGigsData data) {
+    List<String> urlImages = [];
+    for (var i in data.gigsRequestData) {
+      if (i.candidateImageList.isEmpty) {
+      } else {
+        print("candidateImageList----> ${i.candidateImageList.first.imageURL}");
+        urlImages.add(i.candidateImageList.first.imageURL);
+      }
+    }
+    responseCount = urlImages.length;
+    return urlImages;
+  }
+
+  String get setResponseCount {
+    if (responseCount <= 4) {
+      return "$responseCount  response";
+    } else {
+      return "+ $responseCount response";
+    }
+  }
 
   Future<void> fetchMyGigsList() async {
     setBusy(true);

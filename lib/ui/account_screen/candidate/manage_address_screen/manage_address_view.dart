@@ -77,7 +77,7 @@ class _ManageAddressScreenViewState extends State<ManageAddressScreenView> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Icon(
-            Icons.home_outlined,
+            iconsWidget("office"),
             color: independenceColor,
           ),
           SizedBox(
@@ -91,6 +91,7 @@ class _ManageAddressScreenViewState extends State<ManageAddressScreenView> {
                   "Home",
                   style: TSB.semiBoldMedium(),
                 ),
+                SizedBox(height: 3),
                 Text(
                   "11-PU3, Agra Bombay Road, Near C21 Mall, Indore",
                   style: TSB.regularVSmall(
@@ -104,11 +105,21 @@ class _ManageAddressScreenViewState extends State<ManageAddressScreenView> {
             width: SizeConfig.margin_padding_10,
           ),
           Icon(
-            Icons.edit_note_outlined,
-            color: independenceColor,
+            Icons.border_color_outlined,
+            color: textRegularColor,
           ),
         ],
       ),
     );
+  }
+
+  IconData iconsWidget(String text) {
+    if (text == "home") {
+      return Icons.home_outlined;
+    } else if (text == "office") {
+      return Icons.location_city_outlined;
+    } else {
+      return Icons.location_on_outlined;
+    }
   }
 }

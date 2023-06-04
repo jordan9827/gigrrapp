@@ -103,10 +103,44 @@ class GigsRequestData with _$GigsRequestData {
     @JsonKey(name: "payment_status", defaultValue: "") String paymentStatus,
     @JsonKey(name: "rating_from_employer", defaultValue: "")
         String ratingFromEmployer,
+    @JsonKey(name: "candidate_images", defaultValue: [])
+        List<CandidateImage> candidateImageList,
+    @JsonKey(name: "candidate") Candidate candidate,
     @JsonKey(name: "rating_to_employer", defaultValue: "")
         String ratingToEmployer,
   ) = _GigsRequestData;
 
   factory GigsRequestData.fromJson(Map<String, dynamic> json) =>
       _$GigsRequestDataFromJson(json);
+}
+
+@freezed
+@JsonToType()
+class CandidateImage with _$CandidateImage {
+  @JsonSerializable(explicitToJson: true)
+  const factory CandidateImage(
+    @JsonKey(name: "id", defaultValue: 0) int id,
+    @JsonKey(name: "user_id", defaultValue: 0) int userId,
+    @JsonKey(name: "image_url", defaultValue: "") String imageURL,
+  ) = _CandidateImage;
+
+  factory CandidateImage.fromJson(Map<String, dynamic> json) =>
+      _$CandidateImageFromJson(json);
+}
+
+@freezed
+@JsonToType()
+class Candidate with _$Candidate {
+  @JsonSerializable(explicitToJson: true)
+  const factory Candidate(
+    @JsonKey(name: "id", defaultValue: 0) int id,
+    @JsonKey(name: "role_id", defaultValue: "") String roleId,
+    @JsonKey(name: "image_url", defaultValue: "") String imageURL,
+  ) = _Candidate;
+
+  factory Candidate.fromJson(Map<String, dynamic> json) =>
+      _$CandidateFromJson(json);
+  static Future<Candidate> getEmptyCandidate() async {
+    return Candidate.fromJson({});
+  }
 }

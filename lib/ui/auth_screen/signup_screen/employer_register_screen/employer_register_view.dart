@@ -6,7 +6,9 @@ import 'employer_register_view_model.dart';
 import 'widget/employer_personal_form_view.dart';
 
 class EmployerRegisterScreenView extends StatefulWidget {
-  const EmployerRegisterScreenView({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const EmployerRegisterScreenView({Key? key, this.phoneNumber = ""})
+      : super(key: key);
 
   @override
   State<EmployerRegisterScreenView> createState() =>
@@ -18,7 +20,10 @@ class _EmployerRegisterScreenViewState
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => EmployerRegisterViewModel(),
+      viewModelBuilder: () => EmployerRegisterViewModel(
+        mobile: widget.phoneNumber,
+        isMobileRead: widget.phoneNumber.isNotEmpty,
+      ),
       builder: (_, viewModel, child) => WillPopScope(
         onWillPop: () => Future.sync(viewModel.onWillPop),
         child: Scaffold(

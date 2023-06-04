@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import '../../../../../../others/common_app_bar.dart';
 import '../../../../../../others/constants.dart';
 import '../../../../../../others/loading_button.dart';
+import '../../../../../../others/loading_screen.dart';
 import '../../../../../../util/others/image_constants.dart';
 import '../../../../../../util/others/text_styles.dart';
 import '../../../../../widgets/cvm_text_form_field.dart';
@@ -23,90 +24,178 @@ class _CandidateKYCScreenViewState extends State<CandidateKYCScreenView> {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => CandidateKYCViewModel(),
-      builder: (_, viewModel, child) => Scaffold(
-        appBar: getAppBar(
-          context,
-          "upload_kyc_document",
-          actions: [
-            Container(
-              margin: EdgeInsets.only(
-                right: SizeConfig.margin_padding_15,
-              ),
-              height: SizeConfig.margin_padding_15,
-              width: SizeConfig.margin_padding_15,
-              child: Image.asset(ic_close_whit),
-            ),
-          ],
-        ),
-        body: Container(
-          padding: edgeInsetsMargin,
-          child: ListView(
-            children: [
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
-              CVMTextFormField(
-                title: "enter_aadhaar_no",
-                hintForm: "1234 1234 1234",
-              ),
-              CVMTextFormField(
-                title: "upload_front_pic_aadhaar",
-                formWidget:
-                    _buildPickImageView(title: "upload_front_pic_aadhaar"),
-              ),
-              CVMTextFormField(
-                title: "upload_back_pic_aadhaar",
-                formWidget:
-                    _buildPickImageView(title: "upload_back_pic_aadhaar"),
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
-              LoadingButton(
-                action: () {},
-                title: 'submit',
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
+      builder: (_, viewModel, child) => LoadingScreen(
+        loading: viewModel.isBusy,
+        showDialogLoading: true,
+        child: Scaffold(
+          appBar: getAppBar(
+            context,
+            "upload_kyc_document",
+            actions: [
+              InkWell(
+                onTap: viewModel.navigationToHomeScreen,
+                child: Container(
+                  margin: EdgeInsets.only(
+                    right: SizeConfig.margin_padding_15,
+                  ),
+                  height: SizeConfig.margin_padding_15,
+                  width: SizeConfig.margin_padding_15,
+                  child: Image.asset(ic_close_whit),
+                ),
               ),
             ],
+          ),
+          body: Container(
+            padding: edgeInsetsMargin,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: SizeConfig.margin_padding_20,
+                ),
+                CVMTextFormField(
+                  maxLength: 12,
+                  title: "enter_aadhaar_no",
+                  hintForm: "i.e. 1234 1234 1234",
+                  controller: viewModel.aadhaarController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                ),
+                _buildPickedImageWidget(
+                  viewModel: viewModel,
+                  title: "upload_front_pic_aadhaar",
+                  subTitle: "upload_front_pic_aadhaar",
+                  image: viewModel.frontAadhaarImage,
+                ),
+                _buildPickedImageWidget(
+                  viewModel: viewModel,
+                  title: "upload_back_pic_aadhaar",
+                  subTitle: "upload_back_pic_aadhaar",
+                  image: viewModel.backAadhaarImage,
+                  isFont: false,
+                ),
+                SizedBox(
+                  height: SizeConfig.margin_padding_20,
+                ),
+                LoadingButton(
+                  action: viewModel.candidateKYCApi,
+                  title: 'submit',
+                ),
+                SizedBox(
+                  height: SizeConfig.margin_padding_20,
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildPickImageView({required String title}) {
-    return Container(
-      height: SizeConfig.margin_padding_50 * 3,
-      width: double.infinity,
-      decoration: BoxDecoration(
-        color: mainPinkColor.withOpacity(0.04),
-        borderRadius: BorderRadius.circular(
-          SizeConfig.margin_padding_10,
+  Widget _buildPickedImageWidget({
+    required String title,
+    required String subTitle,
+    required String image,
+    bool isFont = true,
+    required CandidateKYCViewModel viewModel,
+  }) {
+    return CVMTextFormField(
+      title: title,
+      formWidget: image.isNotEmpty
+          ? _buildImageView(image: image, viewModel: viewModel, isFont: isFont)
+          : _buildImagePickerView(
+              title: subTitle,
+              onPick: () => viewModel.pickImage(context, isFontImage: isFont),
+            ),
+    );
+  }
+
+  Widget _buildImageView({
+    required String image,
+    bool isFont = true,
+    required CandidateKYCViewModel viewModel,
+  }) {
+    return Stack(
+      children: [
+        Container(
+          height: SizeConfig.margin_padding_50 * 3,
+          width: double.infinity,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(
+              SizeConfig.margin_padding_10,
+            ),
+            child: Image.network(
+              image,
+              fit: BoxFit.fitWidth,
+            ),
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_24,
-            width: SizeConfig.margin_padding_24,
-            child: Image.asset(upload_image),
+        Positioned(
+          top: 0.0,
+          right: 4.0,
+          child: Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: InkWell(
+              onTap: () => viewModel.deleteImageApi(
+                imagePath: image,
+                pickImage: isFont,
+              ),
+              child: Container(
+                width: SizeConfig.margin_padding_24,
+                height: SizeConfig.margin_padding_24,
+                decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(
+                    SizeConfig.margin_padding_20,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Image.asset(ic_remove_wht),
+                ),
+              ),
+            ),
           ),
-          SizedBox(height: SizeConfig.margin_padding_10),
-          Text(
-            title.tr(),
-            style: TSB.regularMedium(textColor: independenceColor),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildImagePickerView({
+    required String title,
+    required Function() onPick,
+  }) {
+    return InkWell(
+      onTap: onPick,
+      child: Container(
+        height: SizeConfig.margin_padding_50 * 3,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: mainPinkColor.withOpacity(0.04),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_10,
           ),
-          SizedBox(height: SizeConfig.margin_padding_5),
-          Text(
-            "Image should be clear".tr(),
-            style: TSB.regularSmall(textColor: fieldsRegularColor),
-          )
-        ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: SizeConfig.margin_padding_24,
+              width: SizeConfig.margin_padding_24,
+              child: Image.asset(upload_image),
+            ),
+            SizedBox(height: SizeConfig.margin_padding_10),
+            Text(
+              title.tr(),
+              style: TSB.regularMedium(textColor: independenceColor),
+            ),
+            SizedBox(height: SizeConfig.margin_padding_5),
+            Text(
+              "Image should be clear".tr(),
+              style: TSB.regularSmall(textColor: fieldsRegularColor),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
+import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
 import '../candidate_register_view_model.dart';
 
@@ -19,7 +20,7 @@ class CandidateRoleFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return LoadingScreen(
-      loading: viewModel.isBusy,
+      loading: viewModel.loading,
       showDialogLoading: true,
       child: Scaffold(
         body: _buildFormView(viewModel),
@@ -36,9 +37,8 @@ class CandidateRoleFormView extends StatelessWidget {
             title: "I Can Be (*select multiple)",
             controller: viewModel.gigrrTypeController,
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
+          _buildCostCriteriaView(viewModel),
+          _buildRangeSliderView(viewModel),
           _buildCustomView(
             title: "i_am_avail",
             child: _buildMyAvailableView(),
@@ -51,7 +51,8 @@ class CandidateRoleFormView extends StatelessWidget {
             height: SizeConfig.margin_padding_35,
           ),
           LoadingButton(
-            action: viewModel.employerCompleteProfileApiCall,
+            loading: viewModel.isBusy,
+            action: viewModel.candidateCompleteProfileApiCall,
             title: "create_profile",
           ),
           SizedBox(
@@ -80,6 +81,85 @@ class CandidateRoleFormView extends StatelessWidget {
           height: SizeConfig.margin_padding_13,
         )
       ],
+    );
+  }
+
+  Widget _buildRangeSliderView(CandidateRegisterViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildTitle("Select Cost"),
+            Text(
+              viewModel.payRangeText,
+              style: TSB.regularVSmall(textColor: textRegularColor),
+            )
+          ],
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            bottom: SizeConfig.margin_padding_8,
+            top: SizeConfig.margin_padding_3,
+          ),
+          child: SliderTheme(
+            data: SliderThemeData(
+              rangeTickMarkShape: const RoundRangeSliderTickMarkShape(
+                tickMarkRadius: 0,
+              ),
+              valueIndicatorColor: Colors.pink,
+              overlayShape: SliderComponentShape.noThumb,
+            ),
+            child: RangeSlider(
+              activeColor: mainPinkColor,
+              inactiveColor: mainGrayColor,
+              values: viewModel.currentRangeValues,
+              min: 0,
+              max: 1000,
+              divisions: 10,
+              labels: RangeLabels(
+                viewModel.currentRangeValues.start.round().toString(),
+                viewModel.currentRangeValues.end.round().toString(),
+              ),
+              onChanged: viewModel.setPayRange,
+            ),
+          ),
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_10,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCostCriteriaView(CandidateRegisterViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTitle("Cost Criteria"),
+        CustomDropDownWidget(
+          hintText: "i.e. hourly",
+          itemList: viewModel.costCriteriaList,
+          visible: viewModel.isVisible,
+          groupValue: viewModel.costCriteriaValue,
+          onVisible: viewModel.onVisibleAction,
+          selectSingleItemsAction: viewModel.onCostCriteriaSelect,
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_13,
+        )
+      ],
+    );
+  }
+
+  Widget _buildTitle(String val) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+      child: Text(
+        val.tr(),
+        style: TSB.regularSmall(),
+      ),
     );
   }
 

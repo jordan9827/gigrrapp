@@ -1,13 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/constants.dart';
 import '../../../../others/loading_screen.dart';
 import '../../../../util/others/size_config.dart';
 import '../../../../util/others/text_styles.dart';
 import '../../../widgets/empty_data_screen.dart';
 import '../../../widgets/notification_icon.dart';
+import '../../../widgets/stacked_widget.dart';
 import '../widget/my_gigs_view_widget.dart';
 import 'employer_gigs_view_model.dart';
 
@@ -28,13 +31,11 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
       builder: (context, viewModel, child) {
         return Scaffold(
           backgroundColor: mainGrayColor,
-          appBar: AppBar(
+          appBar: getAppBar(
+            context,
+            "my_gigs",
+            textColor: independenceColor,
             backgroundColor: mainWhiteColor,
-            elevation: 0,
-            title: Text(
-              "my_gigs".tr(),
-              style: TSB.semiBoldMedium(textColor: independenceColor),
-            ),
             actions: [
               NotificationIcon(),
             ],
@@ -50,6 +51,9 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
 
   Widget _buildMyGigsList(EmployerGigsViewModel viewModel) {
     return Container(
+      margin: EdgeInsets.all(
+        SizeConfig.margin_padding_10,
+      ),
       child: ListView(
         children: [
           if (viewModel.myGigsList.isNotEmpty)
@@ -58,6 +62,29 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                   .map(
                     (gigs) => MyGigsViewWidget(
                       myGigs: gigs,
+                      bottomView: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildStackedImages(
+                                data: gigs,
+                                viewModel: viewModel,
+                              ),
+                              SizedBox(
+                                height: SizeConfig.margin_padding_5,
+                              ),
+                              Text(
+                                viewModel.setResponseCount,
+                                style: TSB.regularSmall(
+                                    textColor: independenceColor),
+                              )
+                            ],
+                          ),
+                          _buildDetailView()
+                        ],
+                      ),
                     ),
                   )
                   .toList(),
@@ -67,6 +94,58 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
             height: SizeConfig.margin_padding_10,
           )
         ],
+      ),
+    );
+  }
+
+  Widget buildStackedImages({
+    required MyGigsData data,
+    TextDirection? direction,
+    required EmployerGigsViewModel viewModel,
+  }) {
+    const double size = 40;
+    const double xShift = 20;
+    var urlImages = viewModel.setStackedImage(data);
+    final items = urlImages.map((urlImage) => buildImage(urlImage)).toList();
+    return StackedWidgets(
+      items: items,
+      size: size,
+      xShift: xShift,
+    );
+  }
+
+  Widget buildImage(String urlImage) {
+    const double borderSize = 5;
+
+    return ClipOval(
+      child: Container(
+        color: Colors.white,
+        child: ClipOval(
+          child: Image.network(
+            urlImage,
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDetailView() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.margin_padding_15,
+          vertical: SizeConfig.margin_padding_8,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: mainPinkColor, width: 1.5),
+          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_8),
+        ),
+        child: Text(
+          "view".tr(),
+          style: TSB.regularVSmall(textColor: mainPinkColor),
+        ),
       ),
     );
   }

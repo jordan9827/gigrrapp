@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:flutter/cupertino.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
@@ -13,6 +12,7 @@ import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
+import '../../../../util/enums/latLng.dart';
 
 class EmployerRegisterViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -36,17 +36,16 @@ class EmployerRegisterViewModel extends BaseViewModel {
   String address = "";
   Location location = Location();
   PageController controller = PageController();
-
-  final Set<Marker> markers = {};
   int pageIndex = 0;
-
   List<String>? imageList = [];
   bool isListEmpty = true;
   bool fourImagesAdded = false;
-
-  EmployerRegisterViewModel({String mobile = "", String fullName = ""}) {
-    fullNameController.text = fullName;
+  bool isMobileRead = false;
+  bool _loading = false;
+  bool get loading => _loading;
+  EmployerRegisterViewModel({String mobile = "", bool isMobileRead = false}) {
     mobileController.text = mobile;
+    this.isMobileRead = isMobileRead;
     businessTypeController.text =
         businessTypeService.businessTypeList.first.id.toString();
     acquireCurrentLocation();
@@ -71,18 +70,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   void setPageIndex(int? val) {
     pageIndex = val!;
-    notifyListeners();
-  }
-
-  Future<void> markersLoadData() async {
-    markers.add(
-      Marker(
-        markerId: MarkerId(""),
-        icon: BitmapDescriptor.defaultMarker,
-        position: LatLng(latitude, longitude),
-      ),
-    );
-
     notifyListeners();
   }
 
@@ -118,7 +105,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   void acquireCurrentLocation() async {
     bool serviceEnabled = await location.serviceEnabled();
     if (serviceEnabled) {
-      setBusy(true);
+      _loading =true;
       final locationData = await location.getLocation();
       print("locationData ${locationData.latitude}");
 
@@ -138,7 +125,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
       latLng =
           LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0);
-      setBusy(false);
+      _loading =false;
       notifyListeners();
     } else {
       serviceEnabled = await location.requestService();
@@ -149,14 +136,14 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   Future<void> setAddressPlace(mapBox.MapBoxPlace mapBoxPlace) async {
     print("$mapBoxPlace");
-    setBusy(true);
+    _loading =true;
     var addressData = mapBoxPlace.context ?? [];
 
     addressController.text = mapBoxPlace.placeName ?? "";
     cityController.text = addressData[2].text ?? "";
     stateController.text = addressData[4].text ?? "";
     pinCodeController.text = addressData[0].text ?? "";
-    setBusy(false);
+    _loading =false;
     notifyListeners();
   }
 
@@ -169,15 +156,14 @@ class EmployerRegisterViewModel extends BaseViewModel {
         country: "in",
         onSelect: (place) async {
           var addressData = place.context!;
-          setBusy(true);
+          _loading =true;
           addressController.text = place.placeName ?? "";
           cityController.text = addressData[2].text ?? "";
           stateController.text = addressData[4].text ?? "";
           pinCodeController.text = addressData[0].text ?? "";
           latLng = LatLng(
               place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
-          setBusy(false);
-
+          _loading =false;
           notifyListeners();
         },
         limit: 7,
@@ -278,8 +264,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
     request['business_type'] = businessTypeController.text.toString();
     request['business_name'] = businessNameController.text;
     request['business_address'] = addressController.text;
-    request['business_latitude'] = latLng.latitude.toString();
-    request['business_longitude'] = latLng.longitude.toString();
+    request['business_latitude'] = latLng.lat.toString();
+    request['business_longitude'] = latLng.lng.toString();
     request['images'] = imageList!.join(', ');
     log("Body Add Business :: $request");
     return request;
@@ -291,8 +277,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
     request['country_code'] = "+91";
     request['mobile_no'] = mobileController.text;
     request['address'] = addressController.text;
-    request['latitude'] = latLng.latitude.toString();
-    request['longitude'] = latLng.longitude.toString();
+    request['latitude'] = latLng.lat.toString();
+    request['longitude'] = latLng.lng.toString();
     log("Body Complete Profile >>> $request");
     return request;
   }

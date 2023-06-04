@@ -98,6 +98,8 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 var gigs = viewModel.appliedGigsList[index];
                 return MyGigsViewWidget(
                   myGigs: gigs,
+                  bottomView: SizedBox(),
+
                 );
               }
             },
@@ -121,6 +123,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 var gigs = viewModel.shortListGigsList[index];
                 return MyGigsViewWidget(
                   myGigs: gigs,
+                  bottomView: SizedBox(),
                 );
               }
             })

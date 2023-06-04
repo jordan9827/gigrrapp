@@ -3,8 +3,8 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
-import 'package:square_demo_architecture/ui/widgets/map_box/google_map_box_view.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
+import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import '../employer_register_view_model.dart';
 
 class EmployerPersonalInfoFormView extends StatelessWidget {
@@ -17,7 +17,7 @@ class EmployerPersonalInfoFormView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return LoadingScreen(
-      loading: viewModel.isBusy,
+      loading: viewModel.loading,
       showDialogLoading: true,
       child: Scaffold(
         body: _buildFormView(viewModel),
@@ -37,39 +37,19 @@ class EmployerPersonalInfoFormView extends StatelessWidget {
           ),
           CVMTextFormField(
             maxLength: 10,
+            readOnly: viewModel.isMobileRead,
             title: "mobile_number",
             hintForm: "i.e. 989 898 9898",
             controller: viewModel.mobileController,
             keyboardType: TextInputType.numberWithOptions(decimal: true),
           ),
-          CVMTextFormField(
-            title: "address",
-            readOnly: true,
-            controller: viewModel.addressController,
-            hintForm: "i.e. House no., Street name, Area",
-            onTap: viewModel.mapBoxPlace,
-          ),
-          CVMTextFormField(
-            title: "city",
-            controller: viewModel.cityController,
-            hintForm: "i.e. Indore",
-          ),
-          CVMTextFormField(
-            title: "state",
-            controller: viewModel.stateController,
-            hintForm: "i.e. Madhya Pradesh",
-          ),
-          CVMTextFormField(
-            title: "pinCode",
-            controller: viewModel.pinCodeController,
-            hintForm: "i.e. 452001",
-          ),
-          CVMTextFormField(
-            title: "add_pin_map",
-            formWidget: _buildGoogleMap(viewModel),
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
+          MapBoxAddressFormViewWidget(
+            latLng: viewModel.latLng,
+            cityController: viewModel.cityController,
+            addressController: viewModel.addressController,
+            stateController: viewModel.stateController,
+            pinController: viewModel.pinCodeController,
+            mapBoxPlace: viewModel.mapBoxPlace,
           ),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
@@ -80,14 +60,6 @@ class EmployerPersonalInfoFormView extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-
-  Widget _buildGoogleMap(EmployerRegisterViewModel viewModel) {
-    var latLng = viewModel.latLng;
-    return GoogleMapBoxScreen(
-      lat: latLng.latitude.toString(),
-      lng: latLng.longitude.toString(),
     );
   }
 }

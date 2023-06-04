@@ -97,6 +97,28 @@ class AuthImpl extends Auth {
       if (response.body == null) {
         throw Exception(response.error);
       }
+      log.i("Candidates Response 22 ${response.body}");
+      return response.body!.map(success: (user) async {
+        var data = await setUserResponse(user.data);
+        return Right(data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserAuthResponseData>> candidatesKYC(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await authService.candidatesKYCApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
         var data = await setUserResponse(user.data);

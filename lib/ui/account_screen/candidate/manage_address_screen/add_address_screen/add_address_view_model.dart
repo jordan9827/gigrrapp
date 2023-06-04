@@ -6,6 +6,7 @@ import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import '../../../../../app/app.locator.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../others/constants.dart';
+import '../../../../../util/enums/latLng.dart';
 
 class AddAddressViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -15,13 +16,27 @@ class AddAddressViewModel extends BaseViewModel {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController pinCodeController = TextEditingController();
-  double latitude = 0.0;
-  double longitude = 0.0;
+  LatLng latLng = const LatLng(14.508, 46.048);
+  bool isVisible = false;
+
+  List<String> addressTypeList = ["Home", "Office", "Other"];
+  String addressTypeValue = "";
+
   void navigationToBack() {
     if (!isBusy) {
       navigationService.back();
     }
     return;
+  }
+
+  void onVisibleAction() {
+    isVisible = !isVisible;
+    notifyListeners();
+  }
+
+  void onCostCriteriaSelect(String? val) {
+    addressTypeValue = val!;
+    notifyListeners();
   }
 
   void mapBoxPlace() {
@@ -38,8 +53,10 @@ class AddAddressViewModel extends BaseViewModel {
           cityController.text = addressData[2].text ?? "";
           stateController.text = addressData[4].text ?? "";
           pinCodeController.text = addressData[0].text ?? "";
-          latitude = place.geometry!.coordinates![1];
-          longitude = place.geometry!.coordinates![0];
+          latLng = LatLng(
+            place.geometry!.coordinates![1],
+            place.geometry!.coordinates![0],
+          );
           setBusy(false);
           notifyListeners();
         },

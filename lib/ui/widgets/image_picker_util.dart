@@ -1,7 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../../others/constants.dart';
 
 class ImagePickerUtil {
   static Future<XFile?> imageFromCamera() async {
@@ -25,6 +28,24 @@ class ImagePickerUtil {
     var imagePickerResponse =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     return imagePickerResponse;
+  }
+
+  static Future<CroppedFile?> cropImage(PickedFile imageFile) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      uiSettings: [
+        AndroidUiSettings(
+          toolbarColor: mainWhiteColor,
+        ),
+      ],
+      aspectRatio: const CropAspectRatio(
+        ratioX: 1.0,
+        ratioY: 1.0,
+      ),
+      sourcePath: imageFile.path,
+      maxWidth: 512,
+      maxHeight: 512,
+    );
+    return croppedFile;
   }
 
   static Future<dynamic> showCameraOrGalleryChooser(

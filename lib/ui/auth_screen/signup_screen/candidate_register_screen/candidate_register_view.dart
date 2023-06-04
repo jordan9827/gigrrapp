@@ -6,7 +6,9 @@ import 'candidate_register_view_model.dart';
 import 'widget/candidate_personal_form_view.dart';
 
 class CandidateRegisterScreenView extends StatefulWidget {
-  const CandidateRegisterScreenView({Key? key}) : super(key: key);
+  final String phoneNumber;
+  const CandidateRegisterScreenView({Key? key, this.phoneNumber = ""})
+      : super(key: key);
 
   @override
   State<CandidateRegisterScreenView> createState() =>
@@ -18,7 +20,13 @@ class _CandidateRegisterScreenViewState
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => CandidateRegisterViewModel(),
+      onViewModelReady: (viewModel) async {
+        await viewModel.businessTypeService.businessRepo.gigrrTypeCategory();
+      },
+      viewModelBuilder: () => CandidateRegisterViewModel(
+        mobile: widget.phoneNumber,
+        isMobileRead: widget.phoneNumber.isNotEmpty,
+      ),
       builder: (_, viewModel, child) => WillPopScope(
         onWillPop: () => Future.sync(viewModel.onWillPop),
         child: Scaffold(

@@ -30,6 +30,10 @@ abstract class Auth {
     Map<String, dynamic> data,
   );
 
+  Future<Either<Failure, UserAuthResponseData>> candidatesKYC(
+    Map<String, dynamic> data,
+  );
+
   Future<Either<Failure, bool>> logout();
 
   Future<Either<Failure, UploadImageResponseData>> uploadImages(

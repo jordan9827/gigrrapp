@@ -8,6 +8,7 @@ import '../../../../../others/common_app_bar.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
+import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import 'add_address_view_model.dart';
 
 class AddAddressScreenView extends StatefulWidget {
@@ -37,32 +38,15 @@ class _AddAddressScreenViewState extends State<AddAddressScreenView> {
               SizedBox(
                 height: SizeConfig.margin_padding_15,
               ),
-              _buildSelectAddressType(),
-              CVMTextFormField(
-                title: "address",
-                readOnly: true,
-                controller: viewModel.addressController,
-                hintForm: "i.e. House no., Street name, Area",
-                suffixIcon: Icon(
-                  Icons.my_location_outlined,
-                  color: mainPinkColor,
-                ),
-                onTap: viewModel.mapBoxPlace,
-              ),
-              CVMTextFormField(
-                title: "city",
-                controller: viewModel.cityController,
-                hintForm: "i.e. Indore",
-              ),
-              CVMTextFormField(
-                title: "state",
-                controller: viewModel.stateController,
-                hintForm: "i.e. Madhya Pradesh",
-              ),
-              CVMTextFormField(
-                title: "pinCode",
-                controller: viewModel.pinCodeController,
-                hintForm: "i.e. 452001",
+              _buildSelectAddressType(viewModel),
+              MapBoxAddressFormViewWidget(
+                isMapEnable: false,
+                latLng: viewModel.latLng,
+                cityController: viewModel.cityController,
+                addressController: viewModel.addressController,
+                stateController: viewModel.stateController,
+                pinController: viewModel.pinCodeController,
+                mapBoxPlace: viewModel.mapBoxPlace,
               ),
               SizedBox(
                 height: SizeConfig.margin_padding_24,
@@ -78,7 +62,7 @@ class _AddAddressScreenViewState extends State<AddAddressScreenView> {
     );
   }
 
-  Widget _buildSelectAddressType() {
+  Widget _buildSelectAddressType(AddAddressViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,8 +74,13 @@ class _AddAddressScreenViewState extends State<AddAddressScreenView> {
           ),
         ),
         CustomDropDownWidget(
-          hintText: "i.e. Shopping Store",
-          itemList: [],
+          hintText: "i.e. hourly",
+          visible: viewModel.isVisible,
+          size: SizeConfig.margin_padding_50 * 3,
+          itemList: viewModel.addressTypeList,
+          groupValue: viewModel.addressTypeValue,
+          onVisible: viewModel.onVisibleAction,
+          selectSingleItemsAction: viewModel.onCostCriteriaSelect,
         ),
         SizedBox(
           height: SizeConfig.margin_padding_13,
