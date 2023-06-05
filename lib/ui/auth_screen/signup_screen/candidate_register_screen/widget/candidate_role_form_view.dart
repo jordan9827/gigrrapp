@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
@@ -23,12 +24,13 @@ class CandidateRoleFormView extends StatelessWidget {
       loading: viewModel.loading,
       showDialogLoading: true,
       child: Scaffold(
-        body: _buildFormView(viewModel),
+        body: _buildFormView(context, viewModel),
       ),
     );
   }
 
-  Widget _buildFormView(CandidateRegisterViewModel viewModel) {
+  Widget _buildFormView(
+      BuildContext context, CandidateRegisterViewModel viewModel) {
     return Container(
       padding: edgeInsetsMargin,
       child: ListView(
@@ -39,6 +41,19 @@ class CandidateRoleFormView extends StatelessWidget {
           ),
           _buildCostCriteriaView(viewModel),
           _buildRangeSliderView(viewModel),
+          CVMTextFormField(
+            title: "Total Experience",
+            readOnly: true,
+            hintForm: "i.e. 1 year",
+            controller: viewModel.mobileController,
+            suffixIcon: InkWell(
+              onTap: () => _showExperiencePickerBottom(context),
+              child: Icon(
+                Icons.keyboard_arrow_down,
+                color: independenceColor,
+              ),
+            ),
+          ),
           _buildCustomView(
             title: "i_am_avail",
             child: _buildMyAvailableView(),
@@ -80,6 +95,29 @@ class CandidateRoleFormView extends StatelessWidget {
         SizedBox(
           height: SizeConfig.margin_padding_13,
         )
+      ],
+    );
+  }
+
+  void _showExperiencePickerBottom(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) => _buildExperiencePickerView(),
+    );
+  }
+
+  Widget _buildExperiencePickerView() {
+    return Row(
+      children: [
+        Expanded(
+            child: CupertinoPicker(
+          itemExtent: 30,
+          onSelectedItemChanged: (int value) {},
+          children: List.generate(
+            10,
+            (index) => Text("${++index}"),
+          ),
+        ))
       ],
     );
   }

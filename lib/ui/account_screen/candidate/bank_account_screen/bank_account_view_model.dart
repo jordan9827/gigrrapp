@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
+import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 
 class BankAccountViewModel extends BaseViewModel {
@@ -15,5 +16,9 @@ class BankAccountViewModel extends BaseViewModel {
       navigationService.back();
     }
     return;
+  }
+
+  void navigationToAddBankAccountView() {
+    navigationService.navigateTo(Routes.addBankAccountScreenView);
   }
 }

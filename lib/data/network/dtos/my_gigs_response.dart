@@ -105,7 +105,8 @@ class GigsRequestData with _$GigsRequestData {
         String ratingFromEmployer,
     @JsonKey(name: "candidate_images", defaultValue: [])
         List<CandidateImage> candidateImageList,
-    @JsonKey(name: "candidate") Candidate candidate,
+    @JsonKey(name: "candidate", defaultValue: Candidate.getEmptyCandidate)
+        final Candidate candidate,
     @JsonKey(name: "rating_to_employer", defaultValue: "")
         String ratingToEmployer,
   ) = _GigsRequestData;
@@ -140,7 +141,8 @@ class Candidate with _$Candidate {
 
   factory Candidate.fromJson(Map<String, dynamic> json) =>
       _$CandidateFromJson(json);
-  static Future<Candidate> getEmptyCandidate() async {
+
+  static getEmptyCandidate() {
     return Candidate.fromJson({});
   }
 }

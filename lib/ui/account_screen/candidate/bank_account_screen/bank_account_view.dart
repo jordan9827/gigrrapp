@@ -143,37 +143,40 @@ class _BankAccountScreenViewState extends State<BankAccountScreenView> {
   }
 
   Widget _buildAddAccountView(BankAccountViewModel viewModel) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
-      decoration: BoxDecoration(
-        color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "add_new_account".tr(),
-                style: TSB.semiBoldSmall(),
-              ),
-              Image.asset(
-                ic_arrow_grey,
-                scale: 2,
-              )
-            ],
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_5,
-          ),
-          Text(
-            "to_you_payment_direct_u_bank".tr(),
-            style: TSB.regularVSmall(),
-          ),
-        ],
+    return InkWell(
+      onTap: viewModel.navigationToAddBankAccountView,
+      child: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+        decoration: BoxDecoration(
+          color: mainWhiteColor,
+          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "add_new_account".tr(),
+                  style: TSB.semiBoldSmall(),
+                ),
+                Image.asset(
+                  ic_arrow_grey,
+                  scale: 2,
+                )
+              ],
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
+            Text(
+              "to_you_payment_direct_u_bank".tr(),
+              style: TSB.regularVSmall(),
+            ),
+          ],
+        ),
       ),
     );
   }

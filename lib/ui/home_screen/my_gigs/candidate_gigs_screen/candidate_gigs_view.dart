@@ -99,7 +99,6 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 return MyGigsViewWidget(
                   myGigs: gigs,
                   bottomView: SizedBox(),
-
                 );
               }
             },

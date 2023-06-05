@@ -63,6 +63,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                     (gigs) => MyGigsViewWidget(
                       myGigs: gigs,
                       bottomView: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
@@ -131,21 +132,20 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
   }
 
   Widget _buildDetailView() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.margin_padding_15,
-          vertical: SizeConfig.margin_padding_8,
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: SizeConfig.margin_padding_17,
+        vertical: SizeConfig.margin_padding_8,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: mainPinkColor, width: 1.5),
+        borderRadius: BorderRadius.circular(
+          SizeConfig.margin_padding_8,
         ),
-        decoration: BoxDecoration(
-          border: Border.all(color: mainPinkColor, width: 1.5),
-          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_8),
-        ),
-        child: Text(
-          "view".tr(),
-          style: TSB.regularVSmall(textColor: mainPinkColor),
-        ),
+      ),
+      child: Text(
+        "view".tr(),
+        style: TSB.regularVSmall(textColor: mainPinkColor),
       ),
     );
   }

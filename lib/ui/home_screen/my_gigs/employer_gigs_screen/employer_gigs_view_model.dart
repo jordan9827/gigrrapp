@@ -17,10 +17,14 @@ class EmployerGigsViewModel extends BaseViewModel {
   List<String> setStackedImage(MyGigsData data) {
     List<String> urlImages = [];
     for (var i in data.gigsRequestData) {
-      if (i.candidateImageList.isEmpty) {
-      } else {
-        print("candidateImageList----> ${i.candidateImageList.first.imageURL}");
-        urlImages.add(i.candidateImageList.first.imageURL);
+      if (i.status == "accepted") {
+        if (i.candidateImageList.isEmpty) {
+          urlImages.add(i.candidate.imageURL);
+        } else {
+          print(
+              "candidateImageList----> ${i.candidateImageList.first.imageURL}");
+          urlImages.add(i.candidateImageList.first.imageURL);
+        }
       }
     }
     responseCount = urlImages.length;
@@ -31,7 +35,7 @@ class EmployerGigsViewModel extends BaseViewModel {
     if (responseCount <= 4) {
       return "$responseCount  response";
     } else {
-      return "+ $responseCount response";
+      return "+$responseCount response";
     }
   }
 

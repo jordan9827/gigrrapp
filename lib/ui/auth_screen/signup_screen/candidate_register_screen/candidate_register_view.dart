@@ -40,12 +40,12 @@ class _CandidateRegisterScreenViewState
                   onPageChanged: viewModel.setPageIndex,
                   controller: viewModel.controller,
                   children: [
+                    CandidateRoleFormView(
+                      viewModel: viewModel,
+                    ),
                     CandidatePersonalInfoFormView(
                       viewModel: viewModel,
                     ),
-                    CandidateRoleFormView(
-                      viewModel: viewModel,
-                    )
                   ],
                 ),
               ),
