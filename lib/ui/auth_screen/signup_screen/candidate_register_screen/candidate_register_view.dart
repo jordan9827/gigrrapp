@@ -7,6 +7,7 @@ import 'widget/candidate_personal_form_view.dart';
 
 class CandidateRegisterScreenView extends StatefulWidget {
   final String phoneNumber;
+
   const CandidateRegisterScreenView({Key? key, this.phoneNumber = ""})
       : super(key: key);
 
@@ -40,10 +41,10 @@ class _CandidateRegisterScreenViewState
                   onPageChanged: viewModel.setPageIndex,
                   controller: viewModel.controller,
                   children: [
-                    CandidateRoleFormView(
+                    CandidatePersonalInfoFormView(
                       viewModel: viewModel,
                     ),
-                    CandidatePersonalInfoFormView(
+                    CandidateRoleFormView(
                       viewModel: viewModel,
                     ),
                   ],

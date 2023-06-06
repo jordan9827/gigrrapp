@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:square_demo_architecture/data/network/dtos/base_response.dart';
 import 'package:square_demo_architecture/util/extensions/object_extension.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
@@ -123,6 +124,26 @@ class AccountImpl extends AccountRepo {
       }
       return response.body!.map(success: (res) async {
         return Right(true);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> addBankAccount(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await accountService.addBankAccountApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(res);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

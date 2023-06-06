@@ -1,11 +1,9 @@
 import 'dart:io' show Platform;
 
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import '../util/others/size_config.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const String devBaseURL = "https://gigrr.in/development";
 const String qaBaseURL = "";
@@ -82,6 +80,9 @@ bool validatePassword(String password) => RegExp(
         r"(?=.*[a-z])(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&])^[a-zA-Z0-9!@#$%^&]{6,12}$")
     .hasMatch(password);
 
+bool validateIFSC(String ifsc) =>
+    RegExp(r"^[A-Z]{4}0[A-Z0-9]{6}$").hasMatch(ifsc);
+
 bool validateAadhaarCard(String aadhaar) =>
     RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(aadhaar);
 
@@ -124,39 +125,4 @@ Future<String> deviceToken() async {
 Future<String> appVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
-}
-
-InputBorder inputBorder = OutlineInputBorder(
-  borderRadius: BorderRadius.circular(10),
-  borderSide: BorderSide(
-    width: 1.5,
-    color: mainGrayColor,
-  ),
-);
-
-Widget showLoading([double size = 25]) {
-  return Center(
-    heightFactor: 2,
-    child: SpinKitCircle(
-      size: size,
-      color: independenceColor,
-    ),
-  );
-}
-
-class CustomTrackShape extends RoundedRectSliderTrackShape {
-  @override
-  Rect getPreferredRect({
-    required RenderBox parentBox,
-    Offset offset = Offset.zero,
-    required SliderThemeData sliderTheme,
-    bool isEnabled = false,
-    bool isDiscrete = false,
-  }) {
-    final trackHeight = sliderTheme.trackHeight;
-    final trackLeft = offset.dx;
-    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
-    final trackWidth = parentBox.size.width;
-    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
-  }
 }

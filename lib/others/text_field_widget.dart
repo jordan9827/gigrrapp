@@ -83,6 +83,7 @@ class InputFieldWidget extends StatelessWidget {
           onTap: onTap,
           maxLength: maxLength,
           maxLines: maxLines,
+          textCapitalization: textCapitalization,
           style: TextStyle(color: mainBlackColor),
           keyboardType: keyboardType ?? TextInputType.text,
           readOnly: readOnly,

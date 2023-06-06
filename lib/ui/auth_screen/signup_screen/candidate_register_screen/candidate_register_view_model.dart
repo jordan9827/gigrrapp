@@ -26,6 +26,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
   final TextEditingController pinCodeController = TextEditingController();
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
+  int experienceYear = 1;
+  int experienceMonth = 0;
   var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
   RangeValues currentRangeValues = const RangeValues(100, 400);
   LatLng latLng = const LatLng(14.508, 46.048);
@@ -104,6 +106,16 @@ class CandidateRegisterViewModel extends BaseViewModel {
   void setGender(String? val) {
     initialGender = val!;
     print("initialGender $initialGender");
+    notifyListeners();
+  }
+
+  void pickerExperienceYear(int index) {
+    experienceYear = index;
+    notifyListeners();
+  }
+
+  void pickerExperienceMonth(int index) {
+    experienceMonth = index;
     notifyListeners();
   }
 
@@ -299,8 +311,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['longitude'] = longitude.toString();
     request['gender'] = initialGender.toLowerCase();
     request['dob'] = dobController.text;
-    request['experience_year'] = "3";
-    request['experience_month'] = "0";
+    request['experience_year'] = "$experienceYear";
+    request['experience_month'] = "$experienceMonth";
     request['price_from'] = currentRangeValues.start.toString();
     request['price_to'] = currentRangeValues.end.toString();
     request['price_criteria'] = costCriteriaValue.toLowerCase();

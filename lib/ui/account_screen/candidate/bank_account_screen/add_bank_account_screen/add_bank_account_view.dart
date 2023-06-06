@@ -35,6 +35,11 @@ class _AddBankAccountScreenViewState extends State<AddBankAccountScreenView> {
               height: SizeConfig.margin_padding_20,
             ),
             CVMTextFormField(
+              title: "Holder Name",
+              hintForm: "i.e. Jack Milcon",
+              controller: viewModel.holderNameController,
+            ),
+            CVMTextFormField(
               title: "bank_name",
               hintForm: "i.e. HDFC Bank",
               controller: viewModel.bankNameController,
@@ -49,6 +54,7 @@ class _AddBankAccountScreenViewState extends State<AddBankAccountScreenView> {
               title: "ifsc_code",
               hintForm: "i.e. HDFC0000025",
               controller: viewModel.ifscCodeController,
+              textCapitalization: TextCapitalization.characters,
             ),
             CVMTextFormField(
               title: "account_type",
@@ -59,7 +65,8 @@ class _AddBankAccountScreenViewState extends State<AddBankAccountScreenView> {
               height: SizeConfig.margin_padding_35,
             ),
             LoadingButton(
-              action: () {},
+              loading: viewModel.isBusy,
+              action: viewModel.addBankAccount,
               title: "submit",
             ),
             SizedBox(

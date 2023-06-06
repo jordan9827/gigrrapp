@@ -67,7 +67,8 @@ class MyGigsData with _$MyGigsData {
     @JsonKey(name: "price_criteria", defaultValue: "") String priceCriteria,
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
     @JsonKey(name: "skills") List<GigrrTypeCategoryData> skillsTypeCategoryList,
-    // @JsonKey(name: "gigrr_business") GetBusinessesData businessList,
+    @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
+        GetBusinessesData businessList,
     @JsonKey(name: "gigs_request", defaultValue: [])
         List<GigsRequestData> gigsRequestData,
     @JsonKey(name: "duration", defaultValue: 0) int duration,

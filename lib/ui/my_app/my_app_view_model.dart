@@ -39,7 +39,7 @@ class MyAppViewModel extends BaseViewModel {
     if (icCheckIntroScreen()) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
-      initialRoute = Routes.homeView;
+      initialRoute = Routes.candidateRegisterScreenView;
     }
     notifyListeners();
   }

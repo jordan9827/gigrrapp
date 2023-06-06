@@ -61,7 +61,11 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
               children: viewModel.myGigsList
                   .map(
                     (gigs) => MyGigsViewWidget(
-                      myGigs: gigs,
+                      title: gigs.gigName,
+                      address: gigs.gigAddress,
+                      price: gigs.fromAmount,
+                      startDate: gigs.gigsStartDate,
+                      jobDuration: gigs.duration,
                       bottomView: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

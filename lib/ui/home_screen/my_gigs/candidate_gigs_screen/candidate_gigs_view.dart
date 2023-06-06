@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/ui/widgets/empty_data_screen.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/my_gigs_response.dart';
+import '../../../../others/comman_util.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/constants.dart';
 import '../../../../others/loading_screen.dart';
@@ -97,7 +98,11 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
               } else if (index < viewModel.itemCount) {
                 var gigs = viewModel.appliedGigsList[index];
                 return MyGigsViewWidget(
-                  myGigs: gigs,
+                  title: gigs.gigName,
+                  address: gigs.gigAddress,
+                  price: gigs.fromAmount,
+                  startDate: gigs.gigsStartDate,
+                  jobDuration: gigs.duration,
                   bottomView: SizedBox(),
                 );
               }
@@ -121,7 +126,11 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
               } else if (index < viewModel.itemCount) {
                 var gigs = viewModel.shortListGigsList[index];
                 return MyGigsViewWidget(
-                  myGigs: gigs,
+                  title: gigs.gigName,
+                  address: gigs.gigAddress,
+                  price: gigs.fromAmount,
+                  startDate: gigs.gigsStartDate,
+                  jobDuration: gigs.duration,
                   bottomView: SizedBox(),
                 );
               }

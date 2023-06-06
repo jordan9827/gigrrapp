@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:square_demo_architecture/data/network/dtos/chat_response.dart';
 
+import '../../data/network/dtos/base_response.dart';
 import '../../data/network/dtos/get_chat_response.dart';
 import '../../data/network/dtos/web_view_response.dart';
 import '../../util/exceptions/failures/failure.dart';
@@ -17,4 +18,7 @@ abstract class AccountRepo {
   Future<Either<Failure, GetChatResponseData>> getChat();
 
   Future<Either<Failure, bool>> contactUS(Map<String, dynamic> data);
+
+  Future<Either<Failure, BaseResponse>> addBankAccount(
+      Map<String, dynamic> data);
 }

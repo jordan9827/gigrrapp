@@ -8,6 +8,8 @@ import '../../domain/repos/candidate_repos.dart';
 import '../../util/exceptions/failures/failure.dart';
 import '../network/api_services/candidate_service.dart';
 import '../network/app_chopper_client.dart';
+import '../network/dtos/candidate_roster_gigs_response.dart';
+import '../network/dtos/gigs_accepted_response.dart';
 
 class CandidateImpl extends CandidateRepo {
   final candidateService =
@@ -15,7 +17,7 @@ class CandidateImpl extends CandidateRepo {
   final log = getLogger("CandidateImpl");
 
   @override
-  Future<Either<Failure, MyGigsResponseData>> candidateRosterGigs(
+  Future<Either<Failure, CandidateRosterResponseData>> candidateRosterGigs(
       int id) async {
     try {
       final response =
@@ -26,7 +28,7 @@ class CandidateImpl extends CandidateRepo {
       }
       // log.i("Candidate Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
-        return Right(data.responseData);
+        return Right(data.data);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });
@@ -37,7 +39,7 @@ class CandidateImpl extends CandidateRepo {
   }
 
   @override
-  Future<Either<Failure, MyGigsResponseData>> acceptedGigs(int id) async {
+  Future<Either<Failure, GigsAcceptedResponseData>> acceptedGigs(int id) async {
     try {
       final response = await candidateService.acceptedGigs(id.toString());
 

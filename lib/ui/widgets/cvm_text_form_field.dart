@@ -14,14 +14,18 @@ class CVMTextFormField extends StatelessWidget {
   final TextInputType keyboardType;
   final Widget? formWidget;
   final Function()? onTap;
+  final TextCapitalization textCapitalization;
   final Widget? suffixIcon;
+  final String errorMsgValidation;
   const CVMTextFormField({
     Key? key,
     required this.title,
     this.hintForm = "",
+    this.errorMsgValidation = "",
     this.maxLength = 30,
     this.readOnly = false,
     this.controller,
+    this.textCapitalization = TextCapitalization.none,
     this.suffixIcon,
     this.formWidget,
     this.onTap,
@@ -44,6 +48,8 @@ class CVMTextFormField extends StatelessWidget {
           ),
         formWidget ??
             InputFieldWidget(
+              textCapitalization: textCapitalization,
+              errorMsgValidation: errorMsgValidation,
               maxLength: maxLength,
               keyboardType: keyboardType,
               suffixIcon: suffixIcon,

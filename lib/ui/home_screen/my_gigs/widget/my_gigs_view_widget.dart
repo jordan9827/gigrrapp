@@ -7,13 +7,23 @@ import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 
+import '../../../../data/network/dtos/gigs_accepted_response.dart';
+
 class MyGigsViewWidget extends StatelessWidget {
-  final MyGigsData myGigs;
+  final String title;
+  final String address;
+  final String price;
+  final int jobDuration;
+  final String startDate;
   final Widget bottomView;
   const MyGigsViewWidget({
     Key? key,
-    required this.myGigs,
     required this.bottomView,
+    required this.title,
+    required this.address,
+    required this.price,
+    required this.jobDuration,
+    required this.startDate,
   }) : super(key: key);
 
   @override
@@ -31,7 +41,7 @@ class MyGigsViewWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            myGigs.gigName,
+            title,
             style: TSB.semiBoldMedium(),
           ),
           SizedBox(
@@ -46,7 +56,7 @@ class MyGigsViewWidget extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  myGigs.gigAddress,
+                  address,
                   maxLines: 2,
                   overflow: TextOverflow.fade,
                   style: TSB.regularSmall(textColor: textNoticeColor),
@@ -58,7 +68,7 @@ class MyGigsViewWidget extends StatelessWidget {
             height: SizeConfig.margin_padding_15,
           ),
           Text(
-            "₹ ${myGigs.fromAmount.substring(0, 3)}/day",
+            "₹ ${price.substring(0, 3)}/day",
             style: TSB.semiBoldLarge(textColor: independenceColor),
           ),
           SizedBox(
@@ -67,14 +77,14 @@ class MyGigsViewWidget extends StatelessWidget {
           Row(
             children: [
               _buildDurationView(
-                title: "${myGigs.duration} days",
+                title: "$jobDuration days",
                 subTitle: "job_duration",
               ),
               SizedBox(
                 width: SizeConfig.margin_padding_10,
               ),
               _buildDurationView(
-                title: myGigs.gigsStartDate.toDateFormat(),
+                title: startDate.toDateFormat(),
                 subTitle: "start_date",
               ),
             ],

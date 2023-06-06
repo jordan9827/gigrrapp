@@ -6,6 +6,8 @@ import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart
 import 'package:square_demo_architecture/domain/repos/candidate_repos.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../../data/network/dtos/candidate_roster_gigs_response.dart';
+import '../../../../data/network/dtos/gigs_accepted_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 
 class CandidateGigsViewModel extends BaseViewModel {
@@ -19,8 +21,8 @@ class CandidateGigsViewModel extends BaseViewModel {
   bool _loading = false;
 
   bool get loading => _loading;
-  List<MyGigsData> appliedGigsList = [];
-  List<MyGigsData> shortListGigsList = [];
+  List<GigsAcceptedData> appliedGigsList = [];
+  List<CandidateRosterData> shortListGigsList = [];
   var scrollController = ScrollController();
 
   CandidateGigsViewModel() {}
@@ -66,8 +68,8 @@ class CandidateGigsViewModel extends BaseViewModel {
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
     }, (res) {
-      appliedGigsList.addAll(res.myGigsData);
-      itemCount = res.myGigsData.length;
+      appliedGigsList.addAll(res.gigsAcceptedData);
+      itemCount = res.gigsAcceptedData.length;
       _loading = false;
 
       setBusy(false);
@@ -86,8 +88,8 @@ class CandidateGigsViewModel extends BaseViewModel {
       setBusy(false);
     }, (res) {
       _loading = false;
-      shortListGigsList.addAll(res.myGigsData);
-      itemCount = res.myGigsData.length;
+      shortListGigsList.addAll(res.candidateRosterData);
+      itemCount = res.candidateRosterData.length;
       notifyListeners();
       setBusy(false);
       // log("CandidateRoster " + res.myGigsData.toList().toString());

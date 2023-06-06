@@ -45,7 +45,7 @@ class GetBusinessesResponseData with _$GetBusinessesResponseData {
 class GetBusinessesData with _$GetBusinessesData {
   @JsonSerializable(explicitToJson: true)
   const factory GetBusinessesData(
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
     @JsonKey(name: "category_id", defaultValue: 0) int categoryId,
     @JsonKey(name: "business_name", defaultValue: "") String businessName,
@@ -53,12 +53,18 @@ class GetBusinessesData with _$GetBusinessesData {
     @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "longitude", defaultValue: "") String longitude,
     @JsonKey(name: "status", defaultValue: "") String status,
-    @JsonKey(name: "category") CategoryResp categoryResp,
-    @JsonKey(name: "business_images") List<BusinessesImageList> businessesImage,
+    @JsonKey(name: "category", defaultValue: CategoryResp.getEmptyCategory)
+        CategoryResp categoryResp,
+    @JsonKey(name: "business_images", defaultValue: [])
+        List<BusinessesImageList> businessesImage,
   ) = _GetBusinessesData;
 
   factory GetBusinessesData.fromJson(Map<String, dynamic> json) =>
       _$GetBusinessesDataFromJson(json);
+
+  static getEmptyBusinesses() {
+    return GetBusinessesData.fromJson({});
+  }
 }
 
 @freezed
@@ -66,7 +72,7 @@ class GetBusinessesData with _$GetBusinessesData {
 class BusinessesImageList with _$BusinessesImageList {
   @JsonSerializable(explicitToJson: true)
   const factory BusinessesImageList(
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
     @JsonKey(name: "business_id", defaultValue: 0) int categoryId,
     @JsonKey(name: "status", defaultValue: "") String status,
@@ -88,4 +94,8 @@ class CategoryResp with _$CategoryResp {
 
   factory CategoryResp.fromJson(Map<String, dynamic> json) =>
       _$CategoryRespFromJson(json);
+
+  static getEmptyCategory() {
+    return CategoryResp.fromJson({});
+  }
 }

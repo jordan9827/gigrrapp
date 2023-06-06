@@ -5,6 +5,7 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
+import '../../../../../others/comman_util.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
 import '../../../../widgets/custom_drop_down.dart';
@@ -47,7 +48,10 @@ class CandidateRoleFormView extends StatelessWidget {
             hintForm: "i.e. 1 year",
             controller: viewModel.mobileController,
             suffixIcon: InkWell(
-              onTap: () => _showExperiencePickerBottom(context),
+              onTap: () => showCupertinoBottom(
+                context,
+                _buildExperienceBottomSheet(viewModel),
+              ),
               child: Icon(
                 Icons.keyboard_arrow_down,
                 color: independenceColor,
@@ -99,26 +103,42 @@ class CandidateRoleFormView extends StatelessWidget {
     );
   }
 
-  void _showExperiencePickerBottom(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) => _buildExperiencePickerView(),
+  Widget _buildExperienceBottomSheet(CandidateRegisterViewModel viewModel) {
+    return Row(
+      children: <Widget>[
+        _buildCupertinoPicker(
+          itemCount: 30,
+          onSelectedItemChanged: viewModel.pickerExperienceYear,
+        ),
+        _buildCupertinoPicker(
+          zero: true,
+          itemCount: 12,
+          onSelectedItemChanged: viewModel.pickerExperienceMonth,
+        ),
+      ],
     );
   }
 
-  Widget _buildExperiencePickerView() {
-    return Row(
-      children: [
-        Expanded(
-            child: CupertinoPicker(
-          itemExtent: 30,
-          onSelectedItemChanged: (int value) {},
-          children: List.generate(
-            10,
-            (index) => Text("${++index}"),
-          ),
-        ))
-      ],
+  Widget _buildCupertinoPicker({
+    required int itemCount,
+    bool zero = false,
+    required Function(int) onSelectedItemChanged,
+  }) {
+    return Expanded(
+      child: CupertinoPicker(
+        looping: true,
+        itemExtent: SizeConfig.margin_padding_29,
+        onSelectedItemChanged: onSelectedItemChanged,
+        children: List<Widget>.generate(itemCount, (int index) {
+          var value = zero ? index : ++index;
+          return Center(
+            child: Text(
+              (value).toString(),
+              style: TextStyle(color: independenceColor),
+            ),
+          );
+        }),
+      ),
     );
   }
 
