@@ -105,7 +105,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   void acquireCurrentLocation() async {
     bool serviceEnabled = await location.serviceEnabled();
     if (serviceEnabled) {
-      _loading =true;
+      _loading = true;
       final locationData = await location.getLocation();
       print("locationData ${locationData.latitude}");
 
@@ -125,7 +125,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
       latLng =
           LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0);
-      _loading =false;
+      _loading = false;
       notifyListeners();
     } else {
       serviceEnabled = await location.requestService();
@@ -136,14 +136,14 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   Future<void> setAddressPlace(mapBox.MapBoxPlace mapBoxPlace) async {
     print("$mapBoxPlace");
-    _loading =true;
+    _loading = true;
     var addressData = mapBoxPlace.context ?? [];
 
     addressController.text = mapBoxPlace.placeName ?? "";
     cityController.text = addressData[2].text ?? "";
     stateController.text = addressData[4].text ?? "";
     pinCodeController.text = addressData[0].text ?? "";
-    _loading =false;
+    _loading = false;
     notifyListeners();
   }
 
@@ -156,14 +156,14 @@ class EmployerRegisterViewModel extends BaseViewModel {
         country: "in",
         onSelect: (place) async {
           var addressData = place.context!;
-          _loading =true;
+          _loading = true;
           addressController.text = place.placeName ?? "";
           cityController.text = addressData[2].text ?? "";
           stateController.text = addressData[4].text ?? "";
           pinCodeController.text = addressData[0].text ?? "";
           latLng = LatLng(
               place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
-          _loading =false;
+          _loading = false;
           notifyListeners();
         },
         limit: 7,

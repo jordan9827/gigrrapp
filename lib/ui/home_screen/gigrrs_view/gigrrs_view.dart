@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
+import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/home_screen/gigrrs_view/gigrrs_view_model.dart';
 import 'package:square_demo_architecture/ui/widgets/gigrr_card_widget.dart';
 import 'package:square_demo_architecture/ui/widgets/notification_icon.dart';
@@ -9,6 +10,7 @@ import 'package:stacked/stacked.dart';
 
 class GigrrsView extends StatelessWidget {
   const GigrrsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -53,7 +55,7 @@ class GigrrsView extends StatelessWidget {
                       ],
                     ),
                     Text(
-                      "11-PU3, Agra Bombay Road, Near C21 Mall...",
+                      viewModel.user.address,
                       style: TextStyle(
                         color: mainBlackColor,
                         fontSize: SizeConfig.textSizeVerySmall * 0.95,
@@ -67,23 +69,21 @@ class GigrrsView extends StatelessWidget {
               NotificationIcon(),
             ],
           ),
-          body: PageView(
-            scrollDirection: Axis.vertical,
-            controller: viewModel.pageController,
-            children: [
-              GiggrCardWidget(
-                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
-              ),
-              GiggrCardWidget(
-                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
-              ),
-              GiggrCardWidget(
-                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
-              ),
-              GiggrCardWidget(
-                navigateToDetailScreen: viewModel.navigateToGigrrDetailScreen,
-              ),
-            ],
+          body: LoadingScreen(
+            loading: viewModel.isBusy,
+            child: PageView(
+              scrollDirection: Axis.vertical,
+              controller: viewModel.pageController,
+              children: viewModel.gigsData
+                  .map(
+                    (e) => GiggrCardWidget(
+                      data: e,
+                      navigateToDetailScreen: () =>
+                          viewModel.navigateToGigrrDetailScreen(e),
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
         );
       },

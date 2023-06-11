@@ -2,22 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/others/loading_button.dart';
-import 'package:square_demo_architecture/others/text_field_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/text_styles.dart';
 import 'help_support_view_model.dart';
 
-class HelpSupportScreenView extends StatefulWidget {
+class HelpSupportScreenView extends StatelessWidget {
   const HelpSupportScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<HelpSupportScreenView> createState() => _HelpSupportScreenViewState();
-}
-
-class _HelpSupportScreenViewState extends State<HelpSupportScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

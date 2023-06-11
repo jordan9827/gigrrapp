@@ -8,14 +8,9 @@ import '../../widgets/empty_data_screen.dart';
 import 'businesses_view_model.dart';
 import 'widget/businesses_view_widget.dart';
 
-class BusinessesScreenView extends StatefulWidget {
+class BusinessesScreenView extends StatelessWidget {
   const BusinessesScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<BusinessesScreenView> createState() => _BusinessesScreenViewState();
-}
-
-class _BusinessesScreenViewState extends State<BusinessesScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

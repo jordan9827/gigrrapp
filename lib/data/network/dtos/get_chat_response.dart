@@ -17,7 +17,10 @@ class GetChatResponse with _$GetChatResponse {
   ) = _GetChatResponse;
 
   @JsonSerializable()
-  const factory GetChatResponse.error(String message) = _GetChatResponseError;
+  const factory GetChatResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _GetChatResponseError;
 
   factory GetChatResponse.fromJson(Map<String, dynamic> json) =>
       _$GetChatResponseFromJson(json);

@@ -20,6 +20,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
   final businessTypeService = locator<BusinessTypeService>();
   TextEditingController gigrrTypeController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  final TextEditingController userExperiencesController =
+      TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
@@ -70,6 +72,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
     acquireCurrentLocation();
   }
 
+  String get userExperience => "$experienceYear year $experienceMonth month";
+
   bool onWillPop() {
     if (pageIndex == 0) {
       navigationService.back();
@@ -111,11 +115,13 @@ class CandidateRegisterViewModel extends BaseViewModel {
 
   void pickerExperienceYear(int index) {
     experienceYear = index;
+    userExperiencesController.text = userExperience;
     notifyListeners();
   }
 
   void pickerExperienceMonth(int index) {
     experienceMonth = index;
+    userExperiencesController.text = userExperience;
     notifyListeners();
   }
 

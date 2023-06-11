@@ -8,15 +8,9 @@ import 'package:stacked/stacked.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
 import 'add_bank_account_view_model.dart';
 
-class AddBankAccountScreenView extends StatefulWidget {
+class AddBankAccountScreenView extends StatelessWidget {
   const AddBankAccountScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<AddBankAccountScreenView> createState() =>
-      _AddBankAccountScreenViewState();
-}
-
-class _AddBankAccountScreenViewState extends State<AddBankAccountScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(

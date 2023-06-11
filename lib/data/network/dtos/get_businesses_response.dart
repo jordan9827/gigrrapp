@@ -15,8 +15,10 @@ class GetBusinessesResponse with _$GetBusinessesResponse {
   ) = _GetBusinessesResponse;
 
   @JsonSerializable()
-  const factory GetBusinessesResponse.error(String message) =
-      _GetBusinessesResponseError;
+  const factory GetBusinessesResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _GetBusinessesResponseError;
 
   factory GetBusinessesResponse.fromJson(Map<String, dynamic> json) =>
       _$GetBusinessesResponseFromJson(json);

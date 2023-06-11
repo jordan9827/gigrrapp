@@ -15,7 +15,10 @@ class WebViewResponse with _$WebViewResponse {
   ) = _WebViewResponse;
 
   @JsonSerializable()
-  const factory WebViewResponse.error(String message) = _WebViewResponseError;
+  const factory WebViewResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _WebViewResponseError;
 
   factory WebViewResponse.fromJson(Map<String, dynamic> json) =>
       _$WebViewResponseFromJson(json);

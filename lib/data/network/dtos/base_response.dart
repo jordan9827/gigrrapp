@@ -14,7 +14,10 @@ class BaseResponse with _$BaseResponse {
   ) = _BaseResponse;
 
   @JsonSerializable()
-  const factory BaseResponse.error(String message) = _BaseResponseError;
+  const factory BaseResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _BaseResponseError;
 
   factory BaseResponse.fromJson(Map<String, dynamic> json) =>
       _$BaseResponseFromJson(json);

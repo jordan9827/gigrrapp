@@ -9,14 +9,9 @@ import '../../../../others/constants.dart';
 import '../../../../util/others/text_styles.dart';
 import 'bank_account_view_model.dart';
 
-class BankAccountScreenView extends StatefulWidget {
+class BankAccountScreenView extends StatelessWidget {
   const BankAccountScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<BankAccountScreenView> createState() => _BankAccountScreenViewState();
-}
-
-class _BankAccountScreenViewState extends State<BankAccountScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

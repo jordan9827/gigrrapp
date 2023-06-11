@@ -25,6 +25,7 @@ class LoginViewViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final loginFormKey = GlobalKey<FormState>();
   final authRepo = locator<Auth>();
+  final user = locator<UserAuthResponseData>();
 
   TextEditingController mobileController = TextEditingController();
   String mobileMessage = "";
@@ -71,7 +72,7 @@ class LoginViewViewModel extends BaseViewModel {
   Future<void> login() async {
     mobileNoValidation();
     if (mobileMessage.isEmpty) {
-      bool result = await navigationService.navigateTo(
+      var result = await navigationService.navigateTo(
         Routes.oTPVerifyScreen,
         arguments: OTPVerifyScreenArguments(
           mobile: mobileController.text,
@@ -80,28 +81,37 @@ class LoginViewViewModel extends BaseViewModel {
         ),
       );
       print("OTPVerifyScreenArguments $result");
-      if (result) {
-        _navigationToStatusLogin();
+      if (result["isCheck"]) {
+        _navigationToStatusLogin(result["profile_status"]);
       }
     }
   }
 
-  void _navigationToStatusLogin() {
-    var isEmployer = (roleId == "3" ? true : false);
-    if (isEmployer) {
-      navigationService.clearStackAndShow(
-        Routes.employerRegisterScreenView,
-        arguments: EmployerRegisterScreenViewArguments(
-          phoneNumber: mobileController.text,
-        ),
-      );
-    } else {
-      navigationService.clearStackAndShow(
-        Routes.candidateRegisterScreenView,
-        arguments: CandidateRegisterScreenViewArguments(
-          phoneNumber: mobileController.text,
-        ),
-      );
+  void _navigationToStatusLogin(String value) {
+    switch (value) {
+      case "otp-verify":
+        if (user.isEmployer) {
+          navigationService.clearStackAndShow(
+            Routes.employerRegisterScreenView,
+            arguments: EmployerRegisterScreenViewArguments(
+              phoneNumber: mobileController.text,
+            ),
+          );
+        } else {
+          navigationService.clearStackAndShow(
+            Routes.candidateRegisterScreenView,
+            arguments: CandidateRegisterScreenViewArguments(
+              phoneNumber: mobileController.text,
+            ),
+          );
+        }
+        break;
+      case "kyc-completed":
+        navigationService.clearStackAndShow(Routes.homeView);
+        break;
+      case "profile-completed":
+        navigationService.clearStackAndShow(Routes.candidateKYCScreenView);
+        break;
     }
   }
 
@@ -191,18 +201,14 @@ class LoginViewViewModel extends BaseViewModel {
         }
         break;
       case "profile-completed":
-        if (res.isEmployer) {
-          await navigationService.clearStackAndShow(
-            Routes.oTPVerifyScreen,
-            arguments: OTPVerifyScreenArguments(
-              mobile: res.mobile,
-              otpType: initialOTPType,
-              roleId: res.roleId,
-            ),
-          );
-        } else {
-          snackBarService.showSnackbar(message: "Coming Soon 1");
-        }
+        await navigationService.clearStackAndShow(
+          Routes.oTPVerifyScreen,
+          arguments: OTPVerifyScreenArguments(
+            mobile: res.mobile,
+            otpType: initialOTPType,
+            roleId: res.roleId,
+          ),
+        );
         break;
       default:
         navigationService.clearStackAndShow(Routes.homeView);

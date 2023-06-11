@@ -9,14 +9,9 @@ import '../../util/others/text_styles.dart';
 import 'account_view_model.dart';
 import 'widget/profile_widget_screen.dart';
 
-class AccountView extends StatefulWidget {
+class AccountView extends StatelessWidget {
   const AccountView({Key? key}) : super(key: key);
 
-  @override
-  State<AccountView> createState() => _AccountViewState();
-}
-
-class _AccountViewState extends State<AccountView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

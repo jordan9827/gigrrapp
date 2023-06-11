@@ -1,15 +1,18 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:stacked/stacked.dart';
-// import 'package:webview_flutter/webview_flutter.dart';
 import '../../../others/common_app_bar.dart';
 import '../../../others/loading_screen.dart';
 import 'privacy_policy_viewmodel.dart';
 
-class PrivacyPolicyScreenView extends StatelessWidget {
+class PrivacyPolicyScreenView extends StatefulWidget {
+  @override
+  State<PrivacyPolicyScreenView> createState() =>
+      _PrivacyPolicyScreenViewState();
+}
+
+class _PrivacyPolicyScreenViewState extends State<PrivacyPolicyScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<PrivacyPolicyViewModel>.reactive(

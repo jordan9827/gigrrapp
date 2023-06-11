@@ -13,16 +13,9 @@ import '../../../widgets/custom_date_picker.dart';
 import 'candidate_preferences_view_model.dart';
 import 'preference_custom_ui_widget.dart';
 
-class CandidatePreferenceScreenView extends StatefulWidget {
+class CandidatePreferenceScreenView extends StatelessWidget {
   const CandidatePreferenceScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<CandidatePreferenceScreenView> createState() =>
-      _CandidatePreferenceScreenViewState();
-}
-
-class _CandidatePreferenceScreenViewState
-    extends State<CandidatePreferenceScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

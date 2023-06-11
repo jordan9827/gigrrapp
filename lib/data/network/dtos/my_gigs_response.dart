@@ -18,7 +18,10 @@ class MyGigsResponse with _$MyGigsResponse {
   ) = _MyGigsResponse;
 
   @JsonSerializable()
-  const factory MyGigsResponse.error(String message) = _MyGigsResponseError;
+  const factory MyGigsResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _MyGigsResponseError;
 
   factory MyGigsResponse.fromJson(Map<String, dynamic> json) =>
       _$MyGigsResponseFromJson(json);

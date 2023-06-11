@@ -160,8 +160,12 @@ class OTPVerifyScreenModel extends BaseViewModel {
       },
       (res) {
         print("verifyOTP ::::-----------------");
-        navigationService.back(result: true);
-        notifyListeners();
+        navigationService.back(
+          result: {
+            "isCheck": true,
+            "profile_status": res.profileStatus,
+          },
+        );
       },
     );
     notifyListeners();

@@ -13,14 +13,9 @@ import '../widgets/empty_data_screen.dart';
 import 'notification_view_model.dart';
 import 'widget/notification_widget.dart';
 
-class NotificationScreenView extends StatefulWidget {
+class NotificationScreenView extends StatelessWidget {
   const NotificationScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<NotificationScreenView> createState() => _NotificationScreenViewState();
-}
-
-class _NotificationScreenViewState extends State<NotificationScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(

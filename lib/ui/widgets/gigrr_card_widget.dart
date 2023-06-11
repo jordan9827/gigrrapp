@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 
+import '../../data/network/dtos/candidate_gigs_request.dart';
+
 class GiggrCardWidget extends StatefulWidget {
+  final CandidateGigsRequestData data;
   final Function navigateToDetailScreen;
 
   const GiggrCardWidget({
     Key? key,
     required this.navigateToDetailScreen,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -27,6 +31,9 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
+    var gigs = widget.data;
+    print("gigs gigs ${gigs.gigName}");
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Container(
       height: mediaQueryData.size.height,
@@ -81,7 +88,7 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Suresh Kumar, 32",
+                    gigs.gigName,
                     style: TextStyle(
                       color: mainWhiteColor,
                       fontSize: SizeConfig.textSizeHeading,
@@ -89,15 +96,21 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                     ),
                   ),
                   _buildSpacing(),
-                  Text(
-                    "Civil Engineer, Superviser",
-                    style: TextStyle(
-                      color: mainWhiteColor,
-                    ),
+                  Wrap(
+                    children: gigs.skillsCategoryList
+                        .map(
+                          (e) => Text(
+                            "${e.name}, ",
+                            style: TextStyle(
+                              color: mainWhiteColor,
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ),
                   _buildSpacing(),
                   Text(
-                    "₹ 300-400/day",
+                    "₹ ${gigs.fromAmount}-${gigs.toAmount}/${gigs.priceCriteria}",
                     style: TextStyle(
                       color: mainPinkColor,
                       fontSize: SizeConfig.textSizeMedium,

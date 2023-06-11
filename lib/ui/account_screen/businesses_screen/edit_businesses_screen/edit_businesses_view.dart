@@ -14,24 +14,17 @@ import '../../../widgets/cvm_text_form_field.dart';
 import '../../../widgets/map_box/google_map_box_view.dart';
 import 'edit_businesses_view_model.dart';
 
-class EditBusinessesScreenView extends StatefulWidget {
+class EditBusinessesScreenView extends StatelessWidget {
   final GetBusinessesData businessData;
   const EditBusinessesScreenView({Key? key, required this.businessData})
       : super(key: key);
 
   @override
-  State<EditBusinessesScreenView> createState() =>
-      _EditBusinessesScreenViewState();
-}
-
-class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
-  @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) =>
-          viewModel.initialDataLoad(widget.businessData),
-      viewModelBuilder: () => EditBusinessesViewModel(widget.businessData),
+      onViewModelReady: (viewModel) => viewModel.initialDataLoad(businessData),
+      viewModelBuilder: () => EditBusinessesViewModel(businessData),
       builder: (context, viewModel, child) => Scaffold(
         appBar: getAppBar(
           context,
@@ -125,7 +118,7 @@ class _EditBusinessesScreenViewState extends State<EditBusinessesScreenView> {
   }
 
   Widget _buildGoogleMap(EditBusinessesViewModel viewModel) {
-    var latLng = widget.businessData;
+    var latLng = businessData;
     return GoogleMapBoxScreen(
       lat: latLng.latitude.toString(),
       lng: latLng.longitude.toString(),

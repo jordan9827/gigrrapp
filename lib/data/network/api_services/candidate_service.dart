@@ -1,5 +1,6 @@
 import 'package:chopper/chopper.dart';
 import '../dtos/business_type_category.dart';
+import '../dtos/candidate_gigs_request.dart';
 import '../dtos/candidate_roster_gigs_response.dart';
 import '../dtos/gigs_accepted_response.dart';
 import '../dtos/my_gigs_response.dart';
@@ -12,6 +13,11 @@ abstract class CandidateService extends ChopperService {
 
   @Get(path: "gigrr_types")
   Future<Response<BusinessTypeCategoryResponse>> businessTypeCategory();
+
+  @Post(path: "gigs_request_v1")
+  Future<Response<CandidateGigsRequestResponse>> candidateGigsRequest(
+    @Body() Map<String, dynamic> body,
+  );
 
   @Get(path: "candidates/my-roster-gigs")
   Future<Response<CandidateRosterResponse>> candidateRosterGigs(

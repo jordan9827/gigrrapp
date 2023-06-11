@@ -9,14 +9,9 @@ import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 import 'forgetPassword_view_model.dart';
 
-class ForgetPasswordView extends StatefulWidget {
+class ForgetPasswordView extends StatelessWidget {
   const ForgetPasswordView({Key? key}) : super(key: key);
 
-  @override
-  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
-}
-
-class _ForgetPasswordViewState extends State<ForgetPasswordView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
@@ -25,7 +20,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
       builder: (_, viewModel, child) => Scaffold(
         body: Column(
           children: [
-            _buildHeadingVerifyOTP(viewModel),
+            _buildHeadingVerifyOTP(context, viewModel),
             Expanded(
               flex: 5,
               child: _buildForgetPasswordForm(),
@@ -59,7 +54,8 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
     );
   }
 
-  Widget _buildHeadingVerifyOTP(ForgetPasswordViewModel viewModel) {
+  Widget _buildHeadingVerifyOTP(
+      BuildContext context, ForgetPasswordViewModel viewModel) {
     return Container(
       padding: EdgeInsets.all(SizeConfig.margin_padding_17),
       width: MediaQuery.of(context).size.width,

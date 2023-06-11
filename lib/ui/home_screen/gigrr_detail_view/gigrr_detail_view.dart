@@ -5,14 +5,19 @@ import 'package:square_demo_architecture/util/extensions/build_context_extension
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../data/network/dtos/candidate_gigs_request.dart';
+import '../../../util/others/image_constants.dart';
+import '../../../util/others/text_styles.dart';
+
 class GigrrDetailView extends StatelessWidget {
-  const GigrrDetailView({Key? key}) : super(key: key);
+  final CandidateGigsRequestData data;
+  const GigrrDetailView({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     MediaQueryData mediaQueryData = context.mediaQueryData;
-    double outerPadding = SizeConfig.margin_padding_24;
+    double outerPadding = SizeConfig.margin_padding_15;
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => GigrrDetailViewModel(),
       builder: (context, viewModel, child) {
@@ -73,7 +78,7 @@ class GigrrDetailView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Nikhil Rathore",
+                              data.gigName,
                               textAlign: TextAlign.start,
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
@@ -85,16 +90,14 @@ class GigrrDetailView extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Icon(
-                                  Icons.location_on_rounded,
-                                  size: SizeConfig.margin_padding_20,
-                                ),
+                                Image.asset(ic_location, height: 25),
+                                SizedBox(width: SizeConfig.margin_padding_3),
                                 Text(
-                                  "My address to my location with pin code",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: SizeConfig.textSizeSmall,
-                                  ),
+                                  "location",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TSB.semiBoldLarge(
+                                      textColor: textNoticeColor),
                                 ),
                               ],
                             ),

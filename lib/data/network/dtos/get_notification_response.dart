@@ -15,8 +15,10 @@ class GetNotificationResponse with _$GetNotificationResponse {
   ) = _GetNotificationResponse;
 
   @JsonSerializable()
-  const factory GetNotificationResponse.error(String message) =
-      _GetNotificationResponseError;
+  const factory GetNotificationResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _GetNotificationResponseError;
 
   factory GetNotificationResponse.fromJson(Map<String, dynamic> json) =>
       _$GetNotificationResponseFromJson(json);

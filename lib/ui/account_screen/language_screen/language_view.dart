@@ -6,14 +6,9 @@ import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 import 'language_view_model.dart';
 
-class LanguageScreenView extends StatefulWidget {
+class LanguageScreenView extends StatelessWidget {
   const LanguageScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<LanguageScreenView> createState() => _LanguageScreenViewState();
-}
-
-class _LanguageScreenViewState extends State<LanguageScreenView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
@@ -27,13 +22,16 @@ class _LanguageScreenViewState extends State<LanguageScreenView> {
           onBackPressed: viewModel.navigationToBack,
         ),
         body: ListView(
-          children: [_buildLanguageList(viewModel)],
+          children: [
+            _buildLanguageList(context, viewModel),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildLanguageList(LanguageScreenViewModel viewModel) {
+  Widget _buildLanguageList(
+      BuildContext context, LanguageScreenViewModel viewModel) {
     return Container(
       margin: edgeInsetsMargin.copyWith(
         top: SizeConfig.margin_padding_29,

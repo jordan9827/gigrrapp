@@ -6,14 +6,9 @@ import 'add_gigs_view_model.dart';
 import 'widget/add_gigs_info_view.dart';
 import 'widget/add_operational_info_view.dart';
 
-class AddGigsScreenView extends StatefulWidget {
+class AddGigsScreenView extends StatelessWidget {
   const AddGigsScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<AddGigsScreenView> createState() => _AddGigsScreenViewState();
-}
-
-class _AddGigsScreenViewState extends State<AddGigsScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

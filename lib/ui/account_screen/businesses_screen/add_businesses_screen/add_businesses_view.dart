@@ -13,15 +13,9 @@ import '../../../widgets/cvm_text_form_field.dart';
 import '../../../widgets/map_box/google_map_box_view.dart';
 import 'add_businesses_view_model.dart';
 
-class AddBusinessesScreenView extends StatefulWidget {
+class AddBusinessesScreenView extends StatelessWidget {
   const AddBusinessesScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<AddBusinessesScreenView> createState() =>
-      _AddBusinessesScreenViewState();
-}
-
-class _AddBusinessesScreenViewState extends State<AddBusinessesScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

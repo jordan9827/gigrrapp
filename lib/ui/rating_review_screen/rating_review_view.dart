@@ -11,14 +11,9 @@ import '../../util/others/image_constants.dart';
 import '../../util/others/text_styles.dart';
 import 'rating_review_view_model.dart';
 
-class RatingReviewScreenView extends StatefulWidget {
+class RatingReviewScreenView extends StatelessWidget {
   const RatingReviewScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<RatingReviewScreenView> createState() => _RatingReviewScreenViewState();
-}
-
-class _RatingReviewScreenViewState extends State<RatingReviewScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

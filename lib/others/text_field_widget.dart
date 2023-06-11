@@ -37,6 +37,7 @@ class InputFieldWidget extends StatelessWidget {
   final int maxLength;
   final int maxLines;
   final Function()? onTap;
+  final Function(String)? onChanged;
   const InputFieldWidget({
     Key? key,
     this.icon,
@@ -72,6 +73,7 @@ class InputFieldWidget extends StatelessWidget {
     this.keyboardType,
     this.fillColor,
     this.maxInputLength,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -83,6 +85,7 @@ class InputFieldWidget extends StatelessWidget {
           onTap: onTap,
           maxLength: maxLength,
           maxLines: maxLines,
+          onChanged: onChanged,
           textCapitalization: textCapitalization,
           style: TextStyle(color: mainBlackColor),
           keyboardType: keyboardType ?? TextInputType.text,

@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
@@ -11,14 +10,9 @@ import '../../../util/others/text_styles.dart';
 import '../../widgets/map_box/google_map_box_view.dart';
 import 'edit_profile_view_model.dart';
 
-class EditProfileScreenView extends StatefulWidget {
+class EditProfileScreenView extends StatelessWidget {
   const EditProfileScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<EditProfileScreenView> createState() => _EditProfileScreenViewState();
-}
-
-class _EditProfileScreenViewState extends State<EditProfileScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

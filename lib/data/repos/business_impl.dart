@@ -33,7 +33,7 @@ class BusinessImpl extends BusinessRepo {
       return response.body!.map(success: (user) async {
         return Right(user);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -54,7 +54,7 @@ class BusinessImpl extends BusinessRepo {
       return response.body!.map(success: (user) async {
         return Right(user);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -76,12 +76,15 @@ class BusinessImpl extends BusinessRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
+      log.i("Login Failure :::: ${response.statusCode}");
+
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (res) async {
         locator<BusinessTypeService>().updateBusinessType(res.businessTypeList);
         return Right(res.businessTypeList);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        log.i("Login Failure :::: ${error.status}");
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -108,7 +111,7 @@ class BusinessImpl extends BusinessRepo {
         locator<BusinessTypeService>().updateGigrrName(res.gigrrTypeList);
         return Right(res.gigrrTypeList);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -129,7 +132,7 @@ class BusinessImpl extends BusinessRepo {
       return response.body!.map(success: (res) async {
         return Right(res);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -150,7 +153,7 @@ class BusinessImpl extends BusinessRepo {
       return response.body!.map(success: (res) async {
         return Right(res);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -170,7 +173,7 @@ class BusinessImpl extends BusinessRepo {
       return response.body!.map(success: (res) async {
         return Right(res.responseData);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -191,7 +194,7 @@ class BusinessImpl extends BusinessRepo {
       return response.body!.map(success: (res) async {
         return Right(res.responseData);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);

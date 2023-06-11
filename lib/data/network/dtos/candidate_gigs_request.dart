@@ -5,52 +5,53 @@ import 'get_businesses_response.dart';
 import 'gigrr_type_response.dart';
 import 'my_gigs_response.dart';
 
-part 'candidate_roster_gigs_response.freezed.dart';
+part 'candidate_gigs_request.freezed.dart';
 
-part 'candidate_roster_gigs_response.g.dart';
+part 'candidate_gigs_request.g.dart';
 
 @JsonToType()
 @Freezed(unionKey: 'type', unionValueCase: FreezedUnionCase.none)
-class CandidateRosterResponse with _$CandidateRosterResponse {
+class CandidateGigsRequestResponse with _$CandidateGigsRequestResponse {
   @JsonSerializable()
-  const factory CandidateRosterResponse.success(
-    @JsonKey(name: "data") CandidateRosterResponseData data,
+  const factory CandidateGigsRequestResponse.success(
+    @JsonKey(name: "data") CandidateGigsRequestResponseData data,
     @JsonKey(name: "message") String message,
-  ) = _CandidateRosterResponse;
+  ) = _CandidateGigsRequestResponse;
 
   @JsonSerializable()
-  const factory CandidateRosterResponse.error(
+  const factory CandidateGigsRequestResponse.error(
     @JsonKey(name: "status", defaultValue: 200) int status,
     @JsonKey(name: "message") String message,
-  ) = _CandidateRosterResponseError;
+  ) = _CandidateGigsRequestResponseError;
 
-  factory CandidateRosterResponse.fromJson(Map<String, dynamic> json) =>
-      _$CandidateRosterResponseFromJson(json);
+  factory CandidateGigsRequestResponse.fromJson(Map<String, dynamic> json) =>
+      _$CandidateGigsRequestResponseFromJson(json);
 }
 
 @freezed
 @JsonToType()
-class CandidateRosterResponseData with _$CandidateRosterResponseData {
+class CandidateGigsRequestResponseData with _$CandidateGigsRequestResponseData {
   @JsonSerializable(explicitToJson: true)
-  const factory CandidateRosterResponseData(
+  const factory CandidateGigsRequestResponseData(
     @JsonKey(name: "current_page") int currentPage,
-    @JsonKey(name: "data") List<CandidateRosterData> candidateRosterData,
+    @JsonKey(name: "data") List<CandidateGigsRequestData> gigsRequestData,
     @JsonKey(name: "from", defaultValue: 0) int from,
     @JsonKey(name: "last_page", defaultValue: 0) int lastPage,
     @JsonKey(name: "per_page", defaultValue: 0) int perPage,
     @JsonKey(name: "to", defaultValue: 0) int to,
     @JsonKey(name: "total", defaultValue: 0) int total,
-  ) = _CandidateRosterResponseData;
+  ) = _CandidateGigsRequestResponseData;
 
-  factory CandidateRosterResponseData.fromJson(Map<String, dynamic> json) =>
-      _$CandidateRosterResponseDataFromJson(json);
+  factory CandidateGigsRequestResponseData.fromJson(
+          Map<String, dynamic> json) =>
+      _$CandidateGigsRequestResponseDataFromJson(json);
 }
 
 @freezed
 @JsonToType()
-class CandidateRosterData with _$CandidateRosterData {
+class CandidateGigsRequestData with _$CandidateGigsRequestData {
   @JsonSerializable(explicitToJson: true)
-  const factory CandidateRosterData(
+  const factory CandidateGigsRequestData(
     @JsonKey(name: "id") int id,
     @JsonKey(name: "business_id", defaultValue: 0) int businessId,
     @JsonKey(name: "gigs_id", defaultValue: "") String gigsId,
@@ -70,9 +71,10 @@ class CandidateRosterData with _$CandidateRosterData {
     @JsonKey(name: "gigs_endtime", defaultValue: "") String gigsEndTime,
     @JsonKey(name: "price_criteria", defaultValue: "") String priceCriteria,
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
-    @JsonKey(name: "skills") List<GigrrTypeCategoryData> skillsTypeCategoryList,
+    @JsonKey(name: "skills", defaultValue: [])
+        List<GigrrTypeCategoryData> skillsCategoryList,
     // @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
-    // GetBusinessesData businessList,
+    //     GetBusinessesData businessList,
     @JsonKey(name: "gigs_request", defaultValue: [])
         List<GigsRequestData> gigsRequestData,
     @JsonKey(name: "duration", defaultValue: 0) int duration,
@@ -82,8 +84,8 @@ class CandidateRosterData with _$CandidateRosterData {
     @JsonKey(name: "city_id") int cityId,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "created_at", defaultValue: "") String createdAt,
-  ) = _CandidateRosterData;
+  ) = _CandidateGigsRequestData;
 
-  factory CandidateRosterData.fromJson(Map<String, dynamic> json) =>
-      _$CandidateRosterDataFromJson(json);
+  factory CandidateGigsRequestData.fromJson(Map<String, dynamic> json) =>
+      _$CandidateGigsRequestDataFromJson(json);
 }

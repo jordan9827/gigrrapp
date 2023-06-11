@@ -15,8 +15,10 @@ class BusinessProfileResponse with _$BusinessProfileResponse {
   ) = _BusinessProfileResponse;
 
   @JsonSerializable()
-  const factory BusinessProfileResponse.error(String message) =
-      _BusinessProfileResponseError;
+  const factory BusinessProfileResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _BusinessProfileResponseError;
 
   factory BusinessProfileResponse.fromJson(Map<String, dynamic> json) =>
       _$BusinessProfileResponseFromJson(json);

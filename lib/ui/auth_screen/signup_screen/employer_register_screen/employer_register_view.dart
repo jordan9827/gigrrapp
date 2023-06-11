@@ -5,24 +5,17 @@ import 'widget/employer_business_form_view.dart';
 import 'employer_register_view_model.dart';
 import 'widget/employer_personal_form_view.dart';
 
-class EmployerRegisterScreenView extends StatefulWidget {
+class EmployerRegisterScreenView extends StatelessWidget {
   final String phoneNumber;
   const EmployerRegisterScreenView({Key? key, this.phoneNumber = ""})
       : super(key: key);
 
   @override
-  State<EmployerRegisterScreenView> createState() =>
-      _EmployerRegisterScreenViewState();
-}
-
-class _EmployerRegisterScreenViewState
-    extends State<EmployerRegisterScreenView> {
-  @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => EmployerRegisterViewModel(
-        mobile: widget.phoneNumber,
-        isMobileRead: widget.phoneNumber.isNotEmpty,
+        mobile: phoneNumber,
+        isMobileRead: phoneNumber.isNotEmpty,
       ),
       builder: (_, viewModel, child) => WillPopScope(
         onWillPop: () => Future.sync(viewModel.onWillPop),

@@ -15,8 +15,10 @@ class GigrrTypeCategoryResponse with _$GigrrTypeCategoryResponse {
   ) = _GigrrTypeCategoryResponse;
 
   @JsonSerializable()
-  const factory GigrrTypeCategoryResponse.error(String message) =
-      _GigrrTypeCategoryResponseError;
+  const factory GigrrTypeCategoryResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _GigrrTypeCategoryResponseError;
 
   factory GigrrTypeCategoryResponse.fromJson(Map<String, dynamic> json) =>
       _$GigrrTypeCategoryResponseFromJson(json);

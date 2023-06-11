@@ -19,8 +19,10 @@ class GigsAcceptedResponse with _$GigsAcceptedResponse {
   ) = _GigsAcceptedResponse;
 
   @JsonSerializable()
-  const factory GigsAcceptedResponse.error(String message) =
-      _GigsAcceptedResponseError;
+  const factory GigsAcceptedResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _GigsAcceptedResponseError;
 
   factory GigsAcceptedResponse.fromJson(Map<String, dynamic> json) =>
       _$GigsAcceptedResponseFromJson(json);

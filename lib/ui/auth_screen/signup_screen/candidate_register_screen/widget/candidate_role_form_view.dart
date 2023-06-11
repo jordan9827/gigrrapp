@@ -46,7 +46,7 @@ class CandidateRoleFormView extends StatelessWidget {
             title: "Total Experience",
             readOnly: true,
             hintForm: "i.e. 1 year",
-            controller: viewModel.mobileController,
+            controller: viewModel.userExperiencesController,
             suffixIcon: InkWell(
               onTap: () => showCupertinoBottom(
                 context,

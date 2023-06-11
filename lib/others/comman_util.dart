@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:square_demo_architecture/util/others/size_config.dart';
+import '../util/others/text_styles.dart';
 import 'constants.dart';
 
 InputBorder inputBorder = OutlineInputBorder(
@@ -37,12 +39,15 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
-void showCupertinoBottom(BuildContext context,Widget child) {
+
+void showCupertinoBottom(BuildContext context, Widget child) {
   showCupertinoModalPopup<void>(
     context: context,
     builder: (BuildContext context) => Container(
-      height: 216,
-      padding: const EdgeInsets.only(top: 6.0),
+      height: SizeConfig.margin_padding_50 * 3.5,
+      padding: const EdgeInsets.only(
+        top: 6.0,
+      ),
       margin: EdgeInsets.only(
         bottom: MediaQuery.of(context).viewInsets.bottom,
       ),

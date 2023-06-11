@@ -28,6 +28,7 @@ class _HomeViewState extends State<HomeView> {
   ];
   List<Widget> candidateScreens = [
     MyGigs(),
+    GigrrsView(),
     AccountView(),
   ];
 
@@ -231,10 +232,10 @@ class _HomeViewState extends State<HomeView> {
       _buildAddBottomBarTab(
         title: "find_gig",
         icon: ic_search_blck,
-        onTap: () {},
+        onTap: () => viewModel.changeScreenIndex(1),
       ),
       _buildBottomBarTab(
-        onTap: () => viewModel.changeScreenIndex(1),
+        onTap: () => viewModel.changeScreenIndex(2),
         image: ic_account,
         title: "account",
         isSelected: 1 == viewModel.bottomNavBarService.currentIndex,

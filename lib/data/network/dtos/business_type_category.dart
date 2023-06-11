@@ -15,8 +15,10 @@ class BusinessTypeCategoryResponse with _$BusinessTypeCategoryResponse {
   ) = _BusinessTypeCategoryResponse;
 
   @JsonSerializable()
-  const factory BusinessTypeCategoryResponse.error(String message) =
-      _BusinessTypeCategoryResponseError;
+  const factory BusinessTypeCategoryResponse.error(
+    @JsonKey(name: "status", defaultValue: 200) int status,
+    @JsonKey(name: "message") String message,
+  ) = _BusinessTypeCategoryResponseError;
 
   factory BusinessTypeCategoryResponse.fromJson(Map<String, dynamic> json) =>
       _$BusinessTypeCategoryResponseFromJson(json);

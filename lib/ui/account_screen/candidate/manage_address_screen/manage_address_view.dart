@@ -7,15 +7,9 @@ import 'package:stacked/stacked.dart';
 import '../../../../others/common_app_bar.dart';
 import 'manage_address_view_model.dart';
 
-class ManageAddressScreenView extends StatefulWidget {
+class ManageAddressScreenView extends StatelessWidget {
   const ManageAddressScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<ManageAddressScreenView> createState() =>
-      _ManageAddressScreenViewState();
-}
-
-class _ManageAddressScreenViewState extends State<ManageAddressScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

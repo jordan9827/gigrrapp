@@ -11,14 +11,9 @@ import '../../../../util/others/text_styles.dart';
 import 'chat_view_model.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
-class ChatScreenView extends StatefulWidget {
+class ChatScreenView extends StatelessWidget {
   const ChatScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<ChatScreenView> createState() => _ChatScreenViewState();
-}
-
-class _ChatScreenViewState extends State<ChatScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

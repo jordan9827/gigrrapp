@@ -11,14 +11,9 @@ import '../../../../widgets/cvm_text_form_field.dart';
 import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import 'add_address_view_model.dart';
 
-class AddAddressScreenView extends StatefulWidget {
+class AddAddressScreenView extends StatelessWidget {
   const AddAddressScreenView({Key? key}) : super(key: key);
 
-  @override
-  State<AddAddressScreenView> createState() => _AddAddressScreenViewState();
-}
-
-class _AddAddressScreenViewState extends State<AddAddressScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);

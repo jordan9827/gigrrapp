@@ -7,6 +7,7 @@ import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/repos/business_repos.dart';
+import 'gigrrs_view/gigrrs_view.dart';
 
 class HomeViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -34,5 +35,9 @@ class HomeViewModel extends BaseViewModel {
 
   void navigatorToAddGigsView() {
     navigationService.navigateTo(Routes.addGigsScreenView);
+  }
+
+  void navigatorToGigrrsView() {
+    navigationService.navigateWithTransition(GigrrsView());
   }
 }

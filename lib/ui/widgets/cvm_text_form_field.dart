@@ -13,6 +13,7 @@ class CVMTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType keyboardType;
   final Widget? formWidget;
+  final Function(String)? onChanged;
   final Function()? onTap;
   final TextCapitalization textCapitalization;
   final Widget? suffixIcon;
@@ -30,6 +31,7 @@ class CVMTextFormField extends StatelessWidget {
     this.formWidget,
     this.onTap,
     this.keyboardType = TextInputType.text,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -48,6 +50,7 @@ class CVMTextFormField extends StatelessWidget {
           ),
         formWidget ??
             InputFieldWidget(
+              onChanged: onChanged,
               textCapitalization: textCapitalization,
               errorMsgValidation: errorMsgValidation,
               maxLength: maxLength,
