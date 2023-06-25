@@ -1,6 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,13 +8,11 @@ import 'package:square_demo_architecture/ui/my_app/my_app_view.dart';
 import 'package:square_demo_architecture/util/others/internet_check_service.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import 'app/app.locator.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -31,10 +28,12 @@ Future<void> main() async {
       );
     },
   );
+  Future.delayed(Duration(seconds: 1))
+      .then((value) => FlutterNativeSplash.remove());
 
   await EasyLocalization.ensureInitialized();
   final initialThemeMode =
-      (await AdaptiveTheme.getThemeMode()) ?? AdaptiveThemeMode.system;
+      (await AdaptiveTheme.getThemeMode()) ?? AdaptiveThemeMode.light;
 
   await setupLocator(environment: Environment.dev);
 
@@ -45,8 +44,7 @@ Future<void> main() async {
       animationDuration: const Duration(seconds: 1),
     ),
   );
-  Future.delayed(Duration(seconds: 1))
-      .then((value) => FlutterNativeSplash.remove());
+
   locator<InternetCheckService>().initializeInternetCheckServices();
   runApp(
     EasyLocalization(

@@ -54,4 +54,7 @@ const String ic_empty_data = _baseUrl + "ic_obj_no_data.png";
 const String ic_back_arrow_button = _baseUrl + "ic_back_arrow_button.png";
 const String ic_manu_button = _baseUrl + "ic_manu_button.png";
 const String ic_close_whit = _baseUrl + "ic_close_whit.png";
+const String grop_arrow_icon = _baseUrl + "grop_arrow_icon.png";
+const String grop_icon = _baseUrl + "grop_icon.png";
+const String ic_congratutation = _baseUrl + "ic_congratutation.png";
 const String ic_obj_no_internet = _baseUrl + "ic_obj_no_internet.png";

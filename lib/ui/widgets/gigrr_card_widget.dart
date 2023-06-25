@@ -1,17 +1,35 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 
 import '../../data/network/dtos/candidate_gigs_request.dart';
+import '../../util/others/text_styles.dart';
 
 class GiggrCardWidget extends StatefulWidget {
-  final CandidateGigsRequestData data;
+  final String title;
+  final List<String> skillList;
+  final String price;
+  final String distance;
+  final String experience;
+  final String gigrrName;
+  final bool isCandidate;
   final Function navigateToDetailScreen;
+  final Function()? navigateToGigrr;
+  final Function()? acceptedGigsRequest;
 
   const GiggrCardWidget({
     Key? key,
     required this.navigateToDetailScreen,
-    required this.data,
+    required this.title,
+    required this.skillList,
+    required this.price,
+    this.distance = "",
+    this.experience = "",
+    this.isCandidate = false,
+    required this.gigrrName,
+    this.navigateToGigrr,
+    this.acceptedGigsRequest,
   }) : super(key: key);
 
   @override
@@ -32,8 +50,6 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    var gigs = widget.data;
-    print("gigs gigs ${gigs.gigName}");
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
     return Container(
       height: mediaQueryData.size.height,
@@ -50,21 +66,13 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
               Image.asset(
                 "assets/images/home_slide_demo.png",
                 fit: BoxFit.fill,
-              ),
-              Image.asset(
-                "assets/images/home_slide_demo.png",
-                fit: BoxFit.fill,
-              ),
-              Image.asset(
-                "assets/images/home_slide_demo.png",
-                fit: BoxFit.fill,
-              ),
+              )
             ],
           ),
           Positioned(
             bottom: 0,
             child: Container(
-              height: mediaQueryData.size.height * 0.3,
+              height: mediaQueryData.size.height * 0.4,
               width: mediaQueryData.size.width,
               padding: EdgeInsets.only(
                 left: SizeConfig.margin_padding_10,
@@ -88,19 +96,19 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    gigs.gigName,
+                    widget.title,
                     style: TextStyle(
                       color: mainWhiteColor,
                       fontSize: SizeConfig.textSizeHeading,
                       fontWeight: FontWeight.w900,
                     ),
                   ),
-                  _buildSpacing(),
+                  _buildSpacing(height: 2),
                   Wrap(
-                    children: gigs.skillsCategoryList
+                    children: widget.skillList
                         .map(
                           (e) => Text(
-                            "${e.name}, ",
+                            "$e, ",
                             style: TextStyle(
                               color: mainWhiteColor,
                             ),
@@ -110,12 +118,8 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                   ),
                   _buildSpacing(),
                   Text(
-                    "₹ ${gigs.fromAmount}-${gigs.toAmount}/${gigs.priceCriteria}",
-                    style: TextStyle(
-                      color: mainPinkColor,
-                      fontSize: SizeConfig.textSizeMedium,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    widget.price,
+                    style: TSB.semiBoldMedium(textColor: mainPinkColor),
                   ),
                   _buildSpacing(),
                   Row(
@@ -151,63 +155,96 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                   ),
                   _buildSpacing(),
                   Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                        padding: EdgeInsets.all(SizeConfig.margin_padding_5),
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(
-                            color: mainWhiteColor,
-                            width: SizeConfig.margin_padding_2,
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(
-                              SizeConfig.margin_padding_8,
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                              vertical: SizeConfig.margin_padding_5,
+                              horizontal: SizeConfig.margin_padding_15,
                             ),
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "SHORTLIST GIGRR",
-                            style: TextStyle(
-                              color: mainWhiteColor,
-                              fontSize: SizeConfig.textSizeSmall,
-                            ),
-                          ),
-                        ),
-                      ),
-                      _buildSpacing(
-                        width: SizeConfig.margin_padding_5,
-                      ),
-                      InkWell(
-                        onTap: () => widget.navigateToDetailScreen(),
-                        child: Container(
-                          height: SizeConfig.margin_padding_29,
-                          width: SizeConfig.margin_padding_29,
-                          decoration: BoxDecoration(
-                            color: Colors.transparent,
-                            border: Border.all(
-                              color: mainWhiteColor,
-                              width: SizeConfig.margin_padding_2,
-                            ),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(
-                                SizeConfig.margin_padding_8,
-                              ),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "i",
-                              style: TextStyle(
+                            decoration: BoxDecoration(
+                              color: Colors.transparent,
+                              border: Border.all(
                                 color: mainWhiteColor,
-                                fontSize: SizeConfig.textSizeSmall,
+                                width: SizeConfig.margin_padding_2,
+                              ),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  SizeConfig.margin_padding_8,
+                                ),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                widget.gigrrName.tr(),
+                                style: TextStyle(
+                                  color: mainWhiteColor,
+                                  fontSize: SizeConfig.textSizeSmall,
+                                ),
                               ),
                             ),
                           ),
-                        ),
+                          _buildSpacing(
+                            width: SizeConfig.margin_padding_5,
+                          ),
+                          InkWell(
+                            onTap: () => widget.navigateToDetailScreen(),
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.margin_padding_5,
+                                horizontal: SizeConfig.margin_padding_10,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(
+                                  color: mainWhiteColor,
+                                  width: SizeConfig.margin_padding_2,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    SizeConfig.margin_padding_8,
+                                  ),
+                                ),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "i",
+                                  style: TextStyle(
+                                    color: mainWhiteColor,
+                                    fontSize: SizeConfig.textSizeSmall,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                      if (widget.isCandidate)
+                        InkWell(
+                          onTap: widget.acceptedGigsRequest,
+                          child: Container(
+                            margin: EdgeInsets.all(10),
+                            padding:
+                                EdgeInsets.all(SizeConfig.margin_padding_5),
+                            height: SizeConfig.margin_padding_35,
+                            width: SizeConfig.margin_padding_35,
+                            decoration: BoxDecoration(
+                              color: mainWhiteColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(
+                                  SizeConfig.margin_padding_8,
+                                ),
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.send,
+                              color: mainPinkColor,
+                            ),
+                          ),
+                        )
                     ],
                   ),
                   _buildSpacing(
@@ -217,19 +254,6 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
               ),
             ),
           ),
-          // Positioned(
-          //   top: SizeConfig.margin_padding_14,
-          //   left: (mediaQueryData.size.width * 0.5) -
-          //       (SizeConfig.margin_padding_65 * 0.5),
-          //   child: Center(
-          //     child: Container(
-          //       height: SizeConfig.margin_padding_10,
-          //       width: SizeConfig.margin_padding_65,
-          //       decoration: BoxDecoration(
-          //           borderRadius: BorderRadius.all(Radius.circular())),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

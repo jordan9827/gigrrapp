@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/app/app.router.dart';
-import 'package:square_demo_architecture/ui/home_screen/gigrr_detail_view/gigrr_detail_view.dart';
+import 'package:square_demo_architecture/data/network/api_services/business_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../data/network/dtos/candidate_gigs_request.dart';
+import '../../../data/network/dtos/employer_gigs_request.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../domain/repos/business_repos.dart';
 import '../../../domain/repos/candidate_repos.dart';
 
-class GigrrsViewModel extends BaseViewModel {
+class EmployerGigrrsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
@@ -17,20 +19,21 @@ class GigrrsViewModel extends BaseViewModel {
   final PageController pageController = PageController();
   final user = locator<UserAuthResponseData>();
   final candidateRepo = locator<CandidateRepo>();
-  List<CandidateGigsRequestData> gigsData = [];
+  final businessRepo = locator<BusinessRepo>();
+  List<EmployerGigsRequestData> gigsData = [];
 
-  GigrrsViewModel() {
+  EmployerGigrrsViewModel() {
     fetchGigsRequest();
   }
 
-  void navigateToGigrrDetailScreen(CandidateGigsRequestData e) {
-    navigationService.navigateTo(Routes.gigrrDetailView,
-        arguments: GigrrDetailViewArguments(data: e));
+  void navigateToGigrrDetailScreen(EmployerGigsRequestData e) {
+    // navigationService.navigateTo();
   }
 
   Future<void> fetchGigsRequest() async {
     setBusy(true);
-    var result = await candidateRepo.getGigsRequest(await _getRequestForGig());
+    var result =
+        await businessRepo.employerGigsRequest(await _getRequestForGig());
     result.fold((fail) {
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
@@ -43,11 +46,14 @@ class GigrrsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  String price(EmployerGigsRequestData e) {
+    var p = e.employerProfile;
+    return "₹ ${p.priceFrom.toStringAsFixed(1)}-${p.priceFrom.toStringAsFixed(0)}/${p.priceCriteria}";
+  }
+
   Future<Map<String, String>> _getRequestForGig() async {
     Map<String, String> request = {};
-    request["address"] = user.address;
-    request["latitude"] = user.latitude;
-    request["longitude"] = user.longitude;
+    request["id"] = "0";
     notifyListeners();
     return request;
   }

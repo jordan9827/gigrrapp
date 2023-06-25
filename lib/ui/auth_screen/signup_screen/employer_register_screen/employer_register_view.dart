@@ -6,15 +6,20 @@ import 'employer_register_view_model.dart';
 import 'widget/employer_personal_form_view.dart';
 
 class EmployerRegisterScreenView extends StatelessWidget {
+  final bool isSocialLogin;
   final String phoneNumber;
-  const EmployerRegisterScreenView({Key? key, this.phoneNumber = ""})
-      : super(key: key);
+  const EmployerRegisterScreenView({
+    Key? key,
+    this.phoneNumber = "",
+    this.isSocialLogin = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => EmployerRegisterViewModel(
         mobile: phoneNumber,
+        isSocial: isSocialLogin,
         isMobileRead: phoneNumber.isNotEmpty,
       ),
       builder: (_, viewModel, child) => WillPopScope(

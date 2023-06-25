@@ -31,9 +31,7 @@ class AddGigsViewModel extends BaseViewModel {
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
   final authRepo = locator<Auth>();
   PageController controller = PageController();
-  List<String> priceList = ["daily_price", "total_price"];
   int pageIndex = 0;
-  String initialPrice = "daily_price";
 
   AddGigsViewModel() {
     setInitialDataTime();
@@ -61,13 +59,6 @@ class AddGigsViewModel extends BaseViewModel {
       );
     }
     return false;
-  }
-
-  void setPrice(String? val) {
-    initialPrice = val!;
-    priceTypeController.text = (val == "daily_price" ? "price" : "total");
-    print(priceTypeController.text);
-    notifyListeners();
   }
 
   void setPageIndex(int? val) {

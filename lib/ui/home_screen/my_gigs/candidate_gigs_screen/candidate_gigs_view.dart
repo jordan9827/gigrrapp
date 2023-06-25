@@ -2,12 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/ui/widgets/empty_data_screen.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../data/network/dtos/candidate_roster_gigs_response.dart';
+import '../../../../data/network/dtos/gigs_accepted_response.dart';
 import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/comman_util.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/constants.dart';
 import '../../../../others/loading_screen.dart';
 import '../../../../util/others/size_config.dart';
+import '../../../../util/others/text_styles.dart';
 import '../../../widgets/notification_icon.dart';
 import '../widget/my_gigs_view_widget.dart';
 import 'candidate_gigs_view_model.dart';
@@ -100,15 +103,57 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 return MyGigsViewWidget(
                   title: gigs.gigName,
                   address: gigs.gigAddress,
-                  price: gigs.fromAmount,
+                  price: viewModel.price(
+                    from: gigs.fromAmount,
+                    to: gigs.toAmount,
+                    priceCriteria: gigs.priceCriteria,
+                  ),
                   startDate: gigs.gigsStartDate,
-                  jobDuration: gigs.duration,
-                  bottomView: SizedBox(),
+                  jobDuration: "${gigs.duration}/day",
+                  bottomView: _buildAppliedGigsStatusView(
+                    viewModel: viewModel,
+                    gigs: gigs,
+                  ),
                 );
               }
             },
           )
         : EmptyDataScreenView();
+  }
+
+  Widget _buildAppliedGigsStatusView({
+    required CandidateGigsViewModel viewModel,
+    required GigsAcceptedData gigs,
+  }) {
+    var status = viewModel.getGigStatus(gigs.gigsRequestData, gigs.employerId);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(),
+        Text(
+          "Super Enterprise",
+          style: TSB.semiBoldLarge(
+            textColor: independenceColor,
+          ),
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_5,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              status,
+              style: TSB.regularSmall(
+                textColor: mainPinkColor,
+              ),
+            ),
+            if (viewModel.statusSlug == "sent-offer")
+              _buildAcceptOfferView(viewModel, gigs)
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildShortListView(CandidateGigsViewModel viewModel) {
@@ -128,14 +173,72 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 return MyGigsViewWidget(
                   title: gigs.gigName,
                   address: gigs.gigAddress,
-                  price: gigs.fromAmount,
+                  price: viewModel.price(
+                    from: gigs.fromAmount,
+                    to: gigs.toAmount,
+                    priceCriteria: gigs.priceCriteria,
+                  ),
                   startDate: gigs.gigsStartDate,
-                  jobDuration: gigs.duration,
-                  bottomView: SizedBox(),
+                  jobDuration: "${gigs.duration}",
+                  bottomView: _buildShortListGigsStatusView(
+                    gigs: gigs,
+                    viewModel: viewModel,
+                  ),
                 );
               }
             })
         : EmptyDataScreenView();
+  }
+
+  Widget _buildShortListGigsStatusView({
+    required CandidateGigsViewModel viewModel,
+    required CandidateRosterData gigs,
+  }) {
+    var status = viewModel.getGigStatus(gigs.gigsRequestData, gigs.employerId);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Divider(),
+        Text(
+          "Super Enterprise",
+          style: TSB.semiBoldLarge(
+            textColor: independenceColor,
+          ),
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_5,
+        ),
+        Text(
+          status,
+          style: TSB.regularSmall(
+            textColor: mainGreenColor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAcceptOfferView(
+      CandidateGigsViewModel viewModel, GigsAcceptedData gigs) {
+    return InkWell(
+      onTap: () => viewModel.showAcceptOfferDialog(viewModel, gigs),
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.margin_padding_17,
+          vertical: SizeConfig.margin_padding_8,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(color: mainPinkColor, width: 1.5),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_8,
+          ),
+        ),
+        child: Text(
+          "accept_offer".tr(),
+          style: TSB.regularVSmall(textColor: mainPinkColor),
+        ),
+      ),
+    );
   }
 
   PreferredSize selectGigTab(CandidateGigsViewModel viewModel) {

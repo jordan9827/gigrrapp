@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/data/network/dtos/chat_response.dart';
 import 'package:stacked/stacked.dart';

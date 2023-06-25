@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:location/location.dart';
+import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:stacked/stacked.dart';
@@ -34,6 +35,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   RangeValues currentRangeValues = const RangeValues(100, 400);
   LatLng latLng = const LatLng(14.508, 46.048);
   bool _loading = false;
+  bool isSocialLogin = false;
 
   bool get loading => _loading;
   DateTime selectedDate = DateTime.now();
@@ -66,7 +68,9 @@ class CandidateRegisterViewModel extends BaseViewModel {
   bool fourImagesAdded = false;
   bool isMobileRead = false;
 
-  CandidateRegisterViewModel({String mobile = "", bool isMobileRead = false}) {
+  CandidateRegisterViewModel(
+      {String mobile = "", bool isMobileRead = false, bool isSocial = false}) {
+    this.isSocialLogin = isSocial;
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
     acquireCurrentLocation();
@@ -296,14 +300,34 @@ class CandidateRegisterViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
       },
-      (res) {
-        navigationService.navigateTo(
-          Routes.candidateKYCScreenView,
-        );
+      (res) async {
+        await navigationToCandidateComplete(res);
         setBusy(false);
       },
     );
     notifyListeners();
+  }
+
+  Future<void> navigationToCandidateComplete(UserAuthResponseData res) async {
+    if (isSocialLogin) {
+      var result = await navigationService.clearStackAndShow(
+        Routes.oTPVerifyScreen,
+        arguments: OTPVerifyScreenArguments(
+          mobile: res.mobile,
+          otpType: "sms",
+          roleId: res.roleId,
+        ),
+      );
+      if (result["isCheck"]) {
+        navigationService.navigateTo(
+          Routes.homeView,
+        );
+      }
+    } else {
+      navigationService.navigateTo(
+        Routes.candidateKYCScreenView,
+      );
+    }
   }
 
   Future<Map<String, String>> _getRequestForCompleteCandidateProfile() async {

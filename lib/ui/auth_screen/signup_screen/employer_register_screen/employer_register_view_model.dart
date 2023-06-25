@@ -42,10 +42,15 @@ class EmployerRegisterViewModel extends BaseViewModel {
   bool fourImagesAdded = false;
   bool isMobileRead = false;
   bool _loading = false;
+  bool isSocialLogin = false;
+
   bool get loading => _loading;
-  EmployerRegisterViewModel({String mobile = "", bool isMobileRead = false}) {
+
+  EmployerRegisterViewModel(
+      {String mobile = "", bool isMobileRead = false, bool isSocial = false}) {
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
+    this.isSocialLogin = isSocial;
     businessTypeController.text =
         businessTypeService.businessTypeList.first.id.toString();
     acquireCurrentLocation();
@@ -232,31 +237,37 @@ class EmployerRegisterViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
       },
-      (businessTypeResponse) => successBody(businessTypeResponse),
+      (res) async {
+        await navigationToEmployerComplete(res);
+        setBusy(false);
+      },
     );
     notifyListeners();
     setBusy(false);
   }
 
-  Future<void> successBody(UserAuthResponseData res) async {
-    await navigationService.navigateTo(
-      Routes.oTPVerifyScreen,
-      arguments: OTPVerifyScreenArguments(
-        mobile: mobileController.text,
-      ),
-    );
-    navigationToSignup(res);
-    setBusy(false);
+  Future<void> navigationToEmployerComplete(UserAuthResponseData res) async {
+    if (isSocialLogin) {
+      var result = await navigationService.clearStackAndShow(
+        Routes.oTPVerifyScreen,
+        arguments: OTPVerifyScreenArguments(
+          mobile: res.mobile,
+          otpType: "sms",
+          roleId: res.roleId,
+        ),
+      );
+      if (result["isCheck"]) {
+        navigationToHomeScreen();
+      }
+    } else {
+      navigationToHomeScreen();
+    }
   }
 
-  void navigationToSignup(UserAuthResponseData res) {
-    if (res.status.toLowerCase() == "incompleted") {
-      if (res.roleId == "3") {
-        navigationService.clearStackAndShow(Routes.employerRegisterScreenView);
-      } else {}
-    } else
-      navigationService.clearStackAndShow(Routes.homeView);
-    setBusy(false);
+  void navigationToHomeScreen() {
+    navigationService.navigateTo(
+      Routes.homeView,
+    );
   }
 
   Future<Map<String, String>> _getRequestForAddBusiness() async {

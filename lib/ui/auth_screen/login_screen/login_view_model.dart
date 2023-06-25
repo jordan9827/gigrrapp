@@ -88,9 +88,10 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void _navigationToStatusLogin(String value) {
+    var employer = (user.roleId == "3" ? true : false);
     switch (value) {
       case "otp-verify":
-        if (user.isEmployer) {
+        if (employer) {
           navigationService.clearStackAndShow(
             Routes.employerRegisterScreenView,
             arguments: EmployerRegisterScreenViewArguments(
@@ -193,11 +194,17 @@ class LoginViewViewModel extends BaseViewModel {
     switch (value) {
       case "login":
         if (res.isEmployer) {
-          navigationService
-              .clearStackAndShow(Routes.employerRegisterScreenView);
+          navigationService.clearStackAndShow(
+            Routes.employerRegisterScreenView,
+            arguments: EmployerRegisterScreenViewArguments(isSocialLogin: true),
+          );
         } else {
-          navigationService
-              .clearStackAndShow(Routes.candidateRegisterScreenView);
+          navigationService.clearStackAndShow(
+            Routes.candidateRegisterScreenView,
+            arguments: CandidateRegisterScreenViewArguments(
+              isSocialLogin: true,
+            ),
+          );
         }
         break;
       case "profile-completed":
@@ -210,7 +217,7 @@ class LoginViewViewModel extends BaseViewModel {
           ),
         );
         break;
-      default:
+      case "otp-verify":
         navigationService.clearStackAndShow(Routes.homeView);
         break;
     }
@@ -227,7 +234,7 @@ class LoginViewViewModel extends BaseViewModel {
     request['role'] = roleId;
     request['social_id'] = socialType(socialData);
     request['social_type'] = socialData.socialMediaType;
-    request['device_token'] = (await deviceToken());
+    request['device_token'] = (await fcmToken());
     request['device_type'] = getDeviceType();
     request['full_name'] = socialData.name;
     request['email'] = socialData.email;

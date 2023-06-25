@@ -1,4 +1,5 @@
 import 'package:chopper/chopper.dart';
+import 'package:square_demo_architecture/data/network/dtos/base_response.dart';
 import '../dtos/business_type_category.dart';
 import '../dtos/candidate_gigs_request.dart';
 import '../dtos/candidate_roster_gigs_response.dart';
@@ -27,5 +28,15 @@ abstract class CandidateService extends ChopperService {
   @Get(path: "gigs-accepted")
   Future<Response<GigsAcceptedResponse>> acceptedGigs(
     @Query('gigs_id') String id,
+  );
+
+  @Get(path: "accept-gigs-request")
+  Future<Response<BaseResponse>> acceptedGigsRequestApi(
+    @Query('gigs_id') String id,
+  );
+
+  @Post(path: "candidates/gigs-offer-accepted")
+  Future<Response<BaseResponse>> acceptedGigsOfferApi(
+    @Body() Map<String, dynamic> body,
   );
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -30,7 +29,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
   String isVerificationId = "";
 
   TextEditingController pinController = TextEditingController();
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
   OTPVerifyScreenModel(
       {required String mobile, String otpType = "", String roleId = ""}) {
@@ -177,7 +175,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
     request['country_code'] = countryCode;
     request['otp'] = pinController.text;
     request['mobile_no'] = mobileNumber;
-    request['device_token'] = (await deviceToken());
+    request['device_token'] = (await fcmToken());
     request['device_type'] = getDeviceType();
     request['certification_type'] = "development";
     log('Body Verify OTP :: $request');

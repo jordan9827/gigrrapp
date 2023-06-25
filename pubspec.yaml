@@ -88,8 +88,15 @@ dependencies:
 
 #  webview_flutter: ^3.0.4
   flutter_html:
+
   json_to_type:
     path: packages/json_to_type
+
+  # FireBase Service
+  fcm_service:
+    path: packages/fcm_service
+
+  firebase_crashlytics:
 
 # Google Login
   google_sign_in: ^6.1.0
@@ -117,10 +124,6 @@ dependencies:
   image_cropper: ^3.0.2
   image_picker: ^0.8.7+2
   cached_network_image: ^3.2.3
-
-# Firebase Auth
-  firebase_auth: ^4.4.0
-  firebase_core: ^2.10.0
 
 
 # flutter_native_splash-development.yaml
@@ -183,7 +186,8 @@ dev_dependencies:
   pull_to_refresh: ^2.0.0
   flutter_spinkit:
 
-
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

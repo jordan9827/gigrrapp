@@ -1,8 +1,10 @@
 import 'dart:io' show Platform;
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../app/app.locator.dart';
 import '../util/others/size_config.dart';
 
 const String devBaseURL = "https://gigrr.in/development";
@@ -46,6 +48,7 @@ const greenBlueColor = Color(0xff18181C);
 const mainBlackColor = Colors.black;
 const mainWhiteColor = Colors.white;
 const mainPinkColor = Color(0xffEE356F);
+const mainGreenColor = Color(0xff38BB64);
 const lightPinkColor = Color(0xffFEEAF0);
 const mainGrayColor = Color(0xffF2F2F2);
 const mainBlueColor = Color(0xff4263FB);
@@ -120,6 +123,10 @@ Future<String> deviceToken() async {
     return (await deviceInfo.androidInfo).id;
   }
   return (await deviceInfo.iosInfo).identifierForVendor ?? "";
+}
+
+Future<String> fcmToken() async {
+  return await locator<FCMService>().token() ?? "";
 }
 
 Future<String> appVersion() async {

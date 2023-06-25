@@ -6,6 +6,7 @@ import '../../../others/loading_button.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 import '../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
+import '../../widgets/custom_price_radio_view/price_radio_view.dart';
 import '../../widgets/cvm_text_form_field.dart';
 import '../../business_type_drop_down_screen/business_type_drop_down_view.dart';
 
@@ -72,38 +73,8 @@ class AddGigsInfoScreenView extends StatelessWidget {
   }
 
   Widget _buildSetPriceView(AddGigsViewModel viewModel) {
-    return Row(
-      children: viewModel.priceList
-          .map(
-            (e) => Container(
-              margin: EdgeInsets.only(
-                right: SizeConfig.margin_padding_15,
-              ),
-              child: Row(
-                children: [
-                  Radio<String>(
-                    visualDensity: const VisualDensity(
-                      horizontal: VisualDensity.minimumDensity,
-                      vertical: VisualDensity.minimumDensity,
-                    ),
-                    activeColor: mainPinkColor,
-                    value: e,
-                    groupValue: viewModel.initialPrice,
-                    onChanged: viewModel.setPrice,
-                  ),
-                  Text(
-                    e.tr(),
-                    style: TSB.regularSmall(
-                      textColor: viewModel.initialPrice != e
-                          ? textRegularColor
-                          : mainBlackColor,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          )
-          .toList(),
+    return CustomPriceRadioButtonView(
+      controller: viewModel.priceTypeController,
     );
   }
 }

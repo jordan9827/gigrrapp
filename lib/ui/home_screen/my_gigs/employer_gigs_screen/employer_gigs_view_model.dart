@@ -52,4 +52,8 @@ class EmployerGigsViewModel extends BaseViewModel {
     });
     notifyListeners();
   }
+
+  String price({String from = "", String to = "", String priceCriteria = ""}) {
+    return "₹ ${double.parse(from).toStringAsFixed(0)}-${double.parse(to).toStringAsFixed(0)}/$priceCriteria";
+  }
 }

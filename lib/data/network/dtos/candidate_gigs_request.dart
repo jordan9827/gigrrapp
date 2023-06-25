@@ -1,7 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
-
-import 'get_businesses_response.dart';
 import 'gigrr_type_response.dart';
 import 'my_gigs_response.dart';
 

@@ -1,3 +1,4 @@
+import 'package:fcm_service/fcm_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/repos/auth_impl.dart';
 import 'package:square_demo_architecture/data/repos/notification_impl.dart';
@@ -7,8 +8,6 @@ import 'package:square_demo_architecture/ui/account_screen/help_support_screen/h
 import 'package:square_demo_architecture/ui/account_screen/language_screen/language_view.dart';
 import 'package:square_demo_architecture/ui/account_screen/payment_history_screen/payment_history_view.dart';
 import 'package:square_demo_architecture/ui/auth_screen/forgetpassword_screen/forgetPassword_view.dart';
-import 'package:square_demo_architecture/ui/home_screen/gigrr_detail_view/gigrr_detail_view.dart';
-import 'package:square_demo_architecture/ui/home_screen/my_gigs/my_gigs_view.dart';
 import 'package:square_demo_architecture/ui/no_internet_screen/no_internet_view.dart';
 import 'package:square_demo_architecture/ui/notification_screen/notification_view.dart';
 import 'package:square_demo_architecture/util/others/bottom_nav_bar_service.dart';
@@ -49,6 +48,7 @@ import '../ui/auth_screen/signup_screen/employer_register_screen/employer_regist
 import '../ui/home_screen/home_view.dart';
 import '../ui/into_screen/intro_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
+import '../ui/widgets/giggr_request_view.dart';
 
 @StackedApp(
   routes: [
@@ -62,6 +62,7 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: CandidateRegisterScreenView),
 
     ///// Businesses /////
+    MaterialRoute(page: GigrrCustomRequestView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: AddBusinessesScreenView),
     MaterialRoute(page: EditBusinessesScreenView),
@@ -87,13 +88,16 @@ import '../ui/rating_review_screen/rating_review_view.dart';
     MaterialRoute(page: AddGigsScreenView),
     MaterialRoute(page: LanguageScreenView),
     MaterialRoute(page: NotificationScreenView),
-    MaterialRoute(page: GigrrDetailView),
     MaterialRoute(page: NoInternetView),
   ],
   dependencies: [
     Presolve(
       classType: SharedPreferences,
       presolveUsing: SharedPreferences.getInstance,
+    ),
+    Presolve(
+      classType: FCMService,
+      presolveUsing: FCMService.getInstance,
     ),
     Factory(
       classType: AuthImpl,

@@ -2,14 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/ui/account_screen/account_view.dart';
-import 'package:square_demo_architecture/ui/home_screen/gigrrs_view/gigrrs_view.dart';
+import 'package:square_demo_architecture/ui/home_screen/employer_gigrr_view/employer_gigrr_view.dart';
 import 'package:square_demo_architecture/ui/home_screen/my_gigrrs/my_gigrrs_view.dart';
 import 'package:square_demo_architecture/ui/home_screen/my_gigs/my_gigs_view.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../util/others/text_styles.dart';
+import 'candidate_gigrrs_view/candidate_gigrrs_view.dart';
 import 'home_view_model.dart';
 
 class HomeView extends StatefulWidget {
@@ -21,14 +21,14 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<Widget> employerScreens = [
-    GigrrsView(),
+    EmployerGigrrsView(),
     MyGigs(),
     MyGirrsView(),
     AccountView(),
   ];
   List<Widget> candidateScreens = [
     MyGigs(),
-    GigrrsView(),
+    CandidateGigrrsView(),
     AccountView(),
   ];
 

@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/business_profile_response.dart';
 import '../dtos/base_response.dart';
 import '../dtos/business_type_category.dart';
+import '../dtos/employer_gigs_request.dart';
 import '../dtos/get_businesses_response.dart';
 import '../dtos/gigrr_type_response.dart';
 import '../dtos/my_gigs_response.dart';
@@ -42,6 +43,10 @@ abstract class BusinessService extends ChopperService {
 
   @Post(path: "rating-review")
   Future<Response<BaseResponse>> ratingReviewApi(
+    @Body() Map<String, dynamic> body,
+  );
+  @Post(path: "search-candidate-via-gigs")
+  Future<Response<EmployerGigsRequestResponse>> employerGigsRequest(
     @Body() Map<String, dynamic> body,
   );
 }

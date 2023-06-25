@@ -13,7 +13,7 @@ class MyGigsViewWidget extends StatelessWidget {
   final String title;
   final String address;
   final String price;
-  final int jobDuration;
+  final String jobDuration;
   final String startDate;
   final Widget bottomView;
   const MyGigsViewWidget({
@@ -58,7 +58,7 @@ class MyGigsViewWidget extends StatelessWidget {
                 child: Text(
                   address,
                   maxLines: 2,
-                  overflow: TextOverflow.fade,
+                  overflow: TextOverflow.ellipsis,
                   style: TSB.regularSmall(textColor: textNoticeColor),
                 ),
               ),
@@ -68,7 +68,7 @@ class MyGigsViewWidget extends StatelessWidget {
             height: SizeConfig.margin_padding_15,
           ),
           Text(
-            "₹ ${price.substring(0, 3)}/day",
+            price,
             style: TSB.semiBoldLarge(textColor: independenceColor),
           ),
           SizedBox(
@@ -77,7 +77,7 @@ class MyGigsViewWidget extends StatelessWidget {
           Row(
             children: [
               _buildDurationView(
-                title: "$jobDuration days",
+                title: jobDuration,
                 subTitle: "job_duration",
               ),
               SizedBox(

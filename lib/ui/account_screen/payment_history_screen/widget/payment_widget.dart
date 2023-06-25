@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import '../../../../data/network/dtos/payment_history_response.dart';
 import '../../../../others/constants.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/size_config.dart';
 import '../../../../util/others/text_styles.dart';
 
 class PaymentHistoryWidget extends StatelessWidget {
-  PaymentHistoryWidget();
+  final PaymentHistoryData data;
+  PaymentHistoryWidget({required this.data});
 
   @override
   Widget build(BuildContext context) {
@@ -35,20 +37,20 @@ class PaymentHistoryWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              "Suresh Kumar",
+              data.employer.firstName,
               style: TSB.semiBoldLarge(),
             ),
             SizedBox(
               height: SizeConfig.margin_padding_3,
             ),
             Text(
-              "₹ 400",
+              "₹ ${data.amount}",
               style: TSB.semiBoldMedium(textColor: Colors.green),
             ),
           ],
         ),
         subtitle: Text(
-          "Successfully Paid",
+          data.status,
           style: TSB.regularSmall(textColor: textNoticeColor),
         ),
       ),

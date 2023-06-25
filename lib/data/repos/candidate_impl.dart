@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:square_demo_architecture/data/network/dtos/business_profile_response.dart';
-import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart';
+import 'package:square_demo_architecture/data/network/dtos/base_response.dart';
 import 'package:square_demo_architecture/util/extensions/object_extension.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
@@ -31,7 +30,7 @@ class CandidateImpl extends CandidateRepo {
       return response.body!.map(success: (data) async {
         return Right(data.data);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -47,11 +46,49 @@ class CandidateImpl extends CandidateRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      // log.i("Accepted Roster Gigs ${response.body}");
+      log.i("Accepted Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
         return Right(data.responseData);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+  @override
+  Future<Either<Failure, BaseResponse>> acceptedGigsRequest(int id) async {
+    try {
+      final response = await candidateService.acceptedGigsRequestApi(id.toString());
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Accepted Roster Gigs ${response.body}");
+      return response.body!.map(success: (data) async {
+        return Right(data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+  @override
+  Future<Either<Failure, BaseResponse>> acceptedGigsOffer( Map<String, dynamic> body) async {
+    try {
+      final response = await candidateService.acceptedGigsOfferApi(body);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Accepted Roster Gigs ${response.body}");
+      return response.body!.map(success: (data) async {
+        return Right(data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -72,7 +109,7 @@ class CandidateImpl extends CandidateRepo {
       return response.body!.map(success: (data) async {
         return Right(data.data);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);

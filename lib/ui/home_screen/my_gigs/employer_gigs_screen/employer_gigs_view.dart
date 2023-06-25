@@ -63,33 +63,14 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                     (gigs) => MyGigsViewWidget(
                       title: gigs.gigName,
                       address: gigs.gigAddress,
-                      price: gigs.fromAmount,
-                      startDate: gigs.gigsStartDate,
-                      jobDuration: gigs.duration,
-                      bottomView: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              buildStackedImages(
-                                data: gigs,
-                                viewModel: viewModel,
-                              ),
-                              SizedBox(
-                                height: SizeConfig.margin_padding_5,
-                              ),
-                              Text(
-                                viewModel.setResponseCount,
-                                style: TSB.regularSmall(
-                                    textColor: independenceColor),
-                              )
-                            ],
-                          ),
-                          _buildDetailView()
-                        ],
+                      price: viewModel.price(
+                        from: gigs.fromAmount,
+                        to: gigs.toAmount,
+                        priceCriteria: gigs.priceCriteria,
                       ),
+                      startDate: gigs.gigsStartDate,
+                      jobDuration: "${gigs.duration} ${gigs.priceCriteria}",
+                      bottomView: _buildAcceptedGigsView(viewModel, gigs),
                     ),
                   )
                   .toList(),
@@ -100,6 +81,65 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildAcceptedGigsView(
+      EmployerGigsViewModel viewModel, MyGigsData gigs) {
+    var status = "";
+    if (gigs.gigsRequestData.isNotEmpty) {
+      status = gigs.gigsRequestData.first.status;
+    }
+    if (status == "accepted") {
+      return _buildAcceptedCandidateView(viewModel: viewModel, gigs: gigs);
+    } else if (status == "received-offer" || status == "sent-offer") {
+      return _buildShortListCandidateView(gigs: gigs);
+    } else
+      return SizedBox();
+  }
+
+  Widget _buildAcceptedCandidateView(
+      {required EmployerGigsViewModel viewModel, required MyGigsData gigs}) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildStackedImages(
+              data: gigs,
+              viewModel: viewModel,
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
+            Text(
+              viewModel.setResponseCount,
+              style: TSB.regularSmall(textColor: independenceColor),
+            )
+          ],
+        ),
+        _buildDetailView()
+      ],
+    );
+  }
+
+  Widget _buildShortListCandidateView({required MyGigsData gigs}) {
+    return Row(
+      children: [
+        Text(
+          "05 Candidate shortlisted.",
+          style: TSB.regularSmall(textColor: independenceColor),
+        ),
+        SizedBox(
+          width: SizeConfig.margin_padding_3,
+        ),
+        Text(
+          "See Details",
+          style: TSB.regularSmall(textColor: mainPinkColor),
+        ),
+      ],
     );
   }
 

@@ -9,12 +9,34 @@ import '../network/api_services/account_service.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/chat_response.dart';
 import '../network/dtos/get_chat_response.dart';
+import '../network/dtos/payment_history_response.dart';
 import '../network/dtos/web_view_response.dart';
 
 class AccountImpl extends AccountRepo {
   final accountService =
       locator<AppChopperClient>().getService<AccountService>();
   final log = getLogger("AccountImpl");
+
+  @override
+  Future<Either<Failure, PaymentHistoryResponseData>> candidatePaymentHistory(
+      {required Map<String, dynamic> data, required int page}) async {
+    try {
+      final response = await accountService.candidatePaymentHistory(data, page);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      // log.i("saveChat Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
 
   @override
   Future<Either<Failure, ChatResponseData>> saveChat(
