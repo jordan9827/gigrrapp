@@ -90,7 +90,7 @@ class BusinessesImageList with _$BusinessesImageList {
 class CategoryResp with _$CategoryResp {
   @JsonSerializable(explicitToJson: true)
   const factory CategoryResp(
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "name", defaultValue: "") String name,
   ) = _CategoryResp;
 

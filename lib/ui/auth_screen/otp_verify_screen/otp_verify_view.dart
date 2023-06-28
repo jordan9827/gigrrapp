@@ -8,6 +8,7 @@ import '../../../others/loading_screen.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
+import '../../widgets/pin_code_field.dart';
 import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {
@@ -127,34 +128,9 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
           SizedBox(
             height: SizeConfig.margin_padding_50,
           ),
-          PinCodeTextField(
-            obscureText: true,
-            length: 4,
-            scrollPadding: EdgeInsets.zero,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            animationType: AnimationType.fade,
-            enableActiveFill: true,
-            cursorColor: mainBlackColor,
-            obscuringCharacter: '*',
+          CVPinCodeTextField(
             controller: viewModel.pinController,
-            pinTheme: PinTheme(
-              activeFillColor: mainGrayColor,
-              inactiveFillColor: mainGrayColor,
-              fieldHeight: SizeConfig.margin_padding_50,
-              fieldWidth: SizeConfig.margin_padding_24 * 1.8,
-              activeColor: mainGrayColor,
-              inactiveColor: mainGrayColor,
-              selectedColor: mainGrayColor,
-              selectedFillColor: mainGrayColor,
-              shape: PinCodeFieldShape.box,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            backgroundColor: Colors.transparent,
-            keyboardType: TextInputType.number,
-            animationDuration: const Duration(milliseconds: 300),
             onChanged: (value) => viewModel.verifyOtpApiCall(),
-            textStyle: const TextStyle(color: Colors.black),
-            appContext: context,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_50,

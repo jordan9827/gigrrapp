@@ -39,4 +39,14 @@ abstract class CandidateService extends ChopperService {
   Future<Response<BaseResponse>> acceptedGigsOfferApi(
     @Body() Map<String, dynamic> body,
   );
+
+  @Post(path: "candidates/update_job_status")
+  Future<Response<BaseResponse>> updateJobStatusCandidate(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "candidates/gigs_verify_otp")
+  Future<Response<BaseResponse>> gigsVerifyOTPCandidate(
+    @Body() Map<String, dynamic> body,
+  );
 }

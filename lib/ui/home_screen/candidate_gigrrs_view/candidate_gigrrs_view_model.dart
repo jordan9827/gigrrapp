@@ -26,8 +26,6 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     navigationService.navigateWithTransition(CandidateGigrrDetailView(data: e));
   }
 
-
-
   Future<void> fetchGigsRequest() async {
     setBusy(true);
     var result = await candidateRepo.getGigsRequest(await _getRequestForGig());
@@ -45,7 +43,7 @@ class CandidateGigrrsViewModel extends BaseViewModel {
 
   Future<void> acceptedGigsRequest(int id) async {
     pageController.nextPage(
-        duration: Duration(milliseconds: 100), curve: Curves.ease);
+        duration: Duration(seconds: 1), curve: Curves.easeInToLinear);
     var result = await candidateRepo.acceptedGigsRequest(id);
     result.fold((fail) {
       snackBarService.showSnackbar(message: fail.errorMsg);

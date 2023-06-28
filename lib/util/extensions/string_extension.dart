@@ -9,4 +9,8 @@ extension StringExtensions on String {
   String toPriceFormat([int p = 2]) {
     return "${double.parse(this).toStringAsFixed(p)}";
   }
+
+  String capitalize() {
+    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+  }
 }

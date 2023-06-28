@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/ui/widgets/empty_data_screen.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/candidate_roster_gigs_response.dart';
 import '../../../../data/network/dtos/gigs_accepted_response.dart';
@@ -125,33 +126,35 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     required CandidateGigsViewModel viewModel,
     required GigsAcceptedData gigs,
   }) {
-    var status = viewModel.getGigStatus(gigs.gigsRequestData, gigs.employerId);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    var status = viewModel.getGigStatus(gigs.gigsRequestData);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Divider(),
-        Text(
-          "Super Enterprise",
-          style: TSB.semiBoldLarge(
-            textColor: independenceColor,
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.margin_padding_5,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              gigs.businessData.businessName.capitalize(),
+              style: TSB.semiBoldLarge(
+                textColor: independenceColor,
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
             Text(
               status,
               style: TSB.regularSmall(
                 textColor: mainPinkColor,
               ),
             ),
-            if (viewModel.statusSlug == "sent-offer")
-              _buildAcceptOfferView(viewModel, gigs)
           ],
         ),
+        if (viewModel.statusSlug == "sent-offer")
+          _buildActionButton(
+            buttonText: "accept_offer",
+            onTap: () => viewModel.showAcceptOfferDialog(viewModel, gigs),
+          )
       ],
     );
   }
@@ -170,14 +173,12 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 );
               } else if (index < viewModel.itemCount) {
                 var gigs = viewModel.shortListGigsList[index];
+                var price =
+                    "₹ ${gigs.gigsRequestData.first.offerAmount.toPriceFormat(0)}/${gigs.priceCriteria}";
                 return MyGigsViewWidget(
                   title: gigs.gigName,
                   address: gigs.gigAddress,
-                  price: viewModel.price(
-                    from: gigs.fromAmount,
-                    to: gigs.toAmount,
-                    priceCriteria: gigs.priceCriteria,
-                  ),
+                  price: price,
                   startDate: gigs.gigsStartDate,
                   jobDuration: "${gigs.duration}",
                   bottomView: _buildShortListGigsStatusView(
@@ -194,34 +195,45 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     required CandidateGigsViewModel viewModel,
     required CandidateRosterData gigs,
   }) {
-    var status = viewModel.getGigStatus(gigs.gigsRequestData, gigs.employerId);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    var status = viewModel.getGigStatus(gigs.gigsRequestData);
+    var buttonText = viewModel.statusForShortList(gigs.gigsRequestData);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Divider(),
-        Text(
-          "Super Enterprise",
-          style: TSB.semiBoldLarge(
-            textColor: independenceColor,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              gigs.business.businessName.capitalize(),
+              style: TSB.semiBoldLarge(
+                textColor: independenceColor,
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
+            Text(
+              status,
+              style: TSB.regularSmall(
+                textColor: mainGreenColor,
+              ),
+            ),
+          ],
         ),
-        SizedBox(
-          height: SizeConfig.margin_padding_5,
-        ),
-        Text(
-          status,
-          style: TSB.regularSmall(
-            textColor: mainGreenColor,
-          ),
-        ),
+        _buildActionButton(
+          buttonText: buttonText,
+          onTap: () => viewModel.loadUpdateJobStatusApi(gigs, viewModel),
+        )
       ],
     );
   }
 
-  Widget _buildAcceptOfferView(
-      CandidateGigsViewModel viewModel, GigsAcceptedData gigs) {
+  Widget _buildActionButton({
+    required Function() onTap,
+    String buttonText = "",
+  }) {
     return InkWell(
-      onTap: () => viewModel.showAcceptOfferDialog(viewModel, gigs),
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(
           horizontal: SizeConfig.margin_padding_17,
@@ -234,7 +246,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
           ),
         ),
         child: Text(
-          "accept_offer".tr(),
+          buttonText.tr(),
           style: TSB.regularVSmall(textColor: mainPinkColor),
         ),
       ),

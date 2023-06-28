@@ -71,15 +71,15 @@ class GigsAcceptedData with _$GigsAcceptedData {
     @JsonKey(name: "price_criteria", defaultValue: "") String priceCriteria,
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
     @JsonKey(name: "skills") List<GigrrTypeCategoryData> skillsTypeCategoryList,
-    // @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
-    //     GetBusinessesData businessData,
+    @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
+        GetBusinessesData businessData,
     @JsonKey(name: "gigs_request", defaultValue: [])
         List<GigsRequestData> gigsRequestData,
     @JsonKey(name: "duration", defaultValue: 0) int duration,
     @JsonKey(name: "gender", defaultValue: "") String gender,
     @JsonKey(name: "state_id", defaultValue: 0) int stateId,
     @JsonKey(name: "roster_count", defaultValue: 0) int rosterCount,
-    @JsonKey(name: "city_id") int cityId,
+    @JsonKey(name: "city_id", defaultValue: 0) int cityId,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "created_at", defaultValue: "") String createdAt,
   ) = _GigsAcceptedData;

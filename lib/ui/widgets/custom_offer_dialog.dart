@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../../../data/network/dtos/gigs_accepted_response.dart';
-import '../../../../../data/network/dtos/payment_history_response.dart';
 import '../../../../../others/constants.dart';
 import '../../../../../others/loading_button.dart';
 import '../../../../../util/others/image_constants.dart';
@@ -9,16 +7,14 @@ import '../../../../../util/others/text_styles.dart';
 
 import 'package:easy_localization/easy_localization.dart';
 
-import '../candidate_gigs_view_model.dart';
-
-class AcceptOfferDialogView extends StatefulWidget {
+class CustomOfferDialog extends StatefulWidget {
   final Function onTap;
   final bool isLoading;
   final String title;
   final String buttonText;
   final String subTitle;
   final String cancel;
-  const AcceptOfferDialogView({
+  const CustomOfferDialog({
     required this.onTap,
     this.title = "",
     this.subTitle = "",
@@ -29,10 +25,10 @@ class AcceptOfferDialogView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<AcceptOfferDialogView> createState() => AcceptOfferDialogViewState();
+  State<CustomOfferDialog> createState() => CustomOfferDialogState();
 }
 
-class AcceptOfferDialogViewState extends State<AcceptOfferDialogView> {
+class CustomOfferDialogState extends State<CustomOfferDialog> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
