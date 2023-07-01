@@ -28,6 +28,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   final TextEditingController dobController = TextEditingController();
   final TextEditingController pinCodeController = TextEditingController();
   final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController costCriteriaController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   int experienceYear = 1;
   int experienceMonth = 0;
@@ -39,14 +40,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
 
   bool get loading => _loading;
   DateTime selectedDate = DateTime.now();
-  List<String> costCriteriaList = [
-    "Hourly",
-    "Daily",
-    "Weekly",
-    "Monthly",
-    "Total"
-  ];
-  String costCriteriaValue = "";
   bool isVisible = false;
 
   List<String> genderList = ["male", "female", "other"];
@@ -100,17 +93,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void onVisibleAction() {
-    isVisible = !isVisible;
-    notifyListeners();
-  }
-
-  void onCostCriteriaSelect(String? val) {
-    costCriteriaValue = val!;
-    print("onCostCriteriaSelect :: " + costCriteriaValue);
-    notifyListeners();
-  }
-
   void setGender(String? val) {
     initialGender = val!;
     print("initialGender $initialGender");
@@ -157,7 +139,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   String get payRangeText =>
-      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/day";
+      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${costCriteriaController.text}";
 
   void navigationToRoleFormView() {
     if (validationPersonalInfo()) {
@@ -291,20 +273,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   void candidateCompleteProfileApiCall() async {
-    setBusy(true);
-    final response = await authRepo.candidatesCompleteProfile(
-      await _getRequestForCompleteCandidateProfile(),
-    );
-    response.fold(
-      (fail) {
-        snackBarService.showSnackbar(message: fail.errorMsg);
-        setBusy(false);
-      },
-      (res) async {
-        await navigationToCandidateComplete(res);
-        setBusy(false);
-      },
-    );
+    // setBusy(true);
+    await _getRequestForCompleteCandidateProfile();
     notifyListeners();
   }
 
@@ -345,12 +315,14 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['experience_month'] = "$experienceMonth";
     request['price_from'] = currentRangeValues.start.toString();
     request['price_to'] = currentRangeValues.end.toString();
-    request['price_criteria'] = costCriteriaValue.toLowerCase();
+    request['price_criteria'] = costCriteriaController.text.toLowerCase();
     request['skills'] = gigrrTypeController.text;
     request['avaliblity'] = myAvailableSelectList.join(",");
     request['shift'] = initialShift.toLowerCase();
     request['images'] = imageList!.join(',');
     request['profile_image'] = imageList!.first;
+
+    print(" body --------$request");
     return request;
   }
 }

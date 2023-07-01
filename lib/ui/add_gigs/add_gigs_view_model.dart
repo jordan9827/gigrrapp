@@ -1,9 +1,11 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
+import '../../data/network/dtos/get_businesses_response.dart';
 import '../../domain/reactive_services/business_type_service.dart';
 import '../../domain/repos/auth_repos.dart';
 import '../../domain/repos/business_repos.dart';
@@ -24,14 +26,19 @@ class AddGigsViewModel extends BaseViewModel {
   TextEditingController gigrrNameController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   TextEditingController priceTypeController = TextEditingController();
+  List<GetBusinessesData> businessesList = <GetBusinessesData>[];
+
   DateTime selectedDate = DateTime.now();
   var timeNow = DateFormat('hh:mm a').format(DateTime.now());
   var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  RangeValues currentRangeValues = const RangeValues(100, 1000);
 
   TimeOfDay selectedTime = const TimeOfDay(hour: 00, minute: 00);
   final authRepo = locator<Auth>();
   PageController controller = PageController();
   int pageIndex = 0;
+  bool isVisible = false;
+  String groupValue = "";
 
   AddGigsViewModel() {
     setInitialDataTime();
@@ -43,10 +50,43 @@ class AddGigsViewModel extends BaseViewModel {
     toTimeController.text = timeNow;
     formDateController.text = dateNow;
     toDateController.text = dateNow;
-    priceTypeController.text = "price";
-    businessTypeController.text =
-        businessTypeService.businessTypeList.first.id.toString();
+    priceTypeController.text = "hourly";
+    refreshScreen();
     notifyListeners();
+  }
+
+  Future<void> refreshScreen() async {
+    businessesList = [];
+    await fetchAllBusinessesApi();
+    notifyListeners();
+  }
+
+  void onItemSelect(String? val) {
+    groupValue = val!;
+    print(val);
+    onSelectId();
+    notifyListeners();
+  }
+
+  void onVisibleAction() {
+    isVisible = !isVisible;
+    notifyListeners();
+  }
+
+  void setPayRange(RangeValues? value) {
+    currentRangeValues = value!;
+    notifyListeners();
+  }
+
+  String get payRangeText =>
+      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${priceTypeController.text}";
+  void onSelectId() {
+    for (var i in businessesList) {
+      if (i.businessName == groupValue) {
+        businessTypeController.text = i.id.toString();
+        notifyListeners();
+      }
+    }
   }
 
   bool onWillPop() {
@@ -67,7 +107,6 @@ class AddGigsViewModel extends BaseViewModel {
   }
 
   void navigationToNextPage() {
-    print("navigationToNextPage ${gigrrTypeController.text}");
     if (validateToGigrrInfo()) {
       controller.animateToPage(
         1,
@@ -201,8 +240,8 @@ class AddGigsViewModel extends BaseViewModel {
           setBusy(false);
         },
         (gigs) async {
+          navigationService.back();
           snackBarService.showSnackbar(message: gigs.message);
-          onWillPop();
           gigrrNameController.clear();
           priceController.clear();
           notifyListeners();
@@ -213,18 +252,35 @@ class AddGigsViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> fetchAllBusinessesApi() async {
+    setBusy(true);
+    final response = await businessRepo.fetchAllBusinessesApi();
+    response.fold(
+      (fail) {
+        snackBarService.showSnackbar(message: fail.errorMsg);
+        setBusy(false);
+      },
+      (response) async {
+        businessesList = response.businessesList;
+        notifyListeners();
+        setBusy(false);
+      },
+    );
+    notifyListeners();
+  }
+
   Future<Map<String, String>> _getRequestForAddGigs() async {
     Map<String, String> request = Map();
     request['business_id'] = businessTypeController.text;
     request['gigrr_type'] = gigrrTypeController.text;
-    request['gig_name'] = gigrrNameController.text;
+    request['gig_name'] = gigrrNameController.text.capitalize();
     request['start_date'] = formDateController.text;
     request['end_date'] = toDateController.text;
     request['start_time'] = formTimeController.text;
     request['end_time'] = toTimeController.text;
-    request['price_criteria'] = priceTypeController.text;
-    request['from_amount'] = priceController.text.toString();
-    request['to_amount'] = priceController.text.toString();
+    request['price_criteria'] = priceTypeController.text.toLowerCase();
+    request['from_amount'] = currentRangeValues.start.toString();
+    request['to_amount'] = currentRangeValues.end.toString();
 
     log("getRequestForCompleteProfile :: $request");
     return request;

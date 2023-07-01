@@ -7,14 +7,12 @@ import '../../../others/loading_button.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 import '../../widgets/cvm_text_form_field.dart';
+import 'package:stacked/stacked.dart';
 
-class AddGigsOperationalInfoScreenView extends StatelessWidget {
-  final AddGigsViewModel viewModel;
-  const AddGigsOperationalInfoScreenView({Key? key, required this.viewModel})
-      : super(key: key);
-
+class AddGigsOperationalInfoScreenView
+    extends ViewModelWidget<AddGigsViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, AddGigsViewModel viewModel) {
     return _buildFormView(viewModel, context);
   }
 
@@ -33,6 +31,7 @@ class AddGigsOperationalInfoScreenView extends StatelessWidget {
           CVMTextFormField(
             title: "from_date",
             hintForm: "i.e. 18 Feb 2023",
+            readOnly: true,
             controller: viewModel.formDateController,
             suffixIcon: _buildImage(
               image: ic_calender_blck,
@@ -46,6 +45,7 @@ class AddGigsOperationalInfoScreenView extends StatelessWidget {
           CVMTextFormField(
             title: "to_date",
             hintForm: "i.e. 18 Feb 2023",
+            readOnly: true,
             controller: viewModel.toDateController,
             suffixIcon: _buildImage(
               image: ic_calender_blck,
@@ -69,6 +69,7 @@ class AddGigsOperationalInfoScreenView extends StatelessWidget {
           CVMTextFormField(
             title: "from_time",
             hintForm: "i.e. 08:00 AM",
+            readOnly: true,
             controller: viewModel.formTimeController,
             suffixIcon: _buildImage(
               image: ic_clock_blck,
@@ -82,6 +83,7 @@ class AddGigsOperationalInfoScreenView extends StatelessWidget {
           CVMTextFormField(
             title: "to_time",
             hintForm: "i.e. 08:00 AM",
+            readOnly: true,
             controller: viewModel.toTimeController,
             suffixIcon: _buildImage(
               image: ic_clock_blck,

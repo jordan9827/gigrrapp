@@ -18,15 +18,40 @@ class AccountImpl extends AccountRepo {
   final log = getLogger("AccountImpl");
 
   @override
-  Future<Either<Failure, PaymentHistoryResponseData>> candidatePaymentHistory(
-      {required Map<String, dynamic> data, required int page}) async {
+  Future<Either<Failure, PaymentHistoryResponseData>> candidatePaymentHistory({
+    required Map<String, dynamic> data,
+    required int page,
+  }) async {
     try {
       final response = await accountService.candidatePaymentHistory(data, page);
 
       if (response.body == null) {
         throw Exception(response.error);
       }
-      // log.i("saveChat Response ${response.body}");
+      log.i("PaymentHistory Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, PaymentHistoryResponseData>> employerPaymentHistory({
+    required Map<String, dynamic> data,
+    required int page,
+  }) async {
+    try {
+      final response = await accountService.employerPaymentHistory(data, page);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("PaymentHistory Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res.data);
       }, error: (error) {

@@ -28,8 +28,8 @@ class AddGigsScreenView extends StatelessWidget {
                   onPageChanged: viewModel.setPageIndex,
                   controller: viewModel.controller,
                   children: [
-                    AddGigsInfoScreenView(viewModel: viewModel),
-                    AddGigsOperationalInfoScreenView(viewModel: viewModel)
+                    AddGigsInfoScreenView(),
+                    AddGigsOperationalInfoScreenView()
                   ],
                 ),
               ),

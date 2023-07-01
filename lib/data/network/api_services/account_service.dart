@@ -22,6 +22,11 @@ abstract class AccountService extends ChopperService {
     @Body() Map<String, dynamic> body,
     @Query('page') int page,
   );
+  @Post(path: "gigs-payment-history")
+  Future<Response<PaymentHistoryResponse>> employerPaymentHistory(
+    @Body() Map<String, dynamic> body,
+    @Query('page') int page,
+  );
 
   @Get(path: "privacy-policy")
   Future<Response<WebViewResponse>> privacyPolicyApi();

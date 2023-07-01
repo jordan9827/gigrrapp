@@ -6,17 +6,18 @@ import '../../../others/loading_button.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 import '../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
+import '../../widgets/custom_drop_down.dart';
+import '../../widgets/custom_price_criteria_view/price_criteria_view.dart';
 import '../../widgets/custom_price_radio_view/price_radio_view.dart';
 import '../../widgets/cvm_text_form_field.dart';
 import '../../business_type_drop_down_screen/business_type_drop_down_view.dart';
+import 'package:stacked/stacked.dart';
 
-class AddGigsInfoScreenView extends StatelessWidget {
-  final AddGigsViewModel viewModel;
-  const AddGigsInfoScreenView({Key? key, required this.viewModel})
-      : super(key: key);
+import '../../widgets/range_filter_view.dart';
 
+class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, AddGigsViewModel viewModel) {
     return WillPopScope(
       onWillPop: () => Future.sync(viewModel.onWillPop),
       child: _buildFormView(viewModel),
@@ -33,12 +34,23 @@ class AddGigsInfoScreenView extends StatelessWidget {
             controller: viewModel.gigrrNameController,
             hintForm: "i.e. Kirana Shop Delivery Boy",
           ),
-          BusinessTypeDropDownView(
-            controller: viewModel.businessTypeController,
-          ),
+          _buildBusinessTypeView(viewModel),
           GigrrTypeDropDownView(
             title: "gigrr_type",
             controller: viewModel.gigrrTypeController,
+          ),
+          Container(
+            alignment: Alignment.topRight,
+            padding: EdgeInsets.only(
+              bottom: SizeConfig.margin_padding_13,
+              top: SizeConfig.margin_padding_8,
+            ),
+            child: Text(
+              "select_multi_up_3".tr(),
+              style: TSB.regularVSmall(
+                textColor: textRegularColor,
+              ),
+            ),
           ),
           Text(
             "i_will_to_pay".tr(),
@@ -51,16 +63,16 @@ class AddGigsInfoScreenView extends StatelessWidget {
           SizedBox(
             height: SizeConfig.margin_padding_5,
           ),
-          CVMTextFormField(
-            title: "",
-            hintForm: "i.e. ₹ 400",
-            keyboardType: TextInputType.number,
-            controller: viewModel.priceController,
+          PriceRangeFilterView(
+            rangeValues: viewModel.currentRangeValues,
+            onChanged: viewModel.setPayRange,
+            rangeText: viewModel.payRangeText,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_29,
           ),
           LoadingButton(
+            loading: viewModel.isBusy,
             action: viewModel.navigationToNextPage,
             title: "next_add_operation".tr(),
           ),
@@ -72,8 +84,36 @@ class AddGigsInfoScreenView extends StatelessWidget {
     );
   }
 
+  Widget _buildBusinessTypeView(AddGigsViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+          child: Text(
+            "business_type".tr(),
+            style: TSB.regularSmall(),
+          ),
+        ),
+        CustomDropDownWidget(
+          hintText: "i.e. Shopping Store",
+          itemList:
+              viewModel.businessesList.map((e) => e.businessName).toList(),
+          visible: viewModel.isVisible,
+          groupValue: viewModel.groupValue,
+          onVisible: viewModel.onVisibleAction,
+          selectSingleItemsAction: viewModel.onItemSelect,
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_13,
+        )
+      ],
+    );
+  }
+
   Widget _buildSetPriceView(AddGigsViewModel viewModel) {
-    return CustomPriceRadioButtonView(
+    return PriceCriteriaView(
+      title: false,
       controller: viewModel.priceTypeController,
     );
   }

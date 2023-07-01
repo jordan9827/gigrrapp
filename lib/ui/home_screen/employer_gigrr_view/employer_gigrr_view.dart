@@ -27,6 +27,7 @@ class EmployerGigrrsView extends StatelessWidget {
                 (e) {
                   return GiggrCardWidget(
                     title: e.firstName,
+                    profile: "",
                     price: viewModel.price(e),
                     gigrrName: 'apply_now',
                     skillList: e.employeeSkills.map((e) => e.name).toList(),

@@ -53,43 +53,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
     return true;
   }
 
-  // void sentVerifyOTP(String mobile) async {
-  //   setBusy(true);
-  //   await firebaseAuth.verifyPhoneNumber(
-  //     phoneNumber: mobile,
-  //     verificationCompleted: (PhoneAuthCredential credential) {},
-  //     verificationFailed: (FirebaseAuthException e) {
-  //       snackBarService.showSnackbar(message: e.toString());
-  //     },
-  //     codeSent: (String verificationId, int? resendToken) {
-  //       this.isVerificationId = verificationId;
-  //     },
-  //     codeAutoRetrievalTimeout: (String verificationId) {},
-  //   );
-  //   setBusy(false);
-  //   notifyListeners();
-  // }
-  //
-  // void verifyOTPCall() async {
-  //   if (validateInput()) {
-  //     print("isVerificationId $isVerificationId");
-  //     setBusy(true);
-  //     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-  //       verificationId: isVerificationId,
-  //       smsCode: pinController.text,
-  //     );
-  //     try {
-  //       var result = await firebaseAuth.signInWithCredential(credential);
-  //       print("firebaseAuth result " + result.toString());
-  //       if (result.user != null) {
-  //         await verifyUserToServerApi();
-  //       }
-  //     } on FirebaseAuthException catch (_, e) {
-  //       snackBarService.showSnackbar(message: e.toString());
-  //       setBusy(false);
-  //     }
-  //   }
-  // }
   void init() async {
     await sendOTP();
     startCountDownTimer();
@@ -158,6 +121,8 @@ class OTPVerifyScreenModel extends BaseViewModel {
       },
       (res) {
         print("verifyOTP ::::-----------------");
+        setBusy(true);
+
         navigationService.back(
           result: {
             "isCheck": true,

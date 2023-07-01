@@ -13,6 +13,7 @@ class CandidateGigrrsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.fetchGigsRequest(),
       viewModelBuilder: () => CandidateGigrrsViewModel(),
       builder: (context, viewModel, child) {
         return Scaffold(
@@ -29,9 +30,14 @@ class CandidateGigrrsView extends StatelessWidget {
                 (e) {
                   if (viewModel.gigsData.isEmpty) {
                     return EmptyDataScreenView();
-                  } else
+                  } else {
+                    String profile = "";
+                    for (var i in e.business.businessesImage) {
+                      profile = i.imageUrl;
+                    }
                     return GiggrCardWidget(
                       title: e.gigName,
+                      profile: profile,
                       price: viewModel.price(e),
                       gigrrName: 'apply_now',
                       isCandidate: true,
@@ -42,6 +48,7 @@ class CandidateGigrrsView extends StatelessWidget {
                       acceptedGigsRequest: () =>
                           viewModel.acceptedGigsRequest(e.id),
                     );
+                  }
                 },
               ).toList(),
             ),

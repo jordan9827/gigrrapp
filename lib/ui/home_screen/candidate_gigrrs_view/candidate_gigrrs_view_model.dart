@@ -1,3 +1,4 @@
+import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
@@ -12,6 +13,7 @@ class CandidateGigrrsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
+  final fCMService = locator<FCMService>();
 
   final PageController pageController = PageController();
   final user = locator<UserAuthResponseData>();
@@ -19,11 +21,13 @@ class CandidateGigrrsViewModel extends BaseViewModel {
   List<CandidateGigsRequestData> gigsData = [];
 
   CandidateGigrrsViewModel() {
-    fetchGigsRequest();
+    fCMService.listenForegroundMessage((p0) => fetchGigsRequest());
   }
 
   void navigateToGigrrDetailScreen(CandidateGigsRequestData e) {
-    navigationService.navigateWithTransition(CandidateGigrrDetailView(data: e));
+    navigationService.navigateWithTransition(
+      CandidateGigrrDetailView(data: e),
+    );
   }
 
   Future<void> fetchGigsRequest() async {

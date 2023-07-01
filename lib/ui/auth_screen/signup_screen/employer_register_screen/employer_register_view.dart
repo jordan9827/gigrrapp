@@ -35,12 +35,8 @@ class EmployerRegisterScreenView extends StatelessWidget {
                   onPageChanged: viewModel.setPageIndex,
                   controller: viewModel.controller,
                   children: [
-                    EmployerPersonalInfoFormView(
-                      viewModel: viewModel,
-                    ),
-                    EmployerBusinessInfoFormView(
-                      viewModel: viewModel,
-                    )
+                    EmployerPersonalInfoFormView(),
+                    EmployerBusinessInfoFormView()
                   ],
                 ),
               ),

@@ -89,6 +89,7 @@ class LoginViewViewModel extends BaseViewModel {
 
   void _navigationToStatusLogin(String value) {
     var employer = (user.roleId == "3" ? true : false);
+    print("_navigationToStatusLogin $employer");
     switch (value) {
       case "otp-verify":
         if (employer) {
@@ -107,7 +108,7 @@ class LoginViewViewModel extends BaseViewModel {
           );
         }
         break;
-      case "kyc-completed":
+      case "completed":
         navigationService.clearStackAndShow(Routes.homeView);
         break;
       case "profile-completed":

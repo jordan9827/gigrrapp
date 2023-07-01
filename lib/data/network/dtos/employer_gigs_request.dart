@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
 
+import 'get_businesses_response.dart';
 import 'gigrr_type_response.dart';
 
 part 'employer_gigs_request.freezed.dart';
@@ -65,6 +66,8 @@ class EmployerGigsRequestData with _$EmployerGigsRequestData {
     @JsonKey(name: "bank_account_status", defaultValue: "")
         String bankAccountStatus,
     @JsonKey(name: "age", defaultValue: 0) int age,
+    @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
+        GetBusinessesData business,
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
     @JsonKey(name: "employee_images", defaultValue: [])
         List<EmployerImageList> employerImageList,

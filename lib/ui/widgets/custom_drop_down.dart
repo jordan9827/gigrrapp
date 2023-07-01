@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 
@@ -88,7 +89,7 @@ class CustomDropDownWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              e,
+                              e.capitalize(),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: TSB.regularSmall(),
@@ -162,7 +163,7 @@ class CustomDropDownWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  element,
+                  element.capitalize(),
                   style: TextStyle(color: Colors.white),
                 ),
                 if (enableMultiSelected)

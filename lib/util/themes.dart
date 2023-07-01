@@ -8,6 +8,9 @@ final lightTheme = ThemeData.light().copyWith(
     backgroundColor: mainPinkColor,
     actionTextColor: mainWhiteColor,
   ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: independenceColor,
+  ),
   colorScheme: ColorScheme.light(
     background: Colors.white,
   ),
@@ -19,6 +22,9 @@ final darkTheme = ThemeData.dark().copyWith(
   snackBarTheme: SnackBarThemeData(
     backgroundColor: mainPinkColor,
     actionTextColor: mainWhiteColor,
+  ),
+  textSelectionTheme: TextSelectionThemeData(
+    cursorColor: independenceColor,
   ),
   colorScheme: ColorScheme.light(
     background: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
+import 'get_businesses_response.dart';
 import 'gigrr_type_response.dart';
 import 'my_gigs_response.dart';
 
@@ -71,8 +72,8 @@ class CandidateGigsRequestData with _$CandidateGigsRequestData {
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
     @JsonKey(name: "skills", defaultValue: [])
         List<GigrrTypeCategoryData> skillsCategoryList,
-    // @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
-    //     GetBusinessesData businessList,
+    @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
+        GetBusinessesData business,
     @JsonKey(name: "gigs_request", defaultValue: [])
         List<GigsRequestData> gigsRequestData,
     @JsonKey(name: "duration", defaultValue: 0) int duration,

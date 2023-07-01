@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -187,8 +185,11 @@ class CandidateGigsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> updateJobStatus(CandidateRosterData gigs, status,
-      CandidateGigsViewModel viewModel) async {
+  Future<void> updateJobStatus(
+    CandidateRosterData gigs,
+    status,
+    CandidateGigsViewModel viewModel,
+  ) async {
     // navigationService.back();
     setBusy(true);
     var result = await candidateRepo.updateJobStatus(
@@ -288,12 +289,6 @@ class CandidateGigsViewModel extends BaseViewModel {
     return status;
   }
 
-  @override
-  void dispose() {
-    scrollController.dispose();
-    super.dispose();
-  }
-
   Future<Map<String, String>> _getRequestForCandidate({
     int gigsId = 0,
     String status = "",
@@ -313,5 +308,11 @@ class CandidateGigsViewModel extends BaseViewModel {
     request['otp'] = otpController.text;
     request['status'] = status;
     return request;
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

@@ -5,21 +5,20 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
+import 'package:stacked/stacked.dart';
 import '../../../../../others/comman_util.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
 import '../../../../widgets/custom_drop_down.dart';
+import '../../../../widgets/custom_price_criteria_view/price_criteria_view.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
+import '../../../../widgets/range_filter_view.dart';
 import '../candidate_register_view_model.dart';
 
-class CandidateRoleFormView extends StatelessWidget {
-  final CandidateRegisterViewModel viewModel;
-
-  const CandidateRoleFormView({Key? key, required this.viewModel})
-      : super(key: key);
-
+class CandidateRoleFormView
+    extends ViewModelWidget<CandidateRegisterViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, CandidateRegisterViewModel viewModel) {
     SizeConfig.init(context);
     return LoadingScreen(
       loading: viewModel.loading,
@@ -40,7 +39,12 @@ class CandidateRoleFormView extends StatelessWidget {
             title: "I Can Be (*select multiple)",
             controller: viewModel.gigrrTypeController,
           ),
-          _buildCostCriteriaView(viewModel),
+          SizedBox(
+            height: SizeConfig.margin_padding_13,
+          ),
+          PriceCriteriaView(
+            controller: viewModel.costCriteriaController,
+          ),
           _buildRangeSliderView(viewModel),
           CVMTextFormField(
             title: "Total Experience",
@@ -60,11 +64,11 @@ class CandidateRoleFormView extends StatelessWidget {
           ),
           _buildCustomView(
             title: "i_am_avail",
-            child: _buildMyAvailableView(),
+            child: _buildMyAvailableView(viewModel),
           ),
           _buildCustomView(
             title: "select_shift",
-            child: _buildSelectShiftView(),
+            child: _buildSelectShiftView(viewModel),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_35,
@@ -143,71 +147,10 @@ class CandidateRoleFormView extends StatelessWidget {
   }
 
   Widget _buildRangeSliderView(CandidateRegisterViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildTitle("Select Cost"),
-            Text(
-              viewModel.payRangeText,
-              style: TSB.regularVSmall(textColor: textRegularColor),
-            )
-          ],
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-            bottom: SizeConfig.margin_padding_8,
-            top: SizeConfig.margin_padding_3,
-          ),
-          child: SliderTheme(
-            data: SliderThemeData(
-              rangeTickMarkShape: const RoundRangeSliderTickMarkShape(
-                tickMarkRadius: 0,
-              ),
-              valueIndicatorColor: Colors.pink,
-              overlayShape: SliderComponentShape.noThumb,
-            ),
-            child: RangeSlider(
-              activeColor: mainPinkColor,
-              inactiveColor: mainGrayColor,
-              values: viewModel.currentRangeValues,
-              min: 0,
-              max: 1000,
-              divisions: 10,
-              labels: RangeLabels(
-                viewModel.currentRangeValues.start.round().toString(),
-                viewModel.currentRangeValues.end.round().toString(),
-              ),
-              onChanged: viewModel.setPayRange,
-            ),
-          ),
-        ),
-        SizedBox(
-          height: SizeConfig.margin_padding_10,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCostCriteriaView(CandidateRegisterViewModel viewModel) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildTitle("Cost Criteria"),
-        CustomDropDownWidget(
-          hintText: "i.e. hourly",
-          itemList: viewModel.costCriteriaList,
-          visible: viewModel.isVisible,
-          groupValue: viewModel.costCriteriaValue,
-          onVisible: viewModel.onVisibleAction,
-          selectSingleItemsAction: viewModel.onCostCriteriaSelect,
-        ),
-        SizedBox(
-          height: SizeConfig.margin_padding_13,
-        )
-      ],
+    return PriceRangeFilterView(
+      rangeValues: viewModel.currentRangeValues,
+      onChanged: viewModel.setPayRange,
+      rangeText: viewModel.payRangeText,
     );
   }
 
@@ -221,7 +164,7 @@ class CandidateRoleFormView extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectShiftView() {
+  Widget _buildSelectShiftView(CandidateRegisterViewModel viewModel) {
     return Row(
       children: viewModel.shiftList
           .map(
@@ -257,7 +200,7 @@ class CandidateRoleFormView extends StatelessWidget {
     );
   }
 
-  Widget _buildMyAvailableView() {
+  Widget _buildMyAvailableView(CandidateRegisterViewModel viewModel) {
     var _list = viewModel.myAvailableList;
     return Row(
       children: _list

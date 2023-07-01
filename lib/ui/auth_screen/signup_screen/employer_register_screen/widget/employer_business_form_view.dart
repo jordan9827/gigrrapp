@@ -4,19 +4,15 @@ import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/business_type_drop_down_screen/business_type_drop_down_view.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
+import 'package:stacked/stacked.dart';
 import '../../../../widgets/custom_image_picker/custom_image_picker_view.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
-import '../../../../widgets/map_box/google_map_box_view.dart';
 import '../employer_register_view_model.dart';
 
-class EmployerBusinessInfoFormView extends StatelessWidget {
-  final EmployerRegisterViewModel viewModel;
-
-  const EmployerBusinessInfoFormView({Key? key, required this.viewModel})
-      : super(key: key);
-
+class EmployerBusinessInfoFormView
+    extends ViewModelWidget<EmployerRegisterViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, EmployerRegisterViewModel viewModel) {
     SizeConfig.init(context);
     return LoadingScreen(
       loading: viewModel.loading,

@@ -93,7 +93,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     if (status == "accepted") {
       return _buildAcceptedCandidateView(viewModel: viewModel, gigs: gigs);
     } else if (status == "received-offer" || status == "sent-offer") {
-      return _buildShortListCandidateView(gigs: gigs);
+      return _buildShortListCandidateView(gigs: gigs, viewModel: viewModel);
     } else
       return SizedBox();
   }
@@ -125,19 +125,29 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     );
   }
 
-  Widget _buildShortListCandidateView({required MyGigsData gigs}) {
+  Widget _buildShortListCandidateView({
+    required MyGigsData gigs,
+    required EmployerGigsViewModel viewModel,
+  }) {
     return Row(
       children: [
         Text(
-          "05 Candidate shortlisted.",
-          style: TSB.regularSmall(textColor: independenceColor),
+          "05 " + "candidate_shortlisted".tr(),
+          style: TSB.regularSmall(
+            textColor: independenceColor,
+          ),
         ),
         SizedBox(
           width: SizeConfig.margin_padding_3,
         ),
-        Text(
-          "See Details",
-          style: TSB.regularSmall(textColor: mainPinkColor),
+        InkWell(
+          onTap: () => viewModel.navigationToShortListedDetailView(gigs),
+          child: Text(
+            "see_details".tr(),
+            style: TSB.regularSmall(
+              textColor: mainPinkColor,
+            ),
+          ),
         ),
       ],
     );

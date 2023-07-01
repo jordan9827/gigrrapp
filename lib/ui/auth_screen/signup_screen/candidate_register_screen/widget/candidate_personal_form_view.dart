@@ -6,21 +6,16 @@ import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
+import 'package:stacked/stacked.dart';
 import '../../../../../util/others/image_constants.dart';
 import '../../../../widgets/custom_image_picker/custom_image_picker_view.dart';
 import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import '../candidate_register_view_model.dart';
 
-class CandidatePersonalInfoFormView extends StatelessWidget {
-  final CandidateRegisterViewModel viewModel;
-
-  const CandidatePersonalInfoFormView({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
-
+class CandidatePersonalInfoFormView
+    extends ViewModelWidget<CandidateRegisterViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, CandidateRegisterViewModel viewModel) {
     SizeConfig.init(context);
     return LoadingScreen(
       loading: viewModel.loading,

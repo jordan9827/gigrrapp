@@ -223,4 +223,26 @@ class BusinessImpl extends BusinessRepo {
       return Left(e.handleException());
     }
   }
+
+  @override
+  Future<Either<Failure, BaseResponse>> shortListedCandidate(
+    Map<String, dynamic> body,
+  ) async {
+    try {
+      final response = await businessService.shortListedCandidateApi(body);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      // log.i("shortListedCandidate Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
 }

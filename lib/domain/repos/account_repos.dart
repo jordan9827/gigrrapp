@@ -16,8 +16,15 @@ abstract class AccountRepo {
 
   Future<Either<Failure, ChatResponseData>> saveChat(Map<String, dynamic> data);
 
-  Future<Either<Failure, PaymentHistoryResponseData>> candidatePaymentHistory(
-      {required Map<String, dynamic> data, required int page});
+  Future<Either<Failure, PaymentHistoryResponseData>> candidatePaymentHistory({
+    required Map<String, dynamic> data,
+    required int page,
+  });
+
+  Future<Either<Failure, PaymentHistoryResponseData>> employerPaymentHistory({
+    required Map<String, dynamic> data,
+    required int page,
+  });
 
   Future<Either<Failure, GetChatResponseData>> getChat();
 

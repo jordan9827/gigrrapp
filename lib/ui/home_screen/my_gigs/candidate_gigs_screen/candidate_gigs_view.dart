@@ -5,7 +5,6 @@ import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/candidate_roster_gigs_response.dart';
 import '../../../../data/network/dtos/gigs_accepted_response.dart';
-import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/comman_util.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/constants.dart';
@@ -66,6 +65,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
           body: LoadingScreen(
             loading: viewModel.isBusy,
             child: RefreshIndicator(
+              color: independenceColor,
               onRefresh: viewModel.refreshScreen,
               child: _buildCandidateView(viewModel),
             ),
@@ -117,6 +117,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                   ),
                 );
               }
+              return SizedBox();
             },
           )
         : EmptyDataScreenView();
@@ -153,7 +154,10 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
         if (viewModel.statusSlug == "sent-offer")
           _buildActionButton(
             buttonText: "accept_offer",
-            onTap: () => viewModel.showAcceptOfferDialog(viewModel, gigs),
+            onTap: () => viewModel.showAcceptOfferDialog(
+              viewModel,
+              gigs,
+            ),
           )
       ],
     );
@@ -187,6 +191,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                   ),
                 );
               }
+              return SizedBox();
             })
         : EmptyDataScreenView();
   }

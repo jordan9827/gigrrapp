@@ -65,8 +65,6 @@ class PaymentHistoryData with _$PaymentHistoryData {
     @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "currency", defaultValue: "") String currency,
     @JsonKey(name: "transaction_id", defaultValue: "") String transactionId,
-    @JsonKey(name: "skills", defaultValue: [])
-        List<GigrrTypeCategoryData> skillsTypeCategoryList,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "employer", defaultValue: UserResponse.getEmptyUserResponse)
         UserResponse employer,
@@ -88,17 +86,17 @@ class UserResponse with _$UserResponse {
     @JsonKey(name: "role_id", defaultValue: "") String roleId,
     @JsonKey(name: "first_name", defaultValue: "") String firstName,
     @JsonKey(name: "last_name", defaultValue: "") String lastName,
-    @JsonKey(name: "country_code", defaultValue: "") String countryCode,
-    @JsonKey(name: "email", defaultValue: "") String email,
-    @JsonKey(name: "mobile", defaultValue: "") String mobile,
-    @JsonKey(name: "rating", defaultValue: 0.0) double rating,
-    @JsonKey(name: "age", defaultValue: "") String age,
-    @JsonKey(name: "dob", defaultValue: "") String dob,
-    @JsonKey(name: "longitude", defaultValue: "") String longitude,
-    @JsonKey(name: "latitude", defaultValue: "") String latitude,
+    // @JsonKey(name: "country_code", defaultValue: "") String countryCode,
+    // @JsonKey(name: "email", defaultValue: "") String email,
+    // @JsonKey(name: "mobile", defaultValue: "") String mobile,
+    // @JsonKey(name: "rating", defaultValue: 0.0) double rating,
+    // @JsonKey(name: "age", defaultValue: "") String age,
+    // @JsonKey(name: "dob", defaultValue: "") String dob,
+    // @JsonKey(name: "longitude", defaultValue: "") String longitude,
+    // @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "profile_image", defaultValue: "") String profileImage,
-    @JsonKey(name: "gender", defaultValue: "") String gender,
+    // @JsonKey(name: "gender", defaultValue: "") String gender,
   ) = _UserResponse;
 
   static getEmptyUserResponse() {

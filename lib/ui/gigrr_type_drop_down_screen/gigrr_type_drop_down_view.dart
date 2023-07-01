@@ -35,9 +35,7 @@ class GigrrTypeDropDownView extends StatelessWidget {
             onMultiSelectedList: viewModel.selectedItemList,
             selectMultipleItemsAction: viewModel.onItemSelect,
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_13,
-          )
+
         ],
       ),
     );
@@ -45,7 +43,9 @@ class GigrrTypeDropDownView extends StatelessWidget {
 
   Widget _buildTitle(String val) {
     return Padding(
-      padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+      padding: EdgeInsets.only(
+        bottom: SizeConfig.margin_padding_8,
+      ),
       child: Text(
         val.tr(),
         style: TSB.regularSmall(),

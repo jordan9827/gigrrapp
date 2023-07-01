@@ -23,7 +23,7 @@ class EmployerGigrrsViewModel extends BaseViewModel {
   List<EmployerGigsRequestData> gigsData = [];
 
   EmployerGigrrsViewModel() {
-    fetchGigsRequest();
+    // fetchGigsRequest();
   }
 
   void navigateToGigrrDetailScreen(EmployerGigsRequestData e) {

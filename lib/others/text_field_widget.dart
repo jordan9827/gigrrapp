@@ -91,6 +91,7 @@ class InputFieldWidget extends StatelessWidget {
           keyboardType: keyboardType ?? TextInputType.text,
           readOnly: readOnly,
           controller: controller,
+          cursorColor: independenceColor,
           decoration: InputDecoration(
             counterText: '',
             labelStyle: TextStyle(

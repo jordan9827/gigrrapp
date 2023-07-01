@@ -46,8 +46,13 @@ class PaymentHistoryScreenView extends StatelessWidget {
                 children: viewModel.paymentList.map(
                   (e) {
                     return viewModel.paymentList.isEmpty
-                        ? EmptyDataScreenView()
-                        : PaymentHistoryWidget(data: e);
+                        ? EmptyDataScreenView(
+                            enableBackButton: true,
+                          )
+                        : PaymentHistoryWidget(
+                            data: e,
+                            viewModel: viewModel,
+                          );
                   },
                 ).toList(),
               ),
@@ -57,23 +62,4 @@ class PaymentHistoryScreenView extends StatelessWidget {
       ),
     );
   }
-
-// Widget _buildPaymentList({required String title, int? count}) {
-//   return Column(
-//     crossAxisAlignment: CrossAxisAlignment.start,
-//     children: [
-//       SizedBox(
-//         height: SizeConfig.margin_padding_15,
-//       ),
-//       Text(
-//         title,
-//         style: TSB.semiBoldMedium(textColor: independenceColor),
-//       ),
-//       ...List.generate(
-//         count!,
-//         (index) => PaymentHistoryWidget(),
-//       )
-//     ],
-//   );
-// }
 }

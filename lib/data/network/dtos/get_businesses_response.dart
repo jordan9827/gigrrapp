@@ -76,7 +76,7 @@ class BusinessesImageList with _$BusinessesImageList {
   const factory BusinessesImageList(
     @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
-    @JsonKey(name: "business_id", defaultValue: 0) int categoryId,
+    @JsonKey(name: "business_id", defaultValue: 0) int businessId,
     @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "business_image") String imageUrl,
   ) = _BusinessesImageList;

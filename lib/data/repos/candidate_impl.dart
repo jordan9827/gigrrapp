@@ -67,7 +67,7 @@ class CandidateImpl extends CandidateRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      log.i("Accepted Roster Gigs ${response.body}");
+      // log.i("Accepted Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
         return Right(data);
       }, error: (error) {
@@ -88,7 +88,7 @@ class CandidateImpl extends CandidateRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      log.i("Accepted Roster Gigs ${response.body}");
+      // log.i("Accepted Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
         return Right(data);
       }, error: (error) {
@@ -109,7 +109,7 @@ class CandidateImpl extends CandidateRepo {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      // log.i("Accepted Roster Gigs ${response.body}");
+      log.i("GigsRequest Gigs ${response.body}");
       return response.body!.map(success: (data) async {
         return Right(data.data);
       }, error: (error) {

@@ -40,24 +40,20 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             ),
         builder: (context, viewModel, child) {
           return Scaffold(
-            body: LoadingScreen(
-              loading: viewModel.isBusy,
-              showDialogLoading: true,
-              child: SingleChildScrollView(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: Column(
-                    children: [
-                      Expanded(
-                        flex: 2,
-                        child: _buildHeadingVerifyOTP(viewModel),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: _buildOTPField(viewModel),
-                      ),
-                    ],
-                  ),
+            body: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: _buildHeadingVerifyOTP(viewModel),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: _buildOTPField(viewModel),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -136,7 +132,8 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             height: SizeConfig.margin_padding_50,
           ),
           LoadingButton(
-            // loading: viewModel.isBusy,
+            progressIndicatorColor: mainBlackColor,
+            loading: viewModel.isBusy,
             action: viewModel.init,
             title: viewModel.enableResend
                 ? "resend_otp_text"

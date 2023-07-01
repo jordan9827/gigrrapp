@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../../data/network/dtos/user_auth_response_data.dart';
+import '../../employer_gigrr_view/employer_gigrr_detail_view/employer_gigrr_detail_view.dart';
 
 class EmployerGigsViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -37,6 +38,24 @@ class EmployerGigsViewModel extends BaseViewModel {
     } else {
       return "+$responseCount response";
     }
+  }
+
+  Future<void> navigationToShortListedDetailView(MyGigsData gigs) async {
+    await navigationService.navigateWithTransition(
+      EmployerGigrrDetailView(
+        gigsName: gigs.gigName,
+        address: gigs.gigAddress,
+        gigs: gigs,
+        isShortListed: true,
+        price: price(
+          from: gigs.fromAmount,
+          to: gigs.toAmount,
+          priceCriteria: gigs.priceCriteria,
+        ),
+        skillList: gigs.skillsTypeCategoryList,
+      ),
+    );
+    fetchMyGigsList();
   }
 
   Future<void> fetchMyGigsList() async {

@@ -30,7 +30,7 @@ class EditProfileViewModel extends BaseViewModel {
 
   void setInitData() {
     fullNameController.text = user.fullName;
-    mobileController.text = user.phoneNumber;
+    mobileController.text = user.mobile;
     addressController.text = user.address;
     latLng = LatLng(
       double.parse(user.latitude),
@@ -91,11 +91,12 @@ class EditProfileViewModel extends BaseViewModel {
           setBusy(false);
         },
         (resp) {
-          snackBarService.showSnackbar(message: resp.message);
           navigationService.back();
-          notifyListeners();
+          snackBarService.showSnackbar(message: resp.message);
+          setBusy(false);
         },
       );
+      notifyListeners();
     }
   }
 

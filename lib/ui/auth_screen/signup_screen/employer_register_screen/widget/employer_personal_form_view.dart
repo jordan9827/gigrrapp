@@ -4,17 +4,14 @@ import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
+import 'package:stacked/stacked.dart';
 import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import '../employer_register_view_model.dart';
 
-class EmployerPersonalInfoFormView extends StatelessWidget {
-  final EmployerRegisterViewModel viewModel;
-
-  const EmployerPersonalInfoFormView({Key? key, required this.viewModel})
-      : super(key: key);
-
+class EmployerPersonalInfoFormView
+    extends ViewModelWidget<EmployerRegisterViewModel> {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, EmployerRegisterViewModel viewModel) {
     SizeConfig.init(context);
     return LoadingScreen(
       loading: viewModel.loading,

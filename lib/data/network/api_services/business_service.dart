@@ -45,8 +45,14 @@ abstract class BusinessService extends ChopperService {
   Future<Response<BaseResponse>> ratingReviewApi(
     @Body() Map<String, dynamic> body,
   );
+
   @Post(path: "search-candidate-via-gigs")
   Future<Response<EmployerGigsRequestResponse>> employerGigsRequest(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "add-candidate-roster")
+  Future<Response<BaseResponse>> shortListedCandidateApi(
     @Body() Map<String, dynamic> body,
   );
 }

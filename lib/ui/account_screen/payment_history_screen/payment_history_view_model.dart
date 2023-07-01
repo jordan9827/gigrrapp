@@ -7,6 +7,7 @@ import 'package:square_demo_architecture/util/enums/dialog_type.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
+import '../../../data/network/dtos/user_auth_response_data.dart';
 import 'widget/filter_dialog_view.dart';
 
 class PaymentHistoryViewModel extends BaseViewModel {
@@ -14,7 +15,7 @@ class PaymentHistoryViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
   final accountRepo = locator<AccountRepo>();
-
+  final user = locator<UserAuthResponseData>();
   TextEditingController nameController = TextEditingController();
   TextEditingController formDateController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
@@ -48,13 +49,13 @@ class PaymentHistoryViewModel extends BaseViewModel {
     paymentList = [];
     _pageNumber = 0;
     itemCount = 0;
-    await fetchCandidatePayment();
+    await fetchPayment();
     notifyListeners();
     setBusy(false);
   }
 
   void init() {
-    fetchCandidatePayment();
+    fetchPayment();
     scrollController.addListener(_scrollListener);
   }
 
@@ -62,27 +63,36 @@ class PaymentHistoryViewModel extends BaseViewModel {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
       if (!isBusy) _loading = true;
-      await fetchCandidatePayment();
+      await fetchPayment();
     }
     notifyListeners();
   }
 
-  Future<void> fetchCandidatePayment() async {
+  Future<void> fetchPayment() async {
+    var result;
     _pageNumber = _pageNumber + 1;
     if (_pageNumber == 1) setBusy(true);
-    var result = await accountRepo.candidatePaymentHistory(
-      page: _pageNumber,
-      data: await _getRequestForCandidatePayment(),
-    );
+    if (!user.isEmployer) {
+      result = await accountRepo.candidatePaymentHistory(
+        page: _pageNumber,
+        data: await _getRequestForCandidatePayment(),
+      );
+    } else {
+      result = await accountRepo.employerPaymentHistory(
+        page: _pageNumber,
+        data: await _getRequestForCandidatePayment(),
+      );
+    }
+
     result.fold((fail) {
+      paymentList = [];
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
     }, (res) {
       paymentList.addAll(res.paymentHistoryData);
+      log("paymentList ${paymentList.toList()}");
       _loading = false;
-
       setBusy(false);
-      notifyListeners();
     });
     setBusy(false);
     notifyListeners();
@@ -101,6 +111,14 @@ class PaymentHistoryViewModel extends BaseViewModel {
     );
   }
 
+  String filterStatusForPayment(String value) {
+    String status = "";
+    if (value == "completed") {
+      status = "Successfully Paid";
+    }
+    return status;
+  }
+
   void pickFormDate(DateTime dateTime) {
     formDateController.text = DateFormat("dd MMM yyyy").format(dateTime);
     notifyListeners();
@@ -113,9 +131,9 @@ class PaymentHistoryViewModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForCandidatePayment() async {
     Map<String, String> request = Map();
-    request['start_date'] = "";
-    request['end_date'] = "";
-    log("getRequestForLogIn :: $request");
+    // request['start_date'] = "";
+    // request['end_date'] = "";
+    // log("getRequestForLogIn :: $request");
     return request;
   }
 }

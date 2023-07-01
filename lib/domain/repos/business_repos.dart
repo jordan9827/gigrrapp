@@ -31,4 +31,8 @@ abstract class BusinessRepo {
   Future<Either<Failure, EmployerGigsRequestResponseData>> employerGigsRequest(
     Map<String, dynamic> body,
   );
+
+  Future<Either<Failure, BaseResponse>> shortListedCandidate(
+    Map<String, dynamic> body,
+  );
 }

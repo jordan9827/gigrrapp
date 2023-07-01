@@ -1,3 +1,4 @@
+import 'package:fcm_service/fcm_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/local/preference_keys.dart';
 import 'package:square_demo_architecture/util/exceptions/failures/failure.dart';
@@ -113,10 +114,14 @@ class AccountViewModel extends BaseViewModel {
   Future<void> logOut() async {
     setBusy(true);
     var res = await authRepo.logout();
-    res.fold((l) => failRes(l), (r) => {});
-    await sharedPreferences.clear();
-    navigationService.clearStackAndShow(Routes.loginView);
-    setBusy(false);
+    res.fold((l) => failRes(l), (r) async {
+      await sharedPreferences.clear();
+      await locator.reset();
+      await setupLocator();
+      await locator<FCMService>().deleteToken();
+      navigationService.clearStackAndShow(Routes.loginView);
+      setBusy(false);
+    });
     notifyListeners();
   }
 }

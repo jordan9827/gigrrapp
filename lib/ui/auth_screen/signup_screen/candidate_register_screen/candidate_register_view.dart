@@ -39,12 +39,8 @@ class CandidateRegisterScreenView extends StatelessWidget {
                   onPageChanged: viewModel.setPageIndex,
                   controller: viewModel.controller,
                   children: [
-                    CandidatePersonalInfoFormView(
-                      viewModel: viewModel,
-                    ),
-                    CandidateRoleFormView(
-                      viewModel: viewModel,
-                    ),
+                    CandidatePersonalInfoFormView(),
+                    CandidateRoleFormView(),
                   ],
                 ),
               ),
