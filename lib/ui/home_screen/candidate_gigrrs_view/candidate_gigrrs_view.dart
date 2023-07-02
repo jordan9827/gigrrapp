@@ -31,13 +31,9 @@ class CandidateGigrrsView extends StatelessWidget {
                   if (viewModel.gigsData.isEmpty) {
                     return EmptyDataScreenView();
                   } else {
-                    String profile = "";
-                    for (var i in e.business.businessesImage) {
-                      profile = i.imageUrl;
-                    }
                     return GiggrCardWidget(
                       title: e.gigName,
-                      profile: profile,
+                      profile: viewModel.profileImage(e.business),
                       price: viewModel.price(e),
                       gigrrName: 'apply_now',
                       isCandidate: true,

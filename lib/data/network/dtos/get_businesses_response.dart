@@ -29,7 +29,7 @@ class GetBusinessesResponse with _$GetBusinessesResponse {
 class GetBusinessesResponseData with _$GetBusinessesResponseData {
   @JsonSerializable(explicitToJson: true)
   const factory GetBusinessesResponseData(
-    @JsonKey(name: "current_page") int currentPage,
+    @JsonKey(name: "current_page", defaultValue: 0) int currentPage,
     @JsonKey(name: "data") List<GetBusinessesData> businessesList,
     @JsonKey(name: "from", defaultValue: 0) int from,
     @JsonKey(name: "last_page", defaultValue: 0) int lastPage,

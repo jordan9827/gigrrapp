@@ -125,6 +125,9 @@ dependencies:
   image_picker: ^0.8.7+2
   cached_network_image: ^3.2.3
 
+# calender
+  syncfusion_flutter_calendar:
+
 
 # flutter_native_splash-development.yaml
 flutter_native_splash:
@@ -210,6 +213,7 @@ flutter:
     - assets/splash/
     - assets/images/
     - assets/translations/
+    - assets/calender/
 
   fonts:
     - family: Inter

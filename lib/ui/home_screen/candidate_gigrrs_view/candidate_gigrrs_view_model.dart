@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../data/network/dtos/candidate_gigs_request.dart';
+import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/candidate_repos.dart';
 import 'candidate_gigrr_detail_view/candidate_gigrr_detail_view.dart';
@@ -56,6 +57,14 @@ class CandidateGigrrsViewModel extends BaseViewModel {
 
   String price(CandidateGigsRequestData e) {
     return "₹ ${double.parse(e.fromAmount).toStringAsFixed(1)}-${double.parse(e.toAmount).toStringAsFixed(0)}/${e.priceCriteria}";
+  }
+
+  String profileImage(GetBusinessesData image) {
+    String profile = "";
+    for (var i in image.businessesImage) {
+      profile = i.imageUrl;
+    }
+    return profile;
   }
 
   Future<Map<String, String>> _getRequestForGig() async {

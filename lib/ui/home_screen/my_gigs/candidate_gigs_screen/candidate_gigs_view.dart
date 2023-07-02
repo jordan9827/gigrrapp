@@ -154,10 +154,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
         if (viewModel.statusSlug == "sent-offer")
           _buildActionButton(
             buttonText: "accept_offer",
-            onTap: () => viewModel.showAcceptOfferDialog(
-              viewModel,
-              gigs,
-            ),
+            onTap: () => viewModel.showAcceptOfferDialog(viewModel, gigs),
           )
       ],
     );

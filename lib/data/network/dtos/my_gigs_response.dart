@@ -50,7 +50,7 @@ class MyGigsResponseData with _$MyGigsResponseData {
 class MyGigsData with _$MyGigsData {
   @JsonSerializable(explicitToJson: true)
   const factory MyGigsData(
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "business_id", defaultValue: 0) int businessId,
     @JsonKey(name: "gigs_id", defaultValue: "") String gigsId,
     @JsonKey(name: "gig_name", defaultValue: "") String gigName,
@@ -92,8 +92,8 @@ class MyGigsData with _$MyGigsData {
 class GigsRequestData with _$GigsRequestData {
   @JsonSerializable(explicitToJson: true)
   const factory GigsRequestData(
-    @JsonKey(name: "id") int id,
-    @JsonKey(name: "gigs_id") int gigsId,
+    @JsonKey(name: "id", defaultValue: 0) int id,
+    @JsonKey(name: "gigs_id", defaultValue: 0) int gigsId,
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
     @JsonKey(name: "employe_id", defaultValue: 0) int employeId,
     @JsonKey(name: "employee_name", defaultValue: "") String employeeName,
@@ -102,6 +102,7 @@ class GigsRequestData with _$GigsRequestData {
     @JsonKey(name: "start_otp", defaultValue: "") String startOTP,
     @JsonKey(name: "end_otp", defaultValue: "") String endOTP,
     @JsonKey(name: "status", defaultValue: "") String status,
+    @JsonKey(name: "distance", defaultValue: 0) int distance,
     @JsonKey(name: "candidate_rating", defaultValue: 0.0)
         double candidateRating,
     @JsonKey(name: "payment_status", defaultValue: "") String paymentStatus,

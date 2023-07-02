@@ -1,14 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
-
-import '../../../../data/network/dtos/gigs_accepted_response.dart';
 
 class MyGigsViewWidget extends StatelessWidget {
   final String title;

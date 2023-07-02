@@ -8,9 +8,7 @@ import '../../../util/others/text_styles.dart';
 import '../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
 import '../../widgets/custom_drop_down.dart';
 import '../../widgets/custom_price_criteria_view/price_criteria_view.dart';
-import '../../widgets/custom_price_radio_view/price_radio_view.dart';
 import '../../widgets/cvm_text_form_field.dart';
-import '../../business_type_drop_down_screen/business_type_drop_down_view.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../widgets/range_filter_view.dart';
@@ -59,7 +57,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
           SizedBox(
             height: SizeConfig.margin_padding_8,
           ),
-          _buildSetPriceView(viewModel),
+          _buildPriceCriteriaView(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_5,
           ),
@@ -111,7 +109,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
     );
   }
 
-  Widget _buildSetPriceView(AddGigsViewModel viewModel) {
+  Widget _buildPriceCriteriaView(AddGigsViewModel viewModel) {
     return PriceCriteriaView(
       title: false,
       controller: viewModel.priceTypeController,

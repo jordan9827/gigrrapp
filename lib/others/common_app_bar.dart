@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import '../util/others/text_styles.dart';
@@ -11,6 +12,7 @@ PreferredSizeWidget getAppBar(
   onBackPressed,
   List<Widget>? actions,
   Color? backgroundColor,
+  Color? showBackColor,
   Color textColor = Colors.white,
   PreferredSizeWidget? bottom,
 }) {
@@ -31,6 +33,7 @@ PreferredSizeWidget getAppBar(
             child: Image.asset(
               arrow_back,
               scale: 2,
+              color: showBackColor ?? mainWhiteColor,
             ),
             onTap: onBackPressed,
           )

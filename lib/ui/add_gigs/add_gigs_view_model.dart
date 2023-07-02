@@ -78,8 +78,11 @@ class AddGigsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  String get payRangeText =>
-      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${priceTypeController.text}";
+  String get payRangeText {
+    notifyListeners();
+    return "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${priceTypeController.text}";
+  }
+
   void onSelectId() {
     for (var i in businessesList) {
       if (i.businessName == groupValue) {
@@ -281,7 +284,6 @@ class AddGigsViewModel extends BaseViewModel {
     request['price_criteria'] = priceTypeController.text.toLowerCase();
     request['from_amount'] = currentRangeValues.start.toString();
     request['to_amount'] = currentRangeValues.end.toString();
-
     log("getRequestForCompleteProfile :: $request");
     return request;
   }

@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
+import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/repos/business_repos.dart';
 
@@ -25,6 +26,7 @@ class RatingReviewViewModel extends BaseViewModel {
     if (!isBusy) {
       navigationService.back();
     }
+    return;
   }
 
   void onRatingUpdate(double rate) {
@@ -41,11 +43,17 @@ class RatingReviewViewModel extends BaseViewModel {
     return true;
   }
 
-  Future<void> ratingReviewSubmit() async {
+  Future<void> ratingReviewSubmit({
+    String id = "",
+    String candidateId = "",
+  }) async {
     if (validate()) {
       setBusy(true);
-      final response = await businessRepo.addGigs(
-        await _getRequestForSubmitRating(),
+      final response = await businessRepo.ratingReview(
+        await _getRequestForSubmitRating(
+          id: id,
+          candidateId: candidateId,
+        ),
       );
       response.fold(
         (fail) {
@@ -53,6 +61,7 @@ class RatingReviewViewModel extends BaseViewModel {
           setBusy(false);
         },
         (rating) async {
+          navigationService.back(result: true);
           snackBarService.showSnackbar(message: rating.message);
           setBusy(false);
         },
@@ -61,10 +70,13 @@ class RatingReviewViewModel extends BaseViewModel {
     }
   }
 
-  Future<Map<String, String>> _getRequestForSubmitRating() async {
+  Future<Map<String, String>> _getRequestForSubmitRating({
+    String id = "",
+    String candidateId = "",
+  }) async {
     Map<String, String> request = {};
-    request['gigs_id'] = "";
-    request['candidate_id'] = "";
+    request['gigs_id'] = id;
+    request['candidate_id'] = candidateId;
     request['rating'] = rating.toString();
     request['comments'] = commentController.text;
     log("Rating Request Body :: $request");

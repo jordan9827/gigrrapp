@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
-import 'package:square_demo_architecture/ui/home_screen/my_gigrrs/my_gigrrs_view_model.dart';
-import 'package:square_demo_architecture/ui/home_screen/my_gigrrs/widget/my_giggrrs_widget.dart';
-import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../others/common_app_bar.dart';
 import '../../../others/loading_screen.dart';
+import '../../../util/others/calander_parsing.dart';
 import '../../widgets/notification_icon.dart';
+import 'my_gigrrs_view_model.dart';
 
 class MyGirrsView extends StatelessWidget {
   const MyGirrsView({Key? key}) : super(key: key);
@@ -15,14 +14,14 @@ class MyGirrsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => MyGirrsViewModel(),
+      viewModelBuilder: () => MyGigrrsViewModel(),
       builder: (context, viewModel, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: mainGrayColor,
           appBar: getAppBar(
             context,
-            "my_gigs",
+            "my_gigrrs",
             backgroundColor: mainWhiteColor,
             textColor: mainBlackColor,
             actions: [
@@ -33,7 +32,7 @@ class MyGirrsView extends StatelessWidget {
             loading: viewModel.isBusy,
             child: RefreshIndicator(
               onRefresh: viewModel.refreshScreen,
-              child: _buildMyGigrrs(viewModel),
+              child: _buildCalenderView(viewModel),
             ),
           ),
         );
@@ -41,13 +40,40 @@ class MyGirrsView extends StatelessWidget {
     );
   }
 
-  Widget _buildMyGigrrs(MyGirrsViewModel viewModel) {
-    return ListView(
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
-      children: List.generate(
-        3,
-        (index) => MyGiggrrsWidget(),
-      ),
+  Widget _buildCalenderView(MyGigrrsViewModel viewModel) {
+    return SfCalendar(
+      showDatePickerButton: true,
+      scheduleViewMonthHeaderBuilder: _buildScheduleViewBuilder,
+      view: CalendarView.schedule,
+      dataSource: viewModel.dataSource,
+      onTap: viewModel.navigationToMyGigrrsDetailView,
+    );
+  }
+
+  Widget _buildScheduleViewBuilder(
+    BuildContext buildContext,
+    ScheduleViewMonthHeaderDetails details,
+  ) {
+    final String monthName = CalenderParsing.getMonthDate(details.date.month);
+    return Stack(
+      children: <Widget>[
+        Image(
+          image: AssetImage('assets/calender/' + monthName + '.png'),
+          fit: BoxFit.cover,
+          width: details.bounds.width,
+          height: details.bounds.height,
+        ),
+        Positioned(
+          left: 55,
+          right: 0,
+          top: 20,
+          bottom: 0,
+          child: Text(
+            monthName + ' ' + details.date.year.toString(),
+            style: const TextStyle(fontSize: 18),
+          ),
+        )
+      ],
     );
   }
 }

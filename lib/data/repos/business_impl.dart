@@ -14,7 +14,7 @@ import '../network/dtos/business_type_category.dart';
 import '../network/dtos/employer_gigs_request.dart';
 import '../network/dtos/get_businesses_response.dart';
 import '../network/dtos/gigrr_type_response.dart';
-import '../network/dtos/web_view_response.dart';
+import '../network/dtos/my_gigrrs_roster_response.dart';
 
 class BusinessImpl extends BusinessRepo {
   final businessService =
@@ -237,6 +237,46 @@ class BusinessImpl extends BusinessRepo {
       // log.i("shortListedCandidate Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getCandidate() async {
+    try {
+      final response = await businessService.getCandidateApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      // log.i("shortListedCandidate Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, MyGigrrsRosterData>> myGigrrsRoster(String id) async {
+    try {
+      final response = await businessService.myGigrrsRosterApi(id);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("MyGigrrsRoster Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
       }, error: (error) {
         return Left(Failure(error.status, error.message));
       });

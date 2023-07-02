@@ -29,7 +29,7 @@ class GigrrTypeCategoryResponse with _$GigrrTypeCategoryResponse {
 class GigrrTypeCategoryData with _$GigrrTypeCategoryData {
   @JsonSerializable(explicitToJson: true)
   const factory GigrrTypeCategoryData(
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "name", defaultValue: "") String name,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,

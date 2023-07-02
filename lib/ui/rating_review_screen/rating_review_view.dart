@@ -12,7 +12,17 @@ import '../../util/others/text_styles.dart';
 import 'rating_review_view_model.dart';
 
 class RatingReviewScreenView extends StatelessWidget {
-  const RatingReviewScreenView({Key? key}) : super(key: key);
+  final String name;
+  final String gigsId;
+  final String candidateId;
+  final String profile;
+  const RatingReviewScreenView({
+    Key? key,
+    this.name = "",
+    this.gigsId = "",
+    this.profile = "",
+    this.candidateId = "",
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +53,7 @@ class RatingReviewScreenView extends StatelessWidget {
               height: SizeConfig.margin_padding_20,
             ),
             CircleAvatar(
-              backgroundImage: AssetImage(ic_edit_profile),
+              backgroundImage: NetworkImage(profile),
               radius: SizeConfig.margin_padding_18 * 2.5,
             ),
             SizedBox(
@@ -51,7 +61,7 @@ class RatingReviewScreenView extends StatelessWidget {
             ),
             Text(
               textAlign: TextAlign.center,
-              "Suresh Kumar",
+              name,
               style: TSB.boldLarge(),
             ),
             SizedBox(
@@ -108,6 +118,7 @@ class RatingReviewScreenView extends StatelessWidget {
         ),
         TextFormField(
           maxLines: 4,
+          controller: viewModel.commentController,
           decoration: InputDecoration(
             hintText: "Type review.......",
             border: inputBorder,
@@ -119,7 +130,11 @@ class RatingReviewScreenView extends StatelessWidget {
           height: SizeConfig.margin_padding_20,
         ),
         LoadingButton(
-          action: () {},
+          loading: viewModel.isBusy,
+          action: () => viewModel.ratingReviewSubmit(
+            id: gigsId,
+            candidateId: candidateId,
+          ),
           title: "give_rating",
         )
       ],

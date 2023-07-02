@@ -29,7 +29,7 @@ class WebViewResponse with _$WebViewResponse {
 class WebViewResponseData with _$WebViewResponseData {
   @JsonSerializable(explicitToJson: true)
   const factory WebViewResponseData(
-    @JsonKey(name: "id") int id,
+    @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "slug", defaultValue: "") String slug,
     @JsonKey(name: "content", defaultValue: "") String content,
     @JsonKey(name: "title", defaultValue: "") String title,

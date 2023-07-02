@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/gigrr_card_widget.dart';
 import 'package:stacked/stacked.dart';
+import '../../widgets/empty_data_screen.dart';
 import '../home_app_bar.dart';
 import 'employer_gigrr_view_model.dart';
 
@@ -20,11 +21,14 @@ class EmployerGigrrsView extends StatelessWidget {
           ),
           body: LoadingScreen(
             loading: viewModel.isBusy,
-            child: PageView(
+            child: PageView.builder(
               scrollDirection: Axis.vertical,
               controller: viewModel.pageController,
-              children: viewModel.gigsData.map(
-                (e) {
+              itemBuilder: (BuildContext context, int index) {
+                if (viewModel.gigsData.isEmpty) {
+                  return EmptyDataScreenView();
+                } else {
+                  var e = viewModel.gigsData[index];
                   return GiggrCardWidget(
                     title: e.firstName,
                     profile: "",
@@ -34,8 +38,8 @@ class EmployerGigrrsView extends StatelessWidget {
                     navigateToDetailScreen: () =>
                         viewModel.navigateToGigrrDetailScreen(e),
                   );
-                },
-              ).toList(),
+                }
+              },
             ),
           ),
         );

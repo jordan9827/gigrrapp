@@ -47,6 +47,7 @@ import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candida
 import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candidate_role_form_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_register_view.dart';
 import '../ui/home_screen/home_view.dart';
+import '../ui/home_screen/my_gigrrs/screen/my_gigrrs_detail_view.dart';
 import '../ui/into_screen/intro_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
 import '../ui/widgets/giggr_request_view.dart';
@@ -63,6 +64,7 @@ import '../ui/widgets/giggr_request_view.dart';
     MaterialRoute(page: CandidateRegisterScreenView),
 
     ///// Businesses /////
+    MaterialRoute(page: MyGigrrsDetailView),
     MaterialRoute(page: GigrrCustomRequestView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: AddBusinessesScreenView),

@@ -10,13 +10,13 @@ part 'base_response.g.dart';
 class BaseResponse with _$BaseResponse {
   @JsonSerializable()
   const factory BaseResponse.success(
-    @JsonKey(name: "message") String message,
+    @JsonKey(name: "message", defaultValue: "") String message,
   ) = _BaseResponse;
 
   @JsonSerializable()
   const factory BaseResponse.error(
     @JsonKey(name: "status", defaultValue: 200) int status,
-    @JsonKey(name: "message") String message,
+    @JsonKey(name: "message", defaultValue: "") String message,
   ) = _BaseResponseError;
 
   factory BaseResponse.fromJson(Map<String, dynamic> json) =>
