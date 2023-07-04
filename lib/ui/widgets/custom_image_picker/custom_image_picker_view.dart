@@ -13,7 +13,12 @@ import 'custom_image_picker_view_model.dart';
 
 class CustomImagePickerView extends StatefulWidget {
   final List<String>? imageList;
-  const CustomImagePickerView({Key? key, this.imageList}) : super(key: key);
+  final String title;
+  const CustomImagePickerView({
+    Key? key,
+    this.imageList,
+    required this.title,
+  }) : super(key: key);
 
   @override
   State<CustomImagePickerView> createState() => _CustomImagePickerViewState();
@@ -91,7 +96,7 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
                               ),
                               SizedBox(height: SizeConfig.margin_padding_10),
                               Text(
-                                "add_picture_of_your_business".tr(),
+                                widget.title.tr(),
                                 style: TSB.regularMedium(
                                     textColor: independenceColor),
                               ),

@@ -66,6 +66,7 @@ class EmployerBusinessInfoFormView
             title: "upload_Profile_pictures",
             formWidget: CustomImagePickerView(
               imageList: viewModel.imageList,
+              title: "add_picture_of_your_business",
             ),
           ),
           SizedBox(

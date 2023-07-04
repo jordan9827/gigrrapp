@@ -31,7 +31,10 @@ class PriceRangeFilterView extends StatelessWidget {
             )
           ],
         ),
-        Padding(
+        Container(
+          margin: EdgeInsets.symmetric(
+            horizontal: SizeConfig.margin_padding_5,
+          ),
           padding: EdgeInsets.only(
             bottom: SizeConfig.margin_padding_8,
             top: SizeConfig.margin_padding_3,

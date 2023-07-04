@@ -5,6 +5,7 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../others/common_app_bar.dart';
 import '../../../others/loading_screen.dart';
 import '../../../util/others/calander_parsing.dart';
+import '../../widgets/empty_data_screen.dart';
 import '../../widgets/notification_icon.dart';
 import 'my_gigrrs_view_model.dart';
 
@@ -41,13 +42,15 @@ class MyGirrsView extends StatelessWidget {
   }
 
   Widget _buildCalenderView(MyGigrrsViewModel viewModel) {
-    return SfCalendar(
-      showDatePickerButton: true,
-      scheduleViewMonthHeaderBuilder: _buildScheduleViewBuilder,
-      view: CalendarView.schedule,
-      dataSource: viewModel.dataSource,
-      onTap: viewModel.navigationToMyGigrrsDetailView,
-    );
+    return viewModel.dataSource.appointments!.isNotEmpty
+        ? SfCalendar(
+            showDatePickerButton: true,
+            scheduleViewMonthHeaderBuilder: _buildScheduleViewBuilder,
+            view: CalendarView.schedule,
+            dataSource: viewModel.dataSource,
+            onTap: viewModel.navigationToMyGigrrsDetailView,
+          )
+        : EmptyDataScreenView();
   }
 
   Widget _buildScheduleViewBuilder(

@@ -11,7 +11,7 @@ class CalenderWiseResponse with _$CalenderWiseResponse {
   @JsonSerializable()
   const factory CalenderWiseResponse.success(
     @JsonKey(name: "message", defaultValue: "") String message,
-      @JsonKey(name: "data", defaultValue: {}) Map<String, dynamic> data,
+    @JsonKey(name: "data", defaultValue: {}) Map<String, dynamic> data,
   ) = _CalenderWiseResponse;
 
   @JsonSerializable()

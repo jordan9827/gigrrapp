@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/empty_data_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/gigrr_card_widget.dart';
+import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 
 import '../home_app_bar.dart';
@@ -12,6 +13,7 @@ class CandidateGigrrsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) => viewModel.fetchGigsRequest(),
       viewModelBuilder: () => CandidateGigrrsViewModel(),
@@ -23,31 +25,27 @@ class CandidateGigrrsView extends StatelessWidget {
           ),
           body: LoadingScreen(
             loading: viewModel.isBusy,
-            child: PageView(
-              scrollDirection: Axis.vertical,
-              controller: viewModel.pageController,
-              children: viewModel.gigsData.map(
-                (e) {
-                  if (viewModel.gigsData.isEmpty) {
-                    return EmptyDataScreenView();
-                  } else {
-                    return GiggrCardWidget(
-                      title: e.gigName,
-                      profile: viewModel.profileImage(e.business),
-                      price: viewModel.price(e),
-                      gigrrName: 'apply_now',
-                      isCandidate: true,
-                      skillList:
-                          e.skillsCategoryList.map((e) => e.name).toList(),
-                      navigateToDetailScreen: () =>
-                          viewModel.navigateToGigrrDetailScreen(e),
-                      acceptedGigsRequest: () =>
-                          viewModel.acceptedGigsRequest(e.id),
-                    );
-                  }
-                },
-              ).toList(),
-            ),
+            child: viewModel.gigsData.isNotEmpty
+                ? PageView(
+                    scrollDirection: Axis.vertical,
+                    controller: viewModel.pageController,
+                    children: viewModel.gigsData.map((e) {
+                      return GiggrCardWidget(
+                        title: e.gigName,
+                        profile: viewModel.profileImage(e.business),
+                        price: viewModel.price(e),
+                        gigrrName: 'apply_now',
+                        isCandidate: true,
+                        skillList:
+                            e.skillsCategoryList.map((e) => e.name).toList(),
+                        navigateToDetailScreen: () =>
+                            viewModel.navigateToGigrrDetailScreen(e),
+                        acceptedGigsRequest: () =>
+                            viewModel.acceptedGigsRequest(e.id),
+                      );
+                    }).toList(),
+                  )
+                : EmptyDataScreenView(),
           ),
         );
       },

@@ -31,6 +31,7 @@ class MyAppViewModel extends BaseViewModel {
   MyAppViewModel() {
     init();
     setInitialRoute();
+    print("userData ${userData.profileStatus}");
   }
 
   void init() async {
@@ -42,9 +43,30 @@ class MyAppViewModel extends BaseViewModel {
     if (icCheckIntroScreen()) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
-      initialRoute = Routes.homeView;
+      initialRoute = _buildInitialCurrentRoutes();
     }
     notifyListeners();
+  }
+
+  String _buildInitialCurrentRoutes() {
+    String routes = Routes.homeView;
+
+    switch (userData.profileStatus) {
+      case "login":
+        if (userData.isEmployer) {
+          routes = Routes.employerRegisterScreenView;
+        } else {
+          routes = Routes.candidateRegisterScreenView;
+        }
+        break;
+      case "profile-completed":
+        routes = Routes.candidateKYCScreenView;
+        break;
+      case "":
+        routes = Routes.loginView;
+        break;
+    }
+    return routes;
   }
 
   bool icCheckIntroScreen() {

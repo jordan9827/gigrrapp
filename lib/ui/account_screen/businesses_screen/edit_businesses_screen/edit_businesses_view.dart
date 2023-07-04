@@ -80,6 +80,7 @@ class EditBusinessesScreenView extends StatelessWidget {
         CVMTextFormField(
           title: "upload_Profile_pictures",
           formWidget: CustomImagePickerView(
+            title: "add_picture_of_your_profile",
             imageList: viewModel.imageList,
           ),
         ),

@@ -13,13 +13,14 @@ extension ObjectExtension on Object {
       if (this is SocketException) {
         return Failure(
           NetworkStatus.SocketStatus.index,
-          commonNetworkMsg,
+          "commonNetworkMsg111",
         );
         // return Failure(NetworkStatus.SocketStatus.index,
         //     "Unable to connect with server, please check your internet connection and try again");
       }
-      return Failure(NetworkStatus.CommonStatus.index, commonNetworkMsg);
+      return Failure(NetworkStatus.CommonStatus.index, "commonNetworkMsg333");
     }
-    return Failure(NetworkStatus.CommonStatus.index, commonNetworkMsg);
+    return Failure(NetworkStatus.CommonStatus.index,
+        "Unknown error occurred on the server");
   }
 }

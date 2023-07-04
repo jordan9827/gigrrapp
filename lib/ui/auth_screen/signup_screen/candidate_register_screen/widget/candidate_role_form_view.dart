@@ -32,7 +32,7 @@ class CandidateRoleFormView
   Widget _buildFormView(
       BuildContext context, CandidateRegisterViewModel viewModel) {
     return Container(
-      padding: edgeInsetsMargin,
+      margin: edgeInsetsMargin,
       child: ListView(
         children: [
           GigrrTypeDropDownView(
@@ -112,6 +112,7 @@ class CandidateRoleFormView
       children: <Widget>[
         _buildCupertinoPicker(
           itemCount: 30,
+          zero: true,
           onSelectedItemChanged: viewModel.pickerExperienceYear,
         ),
         _buildCupertinoPicker(

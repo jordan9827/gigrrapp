@@ -142,7 +142,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
       "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${costCriteriaController.text}";
 
   void navigationToRoleFormView() {
-    if (validationPersonalInfo()) {
+    if (!validationPersonalInfo()) {
       controller.animateToPage(
         1,
         duration: Duration(milliseconds: 200),
@@ -273,31 +273,31 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   void candidateCompleteProfileApiCall() async {
-    // setBusy(true);
-    await _getRequestForCompleteCandidateProfile();
+    setBusy(true);
+    final response = await authRepo.candidatesCompleteProfile(
+      await _getRequestForCompleteCandidateProfile(),
+    );
+    response.fold(
+      (fail) {
+        snackBarService.showSnackbar(message: fail.errorMsg);
+        setBusy(false);
+      },
+      (res) async {
+        await navigationToCandidateComplete(res);
+        setBusy(false);
+      },
+    );
     notifyListeners();
   }
 
   Future<void> navigationToCandidateComplete(UserAuthResponseData res) async {
-    if (isSocialLogin) {
-      var result = await navigationService.clearStackAndShow(
-        Routes.oTPVerifyScreen,
-        arguments: OTPVerifyScreenArguments(
-          mobile: res.mobile,
-          otpType: "sms",
-          roleId: res.roleId,
-        ),
-      );
-      if (result["isCheck"]) {
-        navigationService.navigateTo(
-          Routes.homeView,
-        );
-      }
-    } else {
-      navigationService.navigateTo(
-        Routes.candidateKYCScreenView,
-      );
-    }
+    print("isSocialLogin $isSocialLogin");
+    navigationService.navigateTo(
+      Routes.candidateKYCScreenView,
+      arguments: CandidateKYCScreenViewArguments(
+        isSocial: isSocialLogin,
+      ),
+    );
   }
 
   Future<Map<String, String>> _getRequestForCompleteCandidateProfile() async {

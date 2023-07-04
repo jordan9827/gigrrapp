@@ -27,7 +27,7 @@ abstract class NetworkException implements Exception {
     } else if (_statusCode == StatusCodeType.BAD_REQUEST) {
       return "The request could not be understood by the server due to malformed syntax";
     } else if (_statusCode == StatusCodeType.CLIENT_TIMEOUT) {
-      return "Unable to connect to the server, check internet connection";
+      return "Unknown error occurred on the server";
     }
     return "Unknown error occurred with status code $_statusCode";
   }

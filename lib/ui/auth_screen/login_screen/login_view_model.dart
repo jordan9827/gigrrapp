@@ -209,14 +209,17 @@ class LoginViewViewModel extends BaseViewModel {
         }
         break;
       case "profile-completed":
-        await navigationService.clearStackAndShow(
-          Routes.oTPVerifyScreen,
-          arguments: OTPVerifyScreenArguments(
-            mobile: res.mobile,
-            otpType: initialOTPType,
-            roleId: res.roleId,
-          ),
-        );
+        if (res.isEmployer) {
+          await navigationToOTPScreen(res);
+        } else {
+          navigationService.clearStackAndShow(
+            Routes.candidateKYCScreenView,
+            arguments: CandidateKYCScreenViewArguments(isSocial: true),
+          );
+        }
+        break;
+      case "kyc-completed":
+        await navigationToOTPScreen(res);
         break;
       case "otp-verify":
         navigationService.clearStackAndShow(Routes.homeView);
@@ -224,9 +227,18 @@ class LoginViewViewModel extends BaseViewModel {
     }
   }
 
-  void navigationToOTPScreen() {
-    // navigationService.navigateTo(Routes.oTPVerifyScreen,
-    //     arguments: OTPVerifyScreenArguments(mobile: "+916565656565"));
+  Future<void> navigationToOTPScreen(UserAuthResponseData res) async {
+    var data = await navigationService.navigateTo(
+      Routes.oTPVerifyScreen,
+      arguments: OTPVerifyScreenArguments(
+        mobile: res.mobile,
+        otpType: initialOTPType,
+        roleId: res.roleId,
+      ),
+    );
+    if (data["isCheck"]) {
+      navigationService.clearStackAndShow(Routes.homeView);
+    }
   }
 
   Future<Map<String, String>> _getRequestForLogIn(

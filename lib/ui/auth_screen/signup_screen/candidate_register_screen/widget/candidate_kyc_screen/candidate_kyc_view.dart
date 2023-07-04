@@ -11,19 +11,18 @@ import '../../../../../../util/others/text_styles.dart';
 import '../../../../../widgets/cvm_text_form_field.dart';
 import 'candidate_kyc_view_model.dart';
 
-class CandidateKYCScreenView extends StatefulWidget {
-  const CandidateKYCScreenView({Key? key}) : super(key: key);
+class CandidateKYCScreenView extends StatelessWidget {
+  final bool isSocial;
+  const CandidateKYCScreenView({
+    Key? key,
+    this.isSocial = false,
+  }) : super(key: key);
 
-  @override
-  State<CandidateKYCScreenView> createState() => _CandidateKYCScreenViewState();
-}
-
-class _CandidateKYCScreenViewState extends State<CandidateKYCScreenView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => CandidateKYCViewModel(),
+      viewModelBuilder: () => CandidateKYCViewModel(social: isSocial),
       builder: (_, viewModel, child) => LoadingScreen(
         loading: viewModel.isBusy,
         showDialogLoading: true,
@@ -60,12 +59,14 @@ class _CandidateKYCScreenViewState extends State<CandidateKYCScreenView> {
                   keyboardType: TextInputType.numberWithOptions(decimal: true),
                 ),
                 _buildPickedImageWidget(
+                  context,
                   viewModel: viewModel,
                   title: "upload_front_pic_aadhaar",
                   subTitle: "upload_front_pic_aadhaar",
                   image: viewModel.frontAadhaarImage,
                 ),
                 _buildPickedImageWidget(
+                  context,
                   viewModel: viewModel,
                   title: "upload_back_pic_aadhaar",
                   subTitle: "upload_back_pic_aadhaar",
@@ -90,7 +91,8 @@ class _CandidateKYCScreenViewState extends State<CandidateKYCScreenView> {
     );
   }
 
-  Widget _buildPickedImageWidget({
+  Widget _buildPickedImageWidget(
+    BuildContext context, {
     required String title,
     required String subTitle,
     required String image,

@@ -248,7 +248,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   Future<void> navigationToEmployerComplete(UserAuthResponseData res) async {
     if (isSocialLogin) {
-      var result = await navigationService.clearStackAndShow(
+      var result = await navigationService.navigateTo(
         Routes.oTPVerifyScreen,
         arguments: OTPVerifyScreenArguments(
           mobile: res.mobile,

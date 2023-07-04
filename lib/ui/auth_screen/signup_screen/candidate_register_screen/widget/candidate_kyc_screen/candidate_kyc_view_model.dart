@@ -19,8 +19,13 @@ class CandidateKYCViewModel extends BaseViewModel {
   String frontAadhaarImage = "";
   String backAadhaarImage = "";
   XFile? _imageFile;
+  bool isSocialLogin = false;
 
   XFile? get imageFile => _imageFile;
+
+  CandidateKYCViewModel({bool social = false}) {
+    isSocialLogin = social;
+  }
 
   void navigationToBack() {
     if (!isBusy) {
@@ -69,15 +74,33 @@ class CandidateKYCViewModel extends BaseViewModel {
           snackBarService.showSnackbar(message: fail.errorMsg);
           setBusy(false);
         },
-        (res) {
-          navigationService.navigateTo(
-            Routes.homeView,
-          );
+        (res) async {
+          if (isSocialLogin) {
+            var result = await navigationService.navigateTo(
+              Routes.oTPVerifyScreen,
+              arguments: OTPVerifyScreenArguments(
+                mobile: res.mobile,
+                otpType: "sms",
+                roleId: res.roleId,
+              ),
+            );
+            if (result["isCheck"]) {
+              navigationToHomeView();
+            }
+          } else {
+            navigationToHomeView();
+          }
           setBusy(false);
         },
       );
       notifyListeners();
     }
+  }
+
+  void navigationToHomeView() {
+    navigationService.navigateTo(
+      Routes.homeView,
+    );
   }
 
   Future pickImage(BuildContext context, {bool isFontImage = true}) async {
