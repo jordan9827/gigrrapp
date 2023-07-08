@@ -41,7 +41,10 @@ class CandidateGigrrsView extends StatelessWidget {
                         navigateToDetailScreen: () =>
                             viewModel.navigateToGigrrDetailScreen(e),
                         acceptedGigsRequest: () =>
-                            viewModel.acceptedGigsRequest(e.id),
+                            viewModel.acceptedGigsRequest(
+                          e.id,
+                          viewModel.gigsData.indexOf(e),
+                        ),
                       );
                     }).toList(),
                   )

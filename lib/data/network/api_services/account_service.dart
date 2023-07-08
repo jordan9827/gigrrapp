@@ -22,6 +22,7 @@ abstract class AccountService extends ChopperService {
     @Body() Map<String, dynamic> body,
     @Query('page') int page,
   );
+
   @Post(path: "gigs-payment-history")
   Future<Response<PaymentHistoryResponse>> employerPaymentHistory(
     @Body() Map<String, dynamic> body,
@@ -44,6 +45,11 @@ abstract class AccountService extends ChopperService {
 
   @Post(path: "send-contactus")
   Future<Response<ChatResponse>> contactUSApi(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "gigs-candidate-payment")
+  Future<Response<ChatResponse>> gigsCandidatePaymentApi(
     @Body() Map<String, dynamic> body,
   );
 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/size_config.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -8,11 +9,13 @@ class GoogleMapBoxScreen extends StatefulWidget {
   final String lng;
   final String zoom;
   final String size;
+  final bool loading;
   const GoogleMapBoxScreen({
     Key? key,
     required this.lat,
     required this.lng,
     this.zoom = "11",
+    this.loading = false,
     this.size = "400x200",
   }) : super(key: key);
 
@@ -41,12 +44,6 @@ class _GoogleMapBoxScreenState extends State<GoogleMapBoxScreen> {
           onPageStarted: (String url) {},
           onPageFinished: (String url) {},
           onWebResourceError: (WebResourceError error) {},
-          // onNavigationRequest: (NavigationRequest request) {
-          //   if (request.url.startsWith('https://www.youtube.com/')) {
-          //     return NavigationDecision.prevent;
-          //   }
-          //   return NavigationDecision.navigate;
-          // },
         ),
       )
       ..loadRequest(Uri.parse(url));

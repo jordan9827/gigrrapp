@@ -42,7 +42,11 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
           ),
           body: LoadingScreen(
             loading: viewModel.isBusy,
-            child: _buildMyGigsList(viewModel),
+            child: RefreshIndicator(
+              color: independenceColor,
+              onRefresh: viewModel.fetchMyGigsList,
+              child: _buildMyGigsList(viewModel),
+            ),
           ),
         );
       },
@@ -69,8 +73,10 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                         priceCriteria: gigs.priceCriteria,
                       ),
                       startDate: gigs.gigsStartDate,
+                      isEmptyModel:
+                          (viewModel.isActiveStatus(gigs) != "complete"),
                       jobDuration: "${gigs.duration} ${gigs.priceCriteria}",
-                      bottomView: _buildAcceptedGigsView(viewModel, gigs),
+                      bottomView: _buildStatusGigsView(viewModel, gigs),
                     ),
                   )
                   .toList(),
@@ -84,22 +90,34 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     );
   }
 
-  Widget _buildAcceptedGigsView(
+  Widget _buildStatusGigsView(
       EmployerGigsViewModel viewModel, MyGigsData gigs) {
-    var status = "";
-    if (gigs.gigsRequestData.isNotEmpty) {
-      status = gigs.gigsRequestData.first.status;
-    }
+    var status = viewModel.isActiveStatus(gigs);
     if (status == "accepted") {
       return _buildAcceptedCandidateView(viewModel: viewModel, gigs: gigs);
-    } else if (status == "received-offer" || status == "sent-offer") {
+    } else if (status == "sent-offer") {
+      return _buildOfferSendView(gigs: gigs);
+    } else if (status == "received-offer") {
       return _buildShortListCandidateView(gigs: gigs, viewModel: viewModel);
     } else
       return SizedBox();
   }
 
-  Widget _buildAcceptedCandidateView(
-      {required EmployerGigsViewModel viewModel, required MyGigsData gigs}) {
+  Widget _buildOfferSendView({
+    required MyGigsData gigs,
+  }) {
+    return Text(
+      "${gigs.gigsRequestCount} Offers Sent",
+      style: TSB.regularSmall(
+        textColor: mainPinkColor,
+      ),
+    );
+  }
+
+  Widget _buildAcceptedCandidateView({
+    required EmployerGigsViewModel viewModel,
+    required MyGigsData gigs,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -120,7 +138,10 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
             )
           ],
         ),
-        _buildDetailView()
+        _buildDetailView(
+          onTap: () =>
+              viewModel.navigationToCandidateOfferRequest(viewModel, gigs),
+        )
       ],
     );
   }
@@ -185,21 +206,24 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     );
   }
 
-  Widget _buildDetailView() {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: SizeConfig.margin_padding_17,
-        vertical: SizeConfig.margin_padding_8,
-      ),
-      decoration: BoxDecoration(
-        border: Border.all(color: mainPinkColor, width: 1.5),
-        borderRadius: BorderRadius.circular(
-          SizeConfig.margin_padding_8,
+  Widget _buildDetailView({required Function() onTap}) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(
+          horizontal: SizeConfig.margin_padding_17,
+          vertical: SizeConfig.margin_padding_8,
         ),
-      ),
-      child: Text(
-        "view".tr(),
-        style: TSB.regularVSmall(textColor: mainPinkColor),
+        decoration: BoxDecoration(
+          border: Border.all(color: mainPinkColor, width: 1.5),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_8,
+          ),
+        ),
+        child: Text(
+          "view".tr(),
+          style: TSB.regularVSmall(textColor: mainPinkColor),
+        ),
       ),
     );
   }

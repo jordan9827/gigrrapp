@@ -33,7 +33,9 @@ class CandidateGigrrsViewModel extends BaseViewModel {
 
   Future<void> fetchGigsRequest() async {
     setBusy(true);
-    var result = await candidateRepo.getGigsRequest(await _getRequestForGig());
+    var result = await candidateRepo.getGigsRequest(
+      await _getRequestForGig(),
+    );
     result.fold((fail) {
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
@@ -46,13 +48,18 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> acceptedGigsRequest(int id) async {
-    pageController.nextPage(
-        duration: Duration(seconds: 1), curve: Curves.easeInToLinear);
+  Future<void> acceptedGigsRequest(int id, int index) async {
+    setBusy(true);
+    // pageController.nextPage(
+    //     duration: Duration(seconds: 1), curve: Curves.easeInToLinear);
     var result = await candidateRepo.acceptedGigsRequest(id);
     result.fold((fail) {
       snackBarService.showSnackbar(message: fail.errorMsg);
-    }, (res) {});
+      setBusy(false);
+    }, (res) async {
+      await fetchGigsRequest();
+      setBusy(false);
+    });
   }
 
   String price(CandidateGigsRequestData e) {

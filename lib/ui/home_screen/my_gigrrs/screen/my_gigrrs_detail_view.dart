@@ -56,14 +56,25 @@ class MyGigrrsDetailView extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          status,
-          style: TSB.regularSmall(
-            textColor: mainGreenColor,
-          ),
+        Column(
+          children: [
+            Text(
+              "Job Status",
+              style: TSB.semiBoldSmall(),
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_3,
+            ),
+            Text(
+              status,
+              style: TSB.regularSmall(
+                textColor: mainPinkColor,
+              ),
+            ),
+          ],
         ),
         _buildActionButton(
-          buttonText: buttonText,
+          buttonText: buttonText.tr(),
           onTap: viewModel.navigationToStatusForGigs,
         )
       ],

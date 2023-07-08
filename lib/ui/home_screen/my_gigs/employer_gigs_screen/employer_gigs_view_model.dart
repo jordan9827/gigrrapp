@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
+import 'package:square_demo_architecture/ui/home_screen/my_gigs/employer_gigs_screen/screen/candidate_offer_view.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -14,6 +16,8 @@ class EmployerGigsViewModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
   int responseCount = 0;
   List<MyGigsData> myGigsList = [];
+  TextEditingController offerPriceController = TextEditingController();
+  TextEditingController priceTypeController = TextEditingController();
 
   List<String> setStackedImage(MyGigsData data) {
     List<String> urlImages = [];
@@ -22,8 +26,8 @@ class EmployerGigsViewModel extends BaseViewModel {
         if (i.candidateImageList.isEmpty) {
           urlImages.add(i.candidate.imageURL);
         } else {
-          print(
-              "candidateImageList----> ${i.candidateImageList.first.imageURL}");
+          // print(
+          //     "candidateImageList----> ${i.candidateImageList.first.imageURL}");
           urlImages.add(i.candidateImageList.first.imageURL);
         }
       }
@@ -62,8 +66,8 @@ class EmployerGigsViewModel extends BaseViewModel {
     setBusy(true);
     var result = await businessRepo.fetchMyGigs();
     result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
+      snackBarService.showSnackbar(message: fail.errorMsg);
     }, (myGigs) {
       myGigsList = myGigs.myGigsData;
       notifyListeners();
@@ -74,5 +78,63 @@ class EmployerGigsViewModel extends BaseViewModel {
 
   String price({String from = "", String to = "", String priceCriteria = ""}) {
     return "₹ ${double.parse(from).toStringAsFixed(0)}-${double.parse(to).toStringAsFixed(0)}/$priceCriteria";
+  }
+
+  String isActiveStatus(MyGigsData gigs) {
+    String gigrStatus = "";
+    if (gigs.gigsRequestData.isNotEmpty) {
+      for (var i in gigs.gigsRequestData) {
+        gigrStatus = i.status.toLowerCase();
+      }
+    }
+    return gigrStatus;
+  }
+
+  void navigationToCandidateOfferRequest(
+    EmployerGigsViewModel viewModel,
+    MyGigsData gigs,
+  ) {
+    navigationService.navigateWithTransition(
+      CandidateOfferView(
+        gigs: gigs,
+      ),
+    );
+  }
+
+  Future<void> loadGigsCandidateOffer({
+    int gigsId = 0,
+    int candidateId = 0,
+  }) async {
+    if (offerPriceController.text.isNotEmpty) {
+      setBusy(true);
+      var result = await businessRepo.gigsCandidateOffer(
+        await _getRequestGigsCandidateOffer(
+          id: gigsId,
+          candidateId: candidateId,
+        ),
+      );
+      result.fold((fail) {
+        setBusy(false);
+        snackBarService.showSnackbar(message: fail.errorMsg);
+      }, (myGigs) async {
+        navigationService.back();
+        await fetchMyGigsList();
+        setBusy(false);
+      });
+    } else {
+      snackBarService.showSnackbar(message: "Please enter offer");
+    }
+    notifyListeners();
+  }
+
+  Future<Map<String, String>> _getRequestGigsCandidateOffer({
+    int id = 0,
+    int candidateId = 0,
+  }) async {
+    Map<String, String> request = {};
+    request['gigs_id'] = "$id";
+    request['candidate_id'] = "$candidateId";
+    request['offer_amount'] = offerPriceController.text;
+    return request;
   }
 }

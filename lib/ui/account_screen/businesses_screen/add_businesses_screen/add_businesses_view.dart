@@ -118,6 +118,7 @@ class AddBusinessesScreenView extends StatelessWidget {
     var latLng = viewModel.latLng;
     print("_buildGoogleMap----->>>  ${latLng.longitude}");
     return GoogleMapBoxScreen(
+      loading: true,
       lat: latLng.latitude.toString(),
       lng: latLng.longitude.toString(),
     );

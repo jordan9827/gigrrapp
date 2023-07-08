@@ -22,12 +22,16 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
     var media = MediaQuery.of(context).size;
     var data = viewModel.gigrrsData;
     var sizeWithStatus =
-        viewModel.isStatusSize ? media.height * 0.47 : media.height * 0.42;
+        viewModel.isButtonVisible ? media.height * 0.47 : media.height * 0.415;
     return Container(
       width: double.infinity,
       height: media.height * 0.47,
-      margin: EdgeInsets.all(SizeConfig.margin_padding_15),
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+      margin: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
+      padding: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       decoration: BoxDecoration(
         color: mainWhiteColor,
         borderRadius: BorderRadius.circular(
@@ -81,7 +85,8 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
               SizedBox(
                 height: SizeConfig.margin_padding_10,
               ),
-              viewModel.isStatusSize ? statusView : SizedBox()
+              // viewModel.isStatusSize ? statusView : SizedBox()
+              statusView
             ],
           )
         ],

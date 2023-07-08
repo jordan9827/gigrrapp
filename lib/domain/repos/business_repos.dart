@@ -43,4 +43,8 @@ abstract class BusinessRepo {
   Future<Either<Failure, MyGigrrsRosterData>> myGigrrsRoster(
     String id,
   );
+
+  Future<Either<Failure, BaseResponse>> gigsCandidateOffer(
+    Map<String, dynamic> body,
+  );
 }

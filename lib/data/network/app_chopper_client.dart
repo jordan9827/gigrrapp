@@ -13,7 +13,7 @@ import 'interceptors/user_token_interceptor.dart';
 class AppChopperClient extends ChopperClient {
   AppChopperClient({http.Client? httpClient})
       : super(
-          baseUrl: Uri.parse(devBaseURL),
+          baseUrl: Uri.parse(stagingBaseURL),
           interceptors: [
             UserTokenInterceptor(),
           ],

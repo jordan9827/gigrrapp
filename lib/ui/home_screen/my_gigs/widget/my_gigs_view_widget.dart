@@ -13,12 +13,14 @@ class MyGigsViewWidget extends StatelessWidget {
   final String jobDuration;
   final String startDate;
   final Widget bottomView;
+  final bool isEmptyModel;
   const MyGigsViewWidget({
     Key? key,
     required this.bottomView,
     required this.title,
     required this.address,
     required this.price,
+    this.isEmptyModel = true,
     required this.jobDuration,
     required this.startDate,
   }) : super(key: key);
@@ -86,13 +88,25 @@ class MyGigsViewWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
-          ),
-          Divider(),
-          bottomView
+          if (isEmptyModel) _buildGiggsStatus()
         ],
       ),
+    );
+  }
+
+  Widget _buildGiggsStatus() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: SizeConfig.margin_padding_10,
+        ),
+        Divider(),
+        SizedBox(
+          height: SizeConfig.margin_padding_5,
+        ),
+        bottomView
+      ],
     );
   }
 

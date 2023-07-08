@@ -128,6 +128,8 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     required GigsAcceptedData gigs,
   }) {
     var status = viewModel.getGigStatus(gigs.gigsRequestData);
+    String business = gigs.businessData.businessName;
+    var nameBusiness = business.isNotEmpty ? business : "Super Enterprise";
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -135,7 +137,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              gigs.businessData.businessName.capitalize(),
+              nameBusiness.capitalize(),
               style: TSB.semiBoldLarge(
                 textColor: independenceColor,
               ),
@@ -224,7 +226,8 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
         ),
         _buildActionButton(
           buttonText: buttonText,
-          onTap: () => viewModel.loadUpdateJobStatusApi(gigs, viewModel),
+          onTap: () =>
+              viewModel.loadShortListUpdateJobStatusApi(gigs, viewModel),
         )
       ],
     );

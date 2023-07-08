@@ -89,7 +89,9 @@ class CandidateJobOTPVerifyDialog extends StatelessWidget {
                     loading: viewModel.isBusy,
                     title: "submit",
                     action: () => viewModel.loadGigsVerifyOTP(
-                        id: gigs.id, status: status),
+                      id: gigs.id,
+                      status: status,
+                    ),
                   ),
                 ),
               ],

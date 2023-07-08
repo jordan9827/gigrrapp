@@ -40,6 +40,8 @@ class MyAppViewModel extends BaseViewModel {
   }
 
   void setInitialRoute() {
+    print(
+        "setInitialRoute  ${userData.accessToken} && ${userData.profileStatus}");
     if (icCheckIntroScreen()) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
@@ -49,7 +51,7 @@ class MyAppViewModel extends BaseViewModel {
   }
 
   String _buildInitialCurrentRoutes() {
-    String routes = Routes.homeView;
+    String routes = Routes.loginView;
 
     switch (userData.profileStatus) {
       case "login":
@@ -62,9 +64,8 @@ class MyAppViewModel extends BaseViewModel {
       case "profile-completed":
         routes = Routes.candidateKYCScreenView;
         break;
-      case "":
-        routes = Routes.loginView;
-        break;
+      default:
+        routes = Routes.homeView;
     }
     return routes;
   }

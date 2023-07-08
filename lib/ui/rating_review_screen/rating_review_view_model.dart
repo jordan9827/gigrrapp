@@ -57,10 +57,10 @@ class RatingReviewViewModel extends BaseViewModel {
       );
       response.fold(
         (fail) {
-          snackBarService.showSnackbar(message: fail.errorMsg);
           setBusy(false);
+          snackBarService.showSnackbar(message: fail.errorMsg);
         },
-        (rating) async {
+        (rating) {
           navigationService.back(result: true);
           snackBarService.showSnackbar(message: rating.message);
           setBusy(false);

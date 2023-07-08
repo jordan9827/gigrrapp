@@ -3,4 +3,5 @@ enum DialogType {
   paymentFilter,
   acceptOffer,
   OTPVerifyStartJob,
+  candidatePayment,
 }

@@ -28,8 +28,8 @@ class MyGigrrsViewModel extends BaseViewModel {
     setBusy(true);
     var result = await businessRepo.getCandidate();
     result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
+      snackBarService.showSnackbar(message: fail.errorMsg);
     }, (res) {
       calender = res;
       dataSource = DataSource(_getAppointments());

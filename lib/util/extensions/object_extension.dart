@@ -18,7 +18,8 @@ extension ObjectExtension on Object {
         // return Failure(NetworkStatus.SocketStatus.index,
         //     "Unable to connect with server, please check your internet connection and try again");
       }
-      return Failure(NetworkStatus.CommonStatus.index, "commonNetworkMsg333");
+      return Failure(NetworkStatus.CommonStatus.index,
+          "Unknown error occurred on the server");
     }
     return Failure(NetworkStatus.CommonStatus.index,
         "Unknown error occurred on the server");

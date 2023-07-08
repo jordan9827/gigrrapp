@@ -95,8 +95,8 @@ class CandidateGigsViewModel extends BaseViewModel {
     if (_pageNumber == 1) setBusy(true);
     var result = await candidateRepo.acceptedGigs(_pageNumber);
     result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
+      snackBarService.showSnackbar(message: fail.errorMsg);
     }, (res) {
       appliedGigsList.addAll(res.gigsAcceptedData);
       itemCount = res.gigsAcceptedData.length;
@@ -114,8 +114,9 @@ class CandidateGigsViewModel extends BaseViewModel {
     if (_pageNumber == 1) setBusy(true);
     var result = await candidateRepo.candidateRosterGigs(_pageNumber);
     result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
+      snackBarService.showSnackbar(message: fail.errorMsg);
+
     }, (res) {
       _loading = false;
       shortListGigsList.addAll(res.candidateRosterData);
@@ -134,8 +135,9 @@ class CandidateGigsViewModel extends BaseViewModel {
       await _getRequestForCandidate(gigsId: id, status: "accept"),
     );
     result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
+      snackBarService.showSnackbar(message: fail.errorMsg);
+
     }, (res) async {
       await refreshScreen();
       setBusy(false);
@@ -165,7 +167,7 @@ class CandidateGigsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> loadUpdateJobStatusApi(
+  Future<void> loadShortListUpdateJobStatusApi(
     CandidateRosterData gigs,
     CandidateGigsViewModel viewModel,
   ) async {
@@ -179,7 +181,18 @@ class CandidateGigsViewModel extends BaseViewModel {
         await updateJobStatus(gigs, "complete", viewModel);
       } else if (i.paymentStatus == "pending") {
       } else if (i.ratingToEmployer == "no") {
-        navigationService.navigateTo(Routes.ratingReviewScreenView);
+        var gigsRequest = gigs.gigsRequestData.first;
+        var image = gigs.business.businessesImage.first.imageUrl;
+        await navigationService.navigateTo(
+          Routes.ratingReviewScreenView,
+          arguments: RatingReviewScreenViewArguments(
+            gigsId: gigs.id.toString(),
+            name: gigs.gigName,
+            profile: image,
+            candidateId: gigsRequest.employeId.toString(),
+          ),
+        );
+        refreshScreen();
       }
     }
     notifyListeners();
@@ -196,9 +209,10 @@ class CandidateGigsViewModel extends BaseViewModel {
       await _getRequestForCandidate(gigsId: gigs.id, status: status),
     );
     result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
+      snackBarService.showSnackbar(message: fail.errorMsg);
     }, (res) async {
+      otpController.text = "";
       showCandidateOTPVerifyStartJob(
         viewModel: viewModel,
         gigs: gigs,
@@ -222,8 +236,10 @@ class CandidateGigsViewModel extends BaseViewModel {
       );
       result.fold((fail) {
         otpController.clear();
+        otpController.text = "";
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
+        notifyListeners();
       }, (res) async {
         await refreshScreen();
         setBusy(false);

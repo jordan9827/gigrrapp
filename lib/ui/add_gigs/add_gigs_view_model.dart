@@ -79,7 +79,6 @@ class AddGigsViewModel extends BaseViewModel {
   }
 
   String get payRangeText {
-    notifyListeners();
     return "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${priceTypeController.text}";
   }
 
@@ -239,11 +238,12 @@ class AddGigsViewModel extends BaseViewModel {
           snackBarService.showSnackbar(message: fail.errorMsg);
           setBusy(false);
         },
-        (gigs) async {
+        (gigs) {
+          // snackBarService.showSnackbar(message: gigs.message);
           navigationService.back();
-          snackBarService.showSnackbar(message: gigs.message);
           gigrrNameController.clear();
           priceController.clear();
+          snackBarService.showSnackbar(message: gigs.message);
           notifyListeners();
           setBusy(false);
         },

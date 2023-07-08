@@ -122,7 +122,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
       (res) {
         print("verifyOTP ::::-----------------");
         setBusy(true);
-
         navigationService.back(
           result: {
             "isCheck": true,

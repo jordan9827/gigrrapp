@@ -26,8 +26,8 @@ class NotificationScreenViewModel extends BaseViewModel {
     final response = await notificationRepo.fetchNotifications();
     response.fold(
       (fail) {
-        snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
+        snackBarService.showSnackbar(message: fail.errorMsg);
       },
       (response) async {
         notificationList = response.notificationList;
@@ -43,8 +43,8 @@ class NotificationScreenViewModel extends BaseViewModel {
     final response = await notificationRepo.deleteNotifications();
     response.fold(
       (fail) {
-        snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
+        snackBarService.showSnackbar(message: fail.errorMsg);
       },
       (response) async {
         notificationList.clear();

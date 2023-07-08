@@ -285,4 +285,25 @@ class BusinessImpl extends BusinessRepo {
       return Left(e.handleException());
     }
   }
+
+  @override
+  Future<Either<Failure, BaseResponse>> gigsCandidateOffer(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await businessService.gigsCandidateOfferApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("MyGigrrsRoster Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
 }

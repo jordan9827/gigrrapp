@@ -37,6 +37,7 @@ import '../ui/account_screen/candidate/manage_address_screen/add_address_screen/
 import '../ui/account_screen/candidate/manage_address_screen/manage_address_view.dart';
 import '../ui/account_screen/help_support_screen/support_email_screen/support_email_view.dart';
 import '../ui/account_screen/privacy_policy/privacy_policy_view.dart';
+import '../ui/account_screen/select_payment_screen/select_payment_mode_view.dart';
 import '../ui/account_screen/terms_and_conditions/terms_and_condition_view.dart';
 import '../ui/add_gigs/add_gigs_view.dart';
 import '../ui/auth_screen/edit_profile_screen/edit_profile_view.dart';
@@ -65,7 +66,7 @@ import '../ui/widgets/giggr_request_view.dart';
 
     ///// Businesses /////
     MaterialRoute(page: MyGigrrsDetailView),
-    MaterialRoute(page: GigrrCustomRequestView),
+    MaterialRoute(page: SelectPaymentModeView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: AddBusinessesScreenView),
     MaterialRoute(page: EditBusinessesScreenView),

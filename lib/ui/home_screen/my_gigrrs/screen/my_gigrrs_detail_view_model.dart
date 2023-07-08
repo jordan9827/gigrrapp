@@ -17,6 +17,7 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
   bool isStatusSize = false;
   String statusMyGig = "";
   String gigrId = "";
+  bool isButtonVisible = false;
 
   MyGigrrsDetailViewModel(String id) {
     this.gigrId = id;
@@ -46,19 +47,16 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
 
   String statusForMyGigrrs() {
     for (var i in gigrrsData.gigsRequestData) {
-      if (i.status == "start") {
+      if (i.status == "Complete") {
         statusMyGig = "Complete";
       } else if (i.paymentStatus == "pending") {
-        isStatusSize = true;
-        statusMyGig = "Un Paid";
+        statusMyGig = "pay_candidate";
       } else if (i.ratingFromEmployer == "no") {
-        isStatusSize = true;
-        statusMyGig = "Rate";
+        statusMyGig = "rate";
       } else if (i.ratingFromEmployer == "yes" &&
           i.paymentStatus == "completed" &&
           i.status == "complete") {
-        isStatusSize = true;
-        statusMyGig = "Paid";
+        statusMyGig = "paid";
       }
     }
     return statusMyGig;
@@ -70,6 +68,12 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
       switch (i.status) {
         case "complete":
           status = "Completed";
+          break;
+        case "roster":
+          status = "Roster";
+          break;
+        case "start":
+          status = "Start";
           break;
       }
     }
@@ -89,6 +93,8 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
         ),
       );
       if (result) fetchMyGigrrRoster();
+    } else if (statusMyGig.toLowerCase() == "pay_candidate") {
+      navigationService.navigateTo(Routes.selectPaymentModeView);
     }
   }
 }
