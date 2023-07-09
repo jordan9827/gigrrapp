@@ -31,6 +31,8 @@ Future<void> scheduleNotification(
       payload: module,
       notificationDetails: NotificationDetails(
         android: AndroidNotificationDetails(
+          priority: Priority.high,
+          importance: Importance.high,
           NOTIFICATION_CHANNEL_ID,
           NOTIFICATION_CHANNEL_DESCRIPTION,
           groupKey: module,

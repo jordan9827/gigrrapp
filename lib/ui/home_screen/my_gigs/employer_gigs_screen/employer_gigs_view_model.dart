@@ -100,7 +100,7 @@ class EmployerGigsViewModel extends BaseViewModel {
   bool isEmptyModelCheck(MyGigsData gigs) {
     bool isCheck = false;
     var data = isActiveStatus(gigs);
-    if (data == "complete" || data == "") {
+    if (data == "complete" || data == "" || data == "start") {
       isCheck = true;
     }
     return isCheck;

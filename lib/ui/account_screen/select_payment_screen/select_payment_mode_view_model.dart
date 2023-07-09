@@ -135,6 +135,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     }, (res) {
       setBusy(false);
       navigationService.back();
+      navigationService.back();
     });
     notifyListeners();
   }
@@ -148,7 +149,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     var requestData = data.gigsRequestData.first;
     Map<String, String> request = {};
     request['gigs_id'] = "${data.id}";
-    request['candidate_id'] = "${requestData.id}";
+    request['candidate_id'] = "${requestData.candidate.id}";
     request['amount'] = requestData.offerAmount;
     request['payment_mode'] = paymentType;
     request['transaction_response'] = paymentResponse;

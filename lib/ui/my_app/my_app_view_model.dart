@@ -121,6 +121,7 @@ class MyAppViewModel extends BaseViewModel {
 
   void onNotificationOpenApp() {
     fCMService.onMessageOpenedAppStream().listen((event) {
+      navigationService.navigateTo(Routes.homeView);
       fCMService.isOpenFromNotification = true;
     });
   }

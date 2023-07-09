@@ -132,6 +132,9 @@ class AddGigsViewModel extends BaseViewModel {
     } else if (priceTypeController.text.isEmpty) {
       snackBarService.showSnackbar(message: "Please select cost criteria.");
       return false;
+    } else if (gigrrTypeController.text.isEmpty) {
+      snackBarService.showSnackbar(message: "Please select Gigrr Type");
+      return false;
     } else if (businessTypeController.text.isEmpty) {
       snackBarService.showSnackbar(message: "Please select business.");
       return false;

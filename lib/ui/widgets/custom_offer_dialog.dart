@@ -40,7 +40,7 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
       ),
       child: Container(
         height: MediaQuery.of(context).size.height * 0.58,
-        padding: EdgeInsets.symmetric(
+        margin: EdgeInsets.symmetric(
           horizontal: SizeConfig.margin_padding_20,
           vertical: SizeConfig.margin_padding_15,
         ),

@@ -16,11 +16,8 @@ class RatingReviewViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   TextEditingController commentController = TextEditingController();
   double _initialRating = 2.0;
-  double _rating = 0.0;
 
   double get initialRating => _initialRating;
-
-  double get rating => _rating;
 
   void navigatorToBack() {
     if (!isBusy) {
@@ -30,7 +27,7 @@ class RatingReviewViewModel extends BaseViewModel {
   }
 
   void onRatingUpdate(double rate) {
-    _rating = rate;
+    _initialRating = rate;
     log("onRatingUpdate ----> $rate");
     notifyListeners();
   }
@@ -77,7 +74,7 @@ class RatingReviewViewModel extends BaseViewModel {
     Map<String, String> request = {};
     request['gigs_id'] = id;
     request['candidate_id'] = candidateId;
-    request['rating'] = rating.toString();
+    request['rating'] = initialRating.toString();
     request['comments'] = commentController.text;
     log("Rating Request Body :: $request");
     return request;
