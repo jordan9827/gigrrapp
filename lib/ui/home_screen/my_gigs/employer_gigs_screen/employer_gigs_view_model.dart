@@ -1,3 +1,4 @@
+import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart';
@@ -14,10 +15,16 @@ class EmployerGigsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final businessRepo = locator<BusinessRepo>();
   final user = locator<UserAuthResponseData>();
+  final fCMService = locator<FCMService>();
+
   int responseCount = 0;
   List<MyGigsData> myGigsList = [];
   TextEditingController offerPriceController = TextEditingController();
   TextEditingController priceTypeController = TextEditingController();
+
+  EmployerGigsViewModel() {
+    fCMService.listenForegroundMessage((p0) => fetchMyGigsList());
+  }
 
   List<String> setStackedImage(MyGigsData data) {
     List<String> urlImages = [];
@@ -90,15 +97,25 @@ class EmployerGigsViewModel extends BaseViewModel {
     return gigrStatus;
   }
 
-  void navigationToCandidateOfferRequest(
+  bool isEmptyModelCheck(MyGigsData gigs) {
+    bool isCheck = false;
+    var data = isActiveStatus(gigs);
+    if (data == "complete" || data == "") {
+      isCheck = true;
+    }
+    return isCheck;
+  }
+
+  Future<void> navigationToCandidateOfferRequest(
     EmployerGigsViewModel viewModel,
     MyGigsData gigs,
-  ) {
-    navigationService.navigateWithTransition(
-      CandidateOfferView(
-        gigs: gigs,
-      ),
+  ) async {
+    var isCheck = await navigationService.navigateWithTransition(
+      CandidateOfferView(gigs: gigs),
     );
+    if (isCheck) {
+      await fetchMyGigsList();
+    }
   }
 
   Future<void> loadGigsCandidateOffer({
@@ -117,8 +134,7 @@ class EmployerGigsViewModel extends BaseViewModel {
         setBusy(false);
         snackBarService.showSnackbar(message: fail.errorMsg);
       }, (myGigs) async {
-        navigationService.back();
-        await fetchMyGigsList();
+        navigationService.back(result: true);
         setBusy(false);
       });
     } else {

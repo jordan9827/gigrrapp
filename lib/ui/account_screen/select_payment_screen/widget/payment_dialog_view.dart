@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
+import '../../../../data/network/dtos/my_gigrrs_roster_response.dart';
 import '../../../../others/constants.dart';
 import '../../../../util/others/size_config.dart';
 import '../../../../util/others/text_styles.dart';
@@ -8,9 +10,13 @@ import '../select_payment_mode_view_model.dart';
 
 class PaymentDialogView extends StatefulWidget {
   final SelectPaymentModelViewModel viewModel;
+  final MyGigrrsRosterData gigrrsData;
+  final Function() onTap;
   const PaymentDialogView({
     Key? key,
     required this.viewModel,
+    required this.gigrrsData,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -21,6 +27,7 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+    var user = widget.gigrrsData.gigsRequestData.first;
     return Dialog(
       alignment: Alignment.center,
       insetPadding: EdgeInsets.all(30),
@@ -30,14 +37,15 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
       ),
       child: Container(
         width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.65,
+        height: MediaQuery.of(context).size.height * 0.60,
         padding: EdgeInsets.symmetric(
           horizontal: SizeConfig.margin_padding_20,
           vertical: SizeConfig.margin_padding_15,
         ),
         child: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 "make_payment".tr(),
@@ -53,14 +61,18 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
               SizedBox(
                 height: SizeConfig.margin_padding_15,
               ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(0),
+              CircleAvatar(
+                radius: SizeConfig.margin_padding_50,
+                backgroundImage: NetworkImage(
+                  user.candidate.imageURL,
+                ),
+                backgroundColor: Colors.transparent,
               ),
               SizedBox(
                 height: SizeConfig.margin_padding_5,
               ),
               Text(
-                "payment_title".tr(),
+                widget.gigrrsData.gigName,
                 style: TSB.semiBoldMedium(),
               ),
               SizedBox(
@@ -73,10 +85,10 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
                 ),
               ),
               SizedBox(
-                height: SizeConfig.margin_padding_10,
+                height: SizeConfig.margin_padding_5,
               ),
               Text(
-                "400".tr(),
+                "₹ " + user.offerAmount.toPriceFormat(0),
                 style: TSB.bold(
                   textSize: SizeConfig.margin_padding_16 * 2,
                   textColor: mainPinkColor,
@@ -86,11 +98,8 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
                 height: SizeConfig.margin_padding_15,
               ),
               LoadingButton(
-                action: () {},
+                action: widget.onTap,
                 title: "pay_now",
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_10,
               ),
             ],
           ),

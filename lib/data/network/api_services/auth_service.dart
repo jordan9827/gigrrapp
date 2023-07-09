@@ -65,6 +65,6 @@ abstract class AuthService extends ChopperService {
     @PartFile("image[]") String path,
   );
 
-  @Post(path: "logout")
+  @Post(path: "logout", optionalBody: true)
   Future<Response<BaseResponse>> logout();
 }

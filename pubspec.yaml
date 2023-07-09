@@ -39,6 +39,7 @@ dependencies:
   # Stacked for State management
   stacked: 3.2.0
   stacked_services: 1.0.0
+  #local auth of local notification.
   local_auth:
 
   webview_flutter: ^4.2.0
@@ -53,7 +54,7 @@ dependencies:
   # Shared preferences
   shared_preferences: ^2.0.17
 
-  package_info_plus: ^3.1.0
+  package_info_plus: ^4.0.1
   google_maps_flutter: ^2.2.5
   # Http request
   chopper: 6.1.1
@@ -98,17 +99,10 @@ dependencies:
 
   firebase_crashlytics:
 
-# Google Login
+# Social Login
   google_sign_in: ^6.1.0
-
-# FaceBook Login
   flutter_login_facebook: ^1.8.0
-
-# Apple Login
   sign_in_with_apple:
-## Map Box
-#  flutter_mapbox_autocomplete:
-#    path: ./packages/flutter_mapbox_autocomplete
 
   #to check internet connectivity
   internet_connection_checker: ^1.0.0+1
@@ -120,15 +114,15 @@ dependencies:
     path: ./packages/mapbox
 
   dotted_border: ^2.0.0+3
-# Image Picker
+  #Image Picker
   image_cropper: ^3.0.2
   image_picker: ^0.8.7+2
   cached_network_image: ^3.2.3
 
-# calender
+  #calender
   syncfusion_flutter_calendar:
-
-
+  #Payment Gtway
+  razorpay_flutter: ^1.3.5
 # flutter_native_splash-development.yaml
 flutter_native_splash:
   color: "#FFFFFF"

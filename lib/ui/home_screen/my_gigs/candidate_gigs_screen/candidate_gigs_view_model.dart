@@ -116,7 +116,6 @@ class CandidateGigsViewModel extends BaseViewModel {
     result.fold((fail) {
       setBusy(false);
       snackBarService.showSnackbar(message: fail.errorMsg);
-
     }, (res) {
       _loading = false;
       shortListGigsList.addAll(res.candidateRosterData);
@@ -137,7 +136,6 @@ class CandidateGigsViewModel extends BaseViewModel {
     result.fold((fail) {
       setBusy(false);
       snackBarService.showSnackbar(message: fail.errorMsg);
-
     }, (res) async {
       await refreshScreen();
       setBusy(false);
@@ -174,7 +172,7 @@ class CandidateGigsViewModel extends BaseViewModel {
     var bankStatus = (user.bankStatus == 1 ? true : false);
     for (var i in gigs.gigsRequestData) {
       if (i.status == "roster") {
-        if (bankStatus) {
+        if (!bankStatus) {
           await updateJobStatus(gigs, "start", viewModel);
         } else {}
       } else if (i.status == "start") {

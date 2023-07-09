@@ -52,11 +52,12 @@ class MyGigrrsDetailView extends StatelessWidget {
     required MyGigrrsDetailViewModel viewModel,
   }) {
     var status = viewModel.getGigStatus();
-    var buttonText = viewModel.statusForMyGigrrs();
+    var buttonText = viewModel.statusForMyGigrrsAction();
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               "Job Status",
@@ -73,10 +74,11 @@ class MyGigrrsDetailView extends StatelessWidget {
             ),
           ],
         ),
-        _buildActionButton(
-          buttonText: buttonText.tr(),
-          onTap: viewModel.navigationToStatusForGigs,
-        )
+        if (viewModel.isButtonVisible)
+          _buildActionButton(
+            buttonText: buttonText.tr(),
+            onTap: viewModel.navigationToStatusForGigs,
+          )
       ],
     );
   }

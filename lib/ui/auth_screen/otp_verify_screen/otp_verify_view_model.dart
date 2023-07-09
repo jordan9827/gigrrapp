@@ -97,13 +97,15 @@ class OTPVerifyScreenModel extends BaseViewModel {
   }
 
   void verifyOtpApiCall() {
-    if (pinController.text.length == 4) {
-      if (!enableResend) {
-        verifyOTP();
-      } else {
-        pinController.text = "";
-        FocusManager.instance.primaryFocus?.unfocus();
-        snackBarService.showSnackbar(message: "please Resend OTP");
+    if (!isBusy) {
+      if (pinController.text.length == 4) {
+        if (!enableResend) {
+          verifyOTP();
+        } else {
+          pinController.text = "";
+          FocusManager.instance.primaryFocus?.unfocus();
+          snackBarService.showSnackbar(message: "please Resend OTP");
+        }
       }
     }
   }

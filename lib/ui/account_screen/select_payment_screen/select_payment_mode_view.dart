@@ -4,13 +4,19 @@ import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+import '../../../data/network/dtos/my_gigrrs_roster_response.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/text_styles.dart';
 import 'select_payment_mode_view_model.dart';
 
 class SelectPaymentModeView extends StatelessWidget {
-  const SelectPaymentModeView({Key? key}) : super(key: key);
+  final MyGigrrsRosterData data;
+
+  SelectPaymentModeView({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +70,7 @@ class SelectPaymentModeView extends StatelessWidget {
                           ),
                         ),
                         title: Text(
-                          e.title,
+                          e.title.tr(),
                           style: TSB.regularSmall(),
                         ),
                         contentPadding: EdgeInsets.zero,
@@ -82,7 +88,7 @@ class SelectPaymentModeView extends StatelessWidget {
             Spacer(),
             LoadingButton(
               loading: viewModel.isBusy,
-              action: viewModel.submitPayment,
+              action: () => viewModel.submitPayment(viewModel, data),
               title: "pay",
             ),
             SizedBox(

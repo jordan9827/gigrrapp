@@ -73,8 +73,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                         priceCriteria: gigs.priceCriteria,
                       ),
                       startDate: gigs.gigsStartDate,
-                      isEmptyModel:
-                          (viewModel.isActiveStatus(gigs) != "complete"),
+                      isEmptyModel: !viewModel.isEmptyModelCheck(gigs),
                       jobDuration: "${gigs.duration} ${gigs.priceCriteria}",
                       bottomView: _buildStatusGigsView(viewModel, gigs),
                     ),
@@ -99,6 +98,8 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
       return _buildOfferSendView(gigs: gigs);
     } else if (status == "received-offer") {
       return _buildShortListCandidateView(gigs: gigs, viewModel: viewModel);
+    } else if (status == "roster") {
+      return _buildShortListedView(gigs: gigs);
     } else
       return SizedBox();
   }
@@ -108,6 +109,17 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
   }) {
     return Text(
       "${gigs.gigsRequestCount} Offers Sent",
+      style: TSB.regularSmall(
+        textColor: mainPinkColor,
+      ),
+    );
+  }
+
+  Widget _buildShortListedView({
+    required MyGigsData gigs,
+  }) {
+    return Text(
+      "${gigs.gigsRequestCount} ShortListed",
       style: TSB.regularSmall(
         textColor: mainPinkColor,
       ),

@@ -79,6 +79,11 @@
 		<string>Need library access in order to upload user profile picture.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true/>
+		<key>UIBackgroundModes</key>
+        	<array>
+        		<string>fetch</string>
+        		<string>remote-notification</string>
+        	</array>
 		<key>UILaunchStoryboardName</key>
 		<string>LaunchScreen</string>
 		<key>UIMainStoryboardFile</key>

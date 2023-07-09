@@ -1,19 +1,34 @@
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../app/app.locator.dart';
+import '../../../data/network/dtos/my_gigrrs_roster_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../util/enums/dialog_type.dart';
 import '../../../util/others/image_constants.dart';
+import '../../../util/others/razorpay_payment_helper.dart';
 import 'widget/payment_dialog_view.dart';
 
-class SelectPaymentModelViewModel extends BaseViewModel {
+class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
   final user = locator<UserAuthResponseData>();
-  List<String> paymentList = ["Pay Cash, Razor Pay"];
+  final Razorpay _razorpay = Razorpay();
+
+  List<String> paymentList = ["pay_cash, razor_pay"];
   PaymentMethod paymentMethod = PaymentMethod();
+
+  @override
+  void initialise() {
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
+        RazorPayPaymentHelper.handlePaymentSuccessResponse);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
+        RazorPayPaymentHelper.handlePaymentErrorResponse);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
+        RazorPayPaymentHelper.handleExternalWalletSelected);
+  }
 
   void navigationToBack() {
     if (!isBusy) {
@@ -29,24 +44,67 @@ class SelectPaymentModelViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void submitPayment() {
+  void submitPayment(
+    SelectPaymentModelViewModel viewModel,
+    MyGigrrsRosterData gigrrsData,
+  ) {
     if (paymentMethod.title.isNotEmpty) {
+      loadPaymentDialog(viewModel, gigrrsData);
     } else {
       snackBarService.showSnackbar(
           message: "Please select you payment method.");
     }
   }
 
-  void loadPaymentDialog(SelectPaymentModelViewModel viewModel) {
+  Future<void> loadPaymentDialog(
+    SelectPaymentModelViewModel viewModel,
+    MyGigrrsRosterData gigrrsData,
+  ) async {
     final builders = {
       DialogType.candidatePayment: (_, request, completer) => PaymentDialogView(
+            gigrrsData: gigrrsData,
             viewModel: viewModel,
+            onTap: () => loadPaymentMethod(gigrrsData),
           )
     };
     dialogService.registerCustomDialogBuilders(builders);
-    dialogService.showCustomDialog(
+    var data = await dialogService.showCustomDialog(
       variant: DialogType.candidatePayment,
     );
+    print("dialogService $data");
+  }
+
+  void loadPaymentMethod(MyGigrrsRosterData gigrrsData) {
+    var index = PaymentMethod.paymentList.indexOf(paymentMethod);
+    if (index == 1) {
+      print("Razor Pay");
+      loadRazorPayPayment(gigrrsData);
+    } else {
+      print("Cash Pay");
+    }
+  }
+
+  void loadRazorPayPayment(MyGigrrsRosterData data) {
+    var request = data.gigsRequestData.first;
+    var price = request.offerAmount.toPriceFormat(0);
+    var amount = int.parse(price) * 100;
+    var options = {
+      'key': 'rzp_live_aGAF5DHohgOzfr',
+      'amount': amount,
+      'name': request.candidate.fullName,
+      "currency": "INR",
+      'description': 'Payment',
+      'prefill': {
+        'contact': user.mobile,
+        'email': user.email,
+      }
+    };
+    print("RazorPay Request Body --- ${options.toString()}");
+    try {
+      _razorpay.open(options);
+    } catch (e) {
+      snackBarService.showSnackbar(message: e.toString());
+    }
   }
 }
 

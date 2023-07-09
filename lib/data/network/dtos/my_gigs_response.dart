@@ -141,6 +141,9 @@ class Candidate with _$Candidate {
   const factory Candidate(
     @JsonKey(name: "id", defaultValue: 0) int id,
     @JsonKey(name: "role_id", defaultValue: "") String roleId,
+    @JsonKey(name: "email", defaultValue: "") String email,
+    @JsonKey(name: "mobile", defaultValue: "") String mobile,
+    @JsonKey(name: "full_name", defaultValue: "") String fullName,
     @JsonKey(name: "image_url", defaultValue: "") String imageURL,
   ) = _Candidate;
 
