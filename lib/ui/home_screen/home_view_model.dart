@@ -27,6 +27,11 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void setInitialIndex() {
+    if (!user.isEmployer) bottomNavBarService.currentIndex = 1;
+    notifyListeners();
+  }
+
   Future<void> gigrrTypeApiCall() async {
     setBusy(true);
     await businessRepo.gigrrTypeCategory();

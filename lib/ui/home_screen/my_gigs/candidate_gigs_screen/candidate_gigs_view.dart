@@ -245,7 +245,10 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
           vertical: SizeConfig.margin_padding_8,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: mainPinkColor, width: 1.5),
+          border: Border.all(
+            color: mainPinkColor,
+            width: 1.5,
+          ),
           borderRadius: BorderRadius.circular(
             SizeConfig.margin_padding_8,
           ),

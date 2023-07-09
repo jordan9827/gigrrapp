@@ -135,6 +135,7 @@ class _HomeViewState extends State<HomeView> {
     final ThemeData themeData = Theme.of(context);
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.setInitialIndex(),
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, viewModel, child) {
         var isEmployer = viewModel.user.isEmployer;
