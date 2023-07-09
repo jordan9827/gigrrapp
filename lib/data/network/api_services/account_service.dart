@@ -49,7 +49,7 @@ abstract class AccountService extends ChopperService {
   );
 
   @Post(path: "gigs-candidate-payment")
-  Future<Response<ChatResponse>> gigsCandidatePaymentApi(
+  Future<Response<BaseResponse>> gigsCandidatePaymentApi(
     @Body() Map<String, dynamic> body,
   );
 

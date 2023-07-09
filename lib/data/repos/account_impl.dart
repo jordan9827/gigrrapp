@@ -199,4 +199,24 @@ class AccountImpl extends AccountRepo {
       return Left(e.handleException());
     }
   }
+
+  @override
+  Future<Either<Failure, BaseResponse>> gigsCandidatePayment(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await accountService.gigsCandidatePaymentApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(res);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
 }

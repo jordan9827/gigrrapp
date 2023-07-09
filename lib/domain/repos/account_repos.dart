@@ -31,5 +31,10 @@ abstract class AccountRepo {
   Future<Either<Failure, bool>> contactUS(Map<String, dynamic> data);
 
   Future<Either<Failure, BaseResponse>> addBankAccount(
-      Map<String, dynamic> data);
+    Map<String, dynamic> data,
+  );
+
+  Future<Either<Failure, BaseResponse>> gigsCandidatePayment(
+    Map<String, dynamic> data,
+  );
 }

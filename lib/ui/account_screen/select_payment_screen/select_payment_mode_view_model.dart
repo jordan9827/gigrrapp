@@ -1,3 +1,5 @@
+import 'package:square_demo_architecture/domain/repos/account_repos.dart';
+import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -15,6 +17,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
   final user = locator<UserAuthResponseData>();
+  final accountRepo = locator<AccountRepo>();
   final Razorpay _razorpay = Razorpay();
 
   List<String> paymentList = ["pay_cash, razor_pay"];
@@ -38,10 +41,12 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
   }
 
   void selectPayment(PaymentMethod? val) {
-    if (val != null) {
-      paymentMethod = val;
+    if (!isBusy) {
+      if (val != null) {
+        paymentMethod = val;
+      }
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   void submitPayment(
@@ -74,13 +79,17 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     print("dialogService $data");
   }
 
-  void loadPaymentMethod(MyGigrrsRosterData gigrrsData) {
+  void loadPaymentMethod(MyGigrrsRosterData data) {
     var index = PaymentMethod.paymentList.indexOf(paymentMethod);
     if (index == 1) {
       print("Razor Pay");
-      loadRazorPayPayment(gigrrsData);
+      loadRazorPayPayment(data);
     } else {
-      print("Cash Pay");
+      navigationService.back();
+      loadCandidatePayment(
+        data: data,
+        paymentType: "cash",
+      );
     }
   }
 
@@ -105,6 +114,46 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     } catch (e) {
       snackBarService.showSnackbar(message: e.toString());
     }
+  }
+
+  Future<void> loadCandidatePayment({
+    required MyGigrrsRosterData data,
+    String paymentType = "",
+    String paymentResponse = "",
+    String paymentID = "",
+  }) async {
+    setBusy(true);
+    var result = await accountRepo.gigsCandidatePayment(
+      await _getRequestForPayment(
+        data: data,
+        paymentType: paymentType,
+      ),
+    );
+    result.fold((fail) {
+      snackBarService.showSnackbar(message: fail.errorMsg);
+      setBusy(false);
+    }, (res) {
+      setBusy(false);
+      navigationService.back();
+    });
+    notifyListeners();
+  }
+
+  Future<Map<String, String>> _getRequestForPayment({
+    required MyGigrrsRosterData data,
+    String paymentType = "",
+    String paymentResponse = "",
+    String paymentID = "",
+  }) async {
+    var requestData = data.gigsRequestData.first;
+    Map<String, String> request = {};
+    request['gigs_id'] = "${data.id}";
+    request['candidate_id'] = "${requestData.id}";
+    request['amount'] = requestData.offerAmount;
+    request['payment_mode'] = paymentType;
+    request['transaction_response'] = paymentResponse;
+    request['transaction_id'] = paymentID;
+    return request;
   }
 }
 

@@ -15,8 +15,7 @@ class RazorPayPaymentHelper {
   }
 
   static void handlePaymentSuccessResponse(PaymentSuccessResponse response) {
-    navigationService.back();
-    snackBarService.showSnackbar(message: "Successfully");
+    navigationService.back(result: response);
   }
 
   static void handleExternalWalletSelected(ExternalWalletResponse response) {}
