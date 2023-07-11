@@ -15,11 +15,13 @@ class HomeViewModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
   final log = getLogger("HomeScreenViewModel");
   final businessRepo = locator<BusinessRepo>();
+  int initialIndex = 0;
 
-  HomeViewModel() {
+  HomeViewModel(int index) {
+    this.initialIndex = index;
     gigrrTypeApiCall();
     log.i(
-        "User Response --------------------------\nId= ${user.id}\nStatus= ${user.status}\nRole= ${user.roleId}\nToken= ${user.accessToken}\n--------------------");
+        "User Response --------------------------\nId= ${user.toString()}\nStatus= ${user.status}\nRole= ${user.roleId}\nToken= ${user.accessToken}\n--------------------");
   }
 
   void changeScreenIndex(int index) {
@@ -28,7 +30,11 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void setInitialIndex() {
-    if (!user.isEmployer) bottomNavBarService.currentIndex = 1;
+    if (!user.isEmployer) {
+      bottomNavBarService.currentIndex = 1;
+    } else {
+      bottomNavBarService.currentIndex = initialIndex;
+    }
     notifyListeners();
   }
 

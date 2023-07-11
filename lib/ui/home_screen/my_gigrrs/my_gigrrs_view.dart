@@ -15,6 +15,7 @@ class MyGirrsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.fetchCalender(),
       viewModelBuilder: () => MyGigrrsViewModel(),
       builder: (context, viewModel, child) {
         return Scaffold(

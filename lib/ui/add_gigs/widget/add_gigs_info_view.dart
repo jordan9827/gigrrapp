@@ -26,6 +26,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
     return Container(
       padding: edgeInsetsMargin,
       child: ListView(
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           CVMTextFormField(
             title: "gig_name",

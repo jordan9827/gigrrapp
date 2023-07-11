@@ -13,7 +13,11 @@ import 'candidate_gigrrs_view/candidate_gigrrs_view.dart';
 import 'home_view_model.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  final int initialIndex;
+  const HomeView({
+    Key? key,
+    this.initialIndex = 0,
+  }) : super(key: key);
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -111,7 +115,7 @@ class _HomeViewState extends State<HomeView> {
                 Text(
                   title.tr(),
                   style: TSB.regular(
-                    textSize: SizeConfig.safeBlockHorizontal * 3,
+                    textSize: SizeConfig.safeBlockHorizontal * 2.8,
                     textColor: mainWhiteColor,
                   ),
                 ),
@@ -136,7 +140,7 @@ class _HomeViewState extends State<HomeView> {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) => viewModel.setInitialIndex(),
-      viewModelBuilder: () => HomeViewModel(),
+      viewModelBuilder: () => HomeViewModel(widget.initialIndex),
       builder: (context, viewModel, child) {
         var isEmployer = viewModel.user.isEmployer;
         return Scaffold(

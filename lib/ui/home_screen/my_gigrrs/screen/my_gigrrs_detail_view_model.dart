@@ -1,6 +1,6 @@
+import 'package:fcm_service/fcm_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/my_gigrrs_roster_response.dart';
@@ -14,13 +14,17 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
   final businessRepo = locator<BusinessRepo>();
   MyGigrrsRosterData gigrrsData = MyGigrrsRosterData.getEmptyMyGigrrs();
+  final fCMService = locator<FCMService>();
+
   bool isStatusSize = false;
   String statusMyGig = "";
   String gigrId = "";
+  String jobOTP = "";
   bool isButtonVisible = true;
 
   MyGigrrsDetailViewModel(String id) {
     this.gigrId = id;
+    fCMService.listenForegroundMessage((p0) => fetchMyGigrrRoster());
   }
 
   void navigationToBack() {
@@ -71,11 +75,13 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
           break;
         case "roster":
           isButtonVisible = false;
+          jobOTP = i.startOTP;
           status = "Roster";
           break;
         case "start":
           isButtonVisible = false;
           status = "Start";
+          jobOTP = i.endOTP;
           break;
       }
     }

@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/app/app.router.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -243,7 +244,10 @@ class AddGigsViewModel extends BaseViewModel {
         },
         (gigs) {
           // snackBarService.showSnackbar(message: gigs.message);
-          navigationService.back();
+          navigationService.clearStackAndShow(
+            Routes.homeView,
+            arguments: HomeViewArguments(initialIndex: 1),
+          );
           gigrrNameController.clear();
           priceController.clear();
           snackBarService.showSnackbar(message: gigs.message);

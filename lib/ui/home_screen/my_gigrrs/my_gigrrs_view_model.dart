@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fcm_service/fcm_service.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:stacked/stacked.dart';
@@ -15,11 +16,13 @@ class MyGigrrsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final user = locator<UserAuthResponseData>();
   final businessRepo = locator<BusinessRepo>();
+  final fCMService = locator<FCMService>();
+
   Map<String, dynamic> calender = <String, dynamic>{};
   DataSource dataSource = DataSource([]);
 
   MyGigrrsViewModel() {
-    fetchCalender();
+    fCMService.listenForegroundMessage((p0) => fetchCalender());
   }
 
   Future<void> refreshScreen() async {}

@@ -64,6 +64,9 @@ class MyAppViewModel extends BaseViewModel {
       case "profile-completed":
         routes = Routes.candidateKYCScreenView;
         break;
+      case "otp-verify":
+        routes = Routes.loginView;
+        break;
       default:
         routes = Routes.homeView;
     }

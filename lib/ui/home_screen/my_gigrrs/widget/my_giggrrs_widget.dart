@@ -39,56 +39,61 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
         ),
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildTitleOfGiggrrs(data, viewModel),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
-          ),
-          Row(
-            children: [
-              _buildDurationView(
-                title: data.gigsStartDate.toDateFormat(),
-                subTitle: "start_date",
-              ),
-              SizedBox(
-                width: SizeConfig.margin_padding_10,
-              ),
-              _buildDurationView(
-                title:
-                    "₹ ${data.gigsRequestData.first.offerAmount.toPriceFormat(0)}",
-                subTitle: "offer_price",
-              ),
-            ],
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
-          Divider(
-            thickness: 1,
-            color: mainGrayColor,
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_5,
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "all_real_estate_sol".tr(),
-                style: TSB.semiBoldLarge(),
+              _buildTitleOfGiggrrs(data, viewModel),
+              SizedBox(
+                height: SizeConfig.margin_padding_15,
+              ),
+              Row(
+                children: [
+                  _buildDurationView(
+                    title: data.gigsStartDate.toDateFormat(),
+                    subTitle: "start_date",
+                  ),
+                  SizedBox(
+                    width: SizeConfig.margin_padding_10,
+                  ),
+                  _buildDurationView(
+                    title:
+                        "₹ ${data.gigsRequestData.first.offerAmount.toPriceFormat(0)}",
+                    subTitle: "offer_price",
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_10,
+              ),
+              Divider(
+                thickness: 1,
+                color: mainGrayColor,
               ),
               SizedBox(
                 height: SizeConfig.margin_padding_5,
               ),
-              _buildAddressView(data.gigAddress),
-              SizedBox(
-                height: SizeConfig.margin_padding_10,
-              ),
-              // viewModel.isStatusSize ? statusView : SizedBox()
-              statusView
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "all_real_estate_sol".tr(),
+                    style: TSB.semiBoldLarge(),
+                  ),
+                  SizedBox(
+                    height: SizeConfig.margin_padding_5,
+                  ),
+                  _buildAddressView(data.gigAddress),
+                  SizedBox(
+                    height: SizeConfig.margin_padding_10,
+                  ),
+                  // viewModel.isStatusSize ? statusView : SizedBox()
+                ],
+              )
             ],
-          )
+          ),
+          statusView
         ],
       ),
     );

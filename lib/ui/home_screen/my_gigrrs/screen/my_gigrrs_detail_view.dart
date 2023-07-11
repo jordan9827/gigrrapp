@@ -13,6 +13,7 @@ import 'my_gigrrs_detail_view_model.dart';
 
 class MyGigrrsDetailView extends StatelessWidget {
   final String id;
+
   const MyGigrrsDetailView({Key? key, this.id = ""}) : super(key: key);
 
   @override
@@ -37,12 +38,16 @@ class MyGigrrsDetailView extends StatelessWidget {
         ),
         body: LoadingScreen(
           loading: viewModel.isBusy,
-          child: viewModel.isBusy
-              ? EmptyDataScreenView()
-              : MyGigrrsWidget(
-                  statusView:
-                      _buildShortListGigsStatusView(viewModel: viewModel),
-                ),
+          child: RefreshIndicator(
+            color: independenceColor,
+            onRefresh: viewModel.fetchMyGigrrRoster,
+            child: viewModel.isBusy
+                ? EmptyDataScreenView()
+                : MyGigrrsWidget(
+                    statusView:
+                        _buildShortListGigsStatusView(viewModel: viewModel),
+                  ),
+          ),
         ),
       ),
     );
@@ -74,6 +79,10 @@ class MyGigrrsDetailView extends StatelessWidget {
             ),
           ],
         ),
+        _buildStartEndOTPView(
+          status: status.toLowerCase(),
+          otp: viewModel.jobOTP,
+        ),
         if (viewModel.isButtonVisible)
           _buildActionButton(
             buttonText: buttonText.tr(),
@@ -81,6 +90,35 @@ class MyGigrrsDetailView extends StatelessWidget {
           )
       ],
     );
+  }
+
+  Widget _buildStartEndOTPView({
+    String otp = "",
+    String status = "",
+  }) {
+    var title = status == "roster" ? "Start" : "End";
+    if ((status == "roster" || status == "start") && otp.isNotEmpty) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            "$title OTP",
+            style: TSB.semiBoldSmall(),
+          ),
+          SizedBox(
+            height: SizeConfig.margin_padding_3,
+          ),
+          Text(
+            otp,
+            style: TSB.regularSmall(
+              textColor: mainPinkColor,
+            ),
+          ),
+        ],
+      );
+    } else {
+      return SizedBox();
+    }
   }
 
   Widget _buildActionButton({

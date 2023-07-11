@@ -88,19 +88,19 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   void _navigationToStatusLogin(String value) {
-    var employer = (user.roleId == "3" ? true : false);
+    var employer = (roleId == "3" ? true : false);
     print("_navigationToStatusLogin $employer");
     switch (value) {
       case "otp-verify":
         if (employer) {
-          navigationService.clearStackAndShow(
+          navigationService.navigateTo(
             Routes.employerRegisterScreenView,
             arguments: EmployerRegisterScreenViewArguments(
               phoneNumber: mobileController.text,
             ),
           );
         } else {
-          navigationService.clearStackAndShow(
+          navigationService.navigateTo(
             Routes.candidateRegisterScreenView,
             arguments: CandidateRegisterScreenViewArguments(
               phoneNumber: mobileController.text,
@@ -195,12 +195,12 @@ class LoginViewViewModel extends BaseViewModel {
     switch (value) {
       case "login":
         if (res.isEmployer) {
-          navigationService.clearStackAndShow(
+          navigationService.navigateTo(
             Routes.employerRegisterScreenView,
             arguments: EmployerRegisterScreenViewArguments(isSocialLogin: true),
           );
         } else {
-          navigationService.clearStackAndShow(
+          navigationService.navigateTo(
             Routes.candidateRegisterScreenView,
             arguments: CandidateRegisterScreenViewArguments(
               isSocialLogin: true,

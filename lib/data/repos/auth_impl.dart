@@ -241,12 +241,16 @@ class AuthImpl extends Auth {
 
   Future<UserAuthResponseData> setUserResponse(
       UserAuthResponseData user) async {
-    var employer = (user.roleId == "3" ? true : false);
+    var employer = setUserStatus(user.roleId);
     UserAuthResponseData data = user.copyWith(isEmployer: employer);
     locator.unregister<UserAuthResponseData>();
     locator.registerSingleton<UserAuthResponseData>(data);
     await sharedPreferences.setString(
         PreferenceKeys.USER_DATA.text, json.encode(data));
     return data;
+  }
+
+  bool setUserStatus(String id) {
+    return id == "3" ? true : false;
   }
 }
