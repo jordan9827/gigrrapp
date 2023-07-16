@@ -47,8 +47,10 @@ import '../ui/auth_screen/signup_screen/candidate_register_screen/candidate_regi
 import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candidate_kyc_screen/candidate_kyc_view.dart';
 import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candidate_role_form_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_register_view.dart';
+import '../ui/home_screen/employer_gigrr_view/employer_gigrr_detail_view/employer_gigrr_detail_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/home_screen/my_gigrrs/screen/my_gigrrs_detail_view.dart';
+import '../ui/home_screen/my_gigs/employer_gigs_screen/screen/candidate_offer_view.dart';
 import '../ui/into_screen/intro_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
 import '../ui/widgets/giggr_request_view.dart';
@@ -66,6 +68,8 @@ import '../ui/widgets/giggr_request_view.dart';
 
     ///// Businesses /////
     MaterialRoute(page: MyGigrrsDetailView),
+    MaterialRoute(page: EmployerGigrrDetailView),
+    MaterialRoute(page: CandidateOfferView),
     MaterialRoute(page: SelectPaymentModeView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: AddBusinessesScreenView),

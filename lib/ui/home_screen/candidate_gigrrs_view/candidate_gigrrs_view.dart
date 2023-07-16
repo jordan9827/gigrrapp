@@ -34,11 +34,11 @@ class CandidateGigrrsView extends StatelessWidget {
                         title: e.gigName,
                         profile: viewModel.profileImage(e.business),
                         price: viewModel.price(e),
-                        gigrrName: 'apply_now',
+                        gigrrActionName: 'apply_now',
                         isCandidate: true,
                         skillList:
                             e.skillsCategoryList.map((e) => e.name).toList(),
-                        navigateToDetailScreen: () =>
+                        gigrrActionButton: () =>
                             viewModel.navigateToGigrrDetailScreen(e),
                         acceptedGigsRequest: () =>
                             viewModel.acceptedGigsRequest(

@@ -14,20 +14,16 @@ import '../../../../util/others/text_styles.dart';
 import 'employer_gigrr_detail_view_model.dart';
 
 class EmployerGigrrDetailView extends StatelessWidget {
-  final MyGigsData? gigs;
-  final String gigsName;
-  final String address;
   final String price;
+  final GigsRequestData gigsRequestData;
   final List<GigrrTypeCategoryData> skillList;
   final bool isShortListed;
   const EmployerGigrrDetailView({
     Key? key,
-    this.gigsName = "",
     this.isShortListed = false,
     this.price = "",
-    this.address = "",
     required this.skillList,
-    this.gigs,
+    required this.gigsRequestData,
   }) : super(key: key);
 
   @override
@@ -35,8 +31,6 @@ class EmployerGigrrDetailView extends StatelessWidget {
     SizeConfig.init(context);
     MediaQueryData mediaQueryData = context.mediaQueryData;
     double outerPadding = SizeConfig.margin_padding_15;
-    // var price1 =
-    //     "₹ ${double.parse(data.fromAmount).toStringAsFixed(1)}-${double.parse(data.toAmount).toStringAsFixed(0)}/${data.priceCriteria}";
     return ViewModelBuilder.nonReactive(
         viewModelBuilder: () => EmployerGigrrDetailViewModel(),
         builder: (context, viewModel, child) {
@@ -95,7 +89,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            gigsName,
+                            gigsRequestData.employeeName,
                             textAlign: TextAlign.start,
                             style: TextStyle(
                               fontWeight: FontWeight.w600,
@@ -116,7 +110,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
                               ),
                               Expanded(
                                 child: Text(
-                                  address,
+                                  gigsRequestData.candidate.address,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TSB.regularSmall(
@@ -164,7 +158,11 @@ class EmployerGigrrDetailView extends StatelessWidget {
                     )
                   ],
                 ),
-                if (isShortListed) ShortListView(gigs: gigs!),
+                if (isShortListed)
+                  ShortListView(
+                    gigsId: gigsRequestData.gigsId,
+                    candidateId: gigsRequestData.candidate.id,
+                  ),
               ],
             ),
           );
@@ -283,11 +281,14 @@ class EmployerGigrrDetailView extends StatelessWidget {
 }
 
 class ShortListView extends ViewModelWidget<EmployerGigrrDetailViewModel> {
-  final MyGigsData gigs;
-  ShortListView({required this.gigs});
+  final int gigsId;
+  final int candidateId;
+  ShortListView({
+    this.candidateId = 0,
+    this.gigsId = 0,
+  });
   @override
   Widget build(BuildContext context, EmployerGigrrDetailViewModel viewModel) {
-    var data = gigs.gigsRequestData.first;
     return Positioned(
       bottom: 0,
       child: Column(
@@ -322,8 +323,8 @@ class ShortListView extends ViewModelWidget<EmployerGigrrDetailViewModel> {
               child: LoadingButton(
                 loading: viewModel.isBusy,
                 action: () => viewModel.navigatorToGiggrRequestView(
-                  id: gigs.id,
-                  candidateId: data.candidate.id,
+                  id: gigsId,
+                  candidateId: candidateId,
                 ),
                 title: "SHORTLIST GIGRR",
               ),

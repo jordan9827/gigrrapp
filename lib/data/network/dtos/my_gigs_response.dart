@@ -102,6 +102,8 @@ class GigsRequestData with _$GigsRequestData {
     @JsonKey(name: "start_otp", defaultValue: "") String startOTP,
     @JsonKey(name: "end_otp", defaultValue: "") String endOTP,
     @JsonKey(name: "status", defaultValue: "") String status,
+    @JsonKey(name: "created_at", defaultValue: "") String createdAt,
+    @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "distance", defaultValue: 0) int distance,
     @JsonKey(name: "candidate_rating", defaultValue: 0.0)
         double candidateRating,
@@ -143,6 +145,7 @@ class Candidate with _$Candidate {
     @JsonKey(name: "role_id", defaultValue: "") String roleId,
     @JsonKey(name: "email", defaultValue: "") String email,
     @JsonKey(name: "mobile", defaultValue: "") String mobile,
+    @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "full_name", defaultValue: "") String fullName,
     @JsonKey(name: "image_url", defaultValue: "") String imageURL,
   ) = _Candidate;

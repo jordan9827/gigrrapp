@@ -30,11 +30,17 @@ class MyGigsViewWidget extends StatelessWidget {
     SizeConfig.init(context);
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.only(bottom: SizeConfig.margin_padding_10),
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+      margin: EdgeInsets.only(
+        bottom: SizeConfig.margin_padding_10,
+      ),
+      padding: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       decoration: BoxDecoration(
         color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+        borderRadius: BorderRadius.circular(
+          SizeConfig.margin_padding_10,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

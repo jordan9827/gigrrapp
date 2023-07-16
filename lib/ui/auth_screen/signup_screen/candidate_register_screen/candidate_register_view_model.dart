@@ -61,8 +61,11 @@ class CandidateRegisterViewModel extends BaseViewModel {
   bool fourImagesAdded = false;
   bool isMobileRead = false;
 
-  CandidateRegisterViewModel(
-      {String mobile = "", bool isMobileRead = false, bool isSocial = false}) {
+  CandidateRegisterViewModel({
+    String mobile = "",
+    bool isMobileRead = false,
+    bool isSocial = false,
+  }) {
     this.isSocialLogin = isSocial;
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
@@ -142,7 +145,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
       "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${costCriteriaController.text}";
 
   void navigationToRoleFormView() {
-    if (!validationPersonalInfo()) {
+    if (validationPersonalInfo()) {
       controller.animateToPage(
         1,
         duration: Duration(milliseconds: 200),
@@ -222,7 +225,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
 
   void setPickDate(DateTime picked) {
     selectedDate = picked;
-    // textController.text = DateFormat("dd MMM yyyy").format(selectedDate);
     dobController.text = DateFormat("yyyy-MM-dd").format(selectedDate);
     notifyListeners();
   }
@@ -290,7 +292,9 @@ class CandidateRegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> navigationToCandidateComplete(UserAuthResponseData res) async {
+  Future<void> navigationToCandidateComplete(
+    UserAuthResponseData res,
+  ) async {
     print("isSocialLogin $isSocialLogin");
     navigationService.navigateTo(
       Routes.candidateKYCScreenView,
@@ -321,7 +325,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['shift'] = initialShift.toLowerCase();
     request['images'] = imageList!.join(',');
     request['profile_image'] = imageList!.first;
-
     print(" body --------$request");
     return request;
   }

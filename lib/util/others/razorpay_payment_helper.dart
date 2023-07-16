@@ -10,7 +10,6 @@ class RazorPayPaymentHelper {
 
   static void handlePaymentErrorResponse(PaymentFailureResponse response) {
     navigationService.back(result: "Vinay 123 Ghodela");
-
     snackBarService.showSnackbar(message: response.message.toString());
   }
 

@@ -67,11 +67,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                     (gigs) => MyGigsViewWidget(
                       title: gigs.gigName,
                       address: gigs.gigAddress,
-                      price: viewModel.price(
-                        from: gigs.fromAmount,
-                        to: gigs.toAmount,
-                        priceCriteria: gigs.priceCriteria,
-                      ),
+                      price: viewModel.price(gigs),
                       startDate: gigs.gigsStartDate,
                       isEmptyModel: !viewModel.isEmptyModelCheck(gigs),
                       jobDuration: "${gigs.duration} Days",
@@ -90,25 +86,70 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
   }
 
   Widget _buildStatusGigsView(
-      EmployerGigsViewModel viewModel, MyGigsData gigs) {
-    var status = viewModel.isActiveStatus(gigs);
-    if (status == "accepted") {
-      return _buildAcceptedCandidateView(viewModel: viewModel, gigs: gigs);
-    } else if (status == "sent-offer") {
-      return _buildOfferSendView(gigs: gigs);
-    } else if (status == "received-offer") {
-      return _buildShortListCandidateView(gigs: gigs, viewModel: viewModel);
-    } else if (status == "roster") {
-      return _buildShortListedView(gigs: gigs);
-    } else
-      return SizedBox();
+    EmployerGigsViewModel viewModel,
+    MyGigsData gigs,
+  ) {
+    var isCheckAcceptCount =
+        (viewModel.getAcceptedCount(gigs.gigsRequestData) > 0);
+    var isCheckOfferSentCount =
+        (viewModel.getOfferSentCount(gigs.gigsRequestData) > 0);
+    var isCheckOfferReceivedCount =
+        (viewModel.getOfferReceivedCount(gigs.gigsRequestData) > 0);
+    var isCheckRoasterCount =
+        (viewModel.getRoasterCount(gigs.gigsRequestData) > 0);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Visibility(
+          visible: isCheckAcceptCount,
+          child: _buildAcceptedCandidateView(
+            viewModel: viewModel,
+            gigs: gigs,
+          ),
+        ),
+        if (!isCheckAcceptCount && isCheckOfferReceivedCount)
+          SizedBox(
+            height: SizeConfig.margin_padding_5,
+          ),
+        Visibility(
+          visible: isCheckOfferReceivedCount,
+          child: _buildShortListCandidateView(
+            gigs: gigs,
+            viewModel: viewModel,
+          ),
+        ),
+        if (isCheckOfferReceivedCount && !isCheckAcceptCount)
+          SizedBox(
+            height: SizeConfig.margin_padding_5,
+          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Visibility(
+              visible: isCheckOfferSentCount,
+              child: _buildOfferSendView(gigs: gigs, viewModel: viewModel),
+            ),
+            Visibility(
+              visible: isCheckRoasterCount,
+              child: _buildShortListedView(
+                gigs: gigs,
+                viewModel: viewModel,
+              ),
+            )
+          ],
+        ),
+      ],
+    );
   }
 
   Widget _buildOfferSendView({
     required MyGigsData gigs,
+    required EmployerGigsViewModel viewModel,
   }) {
+    var count = viewModel.getOfferSentCount(gigs.gigsRequestData);
     return Text(
-      "${gigs.gigsRequestCount} Offers Sent",
+      "$count Offers Sent",
       style: TSB.regularSmall(
         textColor: mainPinkColor,
       ),
@@ -117,11 +158,17 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
 
   Widget _buildShortListedView({
     required MyGigsData gigs,
+    required EmployerGigsViewModel viewModel,
   }) {
-    return Text(
-      "${gigs.gigsRequestCount} ShortListed",
-      style: TSB.regularSmall(
-        textColor: mainPinkColor,
+    var count = viewModel.getRoasterCount(gigs.gigsRequestData);
+    return InkWell(
+      onTap: () =>
+          viewModel.navigationToCandidateDetail(viewModel, gigs, "shortListed"),
+      child: Text(
+        "$count ShortListed",
+        style: TSB.regularSmall(
+          textColor: mainPinkColor,
+        ),
       ),
     );
   }
@@ -130,31 +177,36 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     required EmployerGigsViewModel viewModel,
     required MyGigsData gigs,
   }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            buildStackedImages(
-              data: gigs,
-              viewModel: viewModel,
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_5,
-            ),
-            Text(
-              viewModel.setResponseCount,
-              style: TSB.regularSmall(textColor: independenceColor),
-            )
-          ],
-        ),
-        _buildDetailView(
-          onTap: () =>
-              viewModel.navigationToCandidateOfferRequest(viewModel, gigs),
-        )
-      ],
+    return Padding(
+      padding: EdgeInsets.only(
+        bottom: SizeConfig.margin_padding_10,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              buildStackedImages(
+                data: gigs,
+                viewModel: viewModel,
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_5,
+              ),
+              Text(
+                viewModel.setResponseCount,
+                style: TSB.regularSmall(textColor: independenceColor),
+              )
+            ],
+          ),
+          _buildDetailView(
+            onTap: () => viewModel.navigationToCandidateDetail(
+                viewModel, gigs, "accepted"),
+          )
+        ],
+      ),
     );
   }
 
@@ -162,10 +214,11 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     required MyGigsData gigs,
     required EmployerGigsViewModel viewModel,
   }) {
+    var count = viewModel.getOfferReceivedCount(gigs.gigsRequestData);
     return Row(
       children: [
         Text(
-          "05 " + "candidate_shortlisted".tr(),
+          "$count " + "candidate_shortlisted".tr(),
           style: TSB.regularSmall(
             textColor: independenceColor,
           ),
@@ -174,7 +227,8 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
           width: SizeConfig.margin_padding_3,
         ),
         InkWell(
-          onTap: () => viewModel.navigationToShortListedDetailView(gigs),
+          onTap: () => viewModel.navigationToCandidateDetail(
+              viewModel, gigs, "shortList"),
           child: Text(
             "see_details".tr(),
             style: TSB.regularSmall(
@@ -203,8 +257,6 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
   }
 
   Widget buildImage(String urlImage) {
-    const double borderSize = 5;
-
     return ClipOval(
       child: Container(
         color: Colors.white,

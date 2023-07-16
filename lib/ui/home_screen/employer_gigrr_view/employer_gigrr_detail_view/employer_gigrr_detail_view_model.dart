@@ -32,7 +32,8 @@ class EmployerGigrrDetailViewModel extends BaseViewModel {
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
     }, (res) {
-      navigationServices.back();
+      navigationServices.back(result: true);
+      navigationServices.back(result: true);
       setBusy(false);
       notifyListeners();
     });

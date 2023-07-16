@@ -13,15 +13,15 @@ class GiggrCardWidget extends StatefulWidget {
   final String price;
   final String distance;
   final String experience;
-  final String gigrrName;
+  final String gigrrActionName;
   final bool isCandidate;
-  final Function navigateToDetailScreen;
+  final Function() gigrrActionButton;
   final Function()? navigateToGigrr;
   final Function()? acceptedGigsRequest;
 
   const GiggrCardWidget({
     Key? key,
-    required this.navigateToDetailScreen,
+    required this.gigrrActionButton,
     required this.title,
     required this.profile,
     required this.skillList,
@@ -29,7 +29,7 @@ class GiggrCardWidget extends StatefulWidget {
     this.distance = "",
     this.experience = "",
     this.isCandidate = false,
-    required this.gigrrName,
+    required this.gigrrActionName,
     this.navigateToGigrr,
     this.acceptedGigsRequest,
   }) : super(key: key);
@@ -162,29 +162,32 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                       Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                              vertical: SizeConfig.margin_padding_5,
-                              horizontal: SizeConfig.margin_padding_15,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              border: Border.all(
-                                color: mainWhiteColor,
-                                width: SizeConfig.margin_padding_2,
+                          InkWell(
+                            onTap: widget.gigrrActionButton,
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                vertical: SizeConfig.margin_padding_5,
+                                horizontal: SizeConfig.margin_padding_15,
                               ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(
-                                  SizeConfig.margin_padding_8,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                border: Border.all(
+                                  color: mainWhiteColor,
+                                  width: SizeConfig.margin_padding_2,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                    SizeConfig.margin_padding_8,
+                                  ),
                                 ),
                               ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                widget.gigrrName.tr(),
-                                style: TextStyle(
-                                  color: mainWhiteColor,
-                                  fontSize: SizeConfig.textSizeSmall,
+                              child: Center(
+                                child: Text(
+                                  widget.gigrrActionName.tr(),
+                                  style: TextStyle(
+                                    color: mainWhiteColor,
+                                    fontSize: SizeConfig.textSizeSmall,
+                                  ),
                                 ),
                               ),
                             ),
@@ -193,7 +196,7 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                             width: SizeConfig.margin_padding_5,
                           ),
                           InkWell(
-                            onTap: () => widget.navigateToDetailScreen(),
+                            onTap: () {},
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                 vertical: SizeConfig.margin_padding_5,

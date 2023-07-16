@@ -33,9 +33,9 @@ class EmployerGigrrsView extends StatelessWidget {
                     title: e.firstName,
                     profile: "",
                     price: viewModel.price(e),
-                    gigrrName: 'apply_now',
+                    gigrrActionName: 'apply_now',
                     skillList: e.employeeSkills.map((e) => e.name).toList(),
-                    navigateToDetailScreen: () =>
+                    gigrrActionButton: () =>
                         viewModel.navigateToGigrrDetailScreen(e),
                   );
                 }

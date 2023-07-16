@@ -97,13 +97,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
         duration: Duration(milliseconds: 200),
         curve: Curves.linear,
       );
-      // navigationService.navigateTo(
-      //   Routes.employerBusinessInfoFormView,
-      //   arguments: EmployerBusinessInfoFormViewArguments(
-      //     fullName: fullNameController.text,
-      //     mobileNumber: mobileController.text,
-      //   ),
-      // );
     }
   }
 
@@ -128,8 +121,10 @@ class EmployerRegisterViewModel extends BaseViewModel {
       print("addressData $addressData");
       await setAddressPlace(addressData);
 
-      latLng =
-          LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0);
+      latLng = LatLng(
+        locationData.latitude ?? 0.0,
+        locationData.longitude ?? 0.0,
+      );
       _loading = false;
       notifyListeners();
     } else {
@@ -217,7 +212,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
           setBusy(false);
         },
         (businessTypeResponse) async {
-          // snackBarService.showSnackbar(message: "");
           employerCompleteProfileApiCall();
           notifyListeners();
           setBusy(false);
@@ -228,7 +222,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
   }
 
   void employerCompleteProfileApiCall() async {
-    // print("employerCompleteProfileApiCall  ${imageList!.first}");
     setBusy(true);
     final response = await authRepo
         .employerCompleteProfile(await _getRequestForEmployerCompleteProfile());
@@ -246,7 +239,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
     setBusy(false);
   }
 
-  Future<void> navigationToEmployerComplete(UserAuthResponseData res) async {
+  Future<void> navigationToEmployerComplete(
+    UserAuthResponseData res,
+  ) async {
     if (isSocialLogin) {
       var result = await navigationService.navigateTo(
         Routes.oTPVerifyScreen,

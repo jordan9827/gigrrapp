@@ -1,5 +1,4 @@
 import 'package:square_demo_architecture/domain/repos/account_repos.dart';
-import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -22,11 +21,10 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
 
   List<String> paymentList = ["pay_cash, razor_pay"];
   PaymentMethod paymentMethod = PaymentMethod();
-
+  MyGigrrsRosterData myGigrrsRosterData = MyGigrrsRosterData.getEmptyMyGigrrs();
   @override
   void initialise() {
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS,
-        RazorPayPaymentHelper.handlePaymentSuccessResponse);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccessResponse);
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
         RazorPayPaymentHelper.handlePaymentErrorResponse);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
@@ -73,16 +71,30 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
           )
     };
     dialogService.registerCustomDialogBuilders(builders);
-    var data = await dialogService.showCustomDialog(
+    await dialogService.showCustomDialog(
       variant: DialogType.candidatePayment,
     );
-    print("dialogService $data");
+  }
+
+  void handlePaymentSuccessResponse(PaymentSuccessResponse response) {
+    navigationService.back();
+    print("handlePaymentSuccessResponse  ${response.paymentId}");
+    if (response.paymentId!.isNotEmpty) {
+      loadCandidatePayment(
+        data: myGigrrsRosterData,
+        paymentType: "online",
+        paymentResponse: response.toString(),
+        paymentID: response.paymentId ?? "",
+      );
+    }
+    notifyListeners();
   }
 
   void loadPaymentMethod(MyGigrrsRosterData data) {
     var index = PaymentMethod.paymentList.indexOf(paymentMethod);
     if (index == 1) {
       print("Razor Pay");
+      myGigrrsRosterData = data;
       loadRazorPayPayment(data);
     } else {
       navigationService.back();
@@ -91,6 +103,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
         paymentType: "cash",
       );
     }
+    notifyListeners();
   }
 
   void loadRazorPayPayment(MyGigrrsRosterData data) {
@@ -98,7 +111,8 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     var price = request.offerAmount.toPriceFormat(0);
     var amount = int.parse(price) * 100;
     var options = {
-      'key': 'rzp_live_aGAF5DHohgOzfr',
+      'key': 'rzp_test_nYsbGl2JnIjUDy', // Testing //
+      //  'key': 'rzp_live_aGAF5DHohgOzfr', // Live //
       'amount': amount,
       'name': request.candidate.fullName,
       "currency": "INR",
@@ -127,6 +141,8 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
       await _getRequestForPayment(
         data: data,
         paymentType: paymentType,
+        paymentID: paymentID,
+        paymentResponse: paymentResponse,
       ),
     );
     result.fold((fail) {
@@ -162,7 +178,10 @@ class PaymentMethod {
   final String title;
   final String image;
 
-  PaymentMethod({this.image = "", this.title = ""});
+  PaymentMethod({
+    this.image = "",
+    this.title = "",
+  });
 
   static var paymentList = [
     PaymentMethod(title: "Pay Cash", image: cash_hand),

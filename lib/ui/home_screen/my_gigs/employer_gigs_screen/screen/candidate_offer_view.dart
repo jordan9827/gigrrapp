@@ -8,18 +8,19 @@ import '../../../../../others/loading_button.dart';
 import '../../../../../util/others/size_config.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../employer_gigs_view_model.dart';
+import 'employer_gigs_detail_screen/employer_gigs_detail_view_model.dart';
 
-class CandidateOfferView extends StackedView<EmployerGigsViewModel> {
+class CandidateOfferView extends StackedView<EmployerGigsDetailViewModel> {
   final MyGigsData gigs;
-
+  final GigsRequestData requestData;
   CandidateOfferView({
+    required this.requestData,
     required this.gigs,
   });
 
   @override
-  Widget builder(
-      BuildContext context, EmployerGigsViewModel viewModel, Widget? child) {
-    var candidate = gigs.gigsRequestData.first.candidate;
+  Widget builder(BuildContext context, EmployerGigsDetailViewModel viewModel,
+      Widget? child) {
     return Scaffold(
       body: ListView(
         padding: edgeInsetsMargin,
@@ -27,7 +28,7 @@ class CandidateOfferView extends StackedView<EmployerGigsViewModel> {
           _buildSpacer(),
           GigrrCustomRequestView(
             giggrName: gigs.gigName,
-            profileImage: candidate.imageURL,
+            profileImage: requestData.candidate.imageURL,
             priceController: viewModel.offerPriceController,
             selectPriceTypeController: viewModel.priceTypeController,
           ),
@@ -35,7 +36,7 @@ class CandidateOfferView extends StackedView<EmployerGigsViewModel> {
             loading: viewModel.isBusy,
             action: () => viewModel.loadGigsCandidateOffer(
               gigsId: gigs.id,
-              candidateId: candidate.id,
+              candidateId: requestData.candidate.id,
             ),
             title: "offer_daily_price",
           ),
@@ -62,6 +63,6 @@ class CandidateOfferView extends StackedView<EmployerGigsViewModel> {
   }
 
   @override
-  EmployerGigsViewModel viewModelBuilder(BuildContext context) =>
-      EmployerGigsViewModel();
+  EmployerGigsDetailViewModel viewModelBuilder(BuildContext context) =>
+      EmployerGigsDetailViewModel();
 }
