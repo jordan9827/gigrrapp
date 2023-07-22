@@ -35,7 +35,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
   RangeValues currentRangeValues = const RangeValues(100, 400);
   LatLng latLng = const LatLng(14.508, 46.048);
-  bool _loading = false;
+  bool _loading = true;
   bool isSocialLogin = false;
 
   bool get loading => _loading;
@@ -225,7 +225,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
 
   void setPickDate(DateTime picked) {
     selectedDate = picked;
-    dobController.text = DateFormat("yyyy-MM-dd").format(selectedDate);
+    dobController.text = DateFormat("dd MMM yyyy").format(selectedDate);
     notifyListeners();
   }
 

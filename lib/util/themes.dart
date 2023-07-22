@@ -5,6 +5,7 @@ final lightTheme = ThemeData.light().copyWith(
   appBarTheme: AppBarTheme(backgroundColor: independenceColor),
   scaffoldBackgroundColor: Colors.white,
   unselectedWidgetColor: textRegularColor,
+  dialogBackgroundColor: mainWhiteColor,
   snackBarTheme: SnackBarThemeData(
     backgroundColor: mainPinkColor,
     actionTextColor: mainWhiteColor,
@@ -13,6 +14,7 @@ final lightTheme = ThemeData.light().copyWith(
     cursorColor: independenceColor,
   ),
   colorScheme: ColorScheme.light(
+    onPrimary: Colors.white,
     background: Colors.white,
   ),
 );
@@ -21,6 +23,7 @@ final darkTheme = ThemeData.dark().copyWith(
   appBarTheme: AppBarTheme(backgroundColor: independenceColor),
   scaffoldBackgroundColor: Colors.white,
   unselectedWidgetColor: textRegularColor,
+  dialogBackgroundColor: mainWhiteColor,
   snackBarTheme: SnackBarThemeData(
     backgroundColor: mainPinkColor,
     actionTextColor: mainWhiteColor,
@@ -28,7 +31,7 @@ final darkTheme = ThemeData.dark().copyWith(
   textSelectionTheme: TextSelectionThemeData(
     cursorColor: independenceColor,
   ),
-  colorScheme: ColorScheme.light(
+  colorScheme: ColorScheme.dark(
     background: Colors.white,
   ),
 );

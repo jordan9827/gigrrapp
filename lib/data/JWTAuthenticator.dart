@@ -41,13 +41,6 @@ class JWTAuthenticator extends Authenticator {
       Map<String, dynamic> newBody = {};
       if (requestBodyMap != null) newBody.addAll(requestBodyMap);
 
-      // 'retryCount' key in body is used to prevent the code from infinite loop just in case.
-
-      // final response = await locator<Login>().refreshToken();
-      // if (response.isLeft()) {
-      //   locator<AppStateManager>().logOutUser();
-      //   locator<SnackbarService>().showSnackbar(message: "Session time out. Login Again");
-      // }
       return request.copyWith(body: newBody);
     }
     return null;
