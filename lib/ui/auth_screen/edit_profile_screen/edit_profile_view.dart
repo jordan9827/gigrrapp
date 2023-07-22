@@ -119,10 +119,12 @@ class EditProfileScreenView extends StatelessWidget {
 
   Widget _buildGoogleMap(EditProfileViewModel viewModel) {
     var latLng = viewModel.latLng;
-    return GoogleMapBoxScreen(
-      lat: latLng.latitude.toString(),
-      lng: latLng.longitude.toString(),
-    );
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+            lat: latLng.latitude,
+            lng: latLng.longitude,
+          );
   }
 
   Widget _buildSaveButton(EditProfileViewModel viewModel) {

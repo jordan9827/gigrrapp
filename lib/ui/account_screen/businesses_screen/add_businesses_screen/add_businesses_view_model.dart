@@ -15,6 +15,7 @@ class AddBusinessesViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final user = locator<UserAuthResponseData>();
   final businessRepo = locator<BusinessRepo>();
+  bool mapBoxLoading = false;
 
   TextEditingController businessNameController = TextEditingController();
   TextEditingController businessTypeController = TextEditingController();
@@ -34,8 +35,10 @@ class AddBusinessesViewModel extends BaseViewModel {
     return;
   }
 
-  void mapBoxPlace() {
-    navigationService.navigateWithTransition(
+  Future<void> mapBoxPlace() async {
+    mapBoxLoading = true;
+
+    await navigationService.navigateWithTransition(
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
@@ -53,6 +56,9 @@ class AddBusinessesViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
+    await Future.delayed(Duration(milliseconds: 500));
+    mapBoxLoading = false;
+    notifyListeners();
   }
 
   bool validationAddBusinessProfile() {

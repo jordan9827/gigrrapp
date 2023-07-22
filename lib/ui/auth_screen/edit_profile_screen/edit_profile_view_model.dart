@@ -23,6 +23,7 @@ class EditProfileViewModel extends BaseViewModel {
   LatLng latLng = const LatLng(14.508, 46.048);
   double latitude = 0.0;
   double longitude = 0.0;
+  bool mapBoxLoading = false;
 
   EditProfileViewModel() {
     setInitData();
@@ -60,8 +61,9 @@ class EditProfileViewModel extends BaseViewModel {
     return true;
   }
 
-  void mapBoxPlace() {
-    navigationService.navigateWithTransition(
+  Future<void> mapBoxPlace() async {
+    mapBoxLoading = true;
+    await navigationService.navigateWithTransition(
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
@@ -78,6 +80,9 @@ class EditProfileViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
+    await Future.delayed(Duration(milliseconds: 500));
+    mapBoxLoading = false;
+    notifyListeners();
   }
 
   Future<void> editProfileApiCall() async {

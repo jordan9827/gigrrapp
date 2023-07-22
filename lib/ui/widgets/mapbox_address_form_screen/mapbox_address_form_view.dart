@@ -69,8 +69,8 @@ class MapBoxAddressFormViewWidget extends StatelessWidget {
 
   Widget _buildGoogleMap() {
     return GoogleMapBoxScreen(
-      lat: latLng.lat.toString(),
-      lng: latLng.lng.toString(),
+      lat: latLng.lat,
+      lng: latLng.lng,
     );
   }
 }

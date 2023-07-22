@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:flutter/material.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/size_config.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class GoogleMapBoxScreen extends StatefulWidget {
-  final String lat;
-  final String lng;
+  final double lat;
+  final double lng;
   final String zoom;
   final String size;
   final bool loading;
@@ -14,7 +14,7 @@ class GoogleMapBoxScreen extends StatefulWidget {
     Key? key,
     required this.lat,
     required this.lng,
-    this.zoom = "11",
+    this.zoom = "13",
     this.loading = false,
     this.size = "400x200",
   }) : super(key: key);
@@ -66,6 +66,29 @@ class _GoogleMapBoxScreenState extends State<GoogleMapBoxScreen> {
           SizeConfig.margin_padding_20,
         ),
         child: WebViewWidget(controller: _controller!),
+      ),
+    );
+  }
+}
+
+class MapBoxShimmerWidget extends StatelessWidget {
+  const MapBoxShimmerWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    SizeConfig.init(context);
+    return Shimmer.fromColors(
+      baseColor: textRegularColor.withOpacity(0.2),
+      highlightColor: textRegularColor.withOpacity(0.4),
+      child: Container(
+        height: SizeConfig.margin_padding_50 * 2.5,
+        width: SizeConfig.screenWidth,
+        decoration: BoxDecoration(
+          color: independenceColor,
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_20,
+          ),
+        ),
       ),
     );
   }

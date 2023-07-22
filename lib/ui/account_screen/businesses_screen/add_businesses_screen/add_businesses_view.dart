@@ -116,12 +116,12 @@ class AddBusinessesScreenView extends StatelessWidget {
 
   Widget _buildGoogleMap(AddBusinessesViewModel viewModel) {
     var latLng = viewModel.latLng;
-    print("_buildGoogleMap----->>>  ${latLng.longitude}");
-    return GoogleMapBoxScreen(
-      loading: true,
-      lat: latLng.latitude.toString(),
-      lng: latLng.longitude.toString(),
-    );
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+            lat: latLng.latitude,
+            lng: latLng.longitude,
+          );
   }
 
   Widget _buildSaveButton(AddBusinessesViewModel viewModel) {

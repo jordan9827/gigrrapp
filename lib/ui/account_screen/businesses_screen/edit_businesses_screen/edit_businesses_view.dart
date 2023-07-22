@@ -120,9 +120,11 @@ class EditBusinessesScreenView extends StatelessWidget {
 
   Widget _buildGoogleMap(EditBusinessesViewModel viewModel) {
     var latLng = businessData;
-    return GoogleMapBoxScreen(
-      lat: latLng.latitude.toString(),
-      lng: latLng.longitude.toString(),
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+      lat: double.parse(latLng.latitude),
+      lng: double.parse(latLng.longitude),
     );
   }
 
