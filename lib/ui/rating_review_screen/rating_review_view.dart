@@ -119,6 +119,7 @@ class RatingReviewScreenView extends StatelessWidget {
         TextFormField(
           maxLines: 4,
           controller: viewModel.commentController,
+          style: TextStyle(color: mainBlackColor),
           decoration: InputDecoration(
             hintText: "Type review.......",
             border: inputBorder,

@@ -41,7 +41,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   bool isListEmpty = true;
   bool fourImagesAdded = false;
   bool isMobileRead = false;
-  bool _loading = false;
+  bool _loading = true;
   bool isSocialLogin = false;
 
   bool get loading => _loading;
@@ -129,6 +129,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
       notifyListeners();
     } else {
       serviceEnabled = await location.requestService();
+      _loading = false;
       return;
     }
     notifyListeners();
@@ -169,6 +170,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
+    _loading = false;
   }
 
   bool validationAddBusinessProfile() {
