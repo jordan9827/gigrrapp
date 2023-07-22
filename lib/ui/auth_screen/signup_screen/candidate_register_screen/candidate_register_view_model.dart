@@ -226,6 +226,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   void setPickDate(DateTime picked) {
     selectedDate = picked;
     dobController.text = DateFormat("dd MMM yyyy").format(selectedDate);
+    _loading = false;
     notifyListeners();
   }
 
