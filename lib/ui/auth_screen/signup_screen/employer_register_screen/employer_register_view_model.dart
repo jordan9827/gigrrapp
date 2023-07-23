@@ -55,8 +55,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
     this.isSocialLogin = isSocial;
-    for (var i in businessTypeService.businessTypeList) {
-      businessTypeController.text = i.id.toString();
+    if (businessTypeService.businessTypeList.isNotEmpty) {
+      businessTypeController.text =
+          businessTypeService.businessTypeList.first.id.toString();
     }
     acquireCurrentLocation();
   }
