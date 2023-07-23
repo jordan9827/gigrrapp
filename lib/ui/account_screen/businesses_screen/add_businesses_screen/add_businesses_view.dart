@@ -5,6 +5,7 @@ import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/loading_button.dart';
+import '../../../../others/loading_screen.dart';
 import '../../../../others/text_field_widget.dart';
 import '../../../../util/others/text_styles.dart';
 import '../../../business_type_drop_down_screen/business_type_drop_down_view.dart';
@@ -20,6 +21,7 @@ class AddBusinessesScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.acquireCurrentLocation(),
       viewModelBuilder: () => AddBusinessesViewModel(),
       builder: (context, viewModel, child) => Scaffold(
         appBar: getAppBar(
@@ -28,19 +30,23 @@ class AddBusinessesScreenView extends StatelessWidget {
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
-        body: Container(
-          padding: edgeInsetsMargin,
-          child: ListView(
-            children: [
-              _buildAddBusinessForm(viewModel),
-              SizedBox(
-                height: SizeConfig.margin_padding_24,
-              ),
-              _buildSaveButton(viewModel),
-              SizedBox(
-                height: SizeConfig.margin_padding_29,
-              ),
-            ],
+        body: LoadingScreen(
+          showDialogLoading: true,
+          loading: viewModel.mapBoxLoading,
+          child: Container(
+            padding: edgeInsetsMargin,
+            child: ListView(
+              children: [
+                _buildAddBusinessForm(viewModel),
+                SizedBox(
+                  height: SizeConfig.margin_padding_24,
+                ),
+                _buildSaveButton(viewModel),
+                SizedBox(
+                  height: SizeConfig.margin_padding_29,
+                ),
+              ],
+            ),
           ),
         ),
       ),

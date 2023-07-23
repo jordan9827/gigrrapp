@@ -11,7 +11,6 @@ class MapBoxAddressFormViewWidget extends StatelessWidget {
   final TextEditingController stateController;
   final TextEditingController pinController;
   final LatLng latLng;
-  final bool isMapEnable;
   final Function() mapBoxPlace;
   MapBoxAddressFormViewWidget({
     Key? key,
@@ -21,7 +20,6 @@ class MapBoxAddressFormViewWidget extends StatelessWidget {
     required this.stateController,
     required this.pinController,
     required this.mapBoxPlace,
-    this.isMapEnable = true,
   }) : super(key: key);
 
   @override
@@ -55,22 +53,10 @@ class MapBoxAddressFormViewWidget extends StatelessWidget {
           controller: pinController,
           hintForm: "i.e. 452001",
         ),
-        if (isMapEnable)
-          CVMTextFormField(
-            title: "add_pin_map",
-            formWidget: _buildGoogleMap(),
-          ),
         SizedBox(
           height: SizeConfig.margin_padding_10,
         ),
       ],
-    );
-  }
-
-  Widget _buildGoogleMap() {
-    return GoogleMapBoxScreen(
-      lat: latLng.lat,
-      lng: latLng.lng,
     );
   }
 }

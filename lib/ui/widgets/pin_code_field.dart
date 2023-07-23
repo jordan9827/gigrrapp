@@ -6,9 +6,11 @@ import '../../util/others/size_config.dart';
 class CVPinCodeTextField extends StatelessWidget {
   final Function(String) onChanged;
   final TextEditingController controller;
+  final bool readOnly;
   const CVPinCodeTextField({
     Key? key,
     required this.onChanged,
+    this.readOnly = false,
     required this.controller,
   }) : super(key: key);
 
@@ -18,6 +20,7 @@ class CVPinCodeTextField extends StatelessWidget {
     return PinCodeTextField(
       obscureText: true,
       length: 4,
+      readOnly: readOnly,
       autoDisposeControllers: false,
       scrollPadding: EdgeInsets.zero,
       mainAxisAlignment: MainAxisAlignment.spaceAround,

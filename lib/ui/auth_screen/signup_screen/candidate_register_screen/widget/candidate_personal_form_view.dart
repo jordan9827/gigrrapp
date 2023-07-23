@@ -64,7 +64,6 @@ class CandidatePersonalInfoFormView
           ),
           _buildSetGender(viewModel),
           MapBoxAddressFormViewWidget(
-            isMapEnable: false,
             latLng: viewModel.latLng,
             cityController: viewModel.cityController,
             addressController: viewModel.addressController,

@@ -25,11 +25,15 @@ class EditBusinessesViewModel extends BaseViewModel {
       TextEditingController(text: "House no., Street name, Area");
   int businessId = 0;
   LatLng latLng = const LatLng(14.508, 46.048);
-  double latitude = 0.0;
-  double longitude = 0.0;
+
   List<String>? imageList = [];
 
-  EditBusinessesViewModel(GetBusinessesData data) {}
+  EditBusinessesViewModel(GetBusinessesData data) {
+    latLng = LatLng(
+      double.parse(data.latitude),
+      double.parse(data.longitude),
+    );
+  }
 
   void initialDataLoad(GetBusinessesData e) {
     businessNameController.text = e.businessName;
@@ -48,7 +52,6 @@ class EditBusinessesViewModel extends BaseViewModel {
 
   Future<void> mapBoxPlace() async {
     mapBoxLoading = true;
-
     await navigationService.navigateWithTransition(
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
@@ -60,6 +63,7 @@ class EditBusinessesViewModel extends BaseViewModel {
           addressController.text = place.placeName ?? "";
           latLng = LatLng(
               place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
+          print("latLnglatLnglatLng ${latLng}");
           setBusy(false);
           notifyListeners();
         },
@@ -111,8 +115,8 @@ class EditBusinessesViewModel extends BaseViewModel {
     request['business_type'] = businessTypeController.text;
     request['business_name'] = businessNameController.text;
     request['business_address'] = addressController.text;
-    request['business_latitude'] = latitude.toString();
-    request['business_longitude'] = longitude.toString();
+    request['business_latitude'] = latLng.latitude.toString();
+    request['business_longitude'] = latLng.longitude.toString();
     request['images'] = imageList!.join(', ');
     log("getRequestForCompleteProfile :: $request");
     return request;

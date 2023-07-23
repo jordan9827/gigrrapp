@@ -5,6 +5,7 @@ import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../widgets/map_box/google_map_box_view.dart';
 import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import '../employer_register_view_model.dart';
 
@@ -48,6 +49,10 @@ class EmployerPersonalInfoFormView
             pinController: viewModel.pinCodeController,
             mapBoxPlace: viewModel.mapBoxPlace,
           ),
+          CVMTextFormField(
+            title: "add_pin_map",
+            formWidget: _buildGoogleMap(viewModel),
+          ),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
             title: "next_add_business",
@@ -58,5 +63,14 @@ class EmployerPersonalInfoFormView
         ],
       ),
     );
+  }
+
+  Widget _buildGoogleMap(EmployerRegisterViewModel viewModel) {
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+            lat: viewModel.latLng.lat,
+            lng: viewModel.latLng.lng,
+          );
   }
 }

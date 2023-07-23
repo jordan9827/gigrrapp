@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
@@ -119,13 +120,12 @@ class EditBusinessesScreenView extends StatelessWidget {
   }
 
   Widget _buildGoogleMap(EditBusinessesViewModel viewModel) {
-    var latLng = businessData;
     return viewModel.mapBoxLoading
         ? MapBoxShimmerWidget()
         : GoogleMapBoxScreen(
-      lat: double.parse(latLng.latitude),
-      lng: double.parse(latLng.longitude),
-    );
+            lat: viewModel.latLng.latitude,
+            lng: viewModel.latLng.longitude,
+          );
   }
 
   Widget _buildSaveButton(EditBusinessesViewModel viewModel) {

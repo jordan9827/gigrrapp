@@ -45,7 +45,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
           Container(
             alignment: Alignment.topRight,
             padding: EdgeInsets.only(
-              bottom: SizeConfig.margin_padding_13,
+              bottom: SizeConfig.margin_padding_3,
               top: SizeConfig.margin_padding_8,
             ),
             child: Text(

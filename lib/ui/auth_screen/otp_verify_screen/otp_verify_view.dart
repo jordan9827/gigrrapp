@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:stacked/stacked.dart';
-import '../../../others/loading_screen.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
@@ -125,6 +123,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             height: SizeConfig.margin_padding_50,
           ),
           CVPinCodeTextField(
+            readOnly: viewModel.isBusy,
             controller: viewModel.pinController,
             onChanged: (value) => viewModel.verifyOtpApiCall(),
           ),
@@ -153,22 +152,5 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
         ],
       ),
     );
-  }
-
-  Widget _buildResendOTPView(OTPVerifyScreenModel viewModel) {
-    return viewModel.enableResend
-        ? InkWell(
-            onTap: viewModel.startCountDownTimer,
-            child: Text(
-              "resend_otp_text".tr(),
-              style: TSB.regularSmall(textColor: mainPinkColor),
-            ),
-          )
-        : Text(
-            "resend_otp_in_text".tr(
-              args: [viewModel.timerText],
-            ),
-            style: TSB.regularSmall(),
-          );
   }
 }

@@ -13,6 +13,7 @@ import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../../util/enums/latLng.dart';
+import '../../../widgets/location_helper.dart';
 
 class EmployerRegisterViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -29,10 +30,10 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController businessTypeController = TextEditingController();
+  bool mapBoxLoading = false;
+
   LatLng latLng = const LatLng(14.508, 46.048);
-  double latitude = 0.0;
   String country = "+91";
-  double longitude = 0.0;
   String address = "";
   Location location = Location();
   PageController controller = PageController();
@@ -46,13 +47,17 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   bool get loading => _loading;
 
-  EmployerRegisterViewModel(
-      {String mobile = "", bool isMobileRead = false, bool isSocial = false}) {
+  EmployerRegisterViewModel({
+    String mobile = "",
+    bool isMobileRead = false,
+    bool isSocial = false,
+  }) {
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
     this.isSocialLogin = isSocial;
-    businessTypeController.text =
-        businessTypeService.businessTypeList.first.id.toString();
+    for (var i in businessTypeService.businessTypeList) {
+      businessTypeController.text = i.id.toString();
+    }
     acquireCurrentLocation();
   }
 
@@ -101,55 +106,31 @@ class EmployerRegisterViewModel extends BaseViewModel {
   }
 
   void acquireCurrentLocation() async {
-    bool serviceEnabled = await location.serviceEnabled();
-    if (serviceEnabled) {
-      _loading = true;
-      final locationData = await location.getLocation();
-      print("locationData ${locationData.latitude}");
-
-      var map = mapBox.MapBoxGeoCoding(
-        apiKey: MAPBOX_TOKEN,
-      );
-
-      var getAddress = await map.getAddress(
-        mapBox.Location(
-          lat: locationData.latitude ?? 0.0,
-          lng: locationData.longitude ?? 0.0,
-        ),
-      );
-      var addressData = getAddress!.first;
-      print("addressData $addressData");
-      await setAddressPlace(addressData);
-
-      latLng = LatLng(
-        locationData.latitude ?? 0.0,
-        locationData.longitude ?? 0.0,
-      );
-      _loading = false;
-      notifyListeners();
-    } else {
-      serviceEnabled = await location.requestService();
-      _loading = false;
-      return;
-    }
-    notifyListeners();
+    mapBoxLoading = true;
+    var location = await LocationHelper.acquireCurrentLocation();
+    await setAddressPlace(location);
+    mapBoxLoading = false;
   }
 
-  Future<void> setAddressPlace(mapBox.MapBoxPlace mapBoxPlace) async {
-    print("$mapBoxPlace");
-    _loading = true;
-    var addressData = mapBoxPlace.context ?? [];
-
-    addressController.text = mapBoxPlace.placeName ?? "";
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    var addressData = data.mapBoxPlace.context ?? [];
+    addressController.text = data.mapBoxPlace.placeName ?? "";
     cityController.text = addressData[2].text ?? "";
     stateController.text = addressData[4].text ?? "";
     pinCodeController.text = addressData[0].text ?? "";
     _loading = false;
+    mapBoxLoading = false;
     notifyListeners();
   }
 
-  void mapBoxPlace() {
-    navigationService.navigateWithTransition(
+  Future<void> mapBoxPlace() async {
+    mapBoxLoading = true;
+    await navigationService.navigateWithTransition(
       mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
@@ -170,7 +151,10 @@ class EmployerRegisterViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
+    await Future.delayed(Duration(milliseconds: 500));
+    mapBoxLoading = false;
     _loading = false;
+    notifyListeners();
   }
 
   bool validationAddBusinessProfile() {

@@ -35,7 +35,6 @@ class AddAddressScreenView extends StatelessWidget {
               ),
               _buildSelectAddressType(viewModel),
               MapBoxAddressFormViewWidget(
-                isMapEnable: false,
                 latLng: viewModel.latLng,
                 cityController: viewModel.cityController,
                 addressController: viewModel.addressController,

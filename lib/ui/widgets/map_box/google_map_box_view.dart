@@ -78,13 +78,13 @@ class MapBoxShimmerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return Shimmer.fromColors(
-      baseColor: textRegularColor.withOpacity(0.2),
-      highlightColor: textRegularColor.withOpacity(0.4),
+      baseColor: mainGrayColor.withOpacity(0.6),
+      highlightColor: independenceColor.withOpacity(0.05),
       child: Container(
         height: SizeConfig.margin_padding_50 * 2.5,
         width: SizeConfig.screenWidth,
         decoration: BoxDecoration(
-          color: independenceColor,
+          color: mainGrayColor,
           borderRadius: BorderRadius.circular(
             SizeConfig.margin_padding_20,
           ),

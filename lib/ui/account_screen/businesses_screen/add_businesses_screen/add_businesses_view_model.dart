@@ -9,6 +9,10 @@ import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/business_repos.dart';
 import '../../../../others/constants.dart';
 import 'package:mapbox_search/mapbox_search.dart' as auto;
+import 'package:mapbox_search/mapbox_search.dart' as mapBox;
+import 'package:location/location.dart';
+
+import '../../../widgets/location_helper.dart';
 
 class AddBusinessesViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -27,6 +31,8 @@ class AddBusinessesViewModel extends BaseViewModel {
   double latitude = 0.0;
   double longitude = 0.0;
   List<String>? imageList = [];
+  bool loading = true;
+  Location location = Location();
 
   void navigationToBack() {
     if (!isBusy) {
@@ -37,7 +43,6 @@ class AddBusinessesViewModel extends BaseViewModel {
 
   Future<void> mapBoxPlace() async {
     mapBoxLoading = true;
-
     await navigationService.navigateWithTransition(
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
@@ -95,6 +100,24 @@ class AddBusinessesViewModel extends BaseViewModel {
       );
       notifyListeners();
     }
+  }
+
+  void acquireCurrentLocation() async {
+    mapBoxLoading = true;
+    var location = await LocationHelper.acquireCurrentLocation();
+    await setAddressPlace(location);
+    mapBoxLoading = false;
+  }
+
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    addressController.text = data.mapBoxPlace.placeName ?? "";
+    mapBoxLoading = false;
+    notifyListeners();
   }
 
   Future<Map<String, String>> _getRequestForAddBusiness() async {
