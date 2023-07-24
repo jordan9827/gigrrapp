@@ -11,13 +11,11 @@ import 'otp_verify_view_model.dart';
 
 class OTPVerifyScreen extends StatefulWidget {
   final String mobile;
-  final String otpType;
   final String roleId;
 
   const OTPVerifyScreen({
     Key? key,
     required this.mobile,
-    this.otpType = "",
     this.roleId = "",
   }) : super(key: key);
 
@@ -34,7 +32,6 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
         viewModelBuilder: () => OTPVerifyScreenModel(
               mobile: widget.mobile,
               roleId: widget.roleId,
-              otpType: widget.otpType,
             ),
         builder: (context, viewModel, child) {
           return Scaffold(

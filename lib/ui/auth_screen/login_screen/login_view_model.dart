@@ -35,6 +35,10 @@ class LoginViewViewModel extends BaseViewModel {
   List<String> sendOTPTypeList = ["sms", "whatsapp"];
   String initialOTPType = "sms";
 
+  LoginViewViewModel() {
+    sharedPreferences.setString(PreferenceKeys.GIGRR_TYPE.text, initialOTPType);
+  }
+
   void setInitialIndex(int index) {
     initialIndex = index;
     roleId = initialIndex == 1 ? "3" : "4";
@@ -53,6 +57,7 @@ class LoginViewViewModel extends BaseViewModel {
 
   void setOTPType(String? val) {
     initialOTPType = val!;
+    sharedPreferences.setString(PreferenceKeys.GIGRR_TYPE.text, "$val");
     print("initialOTPType $initialOTPType");
     notifyListeners();
   }
@@ -76,7 +81,6 @@ class LoginViewViewModel extends BaseViewModel {
         Routes.oTPVerifyScreen,
         arguments: OTPVerifyScreenArguments(
           mobile: mobileController.text,
-          otpType: initialOTPType,
           roleId: roleId,
         ),
       );
@@ -232,7 +236,6 @@ class LoginViewViewModel extends BaseViewModel {
       Routes.oTPVerifyScreen,
       arguments: OTPVerifyScreenArguments(
         mobile: res.mobile,
-        otpType: initialOTPType,
         roleId: res.roleId,
       ),
     );

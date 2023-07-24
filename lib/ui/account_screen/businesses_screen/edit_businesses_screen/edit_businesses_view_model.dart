@@ -58,8 +58,6 @@ class EditBusinessesViewModel extends BaseViewModel {
         hint: "Select Location",
         language: "en",
         onSelect: (place) async {
-          var addressData = place.context!;
-          setBusy(true);
           addressController.text = place.placeName ?? "";
           latLng = LatLng(
               place.geometry!.coordinates![1], place.geometry!.coordinates![0]);

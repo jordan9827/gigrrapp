@@ -80,7 +80,6 @@ class CandidateKYCViewModel extends BaseViewModel {
               Routes.oTPVerifyScreen,
               arguments: OTPVerifyScreenArguments(
                 mobile: res.mobile,
-                otpType: "sms",
                 roleId: res.roleId,
               ),
             );
