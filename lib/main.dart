@@ -48,9 +48,8 @@ Future<void> main() async {
   locator<InternetCheckService>().initializeInternetCheckServices();
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en')],
+      supportedLocales: const [Locale('en'), Locale('hi')],
       useOnlyLangCode: true,
-      fallbackLocale: const Locale('en'),
       path: "assets/translations",
       child: MyAppView(
         initialThemeMode: initialThemeMode,

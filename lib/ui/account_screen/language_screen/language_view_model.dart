@@ -25,7 +25,7 @@ class LanguageScreenViewModel extends BaseViewModel {
 
   void setLanguage(String value, BuildContext context) {
     language = value;
-    // EasyLocalization.of(context)!.setLocale(Locale(value));
+    EasyLocalization.of(context)!.setLocale(Locale(value));
     sharedPreferences.setString("language_select", value);
     notifyListeners();
   }
