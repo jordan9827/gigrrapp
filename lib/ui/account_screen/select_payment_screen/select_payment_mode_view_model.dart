@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:square_demo_architecture/domain/repos/account_repos.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
@@ -54,8 +55,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     if (paymentMethod.title.isNotEmpty) {
       loadPaymentDialog(viewModel, gigrrsData);
     } else {
-      snackBarService.showSnackbar(
-          message: "Please select you payment method.");
+      snackBarService.showSnackbar(message: "plz_select_u_payment_method".tr());
     }
   }
 

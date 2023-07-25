@@ -31,7 +31,9 @@ class LanguageScreenView extends StatelessWidget {
   }
 
   Widget _buildLanguageList(
-      BuildContext context, LanguageScreenViewModel viewModel) {
+    BuildContext context,
+    LanguageScreenViewModel viewModel,
+  ) {
     return Container(
       margin: edgeInsetsMargin.copyWith(
         top: SizeConfig.margin_padding_29,
@@ -57,7 +59,9 @@ class LanguageScreenView extends StatelessWidget {
     required Function(String?) onChanged,
   }) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: SizeConfig.margin_padding_5),
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig.margin_padding_5,
+      ),
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.margin_padding_10,
       ),

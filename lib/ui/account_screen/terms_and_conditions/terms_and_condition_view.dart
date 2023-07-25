@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-
 import 'package:stacked/stacked.dart';
-
 import '../../../others/common_app_bar.dart';
 import '../../../others/constants.dart';
 import '../../../others/loading_screen.dart';
@@ -31,7 +29,9 @@ class TermsAndConditionScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildWebView(TermsAndConditionViewModel viewModel) {
+  Widget _buildWebView(
+    TermsAndConditionViewModel viewModel,
+  ) {
     return SingleChildScrollView(
       padding: edgeInsetsMargin,
       child: Html(

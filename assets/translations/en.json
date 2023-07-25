@@ -225,6 +225,15 @@
  "plz_enter_valid_ifsc_code": "Please enter valid IFSC code.",
  "plz_enterplz_enter_msg_acc_type": "Please enter account type.",
  "plz_enter_msg": "Please enter message.",
+ "plz_sel_to_Time": "Please select to time.",
+ "plz_sel_from_Time": "Please select from time.",
+ "plz_sel_to_date": "Please select to date.",
+ "plz_sel_from_date": "Please select from date.",
+ "plz_sel_business": "Please select business.",
+ "plz_sel_gigrr_type": "Please select Gigrr Type",
+ "plz_select_cost_criteria": "Please select cost criteria.",
+ "plz_enter_gig_name": "Please enter gig name.",
+ "plz_select_u_payment_method": "Please select you payment method",
 
 
  "address_type": "address_type",

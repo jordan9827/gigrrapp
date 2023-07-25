@@ -128,16 +128,16 @@ class AddGigsViewModel extends BaseViewModel {
 
   bool validateToGigrrInfo() {
     if (gigrrNameController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please enter gig name.");
+      snackBarService.showSnackbar(message: "plz_enter_gig_name".tr());
       return false;
     } else if (priceTypeController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select cost criteria.");
+      snackBarService.showSnackbar(message: "plz_select_cost_criteria".tr());
       return false;
     } else if (gigrrTypeController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select Gigrr Type");
+      snackBarService.showSnackbar(message: "plz_sel_gigrr_type".tr());
       return false;
     } else if (businessTypeController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select business.");
+      snackBarService.showSnackbar(message: "plz_sel_business".tr());
       return false;
     }
     return true;
@@ -145,16 +145,16 @@ class AddGigsViewModel extends BaseViewModel {
 
   bool validateToOperational() {
     if (formDateController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select from date.");
+      snackBarService.showSnackbar(message: "plz_sel_from_date".tr());
       return false;
     } else if (toDateController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select to date.");
+      snackBarService.showSnackbar(message: "plz_sel_to_date".tr());
       return false;
     } else if (formTimeController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select from time.");
+      snackBarService.showSnackbar(message: "plz_sel_from_Time".tr());
       return false;
     } else if (toTimeController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please select to time.");
+      snackBarService.showSnackbar(message: "plz_sel_to_Time".tr());
       return false;
     }
     return true;
