@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
+import 'package:restart_app/restart_app.dart';
 
 class LanguageScreenViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -23,11 +24,21 @@ class LanguageScreenViewModel extends BaseViewModel {
         LanguageModel.languageList.first.id;
   }
 
-  void setLanguage(String value, BuildContext context) {
-    language = value;
-    EasyLocalization.of(context)!.setLocale(Locale(value));
-    sharedPreferences.setString("language_select", value);
+  void setLanguage(String? value) {
+    language = value!;
     notifyListeners();
+  }
+
+  void save(BuildContext context) {
+    var lag = sharedPreferences.getString("language_select") ??
+        LanguageModel.languageList.first.id;
+    if (lag != language) {
+      EasyLocalization.of(context)!.setLocale(Locale(language));
+      sharedPreferences.setString("language_select", language);
+      Restart.restartApp();
+    } else {
+      navigationToBack();
+    }
   }
 }
 

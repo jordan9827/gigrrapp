@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
+import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:stacked/stacked.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/size_config.dart';
@@ -11,6 +12,7 @@ class LanguageScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => LanguageScreenViewModel(),
       onViewModelReady: (viewModel) => viewModel.initLocale(),
@@ -21,10 +23,23 @@ class LanguageScreenView extends StatelessWidget {
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
-        body: ListView(
-          children: [
-            _buildLanguageList(context, viewModel),
-          ],
+        body: Container(
+          margin: EdgeInsets.all(
+            SizeConfig.margin_padding_15,
+          ),
+          child: Column(
+            children: [
+              _buildLanguageList(context, viewModel),
+              Spacer(),
+              LoadingButton(
+                action: () => viewModel.save(context),
+                title: "save",
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_5,
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -34,22 +49,16 @@ class LanguageScreenView extends StatelessWidget {
     BuildContext context,
     LanguageScreenViewModel viewModel,
   ) {
-    return Container(
-      margin: edgeInsetsMargin.copyWith(
-        top: SizeConfig.margin_padding_29,
-      ),
-      child: Column(
-        children: LanguageModel.languageList
-            .map(
-              (e) => _buildProfileListView(
-                viewModel: viewModel,
-                language: e,
-                onChanged: (String? value) =>
-                    viewModel.setLanguage(value!, context),
-              ),
-            )
-            .toList(),
-      ),
+    return Column(
+      children: LanguageModel.languageList
+          .map(
+            (e) => _buildProfileListView(
+              viewModel: viewModel,
+              language: e,
+              onChanged: viewModel.setLanguage,
+            ),
+          )
+          .toList(),
     );
   }
 
@@ -70,7 +79,6 @@ class LanguageScreenView extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: ListTile(
-        // onTap: () => onChanged(language.id),
         minLeadingWidth: SizeConfig.margin_padding_10,
         contentPadding: EdgeInsets.zero,
         trailing: Radio<String>(
