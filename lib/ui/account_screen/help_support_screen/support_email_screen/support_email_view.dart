@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/constants.dart';
 import '../../../../others/loading_button.dart';

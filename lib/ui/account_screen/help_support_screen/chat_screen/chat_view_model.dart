@@ -43,12 +43,6 @@ class ChatViewModel extends BaseViewModel {
       chatTextController.clear();
       helpChatList.clear();
       helpChatList.addAll(response.chatList);
-
-      // if (!loadMore) {
-      //   helpChatList = response.chatList;
-      // } else {
-      //   helpChatList.addAll(response.chatList);
-      // }
       _isLoading = false;
       setBusy(false);
       notifyListeners();

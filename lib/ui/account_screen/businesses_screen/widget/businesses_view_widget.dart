@@ -22,12 +22,16 @@ class BusinessesViewWidget extends StatelessWidget {
     SizeConfig.init(context);
     return Container(
       width: double.infinity,
-      margin: edgeInsetsMargin.copyWith(top: SizeConfig.margin_padding_10),
+      margin: edgeInsetsMargin.copyWith(
+        top: SizeConfig.margin_padding_10,
+      ),
       child: Container(
         padding: EdgeInsets.all(SizeConfig.margin_padding_17),
         decoration: BoxDecoration(
           color: mainWhiteColor,
-          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_10,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +62,9 @@ class BusinessesViewWidget extends StatelessWidget {
                     businesses.businessAddress,
                     maxLines: 2,
                     overflow: TextOverflow.clip,
-                    style: TSB.regularSmall(textColor: textNoticeColor),
+                    style: TSB.regularSmall(
+                      textColor: textNoticeColor,
+                    ),
                   ),
                 ),
               ],
@@ -115,11 +121,15 @@ class BusinessesViewWidget extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           border: Border.all(color: mainPinkColor, width: 1.5),
-          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_8),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_8,
+          ),
         ),
         child: Text(
           "txt_edit".tr(),
-          style: TSB.regularVSmall(textColor: mainPinkColor),
+          style: TSB.regularVSmall(
+            textColor: mainPinkColor,
+          ),
         ),
       ),
     );

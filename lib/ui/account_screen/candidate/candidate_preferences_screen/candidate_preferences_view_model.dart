@@ -71,7 +71,6 @@ class CandidatePreferenceViewModel extends BaseViewModel {
     } else {
       addSkillItemList.remove(e);
     }
-    print("Add List ${addSkillItemList.toList()}");
     notifyListeners();
   }
 

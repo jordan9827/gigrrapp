@@ -113,7 +113,9 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildDistanceView(CandidatePreferenceViewModel viewModel) {
+  Widget _buildDistanceView(
+    CandidatePreferenceViewModel viewModel,
+  ) {
     return PreferenceCustomUIWidget(
       title: 'distance',
       child: Column(
@@ -163,7 +165,9 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildPayRangeView(CandidatePreferenceViewModel viewModel) {
+  Widget _buildPayRangeView(
+    CandidatePreferenceViewModel viewModel,
+  ) {
     return PreferenceCustomUIWidget(
       title: 'pay_range',
       child: Column(
@@ -214,7 +218,9 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildAvailabilityShiftView(CandidatePreferenceViewModel viewModel) {
+  Widget _buildAvailabilityShiftView(
+    CandidatePreferenceViewModel viewModel,
+  ) {
     return PreferenceCustomUIWidget(
       title: 'availability',
       child: Column(
@@ -246,7 +252,9 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildAvailabilityDateView(CandidatePreferenceViewModel viewModel) {
+  Widget _buildAvailabilityDateView(
+    CandidatePreferenceViewModel viewModel,
+  ) {
     return PreferenceCustomUIWidget(
       title: 'availability',
       child: Column(
@@ -281,7 +289,9 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildSkillsView(CandidatePreferenceViewModel viewModel) {
+  Widget _buildSkillsView(
+    CandidatePreferenceViewModel viewModel,
+  ) {
     return PreferenceCustomUIWidget(
       title: 'skills',
       child: Column(
@@ -319,7 +329,10 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildCustomSelectBox({bool isSelect = false, String text = ""}) {
+  Widget _buildCustomSelectBox({
+    bool isSelect = false,
+    String text = "",
+  }) {
     return Container(
       padding: EdgeInsets.symmetric(
         vertical: SizeConfig.margin_padding_8,

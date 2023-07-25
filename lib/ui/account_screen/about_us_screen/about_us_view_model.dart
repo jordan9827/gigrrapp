@@ -1,7 +1,6 @@
 import 'package:square_demo_architecture/domain/repos/account_repos.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../app/app.locator.dart';
 
 class AboutUsViewModel extends BaseViewModel {

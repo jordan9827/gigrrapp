@@ -19,6 +19,8 @@ class BankAccountViewModel extends BaseViewModel {
   }
 
   void navigationToAddBankAccountView() {
-    navigationService.navigateTo(Routes.addBankAccountScreenView);
+    navigationService.navigateTo(
+      Routes.addBankAccountScreenView,
+    );
   }
 }

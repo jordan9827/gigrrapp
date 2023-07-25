@@ -4,7 +4,6 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../../widgets/cvm_text_form_field.dart';
 import 'add_bank_account_view_model.dart';
 

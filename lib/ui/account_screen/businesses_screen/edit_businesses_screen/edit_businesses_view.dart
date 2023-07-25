@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';

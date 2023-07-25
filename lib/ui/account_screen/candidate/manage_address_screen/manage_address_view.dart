@@ -3,7 +3,6 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../../others/common_app_bar.dart';
 import 'manage_address_view_model.dart';
 

@@ -9,9 +9,7 @@ import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/business_repos.dart';
 import '../../../../others/constants.dart';
 import 'package:mapbox_search/mapbox_search.dart' as auto;
-import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:location/location.dart';
-
 import '../../../widgets/location_helper.dart';
 
 class AddBusinessesViewModel extends BaseViewModel {
@@ -46,7 +44,7 @@ class AddBusinessesViewModel extends BaseViewModel {
     await navigationService.navigateWithTransition(
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
-        hint: "Select Location",
+        hint: "select_location".tr(),
         language: "en",
         onSelect: (place) async {
           addressController.text = place.placeName ?? "";

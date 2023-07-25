@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-
 import '../../../../../others/constants.dart';
 import '../../../../../util/others/size_config.dart';
 import '../../../../../util/others/text_styles.dart';
@@ -31,7 +30,10 @@ class ChatWidgetView extends StatelessWidget {
           right: paddingR,
           left: paddingL,
         ),
-        padding: EdgeInsets.symmetric(vertical: scale, horizontal: scale * 1.3),
+        padding: EdgeInsets.symmetric(
+          vertical: scale,
+          horizontal: scale * 1.3,
+        ),
         decoration: BoxDecoration(
           color: bocColor,
           borderRadius: BorderRadius.only(

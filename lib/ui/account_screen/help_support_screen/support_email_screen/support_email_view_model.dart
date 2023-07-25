@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -48,7 +48,7 @@ class SupportEmailViewModel extends BaseViewModel {
 
   bool validateInput() {
     if (messageController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please enter message.");
+      snackBarService.showSnackbar(message: "plz_enter_msg".tr());
       return false;
     }
     return true;

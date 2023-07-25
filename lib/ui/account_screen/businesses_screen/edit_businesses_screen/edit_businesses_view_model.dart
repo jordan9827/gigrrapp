@@ -55,13 +55,12 @@ class EditBusinessesViewModel extends BaseViewModel {
     await navigationService.navigateWithTransition(
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
-        hint: "Select Location",
+        hint: "select_location".tr(),
         language: "en",
         onSelect: (place) async {
           addressController.text = place.placeName ?? "";
           latLng = LatLng(
               place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
-          print("latLnglatLnglatLng ${latLng}");
           setBusy(false);
           notifyListeners();
         },
@@ -91,8 +90,9 @@ class EditBusinessesViewModel extends BaseViewModel {
   Future<void> updateBusinessProfileApiCall() async {
     if (validationAddBusinessProfile()) {
       setBusy(true);
-      final response = await businessRepo
-          .updateBusinessProfile(await _getRequestForUpdateBusiness());
+      final response = await businessRepo.updateBusinessProfile(
+        await _getRequestForUpdateBusiness(),
+      );
       response.fold(
         (fail) {
           snackBarService.showSnackbar(message: fail.errorMsg);

@@ -3,11 +3,9 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../../../others/common_app_bar.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../widgets/custom_drop_down.dart';
-import '../../../../widgets/cvm_text_form_field.dart';
 import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import 'add_address_view_model.dart';
 
@@ -56,12 +54,16 @@ class AddAddressScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectAddressType(AddAddressViewModel viewModel) {
+  Widget _buildSelectAddressType(
+    AddAddressViewModel viewModel,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+          padding: EdgeInsets.only(
+            bottom: SizeConfig.margin_padding_8,
+          ),
           child: Text(
             "Address Type",
             style: TSB.regularSmall(),

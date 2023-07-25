@@ -1,8 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapBox;
-
 import '../../../../../app/app.locator.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../others/constants.dart';
@@ -43,7 +43,7 @@ class AddAddressViewModel extends BaseViewModel {
     navigationService.navigateWithTransition(
       mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
-        hint: "Select Location",
+        hint: "select_location".tr(),
         language: "en",
         country: "in",
         onSelect: (place) async {
