@@ -119,11 +119,11 @@ class EmployerRegisterViewModel extends BaseViewModel {
       coordinates.lat,
       coordinates.lng,
     );
-    var addressData = data.mapBoxPlace.context ?? [];
-    addressController.text = data.mapBoxPlace.placeName ?? "";
-    cityController.text = addressData[2].text ?? "";
-    stateController.text = addressData[4].text ?? "";
-    pinCodeController.text = addressData[0].text ?? "";
+    var addressData = data.mapBoxPlace.placeContext;
+    addressController.text = data.mapBoxPlace.placeName;
+    cityController.text = addressData.city;
+    stateController.text = "${addressData.state}, ${addressData.country}";
+    pinCodeController.text = addressData.postCode;
     _loading = false;
     mapBoxLoading = false;
     notifyListeners();
@@ -138,14 +138,16 @@ class EmployerRegisterViewModel extends BaseViewModel {
         language: "en",
         country: "in",
         onSelect: (place) async {
-          var addressData = place.context!;
           _loading = true;
-          addressController.text = place.placeName ?? "";
-          cityController.text = addressData[2].text ?? "";
-          stateController.text = addressData[4].text ?? "";
-          pinCodeController.text = addressData[0].text ?? "";
-          latLng = LatLng(
-              place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
+          setAddressPlace(
+            LocationDataUpdate(
+              mapBoxPlace: place,
+              latLng: LatLng(
+                place.coordinates!.latitude,
+                place.coordinates!.longitude,
+              ),
+            ),
+          );
           _loading = false;
           notifyListeners();
         },

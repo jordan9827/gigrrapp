@@ -7,6 +7,7 @@ import '../../../../../app/app.locator.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../others/constants.dart';
 import '../../../../../util/enums/latLng.dart';
+import '../../../../widgets/location_helper.dart';
 
 class AddAddressViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -47,15 +48,14 @@ class AddAddressViewModel extends BaseViewModel {
         language: "en",
         country: "in",
         onSelect: (place) async {
-          var addressData = place.context!;
-          setBusy(true);
-          addressController.text = place.placeName ?? "";
-          cityController.text = addressData[2].text ?? "";
-          stateController.text = addressData[4].text ?? "";
-          pinCodeController.text = addressData[0].text ?? "";
-          latLng = LatLng(
-            place.geometry!.coordinates![1],
-            place.geometry!.coordinates![0],
+          setAddressPlace(
+            LocationDataUpdate(
+              mapBoxPlace: place,
+              latLng: LatLng(
+                place.coordinates!.latitude,
+                place.coordinates!.longitude,
+              ),
+            ),
           );
           setBusy(false);
           notifyListeners();
@@ -63,5 +63,19 @@ class AddAddressViewModel extends BaseViewModel {
         limit: 7,
       ),
     );
+  }
+
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    var addressData = data.mapBoxPlace.placeContext;
+    addressController.text = data.mapBoxPlace.placeName;
+    cityController.text = addressData.city;
+    stateController.text = "${addressData.state}, ${addressData.country}";
+    pinCodeController.text = addressData.postCode;
+    notifyListeners();
   }
 }

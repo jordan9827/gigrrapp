@@ -15,15 +15,5 @@ class CandidateGigrrDetailViewModel extends BaseViewModel {
     navigationServices.back();
   }
 
-  void navigatorToGiggrRequestView(String name) {
-    // navigationServices.navigateTo(
-    //   Routes.gigrrCustomRequestView,
-    //   arguments: GigrrCustomRequestViewArguments(
-    //     title: name,
-    //     priceController: priceController,
-    //     selectPriceTypeController: priceTypeController,
-    //     isEmployer: user.isEmployer,
-    //   ),
-    // );
-  }
+  void navigatorToGiggrRequestView(String name) {}
 }

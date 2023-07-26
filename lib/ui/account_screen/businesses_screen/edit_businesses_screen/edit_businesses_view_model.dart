@@ -60,7 +60,9 @@ class EditBusinessesViewModel extends BaseViewModel {
         onSelect: (place) async {
           addressController.text = place.placeName ?? "";
           latLng = LatLng(
-              place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
+            place.coordinates!.latitude,
+            place.coordinates!.longitude,
+          );
           setBusy(false);
           notifyListeners();
         },

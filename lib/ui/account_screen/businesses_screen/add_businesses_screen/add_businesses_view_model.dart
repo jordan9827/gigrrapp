@@ -8,8 +8,8 @@ import '../../../../app/app.locator.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/business_repos.dart';
 import '../../../../others/constants.dart';
-import 'package:mapbox_search/mapbox_search.dart' as auto;
-import 'package:location/location.dart';
+import 'package:mapbox_search/mapbox_search.dart';
+import 'package:location/location.dart' as loc;
 import '../../../widgets/location_helper.dart';
 
 class AddBusinessesViewModel extends BaseViewModel {
@@ -30,7 +30,7 @@ class AddBusinessesViewModel extends BaseViewModel {
   double longitude = 0.0;
   List<String>? imageList = [];
   bool loading = true;
-  Location location = Location();
+  loc.Location location = loc.Location();
 
   void navigationToBack() {
     if (!isBusy) {
@@ -42,15 +42,15 @@ class AddBusinessesViewModel extends BaseViewModel {
   Future<void> mapBoxPlace() async {
     mapBoxLoading = true;
     await navigationService.navigateWithTransition(
-      auto.MapBoxAutoCompleteWidget(
+      MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "select_location".tr(),
         language: "en",
         onSelect: (place) async {
           addressController.text = place.placeName ?? "";
           latLng = LatLng(
-            place.geometry!.coordinates![1],
-            place.geometry!.coordinates![0],
+            place.coordinates!.latitude,
+            place.coordinates!.longitude,
           );
           setBusy(false);
           notifyListeners();

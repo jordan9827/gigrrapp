@@ -4,6 +4,7 @@ import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../app/app.router.dart';
 import '../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
@@ -31,6 +32,10 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     );
   }
 
+  void navigateBack() {
+    navigationService.back();
+  }
+
   Future<void> fetchGigsRequest() async {
     setBusy(true);
     var result = await candidateRepo.getGigsRequest(
@@ -48,15 +53,24 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> acceptedGigsRequest(int id, int index) async {
+  Future<void> acceptedGigsRequest(
+    int id,
+    int index, {
+    bool isBack = false,
+  }) async {
     setBusy(true);
-    // pageController.nextPage(
-    //     duration: Duration(seconds: 1), curve: Curves.easeInToLinear);
     var result = await candidateRepo.acceptedGigsRequest(id);
     result.fold((fail) {
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
     }, (res) async {
+      await navigationService.clearStackAndShow(
+        Routes.homeView,
+        arguments: HomeViewArguments(
+          initialIndex: 0,
+          isInitial: false,
+        ),
+      );
       await fetchGigsRequest();
       setBusy(false);
     });

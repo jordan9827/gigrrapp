@@ -18,7 +18,7 @@ class CandidatePersonalInfoFormView
   Widget build(BuildContext context, CandidateRegisterViewModel viewModel) {
     SizeConfig.init(context);
     return LoadingScreen(
-      loading: viewModel.loading,
+      loading: viewModel.mapBoxLoading,
       showDialogLoading: true,
       child: Scaffold(
         body: _buildFormView(context, viewModel),

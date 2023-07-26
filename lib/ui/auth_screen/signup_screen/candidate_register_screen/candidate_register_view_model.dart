@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:mapbox_search/mapbox_search.dart' as mapBox;
-import 'package:location/location.dart';
+import 'package:location/location.dart' as loc;
+import 'package:mapbox_search/mapbox_search.dart';
 import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
@@ -12,6 +12,7 @@ import '../../../../app/app.router.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../../util/enums/latLng.dart';
+import '../../../widgets/location_helper.dart';
 
 class CandidateRegisterViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -35,10 +36,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
   var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
   RangeValues currentRangeValues = const RangeValues(100, 400);
   LatLng latLng = const LatLng(14.508, 46.048);
-  bool _loading = true;
   bool isSocialLogin = false;
 
-  bool get loading => _loading;
   DateTime selectedDate = DateTime.now();
   bool isVisible = false;
 
@@ -50,8 +49,9 @@ class CandidateRegisterViewModel extends BaseViewModel {
   List<String> myAvailableSelectList = [];
   double latitude = 0.0;
   double longitude = 0.0;
+  bool mapBoxLoading = false;
 
-  Location location = Location();
+  loc.Location location = loc.Location();
   PageController controller = PageController();
 
   int pageIndex = 0;
@@ -155,67 +155,45 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   void acquireCurrentLocation() async {
-    bool serviceEnabled = await location.serviceEnabled();
-    if (serviceEnabled) {
-      _loading = true;
-      final locationData = await location.getLocation();
-      print("locationData ${locationData.latitude}");
-
-      var map = mapBox.MapBoxGeoCoding(
-        apiKey: MAPBOX_TOKEN,
-      );
-
-      var getAddress = await map.getAddress(
-        mapBox.Location(
-          lat: locationData.latitude ?? 0.0,
-          lng: locationData.longitude ?? 0.0,
-        ),
-      );
-      var addressData = getAddress!.first;
-      print("addressData $addressData");
-      await setAddressPlace(addressData);
-
-      latLng =
-          LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0);
-      _loading = false;
-      notifyListeners();
-    } else {
-      serviceEnabled = await location.requestService();
-      return;
-    }
-    notifyListeners();
+    mapBoxLoading = true;
+    var location = await LocationHelper.acquireCurrentLocation();
+    await setAddressPlace(location);
+    mapBoxLoading = false;
   }
 
-  Future<void> setAddressPlace(mapBox.MapBoxPlace mapBoxPlace) async {
-    print("$mapBoxPlace");
-    _loading = true;
-    var addressData = mapBoxPlace.context ?? [];
-
-    addressController.text = mapBoxPlace.placeName ?? "";
-    cityController.text = addressData[2].text ?? "";
-    stateController.text = addressData[4].text ?? "";
-    pinCodeController.text = addressData[0].text ?? "";
-    _loading = false;
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    var addressData = data.mapBoxPlace.placeContext;
+    addressController.text = data.mapBoxPlace.placeName;
+    cityController.text = addressData.city;
+    stateController.text = "${addressData.state}, ${addressData.country}";
+    pinCodeController.text = addressData.postCode;
+    mapBoxLoading = false;
     notifyListeners();
   }
 
   void mapBoxPlace() {
     navigationService.navigateWithTransition(
-      mapBox.MapBoxAutoCompleteWidget(
+      MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
         language: "en",
         country: "in",
         onSelect: (place) async {
-          var addressData = place.context!;
-          _loading = true;
-          addressController.text = place.placeName ?? "";
-          cityController.text = addressData[2].text ?? "";
-          stateController.text = addressData[4].text ?? "";
-          pinCodeController.text = addressData[0].text ?? "";
-          latLng = LatLng(
-              place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
-          _loading = false;
+          setAddressPlace(
+            LocationDataUpdate(
+              mapBoxPlace: place,
+              latLng: LatLng(
+                place.coordinates!.latitude,
+                place.coordinates!.longitude,
+              ),
+            ),
+          );
+          mapBoxLoading = false;
           notifyListeners();
         },
         limit: 7,
@@ -226,7 +204,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   void setPickDate(DateTime picked) {
     selectedDate = picked;
     dobController.text = DateFormat("dd MMM yyyy").format(selectedDate);
-    _loading = false;
+    mapBoxLoading = false;
     notifyListeners();
   }
 

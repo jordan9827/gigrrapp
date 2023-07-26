@@ -29,9 +29,10 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setInitialIndex() {
+  void setInitialIndex(bool isInitial) {
     if (!user.isEmployer) {
-      bottomNavBarService.currentIndex = 1;
+      var index = isInitial ? 1 : initialIndex;
+      bottomNavBarService.currentIndex = index;
     } else {
       bottomNavBarService.currentIndex = initialIndex;
     }

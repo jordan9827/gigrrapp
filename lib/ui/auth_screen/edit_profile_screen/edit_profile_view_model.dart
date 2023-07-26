@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:square_demo_architecture/util/enums/latLng.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
-import 'package:mapbox_search/mapbox_search.dart' as auto;
+import 'package:mapbox_search/mapbox_search.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 
@@ -16,10 +16,14 @@ class EditProfileViewModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
   final authRepo = locator<Auth>();
 
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController addressController =
-      TextEditingController(text: "House no., Street name, Area");
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController pinCodeController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController businessNameController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
+  final TextEditingController businessTypeController = TextEditingController();
   LatLng latLng = const LatLng(14.508, 46.048);
   double latitude = 0.0;
   double longitude = 0.0;
@@ -64,14 +68,16 @@ class EditProfileViewModel extends BaseViewModel {
   Future<void> mapBoxPlace() async {
     mapBoxLoading = true;
     await navigationService.navigateWithTransition(
-      auto.MapBoxAutoCompleteWidget(
+      MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
         language: "en",
         onSelect: (place) async {
-          addressController.text = place.placeName ?? "";
+          addressController.text = place.placeName;
           latLng = LatLng(
-              place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
+            place.coordinates!.latitude,
+            place.coordinates!.longitude,
+          );
           setBusy(false);
 
           notifyListeners();
@@ -108,8 +114,8 @@ class EditProfileViewModel extends BaseViewModel {
     Map<String, String> request = {};
     request['full_name'] = fullNameController.text;
     request['address'] = addressController.text;
-    request['latitude'] = latLng.latitude.toString();
-    request['longitude'] = latLng.longitude.toString();
+    request['latitude'] = latLng.lat.toString();
+    request['longitude'] = latLng.lng.toString();
     request['country_code'] = "+91";
     request['mobile_no'] = mobileController.text;
     log("Edit Profile Request : $request");

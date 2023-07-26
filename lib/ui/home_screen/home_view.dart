@@ -12,24 +12,22 @@ import '../../util/others/text_styles.dart';
 import 'candidate_gigrrs_view/candidate_gigrrs_view.dart';
 import 'home_view_model.dart';
 
-class HomeView extends StatefulWidget {
+class HomeView extends StatelessWidget {
   final int initialIndex;
-  const HomeView({
+  final bool isInitial;
+  HomeView({
     Key? key,
     this.initialIndex = 0,
+    this.isInitial = true,
   }) : super(key: key);
 
-  @override
-  State<HomeView> createState() => _HomeViewState();
-}
-
-class _HomeViewState extends State<HomeView> {
   List<Widget> employerScreens = [
     EmployerGigrrsView(),
     MyGigs(),
     MyGirrsView(),
     AccountView(),
   ];
+
   List<Widget> candidateScreens = [
     MyGigs(),
     CandidateGigrrsView(),
@@ -139,8 +137,8 @@ class _HomeViewState extends State<HomeView> {
     final ThemeData themeData = Theme.of(context);
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.setInitialIndex(),
-      viewModelBuilder: () => HomeViewModel(widget.initialIndex),
+      onViewModelReady: (viewModel) => viewModel.setInitialIndex(isInitial),
+      viewModelBuilder: () => HomeViewModel(initialIndex),
       builder: (context, viewModel, child) {
         var isEmployer = viewModel.user.isEmployer;
         return Scaffold(
@@ -243,7 +241,7 @@ class _HomeViewState extends State<HomeView> {
         onTap: () => viewModel.changeScreenIndex(2),
         image: ic_account,
         title: "account",
-        isSelected: 1 == viewModel.bottomNavBarService.currentIndex,
+        isSelected: 2 == viewModel.bottomNavBarService.currentIndex,
       ),
     ];
   }

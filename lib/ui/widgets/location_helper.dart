@@ -1,16 +1,15 @@
-import 'package:mapbox_search/mapbox_search.dart' as mapBox;
-import 'package:location/location.dart';
+import 'package:location/location.dart' as loc;
+import 'package:mapbox_search/mapbox_search.dart';
 import 'package:square_demo_architecture/util/enums/latLng.dart';
-
 import '../../others/constants.dart';
 
 class LocationHelper {
-  static Location location = Location();
+  static loc.Location location = loc.Location();
 
   static Future<LocationDataUpdate> acquireCurrentLocation() async {
     LocationDataUpdate addressData = LocationDataUpdate(
       latLng: LatLng(0.0, 0.0),
-      mapBoxPlace: mapBox.MapBoxPlace.fromJson({}),
+      mapBoxPlace: MapBoxPlace.fromJson({}),
     );
     bool serviceEnabled = await location.serviceEnabled();
     if (serviceEnabled) {
@@ -18,12 +17,12 @@ class LocationHelper {
       print("locationData ${locationData.latitude}");
       var lat = locationData.latitude ?? 0.0;
       var lng = locationData.longitude ?? 0.0;
-      var map = mapBox.MapBoxGeoCoding(
+      var map = MapBoxGeoCoding(
         apiKey: MAPBOX_TOKEN,
       );
 
       var getAddress = await map.getAddress(
-        mapBox.Location(
+        Location(
           lat: lat,
           lng: lng,
         ),
@@ -41,8 +40,9 @@ class LocationHelper {
 }
 
 class LocationDataUpdate {
-  final mapBox.MapBoxPlace mapBoxPlace;
+  final MapBoxPlace mapBoxPlace;
   final LatLng latLng;
+
   LocationDataUpdate({
     required this.mapBoxPlace,
     required this.latLng,

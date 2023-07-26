@@ -243,10 +243,12 @@ class AddGigsViewModel extends BaseViewModel {
           setBusy(false);
         },
         (gigs) {
-          // snackBarService.showSnackbar(message: gigs.message);
           navigationService.clearStackAndShow(
             Routes.homeView,
-            arguments: HomeViewArguments(initialIndex: 1),
+            arguments: HomeViewArguments(
+              initialIndex: 1,
+              isInitial: false,
+            ),
           );
           gigrrNameController.clear();
           priceController.clear();

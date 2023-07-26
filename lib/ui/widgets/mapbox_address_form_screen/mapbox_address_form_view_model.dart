@@ -7,6 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../others/constants.dart';
 import '../../../util/enums/latLng.dart';
+import '../location_helper.dart';
 
 class MapBoxAddressFormViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -30,34 +31,9 @@ class MapBoxAddressFormViewModel extends BaseViewModel {
   }
 
   Future<void> acquireCurrentLocation() async {
-    bool serviceEnabled = await location.serviceEnabled();
-    if (serviceEnabled) {
-      setBusy(true);
-      final locationData = await location.getLocation();
-      print("locationData ${locationData.latitude}");
-
-      var map = mapBox.MapBoxGeoCoding(
-        apiKey: MAPBOX_TOKEN,
-      );
-
-      var getAddress = await map.getAddress(
-        mapBox.Location(
-          lat: locationData.latitude ?? 0.0,
-          lng: locationData.longitude ?? 0.0,
-        ),
-      );
-      var addressData = getAddress!.first;
-      print("addressData $addressData");
-      await setAddressPlace(addressData);
-      latLng =
-          LatLng(locationData.latitude ?? 0.0, locationData.longitude ?? 0.0);
-      setBusy(false);
-      notifyListeners();
-    } else {
-      serviceEnabled = await location.requestService();
-      return;
-    }
-    notifyListeners();
+    var location = await LocationHelper.acquireCurrentLocation();
+    await setAddressPlace(location);
+    setBusy(false);
   }
 
   void mapBoxPlace() {
@@ -68,24 +44,35 @@ class MapBoxAddressFormViewModel extends BaseViewModel {
         language: "en",
         country: "in",
         onSelect: (place) async {
-          await setAddressPlace(place);
           latLng = LatLng(
-              place.geometry!.coordinates![1], place.geometry!.coordinates![0]);
+            place.coordinates!.latitude,
+            place.coordinates!.longitude,
+          );
+          await setAddressPlace(
+            LocationDataUpdate(
+              mapBoxPlace: place,
+              latLng: latLng,
+            ),
+          );
           notifyListeners();
         },
         limit: 7,
       ),
     );
+    notifyListeners();
   }
 
-  Future<void> setAddressPlace(mapBox.MapBoxPlace mapBoxPlace) async {
-    print("$mapBoxPlace");
-    var addressData = mapBoxPlace.context ?? [];
-
-    addressController.text = mapBoxPlace.placeName ?? "";
-    cityController.text = addressData[2].text ?? "";
-    stateController.text = addressData[4].text ?? "";
-    pinCodeController.text = addressData[0].text ?? "";
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    var addressData = data.mapBoxPlace.placeContext;
+    addressController.text = data.mapBoxPlace.placeName;
+    cityController.text = addressData.city;
+    stateController.text = "${addressData.state}, ${addressData.country}";
+    pinCodeController.text = addressData.postCode;
     notifyListeners();
   }
 }

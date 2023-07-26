@@ -8,186 +8,186 @@ import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
+import '../candidate_gigrrs_view_model.dart';
 import 'candidate_gigrr_detail_view_model.dart';
 
-class CandidateGigrrDetailView extends StatelessWidget {
+class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
   final CandidateGigsRequestData data;
   const CandidateGigrrDetailView({Key? key, required this.data})
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget builder(
+      BuildContext context, CandidateGigrrsViewModel viewModel, Widget? child) {
     SizeConfig.init(context);
     MediaQueryData mediaQueryData = context.mediaQueryData;
     double outerPadding = SizeConfig.margin_padding_15;
     var price =
         "₹ ${double.parse(data.fromAmount).toStringAsFixed(1)}-${double.parse(data.toAmount).toStringAsFixed(0)}/${data.priceCriteria}";
-    return ViewModelBuilder.reactive(
-      viewModelBuilder: () => CandidateGigrrDetailViewModel(),
-      builder: (context, viewModel, child) {
-        return Scaffold(
-          body: Stack(
+    return Scaffold(
+      body: Stack(
+        children: [
+          ListView(
             children: [
-              ListView(
-                children: [
-                  Container(
-                    height: mediaQueryData.size.height * 0.5,
-                    width: mediaQueryData.size.width,
-                    child: Stack(
-                      children: [
-                        SizedBox(
-                          height: double.infinity,
-                          width: double.infinity,
-                          child: Image.asset(
-                            "assets/images/home_slide_demo.png",
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        Positioned(
-                          top: 0,
-                          child: Container(
-                            height: kToolbarHeight,
-                            width: mediaQueryData.size.width,
-                            padding: EdgeInsets.only(
-                              right: outerPadding,
-                              left: outerPadding,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _buildAppBarButtons(
-                                  icon: grop_arrow_icon,
-                                  onTap: viewModel.navigateBack,
-                                ),
-                                _buildAppBarButtons(
-                                  icon: grop_icon,
-                                  onTap: viewModel.navigateBack,
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+              Container(
+                height: mediaQueryData.size.height * 0.5,
+                width: mediaQueryData.size.width,
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: double.infinity,
+                      width: double.infinity,
+                      child: Image.asset(
+                        "assets/images/home_slide_demo.png",
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
-                  Container(
-                    width: mediaQueryData.size.width,
-                    padding: EdgeInsets.all(outerPadding),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          data.gigName,
-                          textAlign: TextAlign.start,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            color: Colors.black,
-                            fontSize: SizeConfig.textSizeXLarge,
-                          ),
+                    Positioned(
+                      top: 0,
+                      child: Container(
+                        height: kToolbarHeight,
+                        width: mediaQueryData.size.width,
+                        padding: EdgeInsets.only(
+                          right: outerPadding,
+                          left: outerPadding,
                         ),
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Image.asset(ic_location, height: 23),
-                            SizedBox(width: SizeConfig.margin_padding_3),
-                            Expanded(
-                              child: Text(
-                                data.gigAddress,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TSB.regularSmall(
-                                  textColor: textNoticeColor,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        _buildSpacing(),
-                        Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildExPriceWidget(
-                              outerPadding: outerPadding,
-                              valueText: price,
-                              titleText: "Normal Price",
+                            _buildAppBarButtons(
+                              icon: grop_arrow_icon,
+                              onTap: viewModel.navigateBack,
                             ),
-                            _buildExPriceWidget(
-                              outerPadding: outerPadding,
-                              valueText: "1-3 Years",
-                              titleText: "Required Experience",
-                            ),
+                            _buildAppBarButtons(
+                              icon: grop_icon,
+                              onTap: viewModel.navigateBack,
+                            )
                           ],
-                        ),
-                        _buildSpacing(),
-                        _buildOtherDetailView(
-                          title: "Availibility",
-                          infoList: [
-                            "Weekends",
-                            "Day Shift",
-                            "Night Shift",
-                          ],
-                        ),
-                        _buildSpacing(),
-                        _buildOtherDetailView(
-                          title: "Required Skill",
-                          infoList: data.skillsCategoryList
-                              .map((e) => e.name)
-                              .toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.margin_padding_50 * 1.8,
-                  )
-                ],
-              ),
-              Positioned(
-                bottom: 0,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Container(
-                      height: kToolbarHeight * 2,
-                      width: SizeConfig.screenWidth,
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            mainWhiteColor,
-                            mainWhiteColor.withOpacity(0.75),
-                            mainWhiteColor.withOpacity(0.50),
-                            mainWhiteColor.withOpacity(0.25),
-                            mainWhiteColor.withOpacity(0.0),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: SizeConfig.screenWidth,
-                      color: mainWhiteColor,
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.only(
-                        bottom: SizeConfig.margin_padding_14,
-                      ),
-                      child: SizedBox(
-                        width: SizeConfig.screenWidth * 0.5,
-                        child: LoadingButton(
-                          action: () => viewModel
-                              .navigatorToGiggrRequestView(data.gigName),
-                          title: "apply_now",
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
+              Container(
+                width: mediaQueryData.size.width,
+                padding: EdgeInsets.all(outerPadding),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      data.gigName,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.black,
+                        fontSize: SizeConfig.textSizeXLarge,
+                      ),
+                    ),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(ic_location, height: 23),
+                        SizedBox(width: SizeConfig.margin_padding_3),
+                        Expanded(
+                          child: Text(
+                            data.gigAddress,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TSB.regularSmall(
+                              textColor: textNoticeColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    _buildSpacing(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        _buildExPriceWidget(
+                          outerPadding: outerPadding,
+                          valueText: price,
+                          titleText: "Normal Price",
+                        ),
+                        _buildExPriceWidget(
+                          outerPadding: outerPadding,
+                          valueText: "1-3 Years",
+                          titleText: "Required Experience",
+                        ),
+                      ],
+                    ),
+                    _buildSpacing(),
+                    _buildOtherDetailView(
+                      title: "Availibility",
+                      infoList: [
+                        "Weekends",
+                        "Day Shift",
+                        "Night Shift",
+                      ],
+                    ),
+                    _buildSpacing(),
+                    _buildOtherDetailView(
+                      title: "Required Skill",
+                      infoList:
+                          data.skillsCategoryList.map((e) => e.name).toList(),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_50 * 1.8,
+              )
             ],
           ),
-        );
-      },
+          Positioned(
+            bottom: 0,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  height: kToolbarHeight * 2,
+                  width: SizeConfig.screenWidth,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.topCenter,
+                      colors: [
+                        mainWhiteColor,
+                        mainWhiteColor.withOpacity(0.75),
+                        mainWhiteColor.withOpacity(0.50),
+                        mainWhiteColor.withOpacity(0.25),
+                        mainWhiteColor.withOpacity(0.0),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  width: SizeConfig.screenWidth,
+                  color: mainWhiteColor,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.only(
+                    bottom: SizeConfig.margin_padding_14,
+                  ),
+                  child: SizedBox(
+                    width: SizeConfig.screenWidth * 0.5,
+                    child: LoadingButton(
+                      loading: viewModel.isBusy,
+                      action: () => viewModel.acceptedGigsRequest(
+                        data.id,
+                        viewModel.gigsData.indexOf(data),
+                        isBack: true,
+                      ),
+                      title: "apply_now",
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -297,4 +297,8 @@ class CandidateGigrrDetailView extends StatelessWidget {
       child: Image.asset(icon, scale: 2.8),
     );
   }
+
+  @override
+  CandidateGigrrsViewModel viewModelBuilder(BuildContext context) =>
+      CandidateGigrrsViewModel();
 }

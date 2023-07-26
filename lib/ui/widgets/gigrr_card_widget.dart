@@ -163,7 +163,7 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           InkWell(
-                            onTap: widget.gigrrActionButton,
+                            onTap: widget.acceptedGigsRequest,
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                 vertical: SizeConfig.margin_padding_5,
@@ -196,7 +196,7 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                             width: SizeConfig.margin_padding_5,
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: widget.gigrrActionButton,
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                 vertical: SizeConfig.margin_padding_5,
