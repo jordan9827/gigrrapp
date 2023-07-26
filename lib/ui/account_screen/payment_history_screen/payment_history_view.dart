@@ -42,20 +42,20 @@ class PaymentHistoryScreenView extends StatelessWidget {
                 horizontal: SizeConfig.margin_padding_15,
                 vertical: SizeConfig.margin_padding_10,
               ),
-              child: ListView(
-                children: viewModel.paymentList.map(
-                  (e) {
-                    return viewModel.paymentList.isEmpty
-                        ? EmptyDataScreenView(
-                            enableBackButton: true,
-                          )
-                        : PaymentHistoryWidget(
+              child: viewModel.paymentList.isEmpty
+                  ? EmptyDataScreenView(
+                      enableBackButton: true,
+                    )
+                  : ListView(
+                      children: viewModel.paymentList.map(
+                        (e) {
+                          return PaymentHistoryWidget(
                             data: e,
                             viewModel: viewModel,
                           );
-                  },
-                ).toList(),
-              ),
+                        },
+                      ).toList(),
+                    ),
             ),
           ),
         ),

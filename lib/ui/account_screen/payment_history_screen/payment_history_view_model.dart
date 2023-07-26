@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/network/dtos/payment_history_response.dart';
 import 'package:square_demo_architecture/domain/repos/account_repos.dart';
 import 'package:square_demo_architecture/util/enums/dialog_type.dart';
@@ -12,6 +13,7 @@ import 'widget/filter_dialog_view.dart';
 
 class PaymentHistoryViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
+  final sharedPreferences = locator<SharedPreferences>();
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
   final accountRepo = locator<AccountRepo>();
@@ -22,7 +24,7 @@ class PaymentHistoryViewModel extends BaseViewModel {
   var timeNow = DateFormat('hh:mm a').format(DateTime.now());
 
   // var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
-  var dateNow = DateFormat('dd MMM yyyy').format(DateTime.now());
+  var dateNow = DateFormat("yyyy-MM-dd").format(DateTime.now());
   DateTime selectedDate = DateTime.now();
   var _pageNumber = 0;
   int itemCount = 0;
@@ -33,8 +35,7 @@ class PaymentHistoryViewModel extends BaseViewModel {
   bool get loading => _loading;
 
   PaymentHistoryViewModel() {
-    formDateController.text = dateNow;
-    toDateController.text = dateNow;
+    clearDateController();
   }
 
   void navigationToBack() {
@@ -59,6 +60,32 @@ class PaymentHistoryViewModel extends BaseViewModel {
     scrollController.addListener(_scrollListener);
   }
 
+  Future<void> loadToFilter() async {
+    var isDateStatus = (getDate("toDateController").isNotEmpty &&
+        getDate("formDateController").isNotEmpty);
+    var isNameStatus = nameController.text.isNotEmpty;
+    if (isDateStatus || isNameStatus) {
+      navigationService.back();
+      paymentList.clear();
+      _pageNumber = 0;
+      fetchPayment();
+      notifyListeners();
+    }
+  }
+
+  void clearDateController({bool isClear = false}) {
+    nameController.text = "";
+    formDateController.text = "";
+    toDateController.text = "";
+    setDate("toDateController", "");
+    setDate("formDateController", "");
+    if (isClear) {
+      formDateController.text = dateNow;
+      toDateController.text = dateNow;
+    }
+    notifyListeners();
+  }
+
   Future<void> _scrollListener() async {
     if (scrollController.offset >= scrollController.position.maxScrollExtent &&
         !scrollController.position.outOfRange) {
@@ -69,6 +96,8 @@ class PaymentHistoryViewModel extends BaseViewModel {
   }
 
   Future<void> fetchPayment() async {
+    print("fetchPayment ${formDateController.text}");
+
     var result;
     _pageNumber = _pageNumber + 1;
     if (_pageNumber == 1) setBusy(true);
@@ -90,7 +119,6 @@ class PaymentHistoryViewModel extends BaseViewModel {
       setBusy(false);
     }, (res) {
       paymentList.addAll(res.paymentHistoryData);
-      log("paymentList ${paymentList.toList()}");
       _loading = false;
       setBusy(false);
     });
@@ -98,17 +126,20 @@ class PaymentHistoryViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void showFilterDialog(PaymentHistoryViewModel viewModel) {
+  Future<void> showFilterDialog(PaymentHistoryViewModel viewModel) async {
     final builders = {
-      DialogType.paymentFilter: (_, request, completer) =>
-          FilterDialogView(viewModel: viewModel),
+      DialogType.paymentFilter: (_, request, completer) => FilterDialogView(
+            viewModel: viewModel,
+            actionApply: loadToFilter,
+          ),
     };
 
     dialogService.registerCustomDialogBuilders(builders);
 
-    dialogService.showCustomDialog(
+    await dialogService.showCustomDialog(
       variant: DialogType.paymentFilter,
     );
+    notifyListeners();
   }
 
   String filterStatusForPayment(String value) {
@@ -120,20 +151,32 @@ class PaymentHistoryViewModel extends BaseViewModel {
   }
 
   void pickFormDate(DateTime dateTime) {
-    formDateController.text = DateFormat("dd MMM yyyy").format(dateTime);
+    print("pickFormDate ${dateTime.day}");
+    formDateController.text = DateFormat("yyyy-MM-dd").format(dateTime);
+    setDate("formDateController", formDateController.text);
     notifyListeners();
   }
 
   void pickToDate(DateTime dateTime) {
-    toDateController.text = DateFormat("dd MMM yyyy").format(dateTime);
+    toDateController.text = DateFormat("yyyy-MM-dd").format(dateTime);
+    setDate("toDateController", toDateController.text);
     notifyListeners();
+  }
+
+  String getDate(String val) {
+    return sharedPreferences.getString(val) ?? "";
+  }
+
+  void setDate(String key, type) {
+    sharedPreferences.setString(key, type);
   }
 
   Future<Map<String, String>> _getRequestForCandidatePayment() async {
     Map<String, String> request = Map();
-    // request['start_date'] = "";
-    // request['end_date'] = "";
-    // log("getRequestForLogIn :: $request");
+    request['start_date'] = getDate("formDateController");
+    request['end_date'] = getDate("toDateController");
+
+    log("Request Candidate Payment :: $request");
     return request;
   }
 }
