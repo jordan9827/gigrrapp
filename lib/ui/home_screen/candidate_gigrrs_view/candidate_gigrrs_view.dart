@@ -21,7 +21,9 @@ class CandidateGigrrsView extends StatelessWidget {
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
-            child: HomeGigrrsAppBarView(),
+            child: HomeGigrrsAppBarView(
+              actionToAddress: viewModel.navigateToManageAddressView,
+            ),
           ),
           body: LoadingScreen(
             loading: viewModel.isBusy,

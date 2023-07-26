@@ -26,14 +26,18 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     fCMService.listenForegroundMessage((p0) => fetchGigsRequest());
   }
 
+  void navigateBack() {
+    navigationService.back();
+  }
+
+  void navigateToManageAddressView() {
+    navigationService.navigateTo(Routes.manageAddressScreenView);
+  }
+
   void navigateToGigrrDetailScreen(CandidateGigsRequestData e) {
     navigationService.navigateWithTransition(
       CandidateGigrrDetailView(data: e),
     );
-  }
-
-  void navigateBack() {
-    navigationService.back();
   }
 
   Future<void> fetchGigsRequest() async {

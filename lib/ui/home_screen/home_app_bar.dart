@@ -7,7 +7,11 @@ import '../../util/others/size_config.dart';
 import '../widgets/notification_icon.dart';
 
 class HomeGigrrsAppBarView extends StatelessWidget {
-  const HomeGigrrsAppBarView({Key? key}) : super(key: key);
+  final Function() actionToAddress;
+  const HomeGigrrsAppBarView({
+    Key? key,
+    required this.actionToAddress,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,35 +33,38 @@ class HomeGigrrsAppBarView extends StatelessWidget {
             width: SizeConfig.margin_padding_10,
           ),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Shop",
-                      style: TextStyle(
-                        color: mainBlackColor,
-                        fontWeight: FontWeight.w900,
-                        fontSize: SizeConfig.textSizeSmall,
+            child: InkWell(
+              onTap: actionToAddress,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Shop",
+                        style: TextStyle(
+                          color: mainBlackColor,
+                          fontWeight: FontWeight.w900,
+                          fontSize: SizeConfig.textSizeSmall,
+                        ),
                       ),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down_outlined,
-                      color: mainBlackColor,
-                    )
-                  ],
-                ),
-                Text(
-                  locator<UserAuthResponseData>().address,
-                  style: TextStyle(
-                    color: mainBlackColor,
-                    fontSize: SizeConfig.textSizeVerySmall * 0.95,
+                      Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        color: mainBlackColor,
+                      )
+                    ],
                   ),
-                ),
-              ],
+                  Text(
+                    locator<UserAuthResponseData>().address,
+                    style: TextStyle(
+                      color: mainBlackColor,
+                      fontSize: SizeConfig.textSizeVerySmall * 0.95,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
