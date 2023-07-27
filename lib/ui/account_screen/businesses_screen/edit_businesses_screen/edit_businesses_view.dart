@@ -35,7 +35,11 @@ class EditBusinessesScreenView extends StatelessWidget {
         body: Container(
           padding: edgeInsetsMargin,
           child: ListView(
+            padding: EdgeInsets.zero,
             children: [
+              SizedBox(
+                height: SizeConfig.margin_padding_10,
+              ),
               _buildEditBusinessForm(viewModel),
               SizedBox(
                 height: SizeConfig.margin_padding_24,

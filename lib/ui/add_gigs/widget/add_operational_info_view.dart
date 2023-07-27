@@ -20,7 +20,11 @@ class AddGigsOperationalInfoScreenView
     return Container(
       padding: edgeInsetsMargin,
       child: ListView(
+        padding: EdgeInsets.zero,
         children: [
+          SizedBox(
+            height: SizeConfig.margin_padding_10,
+          ),
           Text(
             "job_duration".tr(),
             style: TSB.semiBoldSmall(),

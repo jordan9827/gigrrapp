@@ -26,31 +26,29 @@ class _IntroScreenViewState extends State<IntroScreenView> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              height: SizeConfig.margin_padding_40,
+            _buildSpacer(
+              SizeConfig.margin_padding_40,
             ),
             SizedBox(
               height: SizeConfig.margin_padding_40,
               child: Image.asset(ic_gigrra_name),
             ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
+            _buildSpacer(),
             Image.asset(ic_gigrra_logo),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
+            _buildSpacer(),
             _buildTitleAndSubTitle(),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
+            _buildSpacer(),
             _buildSkipButton(viewModel),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
+            _buildSpacer(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_20,
     );
   }
 

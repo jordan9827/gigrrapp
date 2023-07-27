@@ -23,26 +23,24 @@ class EmployerGigrrsView extends StatelessWidget {
           ),
           body: LoadingScreen(
             loading: viewModel.isBusy,
-            child: PageView.builder(
-              scrollDirection: Axis.vertical,
-              controller: viewModel.pageController,
-              itemBuilder: (BuildContext context, int index) {
-                if (viewModel.gigsData.isEmpty) {
-                  return EmptyDataScreenView();
-                } else {
-                  var e = viewModel.gigsData[index];
-                  return GiggrCardWidget(
-                    title: e.firstName,
-                    profile: "",
-                    price: viewModel.price(e),
-                    gigrrActionName: 'apply_now',
-                    skillList: e.employeeSkills.map((e) => e.name).toList(),
-                    gigrrActionButton: () =>
-                        viewModel.navigateToGigrrDetailScreen(e),
-                  );
-                }
-              },
-            ),
+            child: viewModel.gigsData.isEmpty
+                ? EmptyDataScreenView()
+                : PageView.builder(
+                    scrollDirection: Axis.vertical,
+                    controller: viewModel.pageController,
+                    itemBuilder: (BuildContext context, int index) {
+                      var e = viewModel.gigsData[index];
+                      return GiggrCardWidget(
+                        title: e.firstName,
+                        profile: "",
+                        price: viewModel.price(e),
+                        gigrrActionName: 'apply_now',
+                        skillList: e.employeeSkills.map((e) => e.name).toList(),
+                        gigrrActionButton: () =>
+                            viewModel.navigateToGigrrDetailScreen(e),
+                      );
+                    },
+                  ),
           ),
         );
       },

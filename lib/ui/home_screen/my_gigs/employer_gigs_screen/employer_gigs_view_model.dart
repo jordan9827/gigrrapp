@@ -146,7 +146,7 @@ class EmployerGigsViewModel extends BaseViewModel {
     var isCheck = await navigationService.navigateWithTransition(
       EmployerGigsDetailView(gigs: gigs, status: gigsStatus),
     );
-    if (isCheck) {
+    if (isCheck ?? false) {
       await fetchMyGigsList();
     }
     notifyListeners();

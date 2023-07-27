@@ -74,11 +74,15 @@ class CustomDropDownWidget extends StatelessWidget {
             height: size ?? SizeConfig.margin_padding_50 * 5,
             decoration: BoxDecoration(
               color: mainGrayColor,
-              border: Border(top: BorderSide(color: Colors.black38, width: 1)),
+              border: Border(
+                top: BorderSide(color: Colors.black38, width: 1),
+              ),
             ),
-            padding:
-                EdgeInsets.symmetric(horizontal: SizeConfig.margin_padding_8),
+            padding: EdgeInsets.symmetric(
+              horizontal: SizeConfig.margin_padding_8,
+            ),
             child: ListView(
+              padding: EdgeInsets.zero,
               shrinkWrap: true,
               children: itemList
                   .map(

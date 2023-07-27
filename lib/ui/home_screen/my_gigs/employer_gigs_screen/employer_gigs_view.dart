@@ -70,7 +70,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                       price: viewModel.price(gigs),
                       startDate: gigs.gigsStartDate,
                       isEmptyModel: !viewModel.isEmptyModelCheck(gigs),
-                      jobDuration: "${gigs.duration} Days",
+                      jobDuration: "${gigs.duration}" + " days".tr(),
                       bottomView: _buildStatusGigsView(viewModel, gigs),
                     ),
                   )

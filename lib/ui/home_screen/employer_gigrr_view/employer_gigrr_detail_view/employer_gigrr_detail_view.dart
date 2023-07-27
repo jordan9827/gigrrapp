@@ -11,6 +11,7 @@ import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/loading_button.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
+import '../../../widgets/detail_app_bar.dart';
 import 'employer_gigrr_detail_view_model.dart';
 
 class EmployerGigrrDetailView extends StatelessWidget {
@@ -42,44 +43,9 @@ class EmployerGigrrDetailView extends StatelessWidget {
                     Container(
                       height: mediaQueryData.size.height * 0.5,
                       width: mediaQueryData.size.width,
-                      child: Stack(
-                        children: [
-                          SizedBox(
-                            height: double.infinity,
-                            width: double.infinity,
-                            child: Image.asset(
-                              "assets/images/home_slide_demo.png",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            child: Container(
-                              height: kToolbarHeight,
-                              width: mediaQueryData.size.width,
-                              padding: EdgeInsets.only(
-                                right: outerPadding,
-                                left: outerPadding,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  _buildAppBarButtons(
-                                    icon: grop_arrow_icon,
-                                    onTap: () =>
-                                        locator<NavigationService>().back(),
-                                  ),
-                                  _buildAppBarButtons(
-                                    icon: grop_icon,
-                                    onTap: () =>
-                                        locator<NavigationService>().back(),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                      child: Image.network(
+                        viewModel.profileImage(gigsRequestData),
+                        fit: BoxFit.fill,
                       ),
                     ),
                     Container(
@@ -157,6 +123,10 @@ class EmployerGigrrDetailView extends StatelessWidget {
                       height: SizeConfig.margin_padding_50 * 1.8,
                     )
                   ],
+                ),
+                Positioned(
+                  top: SizeConfig.margin_padding_24,
+                  child: DetailAppBar(),
                 ),
                 if (isShortListed)
                   ShortListView(
@@ -326,7 +296,7 @@ class ShortListView extends ViewModelWidget<EmployerGigrrDetailViewModel> {
                   id: gigsId,
                   candidateId: candidateId,
                 ),
-                title: "SHORTLIST GIGRR",
+                title: "shortlist_gigrr",
               ),
             ),
           ),

@@ -57,6 +57,14 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  int setDistance(CandidateGigsRequestData e) {
+    int distance = 0;
+    for (var i in e.gigsRequestData) {
+      distance = i.distance;
+    }
+    return distance;
+  }
+
   Future<void> acceptedGigsRequest(
     int id,
     int index, {

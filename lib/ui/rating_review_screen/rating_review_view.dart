@@ -121,7 +121,7 @@ class RatingReviewScreenView extends StatelessWidget {
           controller: viewModel.commentController,
           style: TextStyle(color: mainBlackColor),
           decoration: InputDecoration(
-            hintText: "Type review.......",
+            hintText: "type_review".tr(),
             border: inputBorder,
             enabledBorder: inputBorder,
             focusedBorder: inputBorder,

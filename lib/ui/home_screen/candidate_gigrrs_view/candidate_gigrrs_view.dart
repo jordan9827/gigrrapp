@@ -34,6 +34,7 @@ class CandidateGigrrsView extends StatelessWidget {
                     children: viewModel.gigsData.map((e) {
                       return GiggrCardWidget(
                         title: e.gigName,
+                        distance: viewModel.setDistance(e),
                         profile: viewModel.profileImage(e.business),
                         price: viewModel.price(e),
                         gigrrActionName: 'apply_now',

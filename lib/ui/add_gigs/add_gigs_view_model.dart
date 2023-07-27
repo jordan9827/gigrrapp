@@ -30,7 +30,7 @@ class AddGigsViewModel extends BaseViewModel {
   List<GetBusinessesData> businessesList = <GetBusinessesData>[];
 
   DateTime selectedDate = DateTime.now();
-  var timeNow = DateFormat('hh:mm a').format(DateTime.now());
+  var timeNow = DateFormat('hh:mm a').format(DateTime.now()).toUpperCase();
   var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
   RangeValues currentRangeValues = const RangeValues(100, 1000);
 
@@ -227,7 +227,7 @@ class AddGigsViewModel extends BaseViewModel {
     );
     if (picked != null) {
       selectedTime = picked;
-      textController.text = picked.format(context);
+      textController.text = picked.format(context).toUpperCase();
       notifyListeners();
     }
   }

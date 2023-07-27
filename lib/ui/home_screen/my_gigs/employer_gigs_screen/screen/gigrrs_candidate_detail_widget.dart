@@ -116,8 +116,11 @@ class GigrrsCandidateWidget
           ),
         ),
         _buildDetailView(
-            onTap: () =>
-                viewModel.navigationToShortListedDetailView(gigsData, data))
+          onTap: () => viewModel.navigationToShortListedDetailView(
+            gigs: gigsData,
+            data: data,
+          ),
+        )
       ],
     );
   }
@@ -137,7 +140,7 @@ class GigrrsCandidateWidget
           ),
         ),
         child: Text(
-          "ShorList?".tr(),
+          "shortList?".tr(),
           style: TSB.regularVSmall(textColor: mainPinkColor),
         ),
       ),

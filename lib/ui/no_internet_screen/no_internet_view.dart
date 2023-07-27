@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/ui/no_internet_screen/no_internet_view_model.dart';
@@ -38,7 +39,7 @@ class NoInternetView extends StatelessWidget {
                       ),
                       _buildSpace(),
                       Text(
-                        "You have lost your connection\nPlease check your internet.",
+                        "msg_for_no_internet".tr(),
                         textAlign: TextAlign.center,
                         style: TSB
                             .regular(
@@ -68,9 +69,8 @@ class NoInternetView extends StatelessWidget {
                                     color: mainWhiteColor,
                                   )
                                 : Text(
-                                    "TRY AGAIN",
-                                    style: TSB.regular(
-                                      textSize: SizeConfig.textSizeMedium,
+                                    "try_again".tr(),
+                                    style: TSB.regularMedium(
                                       textColor: mainWhiteColor,
                                     ),
                                   ),

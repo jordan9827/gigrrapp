@@ -44,26 +44,30 @@ class EmployerGigsDetailView extends StatelessWidget {
   }
 
   Widget _buildGigsAcceptedView(EmployerGigsDetailViewModel viewModel) {
-    var e = gigs.gigsRequestData
-        .firstWhere((element) => element.status == "accepted");
     return Expanded(
-      child: PageView.builder(
+      child: PageView(
         scrollDirection: Axis.vertical,
-        itemCount: gigs.gigsRequestData
+        children: gigs.gigsRequestData
             .where((element) => element.status == "accepted")
-            .length,
-        controller: viewModel.pageController,
-        itemBuilder: (BuildContext context, int index) {
-          return GiggrCardWidget(
-            title: e.employeeName,
-            profile: viewModel.profileImage(e),
-            price: viewModel.price(gigs),
-            gigrrActionName: 'offer_send',
-            skillList: gigs.skillsTypeCategoryList.map((e) => e.name).toList(),
-            gigrrActionButton: () =>
-                viewModel.navigationToCandidateOfferRequest(gigs, e),
-          );
-        },
+            .map(
+              (e) => GiggrCardWidget(
+                title: e.employeeName,
+                profile: viewModel.profileImage(e),
+                price: viewModel.price(gigs),
+                gigrrActionName: 'offer_send',
+                skillList:
+                    gigs.skillsTypeCategoryList.map((e) => e.name).toList(),
+                acceptedGigsRequest: () =>
+                    viewModel.navigationToCandidateOfferRequest(gigs, e),
+                gigrrActionButton: () =>
+                    viewModel.navigationToShortListedDetailView(
+                  gigs: gigs,
+                  data: e,
+                  isShortListed: false,
+                ),
+              ),
+            )
+            .toList(),
       ),
     );
   }

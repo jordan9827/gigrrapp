@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/util/others/internet_check_service.dart';
 import 'package:stacked/stacked.dart';
@@ -6,7 +7,7 @@ import 'package:stacked_services/stacked_services.dart';
 class NoInternetViewModel extends BaseViewModel {
   final internetCheckService = locator<InternetCheckService>();
   final navigationService = locator<NavigationService>();
-  final snackbarService = locator<SnackbarService>();
+  final snackBarService = locator<SnackbarService>();
 
   Future<void> checkInterNetStatus() async {
     setBusy(true);
@@ -15,8 +16,7 @@ class NoInternetViewModel extends BaseViewModel {
     if (isInterNetConnected) {
       navigationService.back();
     } else {
-      snackbarService.showSnackbar(
-          message: "Please check you internet connection ant try again");
+      snackBarService.showSnackbar(message: "msg_for_no_internet_snack".tr());
     }
     setBusy(false);
   }

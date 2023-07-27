@@ -26,7 +26,7 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
   }
 
   String price(MyGigsData e) {
-    return "₹ ${double.parse(e.fromAmount).toStringAsFixed(1)}-${double.parse(e.toAmount).toStringAsFixed(0)}/${e.priceCriteria}";
+    return "₹ ${double.parse(e.fromAmount).toStringAsFixed(0)}-${double.parse(e.toAmount).toStringAsFixed(0)}/${e.priceCriteria}";
   }
 
   Future<void> navigationToCandidateOfferRequest(
@@ -39,13 +39,16 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> navigationToShortListedDetailView(
-      MyGigsData gigs, GigsRequestData data) async {
+  Future<void> navigationToShortListedDetailView({
+    required MyGigsData gigs,
+    required GigsRequestData data,
+    bool isShortListed = true,
+  }) async {
     await navigationService.navigateTo(
       Routes.employerGigrrDetailView,
       arguments: EmployerGigrrDetailViewArguments(
         gigsRequestData: data,
-        isShortListed: true,
+        isShortListed: isShortListed,
         price: price(gigs),
         skillList: gigs.skillsTypeCategoryList,
       ),

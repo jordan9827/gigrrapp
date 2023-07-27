@@ -30,7 +30,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         children: [
           SizedBox(
-            height: SizeConfig.margin_padding_15,
+            height: SizeConfig.margin_padding_10,
           ),
           CVMTextFormField(
             title: "gig_name",

@@ -110,7 +110,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                     priceCriteria: gigs.priceCriteria,
                   ),
                   startDate: gigs.gigsStartDate,
-                  jobDuration: "${gigs.duration}/day",
+                  jobDuration: "${gigs.duration}" + " days".tr(),
                   bottomView: _buildAppliedGigsStatusView(
                     viewModel: viewModel,
                     gigs: gigs,
@@ -183,7 +183,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                   address: gigs.gigAddress,
                   price: price,
                   startDate: gigs.gigsStartDate,
-                  jobDuration: "${gigs.duration}",
+                  jobDuration: "${gigs.duration}" + " days".tr(),
                   bottomView: _buildShortListGigsStatusView(
                     gigs: gigs,
                     viewModel: viewModel,

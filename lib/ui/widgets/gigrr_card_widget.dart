@@ -11,7 +11,7 @@ class GiggrCardWidget extends StatefulWidget {
   final String profile;
   final List<String> skillList;
   final String price;
-  final String distance;
+  final int distance;
   final String experience;
   final String gigrrActionName;
   final bool isCandidate;
@@ -26,7 +26,7 @@ class GiggrCardWidget extends StatefulWidget {
     required this.profile,
     required this.skillList,
     required this.price,
-    this.distance = "",
+    this.distance = 0,
     this.experience = "",
     this.isCandidate = false,
     required this.gigrrActionName,
@@ -129,7 +129,7 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "4 KM Away",
+                        "${widget.distance} " + "km_away".tr(),
                         style: TextStyle(
                           color: mainWhiteColor,
                         ),
@@ -137,22 +137,7 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                       _buildSpacing(
                         width: SizeConfig.margin_padding_5,
                       ),
-                      ClipOval(
-                        child: Container(
-                          height: SizeConfig.margin_padding_5,
-                          width: SizeConfig.margin_padding_5,
-                          color: mainWhiteColor,
-                        ),
-                      ),
-                      _buildSpacing(
-                        width: SizeConfig.margin_padding_5,
-                      ),
-                      Text(
-                        "8 Years Experience",
-                        style: TextStyle(
-                          color: mainWhiteColor,
-                        ),
-                      ),
+                      if (!widget.isCandidate) _buildExperience()
                     ],
                   ),
                   _buildSpacing(),
@@ -261,6 +246,29 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildExperience() {
+    return Row(
+      children: [
+        ClipOval(
+          child: Container(
+            height: SizeConfig.margin_padding_5,
+            width: SizeConfig.margin_padding_5,
+            color: mainWhiteColor,
+          ),
+        ),
+        _buildSpacing(
+          width: SizeConfig.margin_padding_5,
+        ),
+        Text(
+          "8 Years Experience",
+          style: TextStyle(
+            color: mainWhiteColor,
+          ),
+        ),
+      ],
     );
   }
 }
