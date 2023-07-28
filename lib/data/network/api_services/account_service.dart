@@ -2,6 +2,8 @@ import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/base_response.dart';
 
 import '../dtos/chat_response.dart';
+import '../dtos/faq_response.dart';
+import '../dtos/get_address_response.dart';
 import '../dtos/get_chat_response.dart';
 import '../dtos/payment_history_response.dart';
 import '../dtos/web_view_response.dart';
@@ -38,8 +40,19 @@ abstract class AccountService extends ChopperService {
   @Get(path: "about-us")
   Future<Response<WebViewResponse>> aboutUsApi();
 
+  @Get(path: "faq")
+  Future<Response<FAQResponse>> faqApi();
+
+  @Get(path: "address")
+  Future<Response<GetAddressResponse>> fetchAddressApi();
+
   @Post(path: "save-chat")
   Future<Response<ChatResponse>> saveChatApi(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "save-address")
+  Future<Response<BaseResponse>> saveAddressApi(
     @Body() Map<String, dynamic> body,
   );
 

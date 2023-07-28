@@ -10,17 +10,38 @@ import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.
 import 'add_address_view_model.dart';
 
 class AddAddressScreenView extends StatelessWidget {
-  const AddAddressScreenView({Key? key}) : super(key: key);
+  final String addressType;
+  final String address;
+  final String city;
+  final String state;
+  final String pinCode;
+  final bool isEdit;
+  const AddAddressScreenView({
+    Key? key,
+    this.addressType = "",
+    this.address = "",
+    this.city = "",
+    this.state = "",
+    this.isEdit = false,
+    this.pinCode = "",
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
+    var appTitle = isEdit ? "edit_address" : "add_address";
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => AddAddressViewModel(),
+      viewModelBuilder: () => AddAddressViewModel(
+        address: address,
+        addressType: addressType,
+        city: city,
+        pinCode: pinCode,
+        state: state,
+      ),
       builder: (_, viewModel, child) => Scaffold(
         appBar: getAppBar(
           context,
-          "add_address",
+          appTitle,
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
@@ -28,8 +49,8 @@ class AddAddressScreenView extends StatelessWidget {
           margin: edgeInsetsMargin,
           child: ListView(
             children: [
-              SizedBox(
-                height: SizeConfig.margin_padding_15,
+              _buildSpacer(
+                SizeConfig.margin_padding_15,
               ),
               _buildSelectAddressType(viewModel),
               MapBoxAddressFormViewWidget(
@@ -40,17 +61,23 @@ class AddAddressScreenView extends StatelessWidget {
                 pinController: viewModel.pinCodeController,
                 mapBoxPlace: viewModel.mapBoxPlace,
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_24,
-              ),
+              _buildSpacer(),
               LoadingButton(
-                action: () {},
+                loading: viewModel.isBusy,
+                action: viewModel.loadSaveAddress,
                 title: "submit",
-              )
+              ),
+              _buildSpacer(),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_24,
     );
   }
 

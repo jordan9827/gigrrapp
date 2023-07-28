@@ -4,8 +4,10 @@ import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+import '../../../others/loading_screen.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/text_styles.dart';
+import 'faq_item_widget.dart';
 import 'help_support_view_model.dart';
 
 class HelpSupportScreenView extends StatelessWidget {
@@ -24,12 +26,15 @@ class HelpSupportScreenView extends StatelessWidget {
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
-        body: ListView(
-          children: [
-            _buildTitle(),
-            _buildSupportView(viewModel),
-            _buildAskQuestions(viewModel),
-          ],
+        body: LoadingScreen(
+          loading: viewModel.isBusy,
+          child: ListView(
+            children: [
+              _buildTitle(),
+              _buildSupportView(viewModel),
+              _buildAskQuestions(viewModel),
+            ],
+          ),
         ),
       ),
     );
@@ -38,13 +43,17 @@ class HelpSupportScreenView extends StatelessWidget {
   Widget _buildTitle() {
     return Container(
       color: mainWhiteColor,
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+      padding: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             "txt_title_help_support".tr(),
-            style: TSB.semiBold(textSize: SizeConfig.safeBlockHorizontal * 8.5),
+            style: TSB.semiBold(
+              textSize: SizeConfig.safeBlockHorizontal * 8.5,
+            ),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_10,
@@ -60,9 +69,13 @@ class HelpSupportScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildSupportView(HelpSupportScreenViewModel viewModel) {
+  Widget _buildSupportView(
+    HelpSupportScreenViewModel viewModel,
+  ) {
     return Container(
-      margin: EdgeInsets.all(SizeConfig.margin_padding_15),
+      margin: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -135,9 +148,13 @@ class HelpSupportScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildAskQuestions(HelpSupportScreenViewModel viewModel) {
+  Widget _buildAskQuestions(
+    HelpSupportScreenViewModel viewModel,
+  ) {
     return Container(
-      margin: EdgeInsets.all(SizeConfig.margin_padding_15),
+      margin: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -148,69 +165,12 @@ class HelpSupportScreenView extends StatelessWidget {
           SizedBox(
             height: SizeConfig.margin_padding_10,
           ),
-          ...List.generate(
-            4,
-            (index) => _buildExpandable(viewModel),
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildExpandable(HelpSupportScreenViewModel viewModel) {
-    var radius = SizeConfig.margin_padding_15;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: SizeConfig.margin_padding_5),
-      decoration: BoxDecoration(
-        color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(radius),
-      ),
-      child: Column(
-        children: [
-          ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: radius),
-            // onTap: viewModel.onActionVisible,
-            title: Text(
-              "What is Lorem Ipsum?",
-              style: TSB.boldSmall(),
-            ),
-            trailing: InkWell(
-              onTap: viewModel.onActionVisible,
-              child: Image.asset(
-                viewModel.isVisible ? arrow_drop_up : arrow_drop_down,
-                scale: 2.8,
-              ),
-            ),
-          ),
-          Visibility(
-            visible: viewModel.isVisible,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: radius,
-              ),
-              child: Divider(
-                thickness: 2,
-                color: Color(0xff707070),
-              ),
-            ),
-          ),
-          Visibility(
-            visible: viewModel.isVisible,
-            child: AnimatedContainer(
-              padding: EdgeInsets.all(radius),
-              duration: Duration(milliseconds: 300),
-              decoration: BoxDecoration(
-                color: mainWhiteColor,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(10),
-                  bottomRight: Radius.circular(10),
-                ),
-              ),
-              child: Text(
-                "Lorem ipsum began as scrambled, nonsensical Latin derived from Cicero's 1st-century BC text De Finibus Bonorum et Malorum.",
-                style: TSB.regularSmall(textColor: textNoticeColor),
-              ),
-            ),
+          Column(
+            children: viewModel.faqData
+                .map(
+                  (e) => FAQItemWidget(faq: e),
+                )
+                .toList(),
           )
         ],
       ),

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../data/network/dtos/get_address_response.dart';
 import '../../../../others/common_app_bar.dart';
+import '../../../../others/loading_screen.dart';
 import 'manage_address_view_model.dart';
 
 class ManageAddressScreenView extends StatelessWidget {
@@ -13,6 +16,7 @@ class ManageAddressScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.fetchAddress(),
       viewModelBuilder: () => ManageAddressViewModel(),
       builder: (_, viewModel, child) => Scaffold(
         backgroundColor: mainGrayColor,
@@ -35,25 +39,32 @@ class ManageAddressScreenView extends StatelessWidget {
             )
           ],
         ),
-        body: Container(
-          margin: edgeInsetsMargin,
-          child: ListView(
-            children: [
-              SizedBox(
-                height: SizeConfig.margin_padding_15,
-              ),
-              ...List.generate(
-                5,
-                (index) => _buildAddressView(),
-              )
-            ],
+        body: LoadingScreen(
+          loading: viewModel.isBusy,
+          child: Container(
+            margin: edgeInsetsMargin,
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: SizeConfig.margin_padding_15,
+                ),
+                Column(
+                  children: viewModel.addressList
+                      .map(
+                        (e) => _buildAddressView(viewModel, e),
+                      )
+                      .toList(),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildAddressView() {
+  Widget _buildAddressView(
+      ManageAddressViewModel viewModel, GetAddressResponseData data) {
     return Container(
       padding: EdgeInsets.all(
         SizeConfig.margin_padding_10,
@@ -81,12 +92,12 @@ class ManageAddressScreenView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "Home",
+                  data.addressType.capitalize(),
                   style: TSB.semiBoldMedium(),
                 ),
                 SizedBox(height: 3),
                 Text(
-                  "11-PU3, Agra Bombay Road, Near C21 Mall, Indore",
+                  data.address,
                   style: TSB.regularVSmall(
                     textColor: textRegularColor,
                   ),
@@ -97,9 +108,12 @@ class ManageAddressScreenView extends StatelessWidget {
           SizedBox(
             width: SizeConfig.margin_padding_10,
           ),
-          Icon(
-            Icons.border_color_outlined,
-            color: textRegularColor,
+          InkWell(
+            onTap: () => viewModel.navigationToEditAddressView(data),
+            child: Icon(
+              Icons.border_color_outlined,
+              color: textRegularColor,
+            ),
           ),
         ],
       ),

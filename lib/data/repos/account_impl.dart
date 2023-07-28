@@ -1,5 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:square_demo_architecture/data/network/dtos/base_response.dart';
+import 'package:square_demo_architecture/data/network/dtos/faq_response.dart';
+import 'package:square_demo_architecture/data/network/dtos/get_address_response.dart';
 import 'package:square_demo_architecture/util/extensions/object_extension.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
@@ -143,6 +145,25 @@ class AccountImpl extends AccountRepo {
   }
 
   @override
+  Future<Either<Failure, List<FAQResponseData>>> faq() async {
+    try {
+      final response = await accountService.faqApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(res.faqData);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
   Future<Either<Failure, WebViewResponseData>> aboutUs() async {
     try {
       final response = await accountService.aboutUsApi();
@@ -211,6 +232,45 @@ class AccountImpl extends AccountRepo {
       }
       return response.body!.map(success: (res) async {
         return Right(res);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> saveAddress(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await accountService.saveAddressApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(res);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<GetAddressResponseData>>> fetchAddress() async {
+    try {
+      final response = await accountService.fetchAddressApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(res.addressList);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

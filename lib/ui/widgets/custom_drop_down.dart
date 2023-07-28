@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:square_demo_architecture/others/constants.dart';
@@ -93,7 +94,7 @@ class CustomDropDownWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              e.capitalize(),
+                              e.capitalize().tr(),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: TSB.regularSmall(),
@@ -167,7 +168,7 @@ class CustomDropDownWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  element.capitalize(),
+                  element.capitalize().tr(),
                   style: TextStyle(color: Colors.white),
                 ),
                 if (enableMultiSelected)
