@@ -13,6 +13,7 @@ import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../../util/enums/latLng.dart';
+import '../../../../util/extensions/validation_address.dart';
 import '../../../widgets/location_helper.dart';
 
 class EmployerRegisterViewModel extends BaseViewModel {
@@ -187,7 +188,12 @@ class EmployerRegisterViewModel extends BaseViewModel {
       );
       return false;
     }
-    return true;
+    return AddressValidationHelper.validationSaveAddress(
+      address: addressController.text,
+      city: cityController.text,
+      state: stateController.text,
+      pinCode: pinCodeController.text,
+    );
   }
 
   Future<void> addBusinessProfileApiCall() async {

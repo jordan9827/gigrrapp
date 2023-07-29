@@ -30,7 +30,7 @@ class NotificationScreenView extends StatelessWidget {
               onTap: viewModel.deleteNotificationApi,
               child: Container(
                 padding: EdgeInsets.only(
-                  right: SizeConfig.margin_padding_5,
+                  right: SizeConfig.margin_padding_10,
                 ),
                 alignment: Alignment.center,
                 child: Text(

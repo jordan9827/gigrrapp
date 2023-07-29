@@ -155,36 +155,11 @@ class _LoginViewState extends State<LoginView>
             height: SizeConfig.margin_padding_18,
           ),
           _buildSelectShiftView(viewModel),
-          // InputFieldWidget(
-          //   hint: "enter_pwd",
-          //   controller: viewModel.passwordController,
-          //   errorMsgValidation: viewModel.pwdMessage,
-          // ),
-          // SizedBox(
-          //   height: SizeConfig.margin_padding_10,
-          // ),
-          // Align(
-          //   alignment: Alignment.topRight,
-          //   child: InkWell(
-          //     onTap: viewModel.navigationToForgetPwdView,
-          //     child: Text(
-          //       "forgot_password".tr(),
-          //       style: TSB.regularSmall(textColor: independenceColor),
-          //     ),
-          //   ),
-          // ),
           Spacer(),
           _buildLoginActionButton(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_24,
           ),
-          // InkWell(
-          //   onTap: viewModel.navigationToOTPScreen,
-          //   child: Text(
-          //     "login_with_otp".tr(),
-          //     style: TSB.regularSmall(textColor: mainPinkColor),
-          //   ),
-          // ),
           SizedBox(
             height: SizeConfig.margin_padding_24,
           ),
@@ -274,25 +249,6 @@ class _LoginViewState extends State<LoginView>
         action: viewModel.login,
         title: "txt_login",
       ),
-    );
-  }
-
-  Widget _buildSignUpView(LoginViewViewModel viewModel) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          "txt_dont_have_an_acc".tr(),
-          style: TSB.regularSmall(),
-        ),
-        InkWell(
-          onTap: viewModel.navigationToSignUpView,
-          child: Text(
-            "sign_up".tr(),
-            style: TSB.regularSmall(textColor: mainPinkColor),
-          ),
-        ),
-      ],
     );
   }
 

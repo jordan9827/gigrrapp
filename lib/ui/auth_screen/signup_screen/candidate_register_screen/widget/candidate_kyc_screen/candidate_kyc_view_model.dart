@@ -44,11 +44,6 @@ class CandidateKYCViewModel extends BaseViewModel {
         message: "aadhaar_no_msg".tr(),
       );
       return false;
-      // } else if (!validateAadhaarCard(aadhaarController.text)) {
-      //   snackBarService.showSnackbar(
-      //     message: "aadhaar_no_valid_msg".tr(),
-      //   );
-      //   return false;
     } else if (frontAadhaarImage.isEmpty) {
       snackBarService.showSnackbar(
         message: "aadhaar_font_msg".tr(),

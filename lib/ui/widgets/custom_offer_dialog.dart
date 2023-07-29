@@ -47,7 +47,9 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
         width: MediaQuery.of(context).size.width,
         child: Column(
           children: [
-            _buildSpacer(size: SizeConfig.margin_padding_15),
+            _buildSpacer(
+              size: SizeConfig.margin_padding_15,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.margin_padding_15,
@@ -59,7 +61,9 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
               "Super Enterprise",
               style: TSB.semiBoldHeading(),
             ),
-            _buildSpacer(size: SizeConfig.margin_padding_5),
+            _buildSpacer(
+              size: SizeConfig.margin_padding_5,
+            ),
             Text(
               widget.subTitle.tr(),
               textAlign: TextAlign.center,

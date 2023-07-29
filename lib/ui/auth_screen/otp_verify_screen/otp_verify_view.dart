@@ -28,32 +28,33 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-        onViewModelReady: (viewModel) => viewModel.init(),
-        viewModelBuilder: () => OTPVerifyScreenModel(
-              mobile: widget.mobile,
-              roleId: widget.roleId,
-            ),
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            body: SingleChildScrollView(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: _buildHeadingVerifyOTP(viewModel),
-                    ),
-                    Expanded(
-                      flex: 4,
-                      child: _buildOTPField(viewModel),
-                    ),
-                  ],
-                ),
+      onViewModelReady: (viewModel) => viewModel.init(),
+      viewModelBuilder: () => OTPVerifyScreenModel(
+        mobile: widget.mobile,
+        roleId: widget.roleId,
+      ),
+      builder: (context, viewModel, child) {
+        return Scaffold(
+          body: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: _buildHeadingVerifyOTP(viewModel),
+                  ),
+                  Expanded(
+                    flex: 4,
+                    child: _buildOTPField(viewModel),
+                  ),
+                ],
               ),
             ),
-          );
-        });
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildHeadingVerifyOTP(OTPVerifyScreenModel viewModel) {
@@ -64,30 +65,26 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_35,
+          _buildSpacer(
+            SizeConfig.margin_padding_35,
           ),
           SizedBox(
             height: SizeConfig.margin_padding_40,
             child: Image.asset(ic_gigrra_name),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
-          ),
+          _buildSpacer(),
           Text(
             "otp_verification".tr(),
             style: TSB.boldXLarge(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_5,
+          _buildSpacer(
+            SizeConfig.margin_padding_5,
           ),
           Text(
             "txt_otp_subTitle".tr(),
             style: TSB.regularSmall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
-          ),
+          _buildSpacer(),
           Row(
             children: [
               Text(
@@ -101,7 +98,9 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
                 onTap: viewModel.navigationToBack,
                 child: Text(
                   "change_number".tr(),
-                  style: TSB.regularSmall(textColor: mainPinkColor),
+                  style: TSB.regularSmall(
+                    textColor: mainPinkColor,
+                  ),
                 ),
               ),
             ],
@@ -111,21 +110,27 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
     );
   }
 
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_15,
+    );
+  }
+
   Widget _buildOTPField(OTPVerifyScreenModel viewModel) {
     return Container(
       padding: edgeInsetsMargin,
       child: Column(
         children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_50,
+          _buildSpacer(
+            SizeConfig.margin_padding_50,
           ),
           CVPinCodeTextField(
             readOnly: viewModel.isBusy,
             controller: viewModel.pinController,
             onChanged: (value) => viewModel.verifyOtpApiCall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_50,
+          _buildSpacer(
+            SizeConfig.margin_padding_50,
           ),
           LoadingButton(
             progressIndicatorColor: mainBlackColor,
@@ -142,10 +147,9 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
             titleColor:
                 viewModel.enableResend ? mainWhiteColor : mainBlackColor,
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_24,
+          _buildSpacer(
+            SizeConfig.margin_padding_24,
           ),
-          //  _buildResendOTPView(viewModel)
         ],
       ),
     );

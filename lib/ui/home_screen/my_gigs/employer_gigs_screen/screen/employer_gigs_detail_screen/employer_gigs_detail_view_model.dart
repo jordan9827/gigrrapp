@@ -1,13 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/data/network/dtos/my_gigs_response.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../../../../app/app.locator.dart';
 import '../../../../../../app/app.router.dart';
 import '../../../../../../domain/repos/business_repos.dart';
-import '../../../../employer_gigrr_view/employer_gigrr_detail_view/employer_gigrr_detail_view.dart';
-import '../candidate_offer_view.dart';
 
 class EmployerGigsDetailViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -30,9 +28,10 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
   }
 
   Future<void> navigationToCandidateOfferRequest(
-      MyGigsData gigs, GigsRequestData requestData) async {
-    print("navigationToCandidateOfferRequest");
-    var isCheck = await navigationService.navigateTo(
+    MyGigsData gigs,
+    GigsRequestData requestData,
+  ) async {
+    await navigationService.navigateTo(
       Routes.candidateOfferView,
       arguments:
           CandidateOfferViewArguments(gigs: gigs, requestData: requestData),
@@ -76,7 +75,7 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
         setBusy(false);
       });
     } else {
-      snackBarService.showSnackbar(message: "Please enter offer");
+      snackBarService.showSnackbar(message: "msg_plz_enter_offer".tr());
     }
     notifyListeners();
   }

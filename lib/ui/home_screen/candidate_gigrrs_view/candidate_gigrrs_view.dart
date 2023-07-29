@@ -4,7 +4,6 @@ import 'package:square_demo_architecture/ui/widgets/empty_data_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/gigrr_card_widget.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-
 import '../home_app_bar.dart';
 import 'candidate_gigrrs_view_model.dart';
 

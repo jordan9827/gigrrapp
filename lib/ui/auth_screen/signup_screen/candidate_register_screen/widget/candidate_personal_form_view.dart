@@ -27,7 +27,9 @@ class CandidatePersonalInfoFormView
   }
 
   Widget _buildFormView(
-      BuildContext context, CandidateRegisterViewModel viewModel) {
+    BuildContext context,
+    CandidateRegisterViewModel viewModel,
+  ) {
     return Container(
       padding: edgeInsetsMargin,
       child: ListView(
@@ -93,7 +95,9 @@ class CandidatePersonalInfoFormView
     );
   }
 
-  Widget _buildSetGender(CandidateRegisterViewModel viewModel) {
+  Widget _buildSetGender(
+    CandidateRegisterViewModel viewModel,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

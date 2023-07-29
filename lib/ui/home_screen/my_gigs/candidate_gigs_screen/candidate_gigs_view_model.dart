@@ -78,8 +78,9 @@ class CandidateGigsViewModel extends BaseViewModel {
       DialogType.acceptOffer: (_, request, completer) => CustomOfferDialog(
             onTap: () => acceptedGigsOffer(gigs.id),
             title: "accept_this_offer",
-            subTitle: "has_offer_you"
-                .tr(args: [" ${gigs.priceCriteria} \nprice of ₹ $offerPrice"]),
+            subTitle: "has_offer_you".tr(args: [
+              " ${gigs.priceCriteria} \n" + "price_of".tr() + "₹ $offerPrice"
+            ]),
             buttonText: "accept_this_offer",
           ),
     };
@@ -122,7 +123,6 @@ class CandidateGigsViewModel extends BaseViewModel {
       itemCount = res.candidateRosterData.length;
       notifyListeners();
       setBusy(false);
-      // log("CandidateRoster " + res.myGigsData.toList().toString());
     });
     notifyListeners();
   }
@@ -201,7 +201,6 @@ class CandidateGigsViewModel extends BaseViewModel {
     status,
     CandidateGigsViewModel viewModel,
   ) async {
-    // navigationService.back();
     setBusy(true);
     var result = await candidateRepo.updateJobStatus(
       await _getRequestForCandidate(gigsId: gigs.id, status: status),
@@ -243,7 +242,7 @@ class CandidateGigsViewModel extends BaseViewModel {
         setBusy(false);
       });
     } else {
-      snackBarService.showSnackbar(message: "Please enter OTP");
+      snackBarService.showSnackbar(message: "msg_plz_enter_otp".tr());
     }
     notifyListeners();
   }
@@ -258,25 +257,22 @@ class CandidateGigsViewModel extends BaseViewModel {
       statusSlug = i.status;
       switch (i.status) {
         case "accepted":
-          status = 'Accepted By You';
+          status = 'status_accept_by_you';
           break;
         case "sent-offer":
-          status = 'Offer Received';
-          break;
-        case "accepted":
-          status = 'Accepted By You';
+          status = 'status_offer_received';
           break;
         case "received-offer":
-          status = 'Offer accepted By You';
+          status = 'status_offer_accept_by_you';
           break;
         case "roster":
-          status = "ShortListed";
+          status = "status_shortListed";
           break;
         case "start":
-          status = "Job Started";
+          status = "status_job_started";
           break;
         case "complete":
-          status = "Job Completed";
+          status = "status_job_complete";
           break;
       }
     }
@@ -287,17 +283,17 @@ class CandidateGigsViewModel extends BaseViewModel {
     String status = "";
     for (var i in list) {
       if (i.status == "roster") {
-        status = "Start Job";
+        status = "status_start_job";
       } else if (i.status == "start") {
-        status = "Complete";
+        status = "complete";
       } else if (i.paymentStatus == "pending") {
-        status = "Un Paid";
+        status = "status_unPaid";
       } else if (i.ratingToEmployer == "no") {
-        status = "Rate";
+        status = "status_rate";
       } else if (i.status == "complete" &&
           i.ratingToEmployer == "yes" &&
           i.paymentStatus == "completed") {
-        status = "Completed";
+        status = "completed";
       }
     }
     return status;

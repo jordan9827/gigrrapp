@@ -116,7 +116,10 @@ class MyGigsViewWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildDurationView({required String title, required String subTitle}) {
+  Widget _buildDurationView({
+    required String title,
+    required String subTitle,
+  }) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.all(
@@ -141,26 +144,6 @@ class MyGigsViewWidget extends StatelessWidget {
               style: TSB.regularSmall(),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDetailView() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: SizeConfig.margin_padding_15,
-          vertical: SizeConfig.margin_padding_8,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: mainPinkColor, width: 1.5),
-          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_8),
-        ),
-        child: Text(
-          "view".tr(),
-          style: TSB.regularVSmall(textColor: mainPinkColor),
         ),
       ),
     );

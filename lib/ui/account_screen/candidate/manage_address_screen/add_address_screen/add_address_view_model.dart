@@ -106,8 +106,8 @@ class AddAddressViewModel extends BaseViewModel {
       return false;
     }
     return AddressValidationHelper.validationSaveAddress(
-      address: cityController.text,
-      city: addressController.text,
+      address: addressController.text,
+      city: cityController.text,
       state: stateController.text,
       pinCode: pinCodeController.text,
     );

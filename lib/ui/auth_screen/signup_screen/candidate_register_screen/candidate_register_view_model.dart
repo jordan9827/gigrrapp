@@ -12,6 +12,7 @@ import '../../../../app/app.router.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../../util/enums/latLng.dart';
+import '../../../../util/extensions/validation_address.dart';
 import '../../../widgets/location_helper.dart';
 
 class CandidateRegisterViewModel extends BaseViewModel {
@@ -224,33 +225,18 @@ class CandidateRegisterViewModel extends BaseViewModel {
         message: "msg_enter_dob".tr(),
       );
       return false;
-    } else if (addressController.text.isEmpty) {
-      snackBarService.showSnackbar(
-        message: "msg_address".tr(),
-      );
-      return false;
-    } else if (cityController.text.isEmpty) {
-      snackBarService.showSnackbar(
-        message: "msg_city".tr(),
-      );
-      return false;
-    } else if (stateController.text.isEmpty) {
-      snackBarService.showSnackbar(
-        message: "msg_state".tr(),
-      );
-      return false;
-    } else if (pinCodeController.text.isEmpty) {
-      snackBarService.showSnackbar(
-        message: "msg_pinCode".tr(),
-      );
-      return false;
     } else if (imageList!.isEmpty) {
       snackBarService.showSnackbar(
         message: "msg_enter_image".tr(),
       );
       return false;
     }
-    return true;
+    return AddressValidationHelper.validationSaveAddress(
+      address: addressController.text,
+      city: cityController.text,
+      state: stateController.text,
+      pinCode: pinCodeController.text,
+    );
   }
 
   void candidateCompleteProfileApiCall() async {

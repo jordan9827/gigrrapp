@@ -93,6 +93,16 @@ class EmployerGigsViewModel extends BaseViewModel {
     return count;
   }
 
+  int getComplete(List<GigsRequestData> gigRequestList) {
+    int count = 0;
+    for (var element in gigRequestList) {
+      if (element.status == "complete") {
+        count = count + 1;
+      }
+    }
+    return count;
+  }
+
   Future<void> fetchMyGigsList() async {
     setBusy(true);
     var result = await businessRepo.fetchMyGigs();
@@ -131,18 +141,17 @@ class EmployerGigsViewModel extends BaseViewModel {
 
   bool isEmptyModelCheck(MyGigsData gigs) {
     bool isCheck = false;
-    var data = isActiveStatus(gigs);
-    if (data == "complete" || data == "" || data == "start") {
-      isCheck = true;
-    }
-    return isCheck;
+    isCheck = gigs.gigsRequestData.every((element) =>
+        (element.status == "complete" ||
+            element.status == "start" ||
+            element.status == "end"));
+    return !isCheck;
   }
 
-  Future<void> navigationToCandidateDetail(
-    EmployerGigsViewModel viewModel,
-    MyGigsData gigs,
-    String gigsStatus,
-  ) async {
+  Future<void> navigationToCandidateDetail({
+    required MyGigsData gigs,
+    required String gigsStatus,
+  }) async {
     var isCheck = await navigationService.navigateWithTransition(
       EmployerGigsDetailView(gigs: gigs, status: gigsStatus),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../../../others/common_app_bar.dart';
 import '../../../../../../others/constants.dart';

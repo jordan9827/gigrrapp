@@ -39,61 +39,54 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
         ),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          _buildTitleOfGiggrrs(data, viewModel),
+          _buildSpacer(),
+          Row(
             children: [
-              _buildTitleOfGiggrrs(data, viewModel),
-              SizedBox(
-                height: SizeConfig.margin_padding_15,
-              ),
-              Row(
-                children: [
-                  _buildDurationView(
-                    title: data.createdAt.toDateFormat(),
-                    subTitle: "start_date",
-                  ),
-                  SizedBox(
-                    width: SizeConfig.margin_padding_10,
-                  ),
-                  _buildDurationView(
-                    title: "₹ ${data.offerAmount.toPriceFormat(0)}",
-                    subTitle: "offer_price",
-                  ),
-                ],
+              _buildDurationView(
+                title: data.createdAt.toDateFormat(),
+                subTitle: "start_date",
               ),
               SizedBox(
-                height: SizeConfig.margin_padding_10,
+                width: SizeConfig.margin_padding_10,
               ),
-              Divider(
-                thickness: 1,
-                color: mainGrayColor,
+              _buildDurationView(
+                title: "₹ ${data.offerAmount.toPriceFormat(0)}",
+                subTitle: "offer_price",
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "all_real_estate_sol".tr(),
-                    style: TSB.semiBoldLarge(),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.margin_padding_5,
-                  ),
-                  _buildAddressView(data.candidate.address),
-                  SizedBox(
-                    height: SizeConfig.margin_padding_10,
-                  ),
-                ],
-              )
             ],
           ),
+          _buildSpacer(
+            SizeConfig.margin_padding_10,
+          ),
+          Divider(
+            thickness: 1,
+            color: mainGrayColor,
+          ),
+          _buildSpacer(
+            SizeConfig.margin_padding_5,
+          ),
+          Text(
+            "all_real_estate_sol".tr(),
+            style: TSB.semiBoldLarge(),
+          ),
+          _buildSpacer(
+            SizeConfig.margin_padding_5,
+          ),
+          _buildAddressView(data.candidate.address),
+          _buildSpacer(),
           statusView
         ],
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_15,
     );
   }
 
@@ -128,8 +121,8 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
               maxLines: 2,
               style: TSB.semiBoldLarge(),
             ),
-            SizedBox(
-              height: SizeConfig.margin_padding_4,
+            _buildSpacer(
+              SizeConfig.margin_padding_4,
             ),
             _buildDistanceView("${data.distance} " + "km_away".tr())
           ],
@@ -194,8 +187,8 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
               title.tr(),
               style: TSB.semiBoldSmall(textColor: mainBlueColor),
             ),
-            SizedBox(
-              height: SizeConfig.margin_padding_3,
+            _buildSpacer(
+              SizeConfig.margin_padding_3,
             ),
             Text(
               subTitle.tr(),

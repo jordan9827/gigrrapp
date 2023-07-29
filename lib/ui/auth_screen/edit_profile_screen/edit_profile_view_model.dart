@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/util/enums/latLng.dart';
+import 'package:square_demo_architecture/util/extensions/validation_address.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
@@ -62,7 +63,12 @@ class EditProfileViewModel extends BaseViewModel {
       );
       return false;
     }
-    return true;
+    return AddressValidationHelper.validationSaveAddress(
+      address: addressController.text,
+      city: cityController.text,
+      state: stateController.text,
+      pinCode: pinCodeController.text,
+    );
   }
 
   Future<void> mapBoxPlace() async {

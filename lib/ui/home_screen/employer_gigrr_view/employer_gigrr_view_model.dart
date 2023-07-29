@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
-import 'package:square_demo_architecture/app/app.router.dart';
-import 'package:square_demo_architecture/data/network/api_services/business_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../data/network/dtos/employer_gigs_request.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/business_repos.dart';
@@ -22,13 +18,7 @@ class EmployerGigrrsViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   List<EmployerGigsRequestData> gigsData = [];
 
-  EmployerGigrrsViewModel() {
-    // fetchGigsRequest();
-  }
-
-  void navigateToGigrrDetailScreen(EmployerGigsRequestData e) {
-    // navigationService.navigateTo();
-  }
+  void navigateToGigrrDetailScreen(EmployerGigsRequestData e) {}
 
   Future<void> fetchGigsRequest() async {
     setBusy(true);

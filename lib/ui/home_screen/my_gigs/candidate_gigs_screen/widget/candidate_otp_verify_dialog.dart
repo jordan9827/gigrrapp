@@ -34,14 +34,16 @@ class CandidateJobOTPVerifyDialog extends StatelessWidget {
       ),
       child: Container(
         height: MediaQuery.of(context).size.height * 0.60,
-        margin: EdgeInsets.symmetric(
+        padding: EdgeInsets.symmetric(
           horizontal: SizeConfig.margin_padding_20,
           vertical: SizeConfig.margin_padding_15,
         ),
         width: MediaQuery.of(context).size.width,
         child: ListView(
           children: [
-            _buildSpacer(size: SizeConfig.margin_padding_10),
+            _buildSpacer(
+              size: SizeConfig.margin_padding_10,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: SizeConfig.margin_padding_15,
@@ -95,7 +97,10 @@ class CandidateJobOTPVerifyDialog extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
+            _buildSpacer(
+              size: SizeConfig.margin_padding_5,
+            ),
           ],
         ),
       ),

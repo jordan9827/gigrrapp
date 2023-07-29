@@ -191,7 +191,6 @@ class AddGigsViewModel extends BaseViewModel {
     );
     if (picked != null) {
       selectedDate = picked;
-      // textController.text = DateFormat("dd MMM yyyy").format(selectedDate);
       textController.text = DateFormat("yyyy-MM-dd").format(selectedDate);
       notifyListeners();
     }

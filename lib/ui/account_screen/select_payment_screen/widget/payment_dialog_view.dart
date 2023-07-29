@@ -4,7 +4,6 @@ import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
-import '../../../../data/network/dtos/my_gigrrs_roster_response.dart';
 import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/constants.dart';
 import '../../../../util/others/size_config.dart';
@@ -13,7 +12,7 @@ import '../select_payment_mode_view_model.dart';
 
 class PaymentDialogView extends StatefulWidget {
   final SelectPaymentModelViewModel viewModel;
-  final MyGigrrsRosterData gigrrsData;
+  final GigsRequestData gigrrsData;
   final Function() onTap;
 
   const PaymentDialogView({
@@ -31,7 +30,7 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
-    var request = widget.gigrrsData.gigsRequestData.first;
+    var request = widget.gigrrsData;
     return Dialog(
       alignment: Alignment.center,
       insetPadding: EdgeInsets.all(30),
@@ -99,7 +98,7 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
           height: SizeConfig.margin_padding_5,
         ),
         Text(
-          widget.gigrrsData.gigName,
+          widget.gigrrsData.employeeName,
           style: TSB.semiBoldMedium(),
         ),
         SizedBox(

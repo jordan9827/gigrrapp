@@ -8,8 +8,6 @@ import '../dtos/get_businesses_response.dart';
 import '../dtos/gigrr_type_response.dart';
 import '../dtos/my_gigrrs_roster_response.dart';
 import '../dtos/my_gigs_response.dart';
-import '../dtos/web_view_response.dart';
-
 part 'business_service.chopper.dart';
 
 @ChopperApi(baseUrl: "/api/")

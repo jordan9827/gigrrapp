@@ -1,11 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/extensions/build_context_extension.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
-import '../../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../../data/network/dtos/gigrr_type_response.dart';
 import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/loading_button.dart';
@@ -19,6 +17,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
   final GigsRequestData gigsRequestData;
   final List<GigrrTypeCategoryData> skillList;
   final bool isShortListed;
+
   const EmployerGigrrDetailView({
     Key? key,
     this.isShortListed = false,
@@ -67,7 +66,6 @@ class EmployerGigrrDetailView extends StatelessWidget {
                             height: SizeConfig.margin_padding_3,
                           ),
                           Row(
-                            // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Image.asset(ic_location, height: 23),
@@ -93,27 +91,23 @@ class EmployerGigrrDetailView extends StatelessWidget {
                               _buildExPriceWidget(
                                 outerPadding: outerPadding,
                                 valueText: price,
-                                titleText: "Normal Price",
+                                titleText: "normal_price",
                               ),
                               _buildExPriceWidget(
                                 outerPadding: outerPadding,
-                                valueText: "1-3 Years",
-                                titleText: "Required Experience",
+                                valueText: "1-3 " + "years".tr(),
+                                titleText: "experience",
                               ),
                             ],
                           ),
                           _buildSpacing(),
                           _buildOtherDetailView(
-                            title: "Availibility",
-                            infoList: [
-                              "Weekends",
-                              "Day Shift",
-                              "Night Shift",
-                            ],
+                            title: "availability",
+                            infoList: viewModel.listOfAvailability,
                           ),
                           _buildSpacing(),
                           _buildOtherDetailView(
-                            title: "Required Skill",
+                            title: "required_skill",
                             infoList: skillList.map((e) => e.name).toList(),
                           ),
                         ],
@@ -171,7 +165,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            valueText,
+            valueText.tr(),
             style: TSB.semiBoldSmall(
               textColor: mainBlueColor.withOpacity(0.90),
             ),
@@ -180,7 +174,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
             height: SizeConfig.margin_padding_3,
           ),
           Text(
-            titleText,
+            titleText.tr(),
             style: TSB.regularSmall(),
           ),
         ],
@@ -197,7 +191,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          title,
+          title.tr(),
           style: TSB.regularSmall(
             textColor: mainBlackColor.withOpacity(0.9),
           ),
@@ -238,25 +232,17 @@ class EmployerGigrrDetailView extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildAppBarButtons({
-    required String icon,
-    required Function() onTap,
-  }) {
-    return InkWell(
-      onTap: onTap,
-      child: Image.asset(icon, scale: 2.8),
-    );
-  }
 }
 
 class ShortListView extends ViewModelWidget<EmployerGigrrDetailViewModel> {
   final int gigsId;
   final int candidateId;
+
   ShortListView({
     this.candidateId = 0,
     this.gigsId = 0,
   });
+
   @override
   Widget build(BuildContext context, EmployerGigrrDetailViewModel viewModel) {
     return Positioned(

@@ -69,7 +69,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                       address: gigs.gigAddress,
                       price: viewModel.price(gigs),
                       startDate: gigs.gigsStartDate,
-                      isEmptyModel: !viewModel.isEmptyModelCheck(gigs),
+                      isEmptyModel: viewModel.isEmptyModelCheck(gigs),
                       jobDuration: "${gigs.duration}" + " days".tr(),
                       bottomView: _buildStatusGigsView(viewModel, gigs),
                     ),
@@ -149,7 +149,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
   }) {
     var count = viewModel.getOfferSentCount(gigs.gigsRequestData);
     return Text(
-      "$count Offers Sent",
+      "$count " + "offer_sent".tr(),
       style: TSB.regularSmall(
         textColor: mainPinkColor,
       ),
@@ -162,10 +162,12 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
   }) {
     var count = viewModel.getRoasterCount(gigs.gigsRequestData);
     return InkWell(
-      onTap: () =>
-          viewModel.navigationToCandidateDetail(viewModel, gigs, "shortListed"),
+      onTap: () => viewModel.navigationToCandidateDetail(
+        gigs: gigs,
+        gigsStatus: "shortListed",
+      ),
       child: Text(
-        "$count ShortListed",
+        "$count " + "shortListed".tr(),
         style: TSB.regularSmall(
           textColor: mainPinkColor,
         ),
@@ -177,36 +179,33 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     required EmployerGigsViewModel viewModel,
     required MyGigsData gigs,
   }) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: SizeConfig.margin_padding_10,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              buildStackedImages(
-                data: gigs,
-                viewModel: viewModel,
-              ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
-              ),
-              Text(
-                viewModel.setResponseCount,
-                style: TSB.regularSmall(textColor: independenceColor),
-              )
-            ],
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            buildStackedImages(
+              data: gigs,
+              viewModel: viewModel,
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
+            Text(
+              viewModel.setResponseCount,
+              style: TSB.regularSmall(textColor: independenceColor),
+            )
+          ],
+        ),
+        _buildDetailView(
+          onTap: () => viewModel.navigationToCandidateDetail(
+            gigs: gigs,
+            gigsStatus: "accepted",
           ),
-          _buildDetailView(
-            onTap: () => viewModel.navigationToCandidateDetail(
-                viewModel, gigs, "accepted"),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 
@@ -228,7 +227,9 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
         ),
         InkWell(
           onTap: () => viewModel.navigationToCandidateDetail(
-              viewModel, gigs, "shortList"),
+            gigs: gigs,
+            gigsStatus: "shortList",
+          ),
           child: Text(
             "see_details".tr(),
             style: TSB.regularSmall(

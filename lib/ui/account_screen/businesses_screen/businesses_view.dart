@@ -15,7 +15,6 @@ class BusinessesScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      // onViewModelReady: (viewModel) => viewModel.fetchAllBusinessesApi(),
       viewModelBuilder: () => BusinessesViewModel(),
       builder: (_, viewModel, child) => Scaffold(
         backgroundColor: mainGrayColor,

@@ -9,7 +9,6 @@ import '../../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
 import '../candidate_gigrrs_view_model.dart';
-import 'candidate_gigrr_detail_view_model.dart';
 
 class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
   final CandidateGigsRequestData data;
@@ -109,27 +108,23 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
                         _buildExPriceWidget(
                           outerPadding: outerPadding,
                           valueText: price,
-                          titleText: "Normal Price",
+                          titleText: "normal_price",
                         ),
                         _buildExPriceWidget(
                           outerPadding: outerPadding,
                           valueText: "1-3 Years",
-                          titleText: "Required Experience",
+                          titleText: "experience",
                         ),
                       ],
                     ),
                     _buildSpacing(),
                     _buildOtherDetailView(
-                      title: "Availibility",
-                      infoList: [
-                        "Weekends",
-                        "Day Shift",
-                        "Night Shift",
-                      ],
+                      title: "availability",
+                      infoList: viewModel.listOfAvailability,
                     ),
                     _buildSpacing(),
                     _buildOtherDetailView(
-                      title: "Required Skill",
+                      title: "required_skill",
                       infoList:
                           data.skillsCategoryList.map((e) => e.name).toList(),
                     ),
@@ -223,7 +218,7 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            valueText,
+            valueText.tr(),
             style: TSB.semiBoldSmall(
               textColor: mainBlueColor.withOpacity(0.90),
             ),
@@ -232,7 +227,7 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
             height: SizeConfig.margin_padding_3,
           ),
           Text(
-            titleText,
+            titleText.tr(),
             style: TSB.regularSmall(),
           ),
         ],
@@ -249,7 +244,7 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          title,
+          title.tr(),
         ),
         _buildSpacing(),
         Wrap(

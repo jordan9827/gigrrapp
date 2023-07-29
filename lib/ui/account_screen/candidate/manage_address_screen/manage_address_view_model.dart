@@ -32,7 +32,8 @@ class ManageAddressViewModel extends BaseViewModel {
   }
 
   Future<void> navigationToEditAddressView(GetAddressResponseData data) async {
-    bool isCheck = await navigationService.navigateTo(
+    bool isCheck = false;
+    isCheck = await navigationService.navigateTo(
       Routes.addAddressScreenView,
       arguments: AddAddressScreenViewArguments(
         isEdit: true,

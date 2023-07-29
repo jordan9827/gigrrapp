@@ -146,7 +146,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
               height: SizeConfig.margin_padding_5,
             ),
             Text(
-              status,
+              status.tr(),
               style: TSB.regularSmall(
                 textColor: mainPinkColor,
               ),
@@ -217,7 +217,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
               height: SizeConfig.margin_padding_5,
             ),
             Text(
-              status,
+              status.tr(),
               style: TSB.regularSmall(
                 textColor: mainGreenColor,
               ),
@@ -225,7 +225,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
           ],
         ),
         _buildActionButton(
-          buttonText: buttonText,
+          buttonText: buttonText.tr(),
           onTap: () =>
               viewModel.loadShortListUpdateJobStatusApi(gigs, viewModel),
         )

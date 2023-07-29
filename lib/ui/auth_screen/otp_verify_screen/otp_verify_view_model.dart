@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
@@ -43,7 +43,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
 
   bool validateInput() {
     if (pinController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please enter OTP.");
+      snackBarService.showSnackbar(message: "msg_plz_enter_otp".tr());
       return false;
     }
     return true;
@@ -100,7 +100,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
         } else {
           pinController.text = "";
           FocusManager.instance.primaryFocus?.unfocus();
-          snackBarService.showSnackbar(message: "please Resend OTP");
+          snackBarService.showSnackbar(message: "msg_plz_resend_otp".tr());
         }
       }
     }

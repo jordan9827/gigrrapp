@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
-import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
+import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../others/constants.dart';
 import '../../util/others/image_constants.dart';
 import '../../util/others/size_config.dart';

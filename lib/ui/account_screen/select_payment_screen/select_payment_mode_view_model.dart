@@ -6,6 +6,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../app/app.locator.dart';
 import '../../../data/network/dtos/my_gigrrs_roster_response.dart';
+import '../../../data/network/dtos/my_gigs_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../util/enums/dialog_type.dart';
 import '../../../util/others/image_constants.dart';
@@ -22,7 +23,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
 
   List<String> paymentList = ["pay_cash, razor_pay"];
   PaymentMethod paymentMethod = PaymentMethod();
-  MyGigrrsRosterData myGigrrsRosterData = MyGigrrsRosterData.getEmptyMyGigrrs();
+  GigsRequestData myGigrrsRequestData = GigsRequestData.fromJson({});
   @override
   void initialise() {
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccessResponse);
@@ -48,12 +49,12 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     }
   }
 
-  void submitPayment(
-    SelectPaymentModelViewModel viewModel,
-    MyGigrrsRosterData gigrrsData,
-  ) {
+  void submitPayment({
+    required SelectPaymentModelViewModel viewModel,
+    required GigsRequestData data,
+  }) {
     if (paymentMethod.title.isNotEmpty) {
-      loadPaymentDialog(viewModel, gigrrsData);
+      loadPaymentDialog(viewModel, data);
     } else {
       snackBarService.showSnackbar(message: "plz_select_u_payment_method".tr());
     }
@@ -61,7 +62,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
 
   Future<void> loadPaymentDialog(
     SelectPaymentModelViewModel viewModel,
-    MyGigrrsRosterData gigrrsData,
+    GigsRequestData gigrrsData,
   ) async {
     final builders = {
       DialogType.candidatePayment: (_, request, completer) => PaymentDialogView(
@@ -81,7 +82,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     print("handlePaymentSuccessResponse  ${response.paymentId}");
     if (response.paymentId!.isNotEmpty) {
       loadCandidatePayment(
-        data: myGigrrsRosterData,
+        data: myGigrrsRequestData,
         paymentType: "online",
         paymentResponse: response.toString(),
         paymentID: response.paymentId ?? "",
@@ -90,11 +91,11 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     notifyListeners();
   }
 
-  void loadPaymentMethod(MyGigrrsRosterData data) {
+  void loadPaymentMethod(GigsRequestData data) {
     var index = PaymentMethod.paymentList.indexOf(paymentMethod);
     if (index == 1) {
       print("Razor Pay");
-      myGigrrsRosterData = data;
+      myGigrrsRequestData = data;
       loadRazorPayPayment(data);
     } else {
       navigationService.back();
@@ -106,15 +107,14 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
     notifyListeners();
   }
 
-  void loadRazorPayPayment(MyGigrrsRosterData data) {
-    var request = data.gigsRequestData.first;
-    var price = request.offerAmount.toPriceFormat(0);
+  void loadRazorPayPayment(GigsRequestData data) {
+    var price = data.offerAmount.toPriceFormat(0);
     var amount = int.parse(price) * 100;
     var options = {
       'key': 'rzp_test_nYsbGl2JnIjUDy', // Testing //
       //  'key': 'rzp_live_aGAF5DHohgOzfr', // Live //
       'amount': amount,
-      'name': request.candidate.fullName,
+      'name': data.candidate.fullName,
       "currency": "INR",
       'description': 'Payment',
       'prefill': {
@@ -131,7 +131,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
   }
 
   Future<void> loadCandidatePayment({
-    required MyGigrrsRosterData data,
+    required GigsRequestData data,
     String paymentType = "",
     String paymentResponse = "",
     String paymentID = "",
@@ -157,16 +157,15 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
   }
 
   Future<Map<String, String>> _getRequestForPayment({
-    required MyGigrrsRosterData data,
+    required GigsRequestData data,
     String paymentType = "",
     String paymentResponse = "",
     String paymentID = "",
   }) async {
-    var requestData = data.gigsRequestData.first;
     Map<String, String> request = {};
-    request['gigs_id'] = "${data.id}";
-    request['candidate_id'] = "${requestData.candidate.id}";
-    request['amount'] = requestData.offerAmount;
+    request['gigs_id'] = "${data.gigsId}";
+    request['candidate_id'] = "${data.candidate.id}";
+    request['amount'] = data.offerAmount;
     request['payment_mode'] = paymentType;
     request['transaction_response'] = paymentResponse;
     request['transaction_id'] = paymentID;

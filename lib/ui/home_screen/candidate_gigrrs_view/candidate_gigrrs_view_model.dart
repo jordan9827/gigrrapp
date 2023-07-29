@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../app/app.router.dart';
 import '../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
@@ -26,6 +25,11 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     fCMService.listenForegroundMessage((p0) => fetchGigsRequest());
   }
 
+  List<String> listOfAvailability = [
+    "Weekends",
+    "Day Shift",
+    "Night Shift",
+  ];
   void navigateBack() {
     navigationService.back();
   }

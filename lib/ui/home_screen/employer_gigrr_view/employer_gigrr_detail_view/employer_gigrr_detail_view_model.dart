@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/business_repos.dart';
@@ -21,6 +19,11 @@ class EmployerGigrrDetailViewModel extends BaseViewModel {
     navigationServices.back();
   }
 
+  List<String> listOfAvailability = [
+    "Weekends",
+    "Day Shift",
+    "Night Shift",
+  ];
   Future<void> navigatorToGiggrRequestView({
     int id = 0,
     int candidateId = 0,

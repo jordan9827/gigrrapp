@@ -5,13 +5,14 @@ import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../data/network/dtos/my_gigrrs_roster_response.dart';
+import '../../../data/network/dtos/my_gigs_response.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/image_constants.dart';
 import '../../../util/others/text_styles.dart';
 import 'select_payment_mode_view_model.dart';
 
 class SelectPaymentModeView extends StatelessWidget {
-  final MyGigrrsRosterData data;
+  final GigsRequestData data;
 
   SelectPaymentModeView({
     Key? key,
@@ -88,7 +89,10 @@ class SelectPaymentModeView extends StatelessWidget {
             Spacer(),
             LoadingButton(
               loading: viewModel.isBusy,
-              action: () => viewModel.submitPayment(viewModel, data),
+              action: () => viewModel.submitPayment(
+                viewModel: viewModel,
+                data: data,
+              ),
               title: "pay",
             ),
             SizedBox(

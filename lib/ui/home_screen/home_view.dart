@@ -134,7 +134,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
-    final ThemeData themeData = Theme.of(context);
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) => viewModel.setInitialIndex(isInitial),

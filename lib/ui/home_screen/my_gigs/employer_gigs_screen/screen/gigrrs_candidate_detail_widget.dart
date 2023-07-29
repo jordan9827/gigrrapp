@@ -74,14 +74,14 @@ class GigrrsCandidateWidget
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Job Status",
+                "job_status".tr(),
                 style: TSB.regularMedium(),
               ),
               if (data.status == "roster")
-                _buildGigrsStatusView(text: "Roster"),
-              if (data.status == "start") _buildGigrsStatusView(text: "Start"),
+                _buildGigrsStatusView(text: "roster"),
+              if (data.status == "start") _buildGigrsStatusView(text: "start"),
               if (data.status == "sent-offer")
-                _buildGigrsStatusView(text: "Sent-Offer"),
+                _buildGigrsStatusView(text: "sent_offer"),
               if (data.status == "received-offer")
                 _buildGigrsSortListedView(viewModel)
             ],
@@ -97,7 +97,7 @@ class GigrrsCandidateWidget
         top: SizeConfig.margin_padding_5,
       ),
       child: Text(
-        text,
+        text.tr(),
         style: TSB.regularSmall(
           textColor: mainPinkColor,
         ),
@@ -105,12 +105,14 @@ class GigrrsCandidateWidget
     );
   }
 
-  Widget _buildGigrsSortListedView(EmployerGigsDetailViewModel viewModel) {
+  Widget _buildGigrsSortListedView(
+    EmployerGigsDetailViewModel viewModel,
+  ) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          "Offer Accepted By Candidate",
+          "offer_accept_by_candidate".tr(),
           style: TSB.regularSmall(
             textColor: mainPinkColor,
           ),

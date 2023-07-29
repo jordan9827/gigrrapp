@@ -8,7 +8,6 @@ import '../../../../../others/loading_button.dart';
 import '../../../../../util/others/size_config.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../widgets/detail_app_bar.dart';
-import '../employer_gigs_view_model.dart';
 import 'employer_gigs_detail_screen/employer_gigs_detail_view_model.dart';
 
 class CandidateOfferView extends StackedView<EmployerGigsDetailViewModel> {

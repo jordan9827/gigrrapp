@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import '../../../data/network/dtos/get_notification_response.dart';
 import '../../../others/constants.dart';
 import '../../../util/others/image_constants.dart';
@@ -14,16 +15,23 @@ class NotificationWidget extends StatelessWidget {
     SizeConfig.init(context);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 5),
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+      padding: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       decoration: BoxDecoration(
         color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+        borderRadius: BorderRadius.circular(
+          SizeConfig.margin_padding_10,
+        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundImage: AssetImage(ic_edit_profile),
+            backgroundImage: NetworkImage(item.image),
+            onBackgroundImageError: (o, s) {
+              NetworkImage(ic_edit_profile);
+            },
             radius: SizeConfig.margin_padding_18,
           ),
           SizedBox(
@@ -34,6 +42,13 @@ class NotificationWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  item.title,
+                  style: TSB.semiBoldSmall(),
+                ),
+                SizedBox(
+                  height: SizeConfig.margin_padding_3,
+                ),
+                Text(
                   item.message,
                   style: TSB.regularLarge(),
                 ),
@@ -41,8 +56,10 @@ class NotificationWidget extends StatelessWidget {
                   height: SizeConfig.margin_padding_5,
                 ),
                 Text(
-                  "Oct 16, 2021",
-                  style: TSB.regularSmall(textColor: textNoticeColor),
+                  item.createdAt.toDateFormat(),
+                  style: TSB.regularSmall(
+                    textColor: textNoticeColor,
+                  ),
                 ),
               ],
             ),
