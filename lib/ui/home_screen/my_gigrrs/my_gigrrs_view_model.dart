@@ -44,7 +44,6 @@ class MyGigrrsViewModel extends BaseViewModel {
   void navigationToMyGigrrsDetailView(CalendarTapDetails val) {
     if (val.appointments != null) {
       String id = val.appointments!.first.id.toString();
-      print("appointments ID $id");
       navigationService.navigateTo(
         Routes.myGigrrsDetailView,
         arguments: MyGigrrsDetailViewArguments(id: id),
@@ -92,7 +91,6 @@ class MyGigrrsViewModel extends BaseViewModel {
       String formattedDate = formatter.format(startDate);
       if (calender.containsKey(formattedDate.toString())) {
         for (var map in calender[formattedDate]) {
-          var mapInside = map["gigs_request_details"];
           String gigsId = map["id"].toString();
           String name = map["gig_name"];
           String startTime = map["gigs_starttime"];

@@ -49,63 +49,61 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  String statusForMyGigrrsAction() {
-    for (var i in gigrrsData.gigsRequestData) {
-      if (i.status == "Complete") {
-        statusMyGig = "Complete";
-      } else if (i.paymentStatus == "pending") {
-        statusMyGig = "pay_candidate";
-      } else if (i.ratingFromEmployer == "no") {
-        statusMyGig = "rate";
-      } else if (i.ratingFromEmployer == "yes" &&
-          i.paymentStatus == "completed" &&
-          i.status == "complete") {
-        statusMyGig = "paid";
-      }
+  String statusForMyGigrrsAction(GigsRequestData i) {
+    if (i.status == "Complete") {
+      statusMyGig = "Complete";
+    } else if (i.paymentStatus == "pending") {
+      statusMyGig = "pay_candidate";
+    } else if (i.ratingFromEmployer == "no") {
+      statusMyGig = "rate";
+    } else if (i.ratingFromEmployer == "yes" &&
+        i.paymentStatus == "completed" &&
+        i.status == "complete") {
+      statusMyGig = "paid";
     }
+
     return statusMyGig;
   }
 
-  String getGigStatus() {
+  String getGigStatus(GigsRequestData e) {
     String status = "";
-    for (var i in gigrrsData.gigsRequestData) {
-      switch (i.status) {
-        case "complete":
-          status = "Completed";
-          break;
-        case "roster":
-          isButtonVisible = false;
-          jobOTP = i.startOTP;
-          status = "Roster";
-          break;
-        case "start":
-          isButtonVisible = false;
-          status = "Start";
-          jobOTP = i.endOTP;
-          break;
-      }
+    switch (e.status) {
+      case "complete":
+        status = "completed";
+        break;
+      case "roster":
+        isButtonVisible = false;
+        jobOTP = e.startOTP;
+        status = "roster";
+        break;
+      case "start":
+        isButtonVisible = false;
+        status = "start";
+        jobOTP = e.endOTP;
+        break;
     }
     return status;
   }
 
-  Future<void> navigationToStatusForGigs() async {
-    if (statusMyGig.toLowerCase() == "rate") {
-      var request = gigrrsData.gigsRequestData.first;
-      var result = await navigationService.navigateTo(
+  Future<void> navigationToStatusForGigs(GigsRequestData request) async {
+    bool result = false;
+    var status = statusForMyGigrrsAction(request).toLowerCase();
+    if (status == "rate") {
+      result = await navigationService.navigateTo(
         Routes.ratingReviewScreenView,
         arguments: RatingReviewScreenViewArguments(
           gigsId: gigrrsData.id.toString(),
-          name: gigrrsData.gigName,
+          name: request.employeeName,
           profile: request.candidate.imageURL,
           candidateId: request.employeId.toString(),
         ),
       );
       if (result) fetchMyGigrrRoster();
-    } else if (statusMyGig.toLowerCase() == "pay_candidate") {
+    } else if (status == "pay_candidate") {
       navigationService.navigateTo(
         Routes.selectPaymentModeView,
         arguments: SelectPaymentModeViewArguments(
-          data: gigrrsData,
+          data: request,
         ),
       );
     }

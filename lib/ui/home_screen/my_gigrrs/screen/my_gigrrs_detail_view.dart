@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/ui/home_screen/my_gigrrs/widget/my_giggrrs_widget.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/constants.dart';
 import '../../../../others/loading_screen.dart';
@@ -14,7 +15,10 @@ import 'my_gigrrs_detail_view_model.dart';
 class MyGigrrsDetailView extends StatelessWidget {
   final String id;
 
-  const MyGigrrsDetailView({Key? key, this.id = ""}) : super(key: key);
+  const MyGigrrsDetailView({
+    Key? key,
+    this.id = "",
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +47,22 @@ class MyGigrrsDetailView extends StatelessWidget {
             onRefresh: viewModel.fetchMyGigrrRoster,
             child: viewModel.isBusy
                 ? EmptyDataScreenView()
-                : MyGigrrsWidget(
-                    statusView:
-                        _buildShortListGigsStatusView(viewModel: viewModel),
+                : ListView(
+                    padding: EdgeInsets.symmetric(
+                      vertical: SizeConfig.margin_padding_10,
+                      horizontal: SizeConfig.margin_padding_15,
+                    ),
+                    children: viewModel.gigrrsData.gigsRequestData
+                        .map(
+                          (e) => MyGigrrsWidget(
+                            data: e,
+                            statusView: _buildShortListGigsStatusView(
+                              data: e,
+                              viewModel: viewModel,
+                            ),
+                          ),
+                        )
+                        .toList(),
                   ),
           ),
         ),
@@ -54,10 +71,11 @@ class MyGigrrsDetailView extends StatelessWidget {
   }
 
   Widget _buildShortListGigsStatusView({
+    required GigsRequestData data,
     required MyGigrrsDetailViewModel viewModel,
   }) {
-    var status = viewModel.getGigStatus();
-    var buttonText = viewModel.statusForMyGigrrsAction();
+    var status = viewModel.getGigStatus(data);
+    var buttonText = viewModel.statusForMyGigrrsAction(data);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -65,14 +83,14 @@ class MyGigrrsDetailView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Job Status",
+              "job_status".tr(),
               style: TSB.semiBoldSmall(),
             ),
             SizedBox(
               height: SizeConfig.margin_padding_3,
             ),
             Text(
-              status,
+              status.tr(),
               style: TSB.regularSmall(
                 textColor: mainPinkColor,
               ),
@@ -86,7 +104,7 @@ class MyGigrrsDetailView extends StatelessWidget {
         if (viewModel.isButtonVisible)
           _buildActionButton(
             buttonText: buttonText.tr(),
-            onTap: viewModel.navigationToStatusForGigs,
+            onTap: () => viewModel.navigationToStatusForGigs(data),
           )
       ],
     );
@@ -96,13 +114,13 @@ class MyGigrrsDetailView extends StatelessWidget {
     String otp = "",
     String status = "",
   }) {
-    var title = status == "roster" ? "Start" : "End";
+    var title = status == "roster" ? "start_otp" : "end_otp";
     if ((status == "roster" || status == "start") && otp.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Text(
-            "$title OTP",
+            title.tr(),
             style: TSB.semiBoldSmall(),
           ),
           SizedBox(
@@ -133,14 +151,19 @@ class MyGigrrsDetailView extends StatelessWidget {
           vertical: SizeConfig.margin_padding_8,
         ),
         decoration: BoxDecoration(
-          border: Border.all(color: mainPinkColor, width: 1.5),
+          border: Border.all(
+            color: mainPinkColor,
+            width: 1.5,
+          ),
           borderRadius: BorderRadius.circular(
             SizeConfig.margin_padding_8,
           ),
         ),
         child: Text(
           buttonText.tr(),
-          style: TSB.regularVSmall(textColor: mainPinkColor),
+          style: TSB.regularVSmall(
+            textColor: mainPinkColor,
+          ),
         ),
       ),
     );

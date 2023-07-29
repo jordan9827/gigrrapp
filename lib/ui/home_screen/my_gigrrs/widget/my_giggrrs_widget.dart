@@ -7,11 +7,14 @@ import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/my_gigrrs_roster_response.dart';
+import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../screen/my_gigrrs_detail_view_model.dart';
 
 class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
+  final GigsRequestData data;
   final Widget statusView;
   const MyGigrrsWidget({
+    required this.data,
     required this.statusView,
     Key? key,
   }) : super(key: key);
@@ -20,14 +23,11 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
   Widget build(BuildContext context, MyGigrrsDetailViewModel viewModel) {
     SizeConfig.init(context);
     var media = MediaQuery.of(context).size;
-    var data = viewModel.gigrrsData;
-    var sizeWithStatus =
-        viewModel.isButtonVisible ? media.height * 0.47 : media.height * 0.415;
     return Container(
       width: double.infinity,
-      height: media.height * 0.47,
-      margin: EdgeInsets.all(
-        SizeConfig.margin_padding_15,
+      // height: media.height * 0.47,
+      margin: EdgeInsets.symmetric(
+        vertical: SizeConfig.margin_padding_5,
       ),
       padding: EdgeInsets.all(
         SizeConfig.margin_padding_15,
@@ -51,15 +51,14 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
               Row(
                 children: [
                   _buildDurationView(
-                    title: data.gigsStartDate.toDateFormat(),
+                    title: data.createdAt.toDateFormat(),
                     subTitle: "start_date",
                   ),
                   SizedBox(
                     width: SizeConfig.margin_padding_10,
                   ),
                   _buildDurationView(
-                    title:
-                        "₹ ${data.gigsRequestData.first.offerAmount.toPriceFormat(0)}",
+                    title: "₹ ${data.offerAmount.toPriceFormat(0)}",
                     subTitle: "offer_price",
                   ),
                 ],
@@ -84,11 +83,10 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
                   SizedBox(
                     height: SizeConfig.margin_padding_5,
                   ),
-                  _buildAddressView(data.gigAddress),
+                  _buildAddressView(data.candidate.address),
                   SizedBox(
                     height: SizeConfig.margin_padding_10,
                   ),
-                  // viewModel.isStatusSize ? statusView : SizedBox()
                 ],
               )
             ],
@@ -100,8 +98,9 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
   }
 
   Widget _buildTitleOfGiggrrs(
-      MyGigrrsRosterData gigrr, MyGigrrsDetailViewModel viewModel) {
-    var profile = gigrr.gigsRequestData.first.candidate.imageURL;
+    GigsRequestData gigrr,
+    MyGigrrsDetailViewModel viewModel,
+  ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -113,7 +112,7 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
               SizeConfig.margin_padding_10,
             ),
             child: Image.network(
-              profile,
+              data.candidateImageList.first.imageURL,
               fit: BoxFit.fill,
             ),
           ),
@@ -125,15 +124,14 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              gigrr.gigName,
+              data.employeeName,
               maxLines: 2,
               style: TSB.semiBoldLarge(),
             ),
             SizedBox(
               height: SizeConfig.margin_padding_4,
             ),
-            _buildDistanceView(
-                "${gigrr.gigsRequestData.first.distance} KM Away")
+            _buildDistanceView("${data.distance} " + "km_away".tr())
           ],
         )
       ],
@@ -176,7 +174,10 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
     );
   }
 
-  Widget _buildDurationView({required String title, required String subTitle}) {
+  Widget _buildDurationView({
+    required String title,
+    required String subTitle,
+  }) {
     return Expanded(
       child: Container(
         padding: EdgeInsets.all(
