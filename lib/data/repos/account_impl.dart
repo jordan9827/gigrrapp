@@ -183,25 +183,6 @@ class AccountImpl extends AccountRepo {
   }
 
   @override
-  Future<Either<Failure, bool>> contactUS(Map<String, dynamic> data) async {
-    try {
-      final response = await accountService.contactUSApi(data);
-
-      if (response.body == null) {
-        throw Exception(response.error);
-      }
-      return response.body!.map(success: (res) async {
-        return Right(true);
-      }, error: (error) {
-        return Left(Failure(200, error.message));
-      });
-    } catch (e) {
-      log.e(e);
-      return Left(e.handleException());
-    }
-  }
-
-  @override
   Future<Either<Failure, BaseResponse>> addBankAccount(
       Map<String, dynamic> data) async {
     try {
@@ -271,6 +252,27 @@ class AccountImpl extends AccountRepo {
       }
       return response.body!.map(success: (res) async {
         return Right(res.addressList);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> contactSupport(
+    Map<String, dynamic> data,
+  ) async {
+    try {
+      final response = await accountService.contactSupportApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      return response.body!.map(success: (res) async {
+        return Right(res);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

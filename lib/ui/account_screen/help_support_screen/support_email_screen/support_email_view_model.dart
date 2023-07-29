@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
@@ -26,22 +25,23 @@ class SupportEmailViewModel extends BaseViewModel {
   Future<void> contactUS() async {
     if (validateInput()) {
       setBusy(true);
-      final response =
-          await accountRepo.saveChat(await _getContactUSRequestBody());
+      final response = await accountRepo.contactSupport(
+        await _getContactUSRequestBody(),
+      );
 
       response.fold((failure) {
         setBusy(false);
       }, (response) {
-        navigationToBack();
+        navigationService.back();
+        snackBarService.showSnackbar(message: response.message);
         setBusy(false);
-        log("message Response--------->>>>\n $response");
       });
     }
   }
 
   Future<Map<String, String>> _getContactUSRequestBody() async {
     Map<String, String> request = {};
-    request['subject_id'] = "";
+    request['subject_id'] = "0";
     request['message'] = messageController.text;
     return request;
   }

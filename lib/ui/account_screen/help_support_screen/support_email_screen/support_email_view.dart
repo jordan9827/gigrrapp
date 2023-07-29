@@ -34,47 +34,45 @@ class _SupportEmailScreenViewState extends State<SupportEmailScreenView> {
           padding: edgeInsetsMargin,
           child: ListView(
             children: [
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               _buildTitle(),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               Text(
                 "select_your_subject".tr(),
                 style: TSB.regularSmall(),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
+              _buildSpacer(
+                SizeConfig.margin_padding_5,
               ),
               InputFieldWidget(
                 hint: "select_subject",
                 controller: viewModel.subjectController,
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               Text(
                 "your_message".tr(),
                 style: TSB.regularSmall(),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_5,
+              _buildSpacer(
+                SizeConfig.margin_padding_5,
               ),
               InputFieldWidget(
                 maxLines: 10,
                 hint: "type_your_message",
                 controller: viewModel.messageController,
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               _buildSubmitButton(viewModel)
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_20,
     );
   }
 
@@ -96,7 +94,8 @@ class _SupportEmailScreenViewState extends State<SupportEmailScreenView> {
 
   Widget _buildSubmitButton(SupportEmailViewModel viewModel) {
     return LoadingButton(
-      action: () {},
+      loading: viewModel.isBusy,
+      action: viewModel.contactUS,
       title: "ic_cap_send",
     );
   }

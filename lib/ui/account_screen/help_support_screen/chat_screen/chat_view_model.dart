@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/data/network/dtos/chat_response.dart';
 import 'package:stacked/stacked.dart';
@@ -62,7 +63,6 @@ class ChatViewModel extends BaseViewModel {
         helpChatList.insert(0, response);
         notifyListeners();
         setBusy(false);
-        log("message Response--------->>>>\n $response");
       });
     }
   }
@@ -70,13 +70,12 @@ class ChatViewModel extends BaseViewModel {
   Future<Map<String, String>> _getRequestForSendChat() async {
     Map<String, String> request = {};
     request['message'] = chatTextController.text;
-    log("Chat Request Body :: $request");
     return request;
   }
 
   bool validateInput() {
     if (chatTextController.text.isEmpty) {
-      snackBarService.showSnackbar(message: "Please enter message.");
+      snackBarService.showSnackbar(message: "plz_enter_msg".tr());
       return false;
     }
     return true;
