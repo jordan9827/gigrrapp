@@ -79,8 +79,9 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
                       radius: const Radius.circular(12),
                       padding: const EdgeInsets.all(1.5),
                       child: ClipRRect(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(12)),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(12),
+                        ),
                         child: SizedBox(
                           height: SizeConfig.margin_padding_50 * 2,
                           width: SizeConfig.margin_padding_50 * 6,
@@ -94,13 +95,17 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
                                 width: SizeConfig.margin_padding_24,
                                 child: Image.asset(upload_image),
                               ),
-                              SizedBox(height: SizeConfig.margin_padding_10),
+                              SizedBox(
+                                height: SizeConfig.margin_padding_10,
+                              ),
                               Text(
                                 widget.title.tr(),
                                 style: TSB.regularMedium(
                                     textColor: independenceColor),
                               ),
-                              SizedBox(height: SizeConfig.margin_padding_5),
+                              SizedBox(
+                                height: SizeConfig.margin_padding_5,
+                              ),
                               Text(
                                 "upload_upto_image".tr(),
                                 style: TSB.regularSmall(
@@ -119,7 +124,9 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
   }
 
   Widget _buildAddMorePicture(
-      BuildContext context, CustomImagePickerViewModel viewModel) {
+    BuildContext context,
+    CustomImagePickerViewModel viewModel,
+  ) {
     return InkWell(
       onTap: () => viewModel.pickImage(context),
       child: ClipRRect(
@@ -143,11 +150,15 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
                 width: SizeConfig.margin_padding_24,
                 child: Image.asset(upload_image),
               ),
-              SizedBox(height: SizeConfig.margin_padding_8),
+              SizedBox(
+                height: SizeConfig.margin_padding_8,
+              ),
               Text(
                 textAlign: TextAlign.center,
                 "add_more_picture".tr(),
-                style: TSB.regularSmall(textColor: independenceColor),
+                style: TSB.regularSmall(
+                  textColor: independenceColor,
+                ),
               ),
             ],
           ),
@@ -156,10 +167,15 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
     );
   }
 
-  Widget _buildListOfImages(CustomImagePickerViewModel viewModel, int index) {
+  Widget _buildListOfImages(
+    CustomImagePickerViewModel viewModel,
+    int index,
+  ) {
     return Container(
       width: SizeConfig.margin_padding_50 * 2,
-      margin: EdgeInsets.only(right: SizeConfig.margin_padding_8),
+      margin: EdgeInsets.only(
+        right: SizeConfig.margin_padding_8,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.all(
@@ -170,10 +186,6 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15.0),
-            // child: Image.asset(
-            //   viewModel.imageList![index],
-            //   fit: BoxFit.cover,
-            // ),
             child: CachedNetworkImage(
               imageUrl: viewModel.imageList[index],
               alignment: Alignment.center,
