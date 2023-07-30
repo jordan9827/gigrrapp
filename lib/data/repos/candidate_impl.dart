@@ -162,4 +162,25 @@ class CandidateImpl extends CandidateRepo {
       return Left(e.handleException());
     }
   }
+
+  @override
+  Future<Either<Failure, BaseResponse>> candidateSavePreference(
+      Map<String, dynamic> body) async {
+    try {
+      final response = await candidateService.candidateSavePreferenceApi(body);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("candidateSavePreference ${response.body}");
+      return response.body!.map(success: (data) async {
+        return Right(data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
 }

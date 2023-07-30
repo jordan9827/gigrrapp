@@ -13,19 +13,19 @@ abstract class CandidateRepo {
   Future<Either<Failure, GigsAcceptedResponseData>> acceptedGigs(int id);
 
   Future<Either<Failure, CandidateGigsRequestResponseData>> getGigsRequest(
-    Map<String, dynamic> body,
-  );
+      Map<String, dynamic> body,);
 
   Future<Either<Failure, BaseResponse>> acceptedGigsRequest(int id);
 
   Future<Either<Failure, BaseResponse>> acceptedGigsOffer(
-    Map<String, dynamic> body,
-  );
+      Map<String, dynamic> body,);
 
   Future<Either<Failure, BaseResponse>> updateJobStatus(
-    Map<String, dynamic> body,
-  );
+      Map<String, dynamic> body,);
+
   Future<Either<Failure, BaseResponse>> gigsVerifyOTP(
-    Map<String, dynamic> body,
-  );
+      Map<String, dynamic> body,);
+
+  Future<Either<Failure, BaseResponse>> candidateSavePreference(
+      Map<String, dynamic> body,);
 }

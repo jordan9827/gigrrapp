@@ -31,7 +31,6 @@ class PaymentHistoryWidget extends StatelessWidget {
       ),
       padding: EdgeInsets.symmetric(
         horizontal: SizeConfig.margin_padding_10,
-        vertical: SizeConfig.margin_padding_3,
       ),
       decoration: BoxDecoration(
         color: mainWhiteColor,

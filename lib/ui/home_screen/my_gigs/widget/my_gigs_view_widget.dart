@@ -14,6 +14,7 @@ class MyGigsViewWidget extends StatelessWidget {
   final String startDate;
   final Widget bottomView;
   final bool isEmptyModel;
+  final bool isShortListed;
   const MyGigsViewWidget({
     Key? key,
     required this.bottomView,
@@ -21,6 +22,7 @@ class MyGigsViewWidget extends StatelessWidget {
     required this.address,
     required this.price,
     this.isEmptyModel = true,
+    this.isShortListed = false,
     required this.jobDuration,
     required this.startDate,
   }) : super(key: key);
@@ -90,7 +92,7 @@ class MyGigsViewWidget extends StatelessWidget {
               ),
               _buildDurationView(
                 title: startDate.toDateFormat(),
-                subTitle: "start_date",
+                subTitle: isShortListed ? "job_date" : "start_date",
               ),
             ],
           ),

@@ -34,7 +34,6 @@ class EmployerRegisterViewModel extends BaseViewModel {
   bool mapBoxLoading = false;
 
   LatLng latLng = const LatLng(14.508, 46.048);
-  String country = "+91";
   String address = "";
   Location location = Location();
   PageController controller = PageController();

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../others/loading_button.dart';
 import '../../../../others/text_field_widget.dart';
@@ -77,14 +78,16 @@ class FilterDialogView extends StatelessWidget {
                               CustomDatePickerWidget(
                                 dataType: "from_date",
                                 initialDate: viewModel.selectedDate,
-                                data: viewModel.formDateController.text,
+                                data: viewModel.formDateController.text
+                                    .toDateFormat(),
                                 onTap: viewModel.pickFormDate,
                               ),
                               SizedBox(width: SizeConfig.margin_padding_10),
                               CustomDatePickerWidget(
                                 dataType: "to_date",
                                 initialDate: viewModel.selectedDate,
-                                data: viewModel.toDateController.text,
+                                data: viewModel.toDateController.text
+                                    .toDateFormat(),
                                 onTap: viewModel.pickToDate,
                               )
                             ],

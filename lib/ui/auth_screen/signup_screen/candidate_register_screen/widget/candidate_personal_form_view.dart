@@ -4,6 +4,7 @@ import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/ui/widgets/cvm_text_form_field.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
 import 'package:stacked/stacked.dart';
@@ -51,7 +52,9 @@ class CandidatePersonalInfoFormView
             readOnly: true,
             title: "date_of_birth",
             hintForm: "i.e. 18 Feb 2023",
-            controller: viewModel.dobController,
+            controller: TextEditingController(
+              text: viewModel.dobController.text.toDateFormat(),
+            ),
             suffixIcon: InkWell(
               onTap: () => selectDatePicker(context, viewModel: viewModel),
               child: Container(

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/ui/add_gigs/add_gigs_view_model.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import '../../../others/constants.dart';
 import '../../../others/loading_button.dart';
@@ -36,7 +37,9 @@ class AddGigsOperationalInfoScreenView
             title: "from_date",
             hintForm: "i.e. 18 Feb 2023",
             readOnly: true,
-            controller: viewModel.formDateController,
+            controller: TextEditingController(
+              text: viewModel.formDateController.text.toDateFormat(),
+            ),
             suffixIcon: _buildImage(
               image: ic_calender_blck,
               onTap: () => viewModel.selectDatePicker(
@@ -50,7 +53,9 @@ class AddGigsOperationalInfoScreenView
             title: "to_date",
             hintForm: "i.e. 18 Feb 2023",
             readOnly: true,
-            controller: viewModel.toDateController,
+            controller: TextEditingController(
+              text: viewModel.toDateController.text.toDateFormat(),
+            ),
             suffixIcon: _buildImage(
               image: ic_calender_blck,
               onTap: () => viewModel.selectDatePicker(

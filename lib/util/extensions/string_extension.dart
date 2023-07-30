@@ -4,6 +4,9 @@ extension StringExtensions on String {
   String toDateFormat() =>
       DateFormat("dd MMM, yyyy").format(DateTime.parse(this));
 
+  String toSentDateFormat() =>
+      DateFormat("yyyy-MM-dd").format(DateTime.parse(this));
+
   double getNumber({int p = 2}) =>
       double.parse('$this'.substring(0, '$this'.indexOf('.')));
 

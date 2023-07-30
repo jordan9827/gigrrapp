@@ -257,22 +257,22 @@ class CandidateGigsViewModel extends BaseViewModel {
       statusSlug = i.status;
       switch (i.status) {
         case "accepted":
-          status = 'status_accept_by_you';
+          status = 'accept_by_you';
           break;
         case "sent-offer":
-          status = 'status_offer_received';
+          status = 'offer_received';
           break;
         case "received-offer":
-          status = 'status_offer_accept_by_you';
+          status = 'offer_accept_by_you';
           break;
         case "roster":
-          status = "status_shortListed";
+          status = "shortListed";
           break;
         case "start":
-          status = "status_job_started";
+          status = "job_started";
           break;
         case "complete":
-          status = "status_job_complete";
+          status = "job_complete";
           break;
       }
     }
@@ -283,7 +283,7 @@ class CandidateGigsViewModel extends BaseViewModel {
     String status = "";
     for (var i in list) {
       if (i.status == "roster") {
-        status = "status_start_job";
+        status = "start_job";
       } else if (i.status == "start") {
         status = "complete";
       } else if (i.paymentStatus == "pending") {

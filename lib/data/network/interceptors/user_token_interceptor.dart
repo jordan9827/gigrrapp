@@ -13,16 +13,16 @@ class UserTokenInterceptor extends RequestInterceptor {
     final user = locator<UserAuthResponseData>();
     String token = user.accessToken;
     Map<String, String> headers = Map.from(request.headers);
-    // if (user.accessToken.isNotEmpty) {
-    headers.update(
-      'Authorization',
-      (value) => 'Bearer $token',
-      ifAbsent: () => 'Bearer $token',
-    );
-    // }
+    if (user.accessToken.isNotEmpty) {
+      headers.update(
+        'Authorization',
+        (value) => 'Bearer $token',
+        ifAbsent: () => 'Bearer $token',
+      );
+    }
 
     log.i(
-        "<------------------------------------------------------------\nAPI ${request.url}\nRequest body ${request.body}\nHeaders ${request.headers}\nQuery params ${request.parameters}\nMultipart ${request.multipart}\nToken $token\n---------------------------------------------------------------->");
+        "<------------------------------------------------------------\nAPI ${request.url}\nRequest body ${request.body}\nHeaders ${request.headers}\nQuery params ${request.parameters}\nMultipart ${request.multipart}\nToken ${headers["Authorization"]}\n---------------------------------------------------------------->");
 
     return request.copyWith(
       headers: headers,

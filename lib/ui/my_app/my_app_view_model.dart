@@ -41,7 +41,7 @@ class MyAppViewModel extends BaseViewModel {
 
   void setInitialRoute() {
     print(
-        "setInitialRoute  ${userData.accessToken} && ${userData.profileStatus}");
+        "setInitialRoute  \n${userData.accessToken}\n${userData.profileStatus}");
     if (icCheckIntroScreen()) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
@@ -65,6 +65,9 @@ class MyAppViewModel extends BaseViewModel {
         routes = Routes.candidateKYCScreenView;
         break;
       case "otp-verify":
+        routes = Routes.loginView;
+        break;
+      case "":
         routes = Routes.loginView;
         break;
       default:

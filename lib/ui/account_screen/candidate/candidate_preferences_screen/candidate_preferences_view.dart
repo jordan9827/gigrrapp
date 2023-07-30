@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_screen.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../others/comman_util.dart';
 import '../../../../others/loading_button.dart';
@@ -20,12 +21,10 @@ class CandidatePreferenceScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) async {
-        viewModel.init();
-      },
+      onViewModelReady: (viewModel) => viewModel.initState(),
       viewModelBuilder: () => CandidatePreferenceViewModel(),
       builder: (_, viewModel, child) => LoadingScreen(
-        loading: viewModel.isBusy,
+        loading: viewModel.loading,
         showDialogLoading: true,
         child: Scaffold(
           backgroundColor: mainGrayColor,
@@ -55,22 +54,19 @@ class CandidatePreferenceScreenView extends StatelessWidget {
             padding: edgeInsetsMargin,
             child: ListView(
               children: [
-                _buildLocationView(),
+                _buildLocationView(viewModel),
                 _buildDistanceView(viewModel),
+                _buildAvailabilityShiftView(viewModel),
                 _buildPayRangeView(viewModel),
                 _buildAvailabilityDateView(viewModel),
-                _buildAvailabilityShiftView(viewModel),
                 _buildSkillsView(viewModel),
-                SizedBox(
-                  height: SizeConfig.margin_padding_20,
-                ),
+                _buildSpacer(),
                 LoadingButton(
-                  action: () {},
+                  loading: viewModel.isBusy,
+                  action: viewModel.loadAddPreference,
                   title: 'submit',
                 ),
-                SizedBox(
-                  height: SizeConfig.margin_padding_20,
-                ),
+                _buildSpacer(),
               ],
             ),
           ),
@@ -79,7 +75,7 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationView() {
+  Widget _buildLocationView(CandidatePreferenceViewModel viewModel) {
     return PreferenceCustomUIWidget(
       title: 'location',
       child: Row(
@@ -87,7 +83,7 @@ class CandidatePreferenceScreenView extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              "11-PU3, Agra Bombay Road, Near C21 Mall, MR-9, Indore MP - 452010",
+              viewModel.addressController.text,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: TSB.regularVSmall(),
@@ -96,16 +92,21 @@ class CandidatePreferenceScreenView extends StatelessWidget {
           SizedBox(
             width: SizeConfig.margin_padding_10,
           ),
-          Container(
-            padding: EdgeInsets.all(SizeConfig.margin_padding_8),
-            decoration: BoxDecoration(
-              color: mainBlueColor.withOpacity(0.08),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Icon(
-              Icons.my_location_outlined,
-              color: mainPinkColor,
-              size: 25,
+          InkWell(
+            onTap: viewModel.mapBoxPlace,
+            child: Container(
+              padding: EdgeInsets.all(
+                SizeConfig.margin_padding_8,
+              ),
+              decoration: BoxDecoration(
+                color: mainBlueColor.withOpacity(0.08),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                Icons.my_location_outlined,
+                color: mainPinkColor,
+                size: 25,
+              ),
             ),
           )
         ],
@@ -230,8 +231,8 @@ class CandidatePreferenceScreenView extends StatelessWidget {
             "select_pre_shift".tr(),
             style: TSB.regularSmall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
+          _buildSpacer(
+            SizeConfig.margin_padding_15,
           ),
           Row(
             children: viewModel.availShitList.map(
@@ -256,22 +257,22 @@ class CandidatePreferenceScreenView extends StatelessWidget {
     CandidatePreferenceViewModel viewModel,
   ) {
     return PreferenceCustomUIWidget(
-      title: 'availability',
+      title: 'by_date',
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "set_payment_range".tr(),
+            "set_date_range".tr(),
             style: TSB.regularSmall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
+          _buildSpacer(
+            SizeConfig.margin_padding_15,
           ),
           Row(
             children: [
               CustomDatePickerWidget(
                 dataType: "from_date",
-                data: viewModel.formDateController.text,
+                data: viewModel.formDateController.text.toDateFormat(),
                 onTap: viewModel.pickFormDate,
                 initialDate: viewModel.selectedDate,
               ),
@@ -279,7 +280,7 @@ class CandidatePreferenceScreenView extends StatelessWidget {
               CustomDatePickerWidget(
                 dataType: "to_date",
                 initialDate: viewModel.selectedDate,
-                data: viewModel.toDateController.text,
+                data: viewModel.toDateController.text.toDateFormat(),
                 onTap: viewModel.pickToDate,
               )
             ],
@@ -301,8 +302,8 @@ class CandidatePreferenceScreenView extends StatelessWidget {
             "select_pre_skills".tr(),
             style: TSB.regularSmall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_15,
+          _buildSpacer(
+            SizeConfig.margin_padding_15,
           ),
           Wrap(
             alignment: WrapAlignment.start,
@@ -349,11 +350,17 @@ class CandidatePreferenceScreenView extends StatelessWidget {
         ),
       ),
       child: Text(
-        text,
+        text.tr(),
         style: TSB.regularVSmall(
           textColor: isSelect ? mainPinkColor : mainBlackColor,
         ),
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_20,
     );
   }
 }

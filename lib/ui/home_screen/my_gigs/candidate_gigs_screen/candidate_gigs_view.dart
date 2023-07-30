@@ -179,6 +179,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                 var price =
                     "₹ ${gigs.gigsRequestData.first.offerAmount.toPriceFormat(0)}/${gigs.priceCriteria}";
                 return MyGigsViewWidget(
+                  isShortListed: true,
                   title: gigs.gigName,
                   address: gigs.gigAddress,
                   price: price,
@@ -216,11 +217,32 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
             SizedBox(
               height: SizeConfig.margin_padding_5,
             ),
-            Text(
-              status.tr(),
-              style: TSB.regularSmall(
-                textColor: mainGreenColor,
-              ),
+            Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(
+                      SizeConfig.margin_padding_10,
+                    ),
+                    color: mainGreenColor,
+                  ),
+                  padding: EdgeInsets.all(2),
+                  child: Icon(
+                    Icons.check,
+                    color: mainWhiteColor,
+                    size: SizeConfig.margin_padding_10,
+                  ),
+                ),
+                SizedBox(
+                  width: SizeConfig.margin_padding_5,
+                ),
+                Text(
+                  status.tr(),
+                  style: TSB.regularSmall(
+                    textColor: mainGreenColor,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

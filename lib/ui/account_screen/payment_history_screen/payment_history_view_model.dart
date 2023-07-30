@@ -36,6 +36,8 @@ class PaymentHistoryViewModel extends BaseViewModel {
 
   PaymentHistoryViewModel() {
     clearDateController();
+    formDateController.text = dateNow;
+    toDateController.text = dateNow;
   }
 
   void navigationToBack() {
@@ -119,6 +121,7 @@ class PaymentHistoryViewModel extends BaseViewModel {
       setBusy(false);
     }, (res) {
       paymentList.addAll(res.paymentHistoryData);
+      paymentList.sort((b, a) => a.updatedAt.compareTo(b.updatedAt));
       _loading = false;
       setBusy(false);
     });

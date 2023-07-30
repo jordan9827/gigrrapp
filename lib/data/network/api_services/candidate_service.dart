@@ -4,7 +4,6 @@ import '../dtos/business_type_category.dart';
 import '../dtos/candidate_gigs_request.dart';
 import '../dtos/candidate_roster_gigs_response.dart';
 import '../dtos/gigs_accepted_response.dart';
-import '../dtos/my_gigs_response.dart';
 
 part 'candidate_service.chopper.dart';
 
@@ -47,6 +46,11 @@ abstract class CandidateService extends ChopperService {
 
   @Post(path: "candidates/gigs_verify_otp")
   Future<Response<BaseResponse>> gigsVerifyOTPCandidate(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "candidates/gig_preference")
+  Future<Response<BaseResponse>> candidateSavePreferenceApi(
     @Body() Map<String, dynamic> body,
   );
 }
