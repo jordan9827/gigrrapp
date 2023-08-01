@@ -24,7 +24,7 @@ class PriceRangeFilterView extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildTitle("Select Cost"),
+            _buildTitle("select_cost"),
             Text(
               rangeText,
               style: TSB.regularVSmall(textColor: textRegularColor),

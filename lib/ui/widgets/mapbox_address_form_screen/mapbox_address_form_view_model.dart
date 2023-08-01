@@ -41,8 +41,8 @@ class MapBoxAddressFormViewModel extends BaseViewModel {
       mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
-        language: "en",
-        country: "in",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
           latLng = LatLng(
             place.coordinates!.latitude,

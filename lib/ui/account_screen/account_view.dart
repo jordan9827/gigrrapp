@@ -17,52 +17,55 @@ class AccountView extends StatelessWidget {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => AccountViewModel(),
-      builder: (context, viewModel, child) => Scaffold(
-        body: ListView(
-          children: [
-            ProfileWidgetScreen(viewModel: viewModel),
-            Container(
-              padding: edgeInsetsMargin,
-              child: Column(
-                children: [
-                  _buildAccountView(viewModel),
-                  _buildHelpAndSupportView(viewModel),
-                ],
+      builder: (context, viewModel, child) => WillPopScope(
+        onWillPop: () => Future.sync(viewModel.onWillPop),
+        child: Scaffold(
+          body: ListView(
+            children: [
+              ProfileWidgetScreen(viewModel: viewModel),
+              Container(
+                padding: edgeInsetsMargin,
+                child: Column(
+                  children: [
+                    _buildAccountView(viewModel),
+                    _buildHelpAndSupportView(viewModel),
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            Container(
-              padding: edgeInsetsMargin,
-              child: LoadingButton(
-                loading: viewModel.isBusy,
-                action: viewModel.logOut,
-                progressIndicatorColor: mainPinkColor,
-                backgroundColor: mainPinkColor.withOpacity(0.10),
-                title: "logout",
-                titleColor: mainPinkColor,
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            Text(
-              textAlign: TextAlign.center,
-              viewModel.platformVersion,
-              style: TSB.regularMedium(textColor: textRegularColor),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            Image.asset(
-              ic_gigrra_name,
-              height: SizeConfig.margin_padding_40,
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-          ],
+              Container(
+                padding: edgeInsetsMargin,
+                child: LoadingButton(
+                  loading: viewModel.isBusy,
+                  action: viewModel.logOut,
+                  progressIndicatorColor: mainPinkColor,
+                  backgroundColor: mainPinkColor.withOpacity(0.10),
+                  title: "logout",
+                  titleColor: mainPinkColor,
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                viewModel.platformVersion,
+                style: TSB.regularMedium(textColor: textRegularColor),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              Image.asset(
+                ic_gigrra_name,
+                height: SizeConfig.margin_padding_40,
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+            ],
+          ),
         ),
       ),
     );

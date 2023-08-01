@@ -11,26 +11,24 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 import 'custom_image_picker_view_model.dart';
 
-class CustomImagePickerView extends StatefulWidget {
+class CustomImagePickerView extends StatelessWidget {
   final List<String>? imageList;
   final String title;
+  final int imageCount;
   const CustomImagePickerView({
     Key? key,
+    this.imageCount = 3,
     this.imageList,
     required this.title,
   }) : super(key: key);
 
   @override
-  State<CustomImagePickerView> createState() => _CustomImagePickerViewState();
-}
-
-class _CustomImagePickerViewState extends State<CustomImagePickerView> {
-  @override
   Widget build(BuildContext context) {
+    int iCount = (imageCount == 0 ? 1 : 4);
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) =>
-          viewModel.updateImageList(widget.imageList ?? []),
-      viewModelBuilder: () => CustomImagePickerViewModel(),
+          viewModel.updateImageList(imageList ?? []),
+      viewModelBuilder: () => CustomImagePickerViewModel(imageCount),
       builder: (_, viewModel, child) => viewModel.isBusy
           ? Center(
               heightFactor: 5,
@@ -99,7 +97,7 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
                                 height: SizeConfig.margin_padding_10,
                               ),
                               Text(
-                                widget.title.tr(),
+                                title.tr(),
                                 style: TSB.regularMedium(
                                     textColor: independenceColor),
                               ),
@@ -107,7 +105,7 @@ class _CustomImagePickerViewState extends State<CustomImagePickerView> {
                                 height: SizeConfig.margin_padding_5,
                               ),
                               Text(
-                                "upload_upto_image".tr(),
+                                "upload_upto_image".tr(args: ["$iCount"]),
                                 style: TSB.regularSmall(
                                     textColor: fieldsRegularColor),
                               )

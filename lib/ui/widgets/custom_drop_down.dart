@@ -94,7 +94,7 @@ class CustomDropDownWidget extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              e.capitalize().tr(),
+                              e.tr(),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: TSB.regularSmall(),
@@ -135,7 +135,7 @@ class CustomDropDownWidget extends StatelessWidget {
   Widget _buildSelectedContainList() {
     return onMultiSelectedList!.isEmpty
         ? Text(
-            hintText,
+            hintText.tr(),
             style: TSB.regularSmall(textColor: textRegularColor),
           )
         : Expanded(
@@ -154,7 +154,7 @@ class CustomDropDownWidget extends StatelessWidget {
   Widget _buildSelectedView(String element) {
     return element.isEmpty
         ? Text(
-            hintText,
+            hintText.tr(),
             style: TSB.regularSmall(textColor: textRegularColor),
           )
         : Container(
@@ -168,7 +168,7 @@ class CustomDropDownWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  element.capitalize().tr(),
+                  element.tr(),
                   style: TextStyle(color: Colors.white),
                 ),
                 if (enableMultiSelected)

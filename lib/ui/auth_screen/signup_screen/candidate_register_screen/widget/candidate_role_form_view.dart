@@ -9,7 +9,6 @@ import 'package:stacked/stacked.dart';
 import '../../../../../others/comman_util.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../gigrr_type_drop_down_screen/gigrr_type_drop_down_view.dart';
-import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/custom_price_criteria_view/price_criteria_view.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
 import '../../../../widgets/range_filter_view.dart';
@@ -30,13 +29,15 @@ class CandidateRoleFormView
   }
 
   Widget _buildFormView(
-      BuildContext context, CandidateRegisterViewModel viewModel) {
+    BuildContext context,
+    CandidateRegisterViewModel viewModel,
+  ) {
     return Container(
       margin: edgeInsetsMargin,
       child: ListView(
         children: [
           GigrrTypeDropDownView(
-            title: "I Can Be (*select multiple)",
+            title: "i_can_be_sel_multi",
             controller: viewModel.gigrrTypeController,
           ),
           SizedBox(
@@ -47,7 +48,7 @@ class CandidateRoleFormView
           ),
           _buildRangeSliderView(viewModel),
           CVMTextFormField(
-            title: "Total Experience",
+            title: "total_experience",
             readOnly: true,
             hintForm: "i.e. 1 year",
             controller: viewModel.userExperiencesController,
@@ -86,7 +87,10 @@ class CandidateRoleFormView
     );
   }
 
-  Widget _buildCustomView({String title = "", required Widget child}) {
+  Widget _buildCustomView({
+    String title = "",
+    required Widget child,
+  }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -107,7 +111,9 @@ class CandidateRoleFormView
     );
   }
 
-  Widget _buildExperienceBottomSheet(CandidateRegisterViewModel viewModel) {
+  Widget _buildExperienceBottomSheet(
+    CandidateRegisterViewModel viewModel,
+  ) {
     return Row(
       children: <Widget>[
         _buildCupertinoPicker(
@@ -147,7 +153,9 @@ class CandidateRoleFormView
     );
   }
 
-  Widget _buildRangeSliderView(CandidateRegisterViewModel viewModel) {
+  Widget _buildRangeSliderView(
+    CandidateRegisterViewModel viewModel,
+  ) {
     return PriceRangeFilterView(
       rangeValues: viewModel.currentRangeValues,
       onChanged: viewModel.setPayRange,
@@ -155,17 +163,9 @@ class CandidateRoleFormView
     );
   }
 
-  Widget _buildTitle(String val) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
-      child: Text(
-        val.tr(),
-        style: TSB.regularSmall(),
-      ),
-    );
-  }
-
-  Widget _buildSelectShiftView(CandidateRegisterViewModel viewModel) {
+  Widget _buildSelectShiftView(
+    CandidateRegisterViewModel viewModel,
+  ) {
     return Row(
       children: viewModel.shiftList
           .map(
@@ -201,7 +201,9 @@ class CandidateRoleFormView
     );
   }
 
-  Widget _buildMyAvailableView(CandidateRegisterViewModel viewModel) {
+  Widget _buildMyAvailableView(
+    CandidateRegisterViewModel viewModel,
+  ) {
     var _list = viewModel.myAvailableList;
     return Row(
       children: _list

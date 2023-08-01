@@ -38,7 +38,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   Location location = Location();
   PageController controller = PageController();
   int pageIndex = 0;
-  List<String>? imageList = [];
+  List<String> imageList = [];
   bool isListEmpty = true;
   bool fourImagesAdded = false;
   bool isMobileRead = false;
@@ -135,8 +135,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
       mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
-        language: "en",
-        country: "in",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
           _loading = true;
           setAddressPlace(
@@ -166,7 +166,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
         message: "msg_enter_businessName".tr(),
       );
       return false;
-    } else if (imageList!.isEmpty) {
+    } else if (imageList.isEmpty) {
       snackBarService.showSnackbar(
         message: "msg_upload_image".tr(),
       );
@@ -265,7 +265,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
     request['business_address'] = addressController.text;
     request['business_latitude'] = latLng.lat.toString();
     request['business_longitude'] = latLng.lng.toString();
-    request['images'] = imageList!.join(', ');
+    request['images'] = imageList.join(', ');
     log("Body Add Business :: $request");
     return request;
   }

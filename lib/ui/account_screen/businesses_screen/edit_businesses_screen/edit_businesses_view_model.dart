@@ -56,9 +56,10 @@ class EditBusinessesViewModel extends BaseViewModel {
       auto.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "select_location".tr(),
-        language: "en",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
-          addressController.text = place.placeName ?? "";
+          addressController.text = place.placeName;
           latLng = LatLng(
             place.coordinates!.latitude,
             place.coordinates!.longitude,

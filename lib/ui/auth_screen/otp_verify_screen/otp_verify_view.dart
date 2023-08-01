@@ -135,7 +135,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
           LoadingButton(
             progressIndicatorColor: mainBlackColor,
             loading: viewModel.isBusy,
-            action: viewModel.init,
+            action: viewModel.enableResend ? viewModel.init : () {},
             title: viewModel.enableResend
                 ? "resend_otp_text"
                 : "resend_otp_in_text".tr(

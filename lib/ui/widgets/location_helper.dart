@@ -1,5 +1,6 @@
 import 'package:location/location.dart' as loc;
 import 'package:mapbox_search/mapbox_search.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/util/enums/latLng.dart';
 import '../../others/constants.dart';
 
@@ -18,6 +19,7 @@ class LocationHelper {
       var lat = locationData.latitude ?? 0.0;
       var lng = locationData.longitude ?? 0.0;
       var map = MapBoxGeoCoding(
+        language: languageCode,
         apiKey: MAPBOX_TOKEN,
       );
 

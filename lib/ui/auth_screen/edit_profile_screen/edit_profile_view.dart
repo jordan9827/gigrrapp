@@ -7,6 +7,8 @@ import '../../../others/common_app_bar.dart';
 import '../../../others/loading_button.dart';
 import '../../../others/text_field_widget.dart';
 import '../../../util/others/text_styles.dart';
+import '../../widgets/custom_image_picker/custom_image_picker_view.dart';
+import '../../widgets/cvm_text_form_field.dart';
 import '../../widgets/map_box/google_map_box_view.dart';
 import '../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import 'edit_profile_view_model.dart';
@@ -33,6 +35,7 @@ class EditProfileScreenView extends StatelessWidget {
               _buildEditProfileForm(viewModel),
               _buildSpacer(),
               _buildSaveButton(viewModel),
+              _buildSpacer(),
               _buildSpacer(),
             ],
           ),
@@ -67,6 +70,15 @@ class EditProfileScreenView extends StatelessWidget {
         ),
         _buildTitle("add_pin_map"),
         _buildGoogleMap(viewModel),
+        _buildSpacer(),
+        CVMTextFormField(
+          title: "upload_profile_pictures",
+          formWidget: CustomImagePickerView(
+            imageCount: 0,
+            imageList: viewModel.imageList,
+            title: "add_picture_of_your_profile",
+          ),
+        ),
       ],
     );
   }
@@ -124,12 +136,11 @@ class EditProfileScreenView extends StatelessWidget {
   }
 
   Widget _buildGoogleMap(EditProfileViewModel viewModel) {
-    var latLng = viewModel.latLng;
     return viewModel.mapBoxLoading
         ? MapBoxShimmerWidget()
         : GoogleMapBoxScreen(
-            lat: latLng.lat,
-            lng: latLng.lng,
+            lat: viewModel.latLng.lat,
+            lng: viewModel.latLng.lng,
           );
   }
 

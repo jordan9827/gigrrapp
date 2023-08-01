@@ -88,7 +88,7 @@ class Coordinates {
   });
 
   static Coordinates fromJson(List json) {
-    return Coordinates(latitude: json[0], longitude: json[1]);
+    return Coordinates(latitude: json[1], longitude: json[0]);
   }
 }
 

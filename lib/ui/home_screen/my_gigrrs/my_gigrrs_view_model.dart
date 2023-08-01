@@ -25,6 +25,17 @@ class MyGigrrsViewModel extends BaseViewModel {
     fCMService.listenForegroundMessage((p0) => fetchCalender());
   }
 
+  bool onWillPop() {
+    navigationService.clearStackAndShow(
+      Routes.homeView,
+      arguments: HomeViewArguments(
+        initialIndex: 0,
+        isInitial: false,
+      ),
+    );
+    return false;
+  }
+
   Future<void> refreshScreen() async {}
 
   Future<void> fetchCalender() async {

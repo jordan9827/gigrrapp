@@ -48,25 +48,23 @@ class EmployerGigsDetailView extends StatelessWidget {
         scrollDirection: Axis.vertical,
         children: gigs.gigsRequestData
             .where((element) => element.status == "accepted")
-            .map(
-              (e) => GiggrCardWidget(
-                title: e.employeeName,
-                profile: viewModel.profileImage(e),
-                price: viewModel.price(gigs),
-                gigrrActionName: 'offer_send',
-                skillList:
-                    gigs.skillsTypeCategoryList.map((e) => e.name).toList(),
-                acceptedGigsRequest: () =>
-                    viewModel.navigationToCandidateOfferRequest(gigs, e),
-                gigrrActionButton: () =>
-                    viewModel.navigationToShortListedDetailView(
-                  gigs: gigs,
-                  data: e,
-                  isShortListed: false,
-                ),
-              ),
-            )
-            .toList(),
+            .map((e) {
+          return GiggrCardWidget(
+            title: e.employeeName,
+            profile: e.candidate.imageURL,
+            price: viewModel.price(gigs),
+            gigrrActionName: 'offer_send',
+            skillList: gigs.skillsTypeCategoryList.map((e) => e.name).toList(),
+            acceptedGigsRequest: () =>
+                viewModel.navigationToCandidateOfferRequest(gigs, e),
+            gigrrActionButton: () =>
+                viewModel.navigationToShortListedDetailView(
+              gigs: gigs,
+              data: e,
+              isShortListed: false,
+            ),
+          );
+        }).toList(),
       ),
     );
   }

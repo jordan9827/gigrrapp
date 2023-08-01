@@ -64,8 +64,8 @@ class AddAddressViewModel extends BaseViewModel {
       mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "select_location".tr(),
-        language: "en",
-        country: "in",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
           setAddressPlace(
             LocationDataUpdate(

@@ -30,7 +30,6 @@ class MyAppViewModel extends BaseViewModel {
 
   MyAppViewModel() {
     init();
-    setInitialRoute();
     print("userData ${userData.profileStatus}");
   }
 
@@ -42,7 +41,7 @@ class MyAppViewModel extends BaseViewModel {
   void setInitialRoute() {
     print(
         "setInitialRoute  \n${userData.accessToken}\n${userData.profileStatus}");
-    if (icCheckIntroScreen()) {
+    if (icCheckIntroScreen() && userData.accessToken.isEmpty) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
       initialRoute = _buildInitialCurrentRoutes();
@@ -81,6 +80,13 @@ class MyAppViewModel extends BaseViewModel {
   }
 
   Future<bool> routeUser() async {
+    print(
+        "setInitialRoute  \n${userData.accessToken}\n${userData.profileStatus}");
+    if (icCheckIntroScreen() && userData.accessToken.isEmpty) {
+      initialRoute = Routes.introScreenView;
+    } else if (userData.accessToken.isNotEmpty) {
+      initialRoute = _buildInitialCurrentRoutes();
+    }
     return true;
   }
 

@@ -53,7 +53,9 @@ class CandidatePersonalInfoFormView
             title: "date_of_birth",
             hintForm: "i.e. 18 Feb 2023",
             controller: TextEditingController(
-              text: viewModel.dobController.text.toDateFormat(),
+              text: viewModel.dobController.text.isNotEmpty
+                  ? viewModel.dobController.text.toDateFormat()
+                  : viewModel.dobController.text,
             ),
             suffixIcon: InkWell(
               onTap: () => selectDatePicker(context, viewModel: viewModel),
@@ -77,8 +79,9 @@ class CandidatePersonalInfoFormView
             mapBoxPlace: viewModel.mapBoxPlace,
           ),
           CVMTextFormField(
-            title: "upload_Profile_pictures",
+            title: "upload_profile_pictures",
             formWidget: CustomImagePickerView(
+              imageCount: 0,
               imageList: viewModel.imageList,
               title: "add_picture_of_your_profile",
             ),

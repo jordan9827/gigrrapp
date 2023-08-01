@@ -27,6 +27,17 @@ class AccountViewModel extends BaseViewModel {
     initPlatformVersion();
   }
 
+  bool onWillPop() {
+    navigationService.clearStackAndShow(
+      Routes.homeView,
+      arguments: HomeViewArguments(
+        initialIndex: user.isEmployer ? 0 : 1,
+        isInitial: false,
+      ),
+    );
+    return false;
+  }
+
   Future<void> notificationSwitchAction(bool val) async {
     notificationSwitch = !notificationSwitch;
     notifyListeners();
@@ -118,7 +129,8 @@ class AccountViewModel extends BaseViewModel {
       await sharedPreferences.clear();
       await locator.reset();
       await setupLocator();
-      await locator<FCMService>().deleteToken();
+      locator<FCMService>().deleteToken();
+      await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
       navigationService.clearStackAndShow(Routes.loginView);
       setBusy(false);
     });

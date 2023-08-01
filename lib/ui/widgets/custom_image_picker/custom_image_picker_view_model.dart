@@ -23,7 +23,10 @@ class CustomImagePickerViewModel extends BaseViewModel {
   List<String> imageList = [];
   bool isListEmpty = true;
   bool fourImagesAdded = false;
-
+  int imageCount = 3;
+  CustomImagePickerViewModel(int count) {
+    this.imageCount = count;
+  }
   void updateImageList(List<String> list) {
     imageList = list;
     updateEmptyItemList();
@@ -103,7 +106,7 @@ class CustomImagePickerViewModel extends BaseViewModel {
   void updateEmptyItemList() {
     if (imageList.isEmpty) {
       updateEmptyItem(true);
-    } else if (imageList.isNotEmpty && imageList.length < 3) {
+    } else if (imageList.isNotEmpty && imageList.length < imageCount) {
       updateEmptyItem(false);
       fourImagesAdded = false;
     } else {

@@ -14,9 +14,12 @@ class MyGigs extends StatelessWidget {
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => MyGigsViewModel(),
       builder: (context, viewModel, child) {
-        return viewModel.user.isEmployer
-            ? EmployerGigsView()
-            : CandidateGigsView();
+        return WillPopScope(
+          onWillPop: () => Future.sync(viewModel.onWillPop),
+          child: viewModel.user.isEmployer
+              ? EmployerGigsView()
+              : CandidateGigsView(),
+        );
       },
     );
   }

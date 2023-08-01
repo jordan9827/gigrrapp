@@ -57,7 +57,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
 
   int pageIndex = 0;
 
-  List<String>? imageList = [];
+  List<String> imageList = [];
   bool isListEmpty = true;
   bool fourImagesAdded = false;
   bool isMobileRead = false;
@@ -143,7 +143,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   String get payRangeText =>
-      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${costCriteriaController.text}";
+      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/${costCriteriaController.text.tr()}";
 
   void navigationToRoleFormView() {
     if (validationPersonalInfo()) {
@@ -182,8 +182,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
       MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
-        language: "en",
-        country: "in",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
           setAddressPlace(
             LocationDataUpdate(
@@ -225,7 +225,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
         message: "msg_enter_dob".tr(),
       );
       return false;
-    } else if (imageList!.isEmpty) {
+    } else if (imageList.isEmpty) {
       snackBarService.showSnackbar(
         message: "msg_enter_image".tr(),
       );
@@ -288,8 +288,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['skills'] = gigrrTypeController.text;
     request['avaliblity'] = myAvailableSelectList.join(",");
     request['shift'] = initialShift.toLowerCase();
-    request['images'] = imageList!.join(',');
-    request['profile_image'] = imageList!.first;
+    request['images'] = imageList.join(',');
+    request['profile_image'] = imageList.first;
     print(" body --------$request");
     return request;
   }

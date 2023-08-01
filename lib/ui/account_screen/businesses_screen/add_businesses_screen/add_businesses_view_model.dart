@@ -28,7 +28,7 @@ class AddBusinessesViewModel extends BaseViewModel {
   LatLng latLng = const LatLng(14.508, 46.048);
   double latitude = 0.0;
   double longitude = 0.0;
-  List<String>? imageList = [];
+  List<String> imageList = [];
   bool loading = true;
   loc.Location location = loc.Location();
 
@@ -45,9 +45,10 @@ class AddBusinessesViewModel extends BaseViewModel {
       MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "select_location".tr(),
-        language: "en",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
-          addressController.text = place.placeName ?? "";
+          addressController.text = place.placeName;
           latLng = LatLng(
             place.coordinates!.latitude,
             place.coordinates!.longitude,
@@ -69,7 +70,7 @@ class AddBusinessesViewModel extends BaseViewModel {
         message: "msg_enter_businessName".tr(),
       );
       return false;
-    } else if (imageList!.isEmpty) {
+    } else if (imageList.isEmpty) {
       snackBarService.showSnackbar(
         message: "msg_upload_image".tr(),
       );
@@ -112,7 +113,7 @@ class AddBusinessesViewModel extends BaseViewModel {
       coordinates.lat,
       coordinates.lng,
     );
-    addressController.text = data.mapBoxPlace.placeName ?? "";
+    addressController.text = data.mapBoxPlace.placeName;
     mapBoxLoading = false;
     notifyListeners();
   }
@@ -124,7 +125,7 @@ class AddBusinessesViewModel extends BaseViewModel {
     request['business_address'] = addressController.text;
     request['business_latitude'] = latLng.latitude.toString();
     request['business_longitude'] = latLng.longitude.toString();
-    request['images'] = imageList!.join(', ');
+    request['images'] = imageList.join(', ');
     log("Body Add Business :: $request");
     return request;
   }

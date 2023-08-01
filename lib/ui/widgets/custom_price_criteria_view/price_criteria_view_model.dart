@@ -6,15 +6,15 @@ class PriceCriteriaViewModel extends BaseViewModel {
 
   PriceCriteriaViewModel(TextEditingController con) {
     controller = con;
-    controller.text = "Hourly";
+    controller.text = "hourly";
   }
 
   List<String> costCriteriaList = [
-    "Hourly",
-    "Daily",
-    "Weekly",
-    "Monthly",
-    "Total"
+    "hourly",
+    "daily",
+    "weekly",
+    "monthly",
+    "total"
   ];
   bool isVisible = false;
 

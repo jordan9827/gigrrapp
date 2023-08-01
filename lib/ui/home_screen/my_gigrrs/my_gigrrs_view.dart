@@ -18,23 +18,26 @@ class MyGirrsView extends StatelessWidget {
       onViewModelReady: (viewModel) => viewModel.fetchCalender(),
       viewModelBuilder: () => MyGigrrsViewModel(),
       builder: (context, viewModel, child) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: mainGrayColor,
-          appBar: getAppBar(
-            context,
-            "my_gigrrs",
-            backgroundColor: mainWhiteColor,
-            textColor: mainBlackColor,
-            actions: [
-              NotificationIcon(),
-            ],
-          ),
-          body: LoadingScreen(
-            loading: viewModel.isBusy,
-            child: RefreshIndicator(
-              onRefresh: viewModel.refreshScreen,
-              child: _buildCalenderView(viewModel),
+        return WillPopScope(
+          onWillPop: () => Future.sync(viewModel.onWillPop),
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: mainGrayColor,
+            appBar: getAppBar(
+              context,
+              "my_gigrrs",
+              backgroundColor: mainWhiteColor,
+              textColor: mainBlackColor,
+              actions: [
+                NotificationIcon(),
+              ],
+            ),
+            body: LoadingScreen(
+              loading: viewModel.isBusy,
+              child: RefreshIndicator(
+                onRefresh: viewModel.refreshScreen,
+                child: _buildCalenderView(viewModel),
+              ),
             ),
           ),
         );

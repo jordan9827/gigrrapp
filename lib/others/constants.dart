@@ -4,13 +4,21 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../app/app.locator.dart';
+import '../data/local/preference_keys.dart';
 import '../util/others/size_config.dart';
 
 const String devBaseURL = "https://gigrr.in/development";
 const String qaBaseURL = "";
 const String stagingBaseURL = "https://gigrr.in/admin";
 const String localBaseURL = "";
+
+String languageCode =
+    locator<SharedPreferences>().getString(PreferenceKeys.APP_LANGUAGE.text) ??
+        "hi";
+
+const String countryType = "in";
 
 const String FONT_FAMILY = "Figtree";
 const String MAPBOX_TOKEN =

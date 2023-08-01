@@ -10,6 +10,7 @@ import '../../../data/network/dtos/user_auth_response_data.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
+import '../../widgets/location_helper.dart';
 
 class EditProfileViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -29,6 +30,7 @@ class EditProfileViewModel extends BaseViewModel {
   double latitude = 0.0;
   double longitude = 0.0;
   bool mapBoxLoading = false;
+  List<String> imageList = [];
 
   EditProfileViewModel() {
     setInitData();
@@ -77,21 +79,40 @@ class EditProfileViewModel extends BaseViewModel {
       MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
         hint: "Select Location",
-        language: "en",
+        language: languageCode,
+        country: countryType,
         onSelect: (place) async {
-          addressController.text = place.placeName;
-          latLng = LatLng(
-            place.coordinates!.latitude,
-            place.coordinates!.longitude,
+          setAddressPlace(
+            LocationDataUpdate(
+              mapBoxPlace: place,
+              latLng: LatLng(
+                place.coordinates!.latitude,
+                place.coordinates!.longitude,
+              ),
+            ),
           );
           setBusy(false);
-
           notifyListeners();
         },
         limit: 7,
       ),
     );
     await Future.delayed(Duration(milliseconds: 500));
+    mapBoxLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    var addressData = data.mapBoxPlace.placeContext;
+    addressController.text = data.mapBoxPlace.placeName;
+    cityController.text = addressData.city;
+    stateController.text = "${addressData.state}, ${addressData.country}";
+    pinCodeController.text = addressData.postCode;
     mapBoxLoading = false;
     notifyListeners();
   }
@@ -119,6 +140,7 @@ class EditProfileViewModel extends BaseViewModel {
   Future<Map<String, String>> _getRequestForEditProfile() async {
     Map<String, String> request = {};
     request['full_name'] = fullNameController.text;
+    request['profile_image'] = imageList.first;
     request['address'] = addressController.text;
     request['latitude'] = latLng.lat.toString();
     request['longitude'] = latLng.lng.toString();

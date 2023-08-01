@@ -63,7 +63,7 @@ class EmployerBusinessInfoFormView
           //   formWidget: _buildGoogleMap(viewModel),
           // ),
           CVMTextFormField(
-            title: "upload_Profile_pictures",
+            title: "upload_business_pictures",
             formWidget: CustomImagePickerView(
               imageList: viewModel.imageList,
               title: "add_picture_of_your_business",
@@ -77,7 +77,7 @@ class EmployerBusinessInfoFormView
             action: viewModel.employerCompleteProfileApiCall,
             backgroundColor: mainGrayColor,
             titleColor: independenceColor,
-            title: "SKIP",
+            title: "skip",
           ),
           SizedBox(
             height: SizeConfig.margin_padding_10,

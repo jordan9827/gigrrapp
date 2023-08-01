@@ -24,7 +24,7 @@ class PriceCriteriaView extends StatelessWidget {
       builder: (_, viewModel, child) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (title) _buildTitle("Cost Criteria"),
+          if (title) _buildTitle("cost_criteria"),
           CustomDropDownWidget(
             hintText: "i.e. hourly",
             itemList: viewModel.costCriteriaList,
