@@ -103,29 +103,27 @@ class _LoginViewState extends State<LoginView>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_20,
-          ),
+          _buildSpacer(),
           SizedBox(
             height: SizeConfig.margin_padding_40,
             child: Image.asset(ic_gigrra_name),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
+          _buildSpacer(
+            SizeConfig.margin_padding_10,
           ),
           Text(
             "txt_login_as".tr(),
             style: TSB.semiBoldLarge(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_4,
+          _buildSpacer(
+            SizeConfig.margin_padding_4,
           ),
           Text(
             "txt_login_STitle".tr(),
             style: TSB.regularMedium(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
+          _buildSpacer(
+            SizeConfig.margin_padding_10,
           ),
         ],
       ),
@@ -137,13 +135,9 @@ class _LoginViewState extends State<LoginView>
       padding: edgeInsetsMargin,
       child: Column(
         children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_20,
-          ),
+          _buildSpacer(),
           selectProfileTab(viewModel),
-          SizedBox(
-            height: SizeConfig.margin_padding_20,
-          ),
+          _buildSpacer(),
           InputFieldWidget(
             maxLength: 10,
             hint: "enter_mobile_no",
@@ -151,18 +145,16 @@ class _LoginViewState extends State<LoginView>
             controller: viewModel.mobileController,
             errorMsgValidation: viewModel.mobileMessage,
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_18,
+          _buildSpacer(
+            SizeConfig.margin_padding_18,
           ),
           _buildSelectShiftView(viewModel),
           Spacer(),
           _buildLoginActionButton(viewModel),
-          SizedBox(
-            height: SizeConfig.margin_padding_24,
+          _buildSpacer(
+            SizeConfig.margin_padding_50,
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_24,
-          ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -179,19 +171,25 @@ class _LoginViewState extends State<LoginView>
               _buildDivider(),
             ],
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
+          _buildSpacer(
+            SizeConfig.margin_padding_29,
           ),
           _buildSocialLoginView(viewModel),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
+          _buildSpacer(
+            SizeConfig.margin_padding_29,
           ),
           // _buildSignUpView(viewModel),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
+          _buildSpacer(
+            SizeConfig.margin_padding_29,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: SizeConfig.margin_padding_20,
     );
   }
 
@@ -231,7 +229,10 @@ class _LoginViewState extends State<LoginView>
     );
   }
 
-  Widget _buildImage({required String image, Function()? onTap}) {
+  Widget _buildImage({
+    required String image,
+    Function()? onTap,
+  }) {
     return InkWell(
       onTap: onTap,
       child: SizedBox(

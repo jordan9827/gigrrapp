@@ -10,8 +10,11 @@ import '../../data/local/preference_keys.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/reactive_services/business_type_service.dart';
 import '../../domain/repos/business_repos.dart';
+import '../../util/enums/dialog_type.dart';
 import '../../util/others/fcm_notification_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+import '../widgets/giggr_otp_start_stop_view.dart';
 
 class MyAppViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
@@ -157,10 +160,32 @@ class MyAppViewModel extends BaseViewModel {
   void onForegroundMessage(RemoteMessage message) async {
     try {
       handleNotification(message, false);
+      openGiggrOTPDialog(message);
       log.i(
           "Foreground message ${message.data}\nForeground details ${message.from}");
     } catch (e, stack) {
       FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
+    }
+  }
+
+  void openGiggrOTPDialog(RemoteMessage message) {
+    String type = message.data["type"];
+    if (type == "JOB_START_OTP_CODE" || type == "JOB_COMPLETE_OTP_CODE") {
+      bool isStartOTP = (type == "JOB_START_OTP_CODE");
+      var title = message.data["message"];
+      var splitTitleF = title.split("otp code")[1];
+      var gigrOTP = splitTitleF.split("to")[0];
+      final builders = {
+        DialogType.OTPViewStartORStop: (_, request, completer) =>
+            GiggrOTPStartStopView(
+              otp: gigrOTP,
+              title: isStartOTP ? "your_gigrr_is_here" : "gig_over",
+            ),
+      };
+      dialogService.registerCustomDialogBuilders(builders);
+      dialogService.showCustomDialog(
+        variant: DialogType.OTPViewStartORStop,
+      );
     }
   }
 }

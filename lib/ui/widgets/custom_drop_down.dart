@@ -1,6 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 
@@ -18,6 +17,7 @@ class CustomDropDownWidget extends StatelessWidget {
   final bool enableMultiSelected;
   final String groupValue;
   final double? size;
+
   CustomDropDownWidget({
     Key? key,
     required this.itemList,
@@ -158,8 +158,12 @@ class CustomDropDownWidget extends StatelessWidget {
             style: TSB.regularSmall(textColor: textRegularColor),
           )
         : Container(
-            margin: EdgeInsets.only(right: SizeConfig.margin_padding_5),
-            padding: EdgeInsets.all(SizeConfig.margin_padding_8),
+            margin: EdgeInsets.only(
+              right: SizeConfig.margin_padding_5,
+            ),
+            padding: EdgeInsets.all(
+              SizeConfig.margin_padding_8,
+            ),
             decoration: BoxDecoration(
               color: independenceColor,
               borderRadius: BorderRadius.circular(10),
@@ -169,10 +173,14 @@ class CustomDropDownWidget extends StatelessWidget {
               children: [
                 Text(
                   element.tr(),
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
                 if (enableMultiSelected)
-                  SizedBox(width: SizeConfig.margin_padding_5),
+                  SizedBox(
+                    width: SizeConfig.margin_padding_5,
+                  ),
                 if (enableMultiSelected)
                   InkWell(
                     onTap: () =>

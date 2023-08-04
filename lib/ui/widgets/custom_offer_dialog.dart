@@ -11,6 +11,7 @@ class CustomOfferDialog extends StatefulWidget {
   final Function onTap;
   final bool isLoading;
   final String title;
+  final String businessName;
   final String buttonText;
   final String subTitle;
   final String cancel;
@@ -18,6 +19,7 @@ class CustomOfferDialog extends StatefulWidget {
     required this.onTap,
     this.title = "",
     this.subTitle = "",
+    this.businessName = "",
     this.buttonText = "",
     this.cancel = "",
     this.isLoading = false,
@@ -58,7 +60,7 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
             ),
             _buildSpacer(),
             Text(
-              "Super Enterprise",
+              widget.businessName,
               style: TSB.semiBoldHeading(),
             ),
             _buildSpacer(

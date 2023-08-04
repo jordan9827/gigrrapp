@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:location/location.dart';
 import 'package:stacked/stacked.dart';
@@ -40,7 +41,7 @@ class MapBoxAddressFormViewModel extends BaseViewModel {
     navigationService.navigateWithTransition(
       mapBox.MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
-        hint: "Select Location",
+        hint: "select_location".tr(),
         language: languageCode,
         country: countryType,
         onSelect: (place) async {

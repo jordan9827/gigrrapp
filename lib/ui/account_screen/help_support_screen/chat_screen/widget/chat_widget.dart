@@ -45,7 +45,9 @@ class ChatWidgetView extends StatelessWidget {
         ),
         child: Text(
           text,
-          style: TSB.regularSmall(textColor: textRegularColor),
+          style: TSB.regularSmall(
+            textColor: textRegularColor,
+          ),
         ),
       ),
     );

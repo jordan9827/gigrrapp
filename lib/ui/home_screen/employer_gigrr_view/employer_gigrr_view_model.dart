@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
+import 'package:square_demo_architecture/app/app.router.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../data/network/dtos/employer_gigs_request.dart';
@@ -19,6 +20,12 @@ class EmployerGigrrsViewModel extends BaseViewModel {
   List<EmployerGigsRequestData> gigsData = [];
 
   void navigateToGigrrDetailScreen(EmployerGigsRequestData e) {}
+
+  void navigateToBusiness() {
+    navigationService.navigateTo(
+      Routes.businessesScreenView,
+    );
+  }
 
   Future<void> fetchGigsRequest() async {
     setBusy(true);

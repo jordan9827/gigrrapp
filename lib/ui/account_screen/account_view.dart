@@ -32,9 +32,7 @@ class AccountView extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               Container(
                 padding: edgeInsetsMargin,
                 child: LoadingButton(
@@ -46,24 +44,18 @@ class AccountView extends StatelessWidget {
                   titleColor: mainPinkColor,
                 ),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               Text(
                 textAlign: TextAlign.center,
                 viewModel.platformVersion,
                 style: TSB.regularMedium(textColor: textRegularColor),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
               Image.asset(
                 ic_gigrra_name,
                 height: SizeConfig.margin_padding_40,
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
+              _buildSpacer(),
             ],
           ),
         ),
@@ -76,15 +68,15 @@ class AccountView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: SizeConfig.margin_padding_15,
+        _buildSpacer(
+          SizeConfig.margin_padding_15,
         ),
         Text(
           "account".tr(),
           style: TSB.semiBoldMedium(),
         ),
-        SizedBox(
-          height: SizeConfig.margin_padding_15,
+        _buildSpacer(
+          SizeConfig.margin_padding_15,
         ),
         _buildListTile(
           leading: ic_notification,
@@ -130,15 +122,15 @@ class AccountView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: SizeConfig.margin_padding_15,
+        _buildSpacer(
+          SizeConfig.margin_padding_15,
         ),
         Text(
           "help_support".tr(),
           style: TSB.semiBoldMedium(),
         ),
-        SizedBox(
-          height: SizeConfig.margin_padding_15,
+        _buildSpacer(
+          SizeConfig.margin_padding_15,
         ),
         _buildListTile(
           leading: ic_about,
@@ -171,14 +163,20 @@ class AccountView extends StatelessWidget {
     Function()? onTap,
   }) {
     return ListTile(
-      contentPadding: EdgeInsets.only(bottom: SizeConfig.margin_padding_10),
+      contentPadding: EdgeInsets.only(
+        bottom: SizeConfig.margin_padding_10,
+      ),
       leading: Container(
-        padding: EdgeInsets.all(SizeConfig.margin_padding_10),
+        padding: EdgeInsets.all(
+          SizeConfig.margin_padding_10,
+        ),
         height: SizeConfig.margin_padding_24 * 1.8,
         width: SizeConfig.margin_padding_24 * 1.8,
         decoration: BoxDecoration(
           color: mainBlueColor.withOpacity(0.10),
-          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_10,
+          ),
         ),
         child: Image.asset(
           leading,
@@ -196,6 +194,12 @@ class AccountView extends StatelessWidget {
               height: SizeConfig.margin_padding_15,
             ),
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_20,
     );
   }
 }

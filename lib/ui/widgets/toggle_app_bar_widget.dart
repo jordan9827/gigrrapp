@@ -47,10 +47,15 @@ class ToggleAppBarWidgetView extends StatelessWidget {
                     height: SizeConfig.margin_padding_10,
                   ),
                 ),
-              if (showBack) SizedBox(width: SizeConfig.margin_padding_10),
+              if (showBack)
+                SizedBox(
+                  width: SizeConfig.margin_padding_10,
+                ),
               Text(
                 appBarTitle.tr(),
-                style: TSB.regularLarge(textColor: mainWhiteColor),
+                style: TSB.regularLarge(
+                  textColor: mainWhiteColor,
+                ),
               ),
             ],
           ),
@@ -60,12 +65,20 @@ class ToggleAppBarWidgetView extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _buildLog(title: firstTitle, isCheck: isCheck),
+              _buildLog(
+                title: firstTitle,
+                isCheck: isCheck,
+              ),
               SizedBox(width: 5),
-              Image.asset(ic_rectangleLine,
-                  width: SizeConfig.margin_padding_50 * 1.5),
+              Image.asset(
+                ic_rectangleLine,
+                width: SizeConfig.margin_padding_50 * 1.5,
+              ),
               SizedBox(width: 5),
-              _buildLog(title: secondTitle, isCheck: !isCheck),
+              _buildLog(
+                title: secondTitle,
+                isCheck: !isCheck,
+              ),
             ],
           )
         ],
@@ -73,16 +86,23 @@ class ToggleAppBarWidgetView extends StatelessWidget {
     );
   }
 
-  Widget _buildLog({required bool isCheck, required String title}) {
+  Widget _buildLog({
+    required bool isCheck,
+    required String title,
+  }) {
     return Row(
       children: [
-        Image.asset(isCheck ? ic_dotSelect : ic_dotUnSelect, scale: 2.8),
+        Image.asset(
+          isCheck ? ic_dotSelect : ic_dotUnSelect,
+          scale: 2.8,
+        ),
         SizedBox(width: 3),
         Text(
           title.tr(),
           style: TSB.regularSmall(
-              textColor:
-                  isCheck ? mainWhiteColor : mainWhiteColor.withOpacity(0.5)),
+            textColor:
+                isCheck ? mainWhiteColor : mainWhiteColor.withOpacity(0.5),
+          ),
         ),
       ],
     );

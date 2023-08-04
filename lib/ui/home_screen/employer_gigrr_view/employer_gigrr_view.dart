@@ -18,7 +18,7 @@ class EmployerGigrrsView extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: HomeGigrrsAppBarView(
-              actionToAddress: () {},
+              actionToAddress: viewModel.navigateToBusiness,
             ),
           ),
           body: LoadingScreen(

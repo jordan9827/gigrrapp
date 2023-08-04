@@ -43,7 +43,7 @@ class EmployerGigrrDetailView extends StatelessWidget {
                       height: mediaQueryData.size.height * 0.5,
                       width: mediaQueryData.size.width,
                       child: Image.network(
-                        viewModel.profileImage(gigsRequestData),
+                        gigsRequestData.candidate.imageURL,
                         fit: BoxFit.fill,
                       ),
                     ),

@@ -6,7 +6,6 @@ import 'package:stacked/stacked.dart';
 import '../../../others/constants.dart';
 import '../../../others/loading_screen.dart';
 import '../../../util/others/image_constants.dart';
-import '../../../util/others/text_styles.dart';
 import 'payment_history_view_model.dart';
 import 'widget/payment_widget.dart';
 

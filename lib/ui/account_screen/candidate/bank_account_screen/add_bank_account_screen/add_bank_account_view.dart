@@ -28,7 +28,7 @@ class AddBankAccountScreenView extends StatelessWidget {
               height: SizeConfig.margin_padding_20,
             ),
             CVMTextFormField(
-              title: "Holder Name",
+              title: "holder_name",
               hintForm: "i.e. Jack Milcon",
               controller: viewModel.holderNameController,
             ),

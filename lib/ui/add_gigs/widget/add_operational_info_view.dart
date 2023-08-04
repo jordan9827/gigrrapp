@@ -23,15 +23,15 @@ class AddGigsOperationalInfoScreenView
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
+          _buildSpacer(
+            SizeConfig.margin_padding_10,
           ),
           Text(
             "job_duration".tr(),
             style: TSB.semiBoldSmall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_13,
+          _buildSpacer(
+            SizeConfig.margin_padding_13,
           ),
           CVMTextFormField(
             title: "from_date",
@@ -65,15 +65,15 @@ class AddGigsOperationalInfoScreenView
               ),
             ),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
+          _buildSpacer(
+            SizeConfig.margin_padding_10,
           ),
           Text(
             "job_timing".tr(),
             style: TSB.semiBoldSmall(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_13,
+          _buildSpacer(
+            SizeConfig.margin_padding_13,
           ),
           CVMTextFormField(
             title: "from_time",
@@ -103,19 +103,21 @@ class AddGigsOperationalInfoScreenView
               ),
             ),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
-          ),
+          _buildSpacer(),
           LoadingButton(
             loading: viewModel.isBusy,
             action: viewModel.addGigrrApiCall,
             title: "confirmed_add_now".tr(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
-          )
+          _buildSpacer()
         ],
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_29,
     );
   }
 
@@ -126,7 +128,9 @@ class AddGigsOperationalInfoScreenView
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(SizeConfig.margin_padding_10),
+        padding: EdgeInsets.all(
+          SizeConfig.margin_padding_10,
+        ),
         height: SizeConfig.margin_padding_15,
         width: SizeConfig.margin_padding_15,
         child: Image.asset(image),

@@ -76,10 +76,11 @@ class CandidateGigsViewModel extends BaseViewModel {
     var offerPrice = gigs.gigsRequestData.first.offerAmount.toPriceFormat(0);
     final builders = {
       DialogType.acceptOffer: (_, request, completer) => CustomOfferDialog(
+            businessName: gigs.businessData.businessName,
             onTap: () => acceptedGigsOffer(gigs.id),
             title: "accept_this_offer",
             subTitle: "has_offer_you".tr(args: [
-              " ${gigs.priceCriteria} \n" + "price_of".tr() + "₹ $offerPrice"
+              " ${gigs.priceCriteria} \n" + "price_of".tr() + " ₹ $offerPrice"
             ]),
             buttonText: "accept_this_offer",
           ),
@@ -185,7 +186,7 @@ class CandidateGigsViewModel extends BaseViewModel {
           Routes.ratingReviewScreenView,
           arguments: RatingReviewScreenViewArguments(
             gigsId: gigs.id.toString(),
-            name: gigs.gigName,
+            name: gigs.business.businessName,
             profile: image,
             candidateId: gigsRequest.employeId.toString(),
           ),

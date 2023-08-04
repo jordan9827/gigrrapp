@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
@@ -92,7 +93,7 @@ class AddAddressScreenView extends StatelessWidget {
             bottom: SizeConfig.margin_padding_8,
           ),
           child: Text(
-            "Address Type",
+            "add_address".tr(),
             style: TSB.regularSmall(),
           ),
         ),

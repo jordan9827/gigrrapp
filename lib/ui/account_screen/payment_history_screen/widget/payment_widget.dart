@@ -53,7 +53,9 @@ class PaymentHistoryWidget extends StatelessWidget {
             ),
             Text(
               "₹ ${data.amount.toPriceFormat(0)}",
-              style: TSB.semiBoldMedium(textColor: Colors.green),
+              style: TSB.semiBoldMedium(
+                textColor: Colors.green,
+              ),
             ),
           ],
         ),
@@ -61,12 +63,18 @@ class PaymentHistoryWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              viewModel.filterStatusForPayment(data.status),
-              style: TSB.regularSmall(textColor: textNoticeColor),
+              viewModel.filterStatusForPayment(
+                data.status,
+              ),
+              style: TSB.regularSmall(
+                textColor: textNoticeColor,
+              ),
             ),
             Text(
               data.createdAt.toDateFormat(),
-              style: TSB.regularSmall(textColor: mainPinkColor),
+              style: TSB.regularSmall(
+                textColor: mainPinkColor,
+              ),
             ),
           ],
         ),

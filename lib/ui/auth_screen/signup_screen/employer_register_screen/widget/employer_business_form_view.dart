@@ -58,10 +58,6 @@ class EmployerBusinessInfoFormView
             hintForm: "i.e. 452001",
             controller: viewModel.pinCodeController,
           ),
-          // CVMTextFormField(
-          //   title: "add_pin_map",
-          //   formWidget: _buildGoogleMap(viewModel),
-          // ),
           CVMTextFormField(
             title: "upload_business_pictures",
             formWidget: CustomImagePickerView(
@@ -69,9 +65,7 @@ class EmployerBusinessInfoFormView
               title: "add_picture_of_your_business",
             ),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
+          _buildSpacer(),
           LoadingButton(
             loading: viewModel.isBusy,
             action: viewModel.employerCompleteProfileApiCall,
@@ -79,19 +73,23 @@ class EmployerBusinessInfoFormView
             titleColor: independenceColor,
             title: "skip",
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_10,
-          ),
+          _buildSpacer(),
           LoadingButton(
             loading: viewModel.isBusy,
             action: viewModel.addBusinessProfileApiCall,
             title: "create_profile",
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
+          _buildSpacer(
+            SizeConfig.margin_padding_29,
           )
         ],
       ),
+    );
+  }
+
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_10,
     );
   }
 }

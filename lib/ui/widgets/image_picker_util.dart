@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,26 +52,27 @@ class ImagePickerUtil {
   static Future<dynamic> showCameraOrGalleryChooser(
       BuildContext context) async {
     return showModalBottomSheet(
-        context: context,
-        builder: (BuildContext bc) {
-          return Container(
-            child: Wrap(
-              children: <Widget>[
-                ListTile(
-                    title: Text('Pick from camera'),
-                    onTap: () async {
-                      var image = await imageFromCamera();
-                      Navigator.pop(context, image);
-                    }),
-                ListTile(
-                    title: Text('Pick from gallery'),
-                    onTap: () async {
-                      var image = await imageFromGallery();
-                      Navigator.pop(context, image);
-                    }),
-              ],
-            ),
-          );
-        });
+      context: context,
+      builder: (BuildContext bc) {
+        return Container(
+          child: Wrap(
+            children: <Widget>[
+              ListTile(
+                  title: Text('pick_from_camera'.tr()),
+                  onTap: () async {
+                    var image = await imageFromCamera();
+                    Navigator.pop(context, image);
+                  }),
+              ListTile(
+                  title: Text('pick_from_gallery'.tr()),
+                  onTap: () async {
+                    var image = await imageFromGallery();
+                    Navigator.pop(context, image);
+                  }),
+            ],
+          ),
+        );
+      },
+    );
   }
 }

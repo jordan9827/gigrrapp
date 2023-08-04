@@ -77,10 +77,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
 
   Widget _buildCandidateView(CandidateGigsViewModel viewModel) {
     return Container(
-      margin: edgeInsetsMargin.copyWith(
-        top: SizeConfig.margin_padding_10,
-        bottom: SizeConfig.margin_padding_10,
-      ),
+      margin: edgeInsetsMargin,
       child: viewModel.initialIndex == 0
           ? _buildAppliedGigsListView(viewModel)
           : _buildShortListView(viewModel),
@@ -91,6 +88,9 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     var itemCount = viewModel.itemCount == 0 ? 0 : viewModel.itemCount + 1;
     return viewModel.appliedGigsList.isNotEmpty
         ? ListView.builder(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.margin_padding_10,
+            ),
             controller: viewModel.scrollController,
             itemCount: itemCount,
             itemBuilder: (context, index) {
@@ -166,6 +166,9 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     var itemCount = viewModel.itemCount == 0 ? 0 : viewModel.itemCount + 1;
     return viewModel.shortListGigsList.isNotEmpty
         ? ListView.builder(
+            padding: EdgeInsets.symmetric(
+              vertical: SizeConfig.margin_padding_10,
+            ),
             controller: viewModel.scrollController,
             itemCount: itemCount,
             itemBuilder: (context, index) {

@@ -103,7 +103,9 @@ class EditBusinessesScreenView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+          padding: EdgeInsets.only(
+            bottom: SizeConfig.margin_padding_8,
+          ),
           child: Text(
             title.tr(),
             style: TSB.regularSmall(),

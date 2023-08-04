@@ -78,7 +78,7 @@ class EditProfileViewModel extends BaseViewModel {
     await navigationService.navigateWithTransition(
       MapBoxAutoCompleteWidget(
         apiKey: MAPBOX_TOKEN,
-        hint: "Select Location",
+        hint: "select_location".tr(),
         language: languageCode,
         country: countryType,
         onSelect: (place) async {

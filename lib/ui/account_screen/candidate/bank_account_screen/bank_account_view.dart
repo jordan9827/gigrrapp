@@ -29,23 +29,24 @@ class BankAccountScreenView extends StatelessWidget {
           margin: edgeInsetsMargin,
           child: ListView(
             children: [
-              SizedBox(
-                height: SizeConfig.margin_padding_10,
-              ),
+              _buildSpacer(),
               Text(
                 "your_upi_bank_acc".tr(),
-                style: TSB.semiBoldMedium(textColor: independenceColor),
+                style: TSB.semiBoldMedium(
+                  textColor: independenceColor,
+                ),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_10,
-              ),
+              _buildSpacer(),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+                padding: EdgeInsets.all(
+                  SizeConfig.margin_padding_15,
+                ),
                 decoration: BoxDecoration(
                   color: mainWhiteColor,
-                  borderRadius:
-                      BorderRadius.circular(SizeConfig.margin_padding_10),
+                  borderRadius: BorderRadius.circular(
+                    SizeConfig.margin_padding_10,
+                  ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,8 +58,8 @@ class BankAccountScreenView extends StatelessWidget {
                           "HDFC Bank".tr(),
                           style: TSB.semiBoldSmall(),
                         ),
-                        SizedBox(
-                          height: SizeConfig.margin_padding_5,
+                        _buildSpacer(
+                          SizeConfig.margin_padding_5,
                         ),
                         Text(
                           "vxxxx xxxx 1234".tr(),
@@ -69,25 +70,26 @@ class BankAccountScreenView extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset(ic_arrow_grey, scale: 2.5),
+                        Image.asset(
+                          ic_arrow_grey,
+                          scale: 2.5,
+                        ),
                       ],
                     )
                   ],
                 ),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_10,
-              ),
+              _buildSpacer(),
               Text(
                 "your_save_bank_acc".tr(),
-                style: TSB.semiBoldMedium(textColor: independenceColor),
+                style: TSB.semiBoldMedium(
+                  textColor: independenceColor,
+                ),
               ),
-              SizedBox(
-                height: SizeConfig.margin_padding_10,
-              ),
+              _buildSpacer(),
               _buildAccountListView(viewModel),
-              SizedBox(
-                height: SizeConfig.margin_padding_15,
+              _buildSpacer(
+                SizeConfig.margin_padding_15,
               ),
               _buildAddAccountView(viewModel)
             ],
@@ -97,13 +99,25 @@ class BankAccountScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountListView(BankAccountViewModel viewModel) {
+  Widget _buildSpacer([double? size]) {
+    return SizedBox(
+      height: size ?? SizeConfig.margin_padding_10,
+    );
+  }
+
+  Widget _buildAccountListView(
+    BankAccountViewModel viewModel,
+  ) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+      padding: EdgeInsets.all(
+        SizeConfig.margin_padding_15,
+      ),
       decoration: BoxDecoration(
         color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+        borderRadius: BorderRadius.circular(
+          SizeConfig.margin_padding_10,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -112,19 +126,23 @@ class BankAccountScreenView extends StatelessWidget {
             "Axis Bank".tr(),
             style: TSB.semiBoldMedium(),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_8,
+          _buildSpacer(
+            SizeConfig.margin_padding_8,
           ),
           Text(
             "account_no".tr(),
-            style: TSB.regularSmall(textColor: independenceColor),
+            style: TSB.regularSmall(
+              textColor: independenceColor,
+            ),
           ),
           Text(
             "ifsc".tr(),
-            style: TSB.regularSmall(textColor: independenceColor),
+            style: TSB.regularSmall(
+              textColor: independenceColor,
+            ),
           ),
-          SizedBox(
-            height: SizeConfig.margin_padding_29,
+          _buildSpacer(
+            SizeConfig.margin_padding_29,
           ),
           LoadingButton(
             action: () {},
@@ -137,15 +155,21 @@ class BankAccountScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildAddAccountView(BankAccountViewModel viewModel) {
+  Widget _buildAddAccountView(
+    BankAccountViewModel viewModel,
+  ) {
     return InkWell(
       onTap: viewModel.navigationToAddBankAccountView,
       child: Container(
         width: double.infinity,
-        padding: EdgeInsets.all(SizeConfig.margin_padding_15),
+        padding: EdgeInsets.all(
+          SizeConfig.margin_padding_15,
+        ),
         decoration: BoxDecoration(
           color: mainWhiteColor,
-          borderRadius: BorderRadius.circular(SizeConfig.margin_padding_10),
+          borderRadius: BorderRadius.circular(
+            SizeConfig.margin_padding_10,
+          ),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,8 +187,8 @@ class BankAccountScreenView extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(
-              height: SizeConfig.margin_padding_5,
+            _buildSpacer(
+              SizeConfig.margin_padding_5,
             ),
             Text(
               "to_you_payment_direct_u_bank".tr(),
