@@ -32,7 +32,6 @@ class MyAppViewModel extends BaseViewModel {
   final dialogService = locator<DialogService>();
 
   MyAppViewModel() {
-    init();
     print("userData ${userData.profileStatus}");
   }
 

@@ -55,11 +55,21 @@ class EmployerRegisterViewModel extends BaseViewModel {
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
     this.isSocialLogin = isSocial;
+    initial();
     if (businessTypeService.businessTypeList.isNotEmpty) {
       businessTypeController.text =
           businessTypeService.businessTypeList.first.id.toString();
     }
+  }
+  Future<void> initial() async {
+    await businessTypeCategoryApiCall();
     acquireCurrentLocation();
+  }
+
+  Future<void> businessTypeCategoryApiCall() async {
+    setBusy(true);
+    await businessRepo.businessTypeCategory();
+    setBusy(false);
   }
 
   bool onWillPop() {
