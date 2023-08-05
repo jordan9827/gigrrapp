@@ -154,7 +154,6 @@ class _LoginViewState extends State<LoginView>
           _buildSpacer(
             SizeConfig.margin_padding_50,
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -176,11 +175,7 @@ class _LoginViewState extends State<LoginView>
           ),
           _buildSocialLoginView(viewModel),
           _buildSpacer(
-            SizeConfig.margin_padding_29,
-          ),
-          // _buildSignUpView(viewModel),
-          _buildSpacer(
-            SizeConfig.margin_padding_29,
+            SizeConfig.margin_padding_29 * 2,
           ),
         ],
       ),
@@ -189,7 +184,7 @@ class _LoginViewState extends State<LoginView>
 
   Widget _buildSpacer([double? size]) {
     return SizedBox(
-      height: SizeConfig.margin_padding_20,
+      height: size ?? SizeConfig.margin_padding_20,
     );
   }
 
