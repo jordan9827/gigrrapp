@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
+import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
@@ -20,50 +21,56 @@ class AccountView extends StatelessWidget {
       builder: (context, viewModel, child) => WillPopScope(
         onWillPop: () => Future.sync(viewModel.onWillPop),
         child: Scaffold(
-          body: ListView(
-            children: [
-              ProfileWidgetScreen(viewModel: viewModel),
-              Container(
-                padding: edgeInsetsMargin,
-                child: Column(
-                  children: [
-                    _buildAccountView(viewModel),
-                    _buildHelpAndSupportView(viewModel),
-                  ],
+          body: LoadingScreen(
+            showDialogLoading: true,
+            loading: viewModel.isBusy,
+            child: ListView(
+              children: [
+                ProfileWidgetScreen(viewModel: viewModel),
+                Container(
+                  padding: edgeInsetsMargin,
+                  child: Column(
+                    children: [
+                      _buildAccountView(viewModel, context),
+                      _buildHelpAndSupportView(viewModel),
+                    ],
+                  ),
                 ),
-              ),
-              _buildSpacer(),
-              Container(
-                padding: edgeInsetsMargin,
-                child: LoadingButton(
-                  loading: viewModel.isBusy,
-                  action: viewModel.logOut,
-                  progressIndicatorColor: mainPinkColor,
-                  backgroundColor: mainPinkColor.withOpacity(0.10),
-                  title: "logout",
-                  titleColor: mainPinkColor,
+                _buildSpacer(),
+                Container(
+                  padding: edgeInsetsMargin,
+                  child: LoadingButton(
+                    loading: viewModel.loading,
+                    action: viewModel.logOut,
+                    progressIndicatorColor: mainPinkColor,
+                    backgroundColor: mainPinkColor.withOpacity(0.10),
+                    title: "logout",
+                    titleColor: mainPinkColor,
+                  ),
                 ),
-              ),
-              _buildSpacer(),
-              Text(
-                textAlign: TextAlign.center,
-                viewModel.platformVersion,
-                style: TSB.regularMedium(textColor: textRegularColor),
-              ),
-              _buildSpacer(),
-              Image.asset(
-                ic_gigrra_name,
-                height: SizeConfig.margin_padding_40,
-              ),
-              _buildSpacer(),
-            ],
+                _buildSpacer(),
+                Text(
+                  textAlign: TextAlign.center,
+                  viewModel.platformVersion,
+                  style: TSB.regularMedium(
+                    textColor: textRegularColor,
+                  ),
+                ),
+                _buildSpacer(),
+                Image.asset(
+                  ic_gigrra_name,
+                  height: SizeConfig.margin_padding_40,
+                ),
+                _buildSpacer(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildAccountView(AccountViewModel viewModel) {
+  Widget _buildAccountView(AccountViewModel viewModel, BuildContext context) {
     var isEmployer = viewModel.user.isEmployer;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,13 +113,19 @@ class AccountView extends StatelessWidget {
           ),
         _buildListTile(
           onTap: viewModel.navigationToLanguageScreen,
-          leading: ic_share,
+          leading: ic_help,
           title: "select_language",
         ),
         _buildListTile(
           onTap: viewModel.navigationToPaymentHistoryScreen,
           leading: ic_payment,
           title: "payment_history",
+        ),
+        _buildListTile(
+          onTap: () => viewModel.showDeleteAccountDialog(context),
+          leading: ic_remove_wht,
+          color: Colors.red,
+          title: "delete_acc",
         ),
       ],
     );
@@ -160,6 +173,7 @@ class AccountView extends StatelessWidget {
     required String leading,
     required String title,
     Widget? trailingWidget,
+    Color? color,
     Function()? onTap,
   }) {
     return ListTile(
@@ -180,6 +194,7 @@ class AccountView extends StatelessWidget {
         ),
         child: Image.asset(
           leading,
+          color: color,
         ),
       ),
       title: Text(

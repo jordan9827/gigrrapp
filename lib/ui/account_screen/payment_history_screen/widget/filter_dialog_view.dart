@@ -76,8 +76,9 @@ class FilterDialogView extends StatelessWidget {
                         CustomDatePickerWidget(
                           dataType: "from_date",
                           initialDate: viewModel.selectedDate,
-                          data:
-                              viewModel.formDateController.text.toDateFormat(),
+                          data: viewModel.formDateController.text.isNotEmpty
+                              ? viewModel.formDateController.text.toDateFormat()
+                              : "",
                           onTap: viewModel.pickFormDate,
                         ),
                         SizedBox(
@@ -86,7 +87,9 @@ class FilterDialogView extends StatelessWidget {
                         CustomDatePickerWidget(
                           dataType: "to_date",
                           initialDate: viewModel.selectedDate,
-                          data: viewModel.toDateController.text.toDateFormat(),
+                          data: viewModel.toDateController.text.isNotEmpty
+                              ? viewModel.toDateController.text.toDateFormat()
+                              : "",
                           onTap: viewModel.pickToDate,
                         )
                       ],
@@ -101,6 +104,7 @@ class FilterDialogView extends StatelessWidget {
                     ),
                     InputFieldWidget(
                       hint: 'Name',
+                      onChanged: (val) => viewModel.setName("historyName", val),
                       controller: viewModel.nameController,
                       prefixIcon: Image.asset(ic_search_blck, scale: 3),
                     ),

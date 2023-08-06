@@ -36,8 +36,8 @@ class PaymentHistoryViewModel extends BaseViewModel {
 
   PaymentHistoryViewModel() {
     clearDateController();
-    formDateController.text = dateNow;
-    toDateController.text = dateNow;
+    // formDateController.text = dateNow;
+    // toDateController.text = dateNow;
   }
 
   void navigationToBack() {
@@ -65,7 +65,7 @@ class PaymentHistoryViewModel extends BaseViewModel {
   Future<void> loadToFilter() async {
     var isDateStatus = (getDate("toDateController").isNotEmpty &&
         getDate("formDateController").isNotEmpty);
-    var isNameStatus = nameController.text.isNotEmpty;
+    var isNameStatus = getDate("historyName").isNotEmpty;
     if (isDateStatus || isNameStatus) {
       navigationService.back();
       paymentList.clear();
@@ -81,6 +81,7 @@ class PaymentHistoryViewModel extends BaseViewModel {
     toDateController.text = "";
     setDate("toDateController", "");
     setDate("formDateController", "");
+    setDate("historyName", "");
     if (isClear) {
       formDateController.text = dateNow;
       toDateController.text = dateNow;
@@ -174,9 +175,14 @@ class PaymentHistoryViewModel extends BaseViewModel {
     sharedPreferences.setString(key, type);
   }
 
+  void setName(String key, type) {
+    sharedPreferences.setString(key, type);
+  }
+
   Future<Map<String, String>> _getRequestForCandidatePayment() async {
     Map<String, String> request = Map();
     request['start_date'] = getDate("formDateController");
+    request['name'] = getDate("historyName");
     request['end_date'] = getDate("toDateController");
 
     log("Request Candidate Payment :: $request");

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/ui/my_app/my_app_view.dart';
 import 'package:square_demo_architecture/util/others/internet_check_service.dart';
 import 'package:stacked/stacked_annotations.dart';
@@ -50,7 +51,7 @@ Future<void> main() async {
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('hi')],
       useOnlyLangCode: true,
-      startLocale: Locale('en'),
+      startLocale: Locale(languageCode),
       path: "assets/translations",
       child: MyAppView(
         initialThemeMode: initialThemeMode,

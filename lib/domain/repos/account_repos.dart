@@ -19,6 +19,8 @@ abstract class AccountRepo {
 
   Future<Either<Failure, List<FAQResponseData>>> faq();
 
+  Future<Either<Failure, BaseResponse>> removeUserAccount();
+
   Future<Either<Failure, GetBankDetailResponseData>> fetchCandidateBankDetail();
 
   Future<Either<Failure, List<GetAddressResponseData>>> fetchAddress();

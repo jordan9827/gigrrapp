@@ -2,10 +2,23 @@ import 'package:location/location.dart' as loc;
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/util/enums/latLng.dart';
+import '../../app/app.locator.dart';
+import '../../domain/reactive_services/state_service.dart';
+import '../../domain/repos/auth_repos.dart';
 import '../../others/constants.dart';
 
 class LocationHelper {
   static loc.Location location = loc.Location();
+  static final stateCityService = locator<StateCityService>();
+  static final authRepo = locator<Auth>();
+
+  static Future<void> setCity(String stateController) async {
+    for (var i in stateCityService.stateList) {
+      if (i.name == stateController) {
+        await authRepo.loadCity(i.id);
+      }
+    }
+  }
 
   static Future<LocationDataUpdate> acquireCurrentLocation() async {
     LocationDataUpdate addressData = LocationDataUpdate(

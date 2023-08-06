@@ -30,7 +30,7 @@ class StateCityWidgetView extends StatelessWidget {
           CustomDropDownWidget(
             hintText: "i.e. Madhya Pradesh",
             itemList: viewModel.stateCityService.stateList
-                .map((e) => e.name)
+                .map((e) => e.name.toUpperCase())
                 .toList(),
             visible: viewModel.isVisibleForState,
             groupValue: viewModel.stateController.text,
@@ -42,8 +42,9 @@ class StateCityWidgetView extends StatelessWidget {
           CustomDropDownWidget(
             isLoading: viewModel.isBusy,
             hintText: "i.e. Indore",
-            itemList:
-                viewModel.stateCityService.cityList.map((e) => e.name).toList(),
+            itemList: viewModel.stateCityService.cityList
+                .map((e) => e.name.toUpperCase())
+                .toList(),
             visible: viewModel.isVisibleForCity,
             groupValue: viewModel.cityController.text,
             onVisible: viewModel.onVisibleActionForCity,

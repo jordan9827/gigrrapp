@@ -71,4 +71,7 @@ abstract class AccountService extends ChopperService {
 
   @Get(path: "get-chat")
   Future<Response<GetChatResponse>> getChatApi();
+
+  @Delete(path: "account/delete")
+  Future<Response<BaseResponse>> removeUserAccountApi();
 }

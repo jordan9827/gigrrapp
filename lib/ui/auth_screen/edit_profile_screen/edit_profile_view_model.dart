@@ -110,8 +110,9 @@ class EditProfileViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    cityController.text = addressData.city;
-    stateController.text = "${addressData.state}, ${addressData.country}";
+    stateController.text = addressData.state.toUpperCase();
+    cityController.text = addressData.city.toUpperCase();
+    await LocationHelper.setCity(stateController.text);
     pinCodeController.text = addressData.postCode;
     mapBoxLoading = false;
     notifyListeners();

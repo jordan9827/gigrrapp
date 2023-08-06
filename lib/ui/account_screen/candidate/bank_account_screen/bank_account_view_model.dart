@@ -22,10 +22,27 @@ class BankAccountViewModel extends BaseViewModel {
     return;
   }
 
-  void navigationToAddBankAccountView() {
-    navigationService.navigateTo(
+  Future<void> navigationToAddAndEditBankAccountView(
+      {bool isEdit = false}) async {
+    bool isCheck = await navigationService.navigateTo(
       Routes.addBankAccountScreenView,
+      arguments: AddBankAccountScreenViewArguments(
+        data: bankInfoData,
+        isEdit: isEdit,
+      ),
     );
+    if (isCheck) {
+      fetchAccountInfo();
+    }
+  }
+
+  String get setAccountNo {
+    if (bankInfoData.accountNumber.length >= 4) {
+      return "XXXXXXXXXX" +
+          bankInfoData.accountNumber
+              .substring(bankInfoData.accountNumber.length - 4);
+    } else
+      return "";
   }
 
   Future<void> fetchAccountInfo() async {

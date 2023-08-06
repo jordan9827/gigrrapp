@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../../app/app.locator.dart';
+import '../../../../../data/network/dtos/fetch_bank_detail_response.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../domain/repos/account_repos.dart';
 import '../../../../../others/constants.dart';
@@ -21,6 +22,15 @@ class AddBankAccountViewModel extends BaseViewModel {
   final accountRepo = locator<AccountRepo>();
   bool isVisible = false;
 
+  AddBankAccountViewModel(GetBankDetailResponseData data, bool isEdit) {
+    if (isEdit) {
+      holderNameController.text = data.holderName;
+      bankNameController.text = data.bankName;
+      accountNumberController.text = data.accountNumber;
+      accountTypeController.text = data.accountType;
+      ifscCodeController.text = data.ifscCode;
+    }
+  }
   final List<String> accountTypeList = [
     "saving_acc",
     "current_acc",
@@ -29,7 +39,7 @@ class AddBankAccountViewModel extends BaseViewModel {
 
   void navigationToBack() {
     if (!isBusy) {
-      navigationService.back();
+      navigationService.back(result: false);
     }
     return;
   }
@@ -78,7 +88,7 @@ class AddBankAccountViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
       }, (res) {
-        navigationService.back();
+        navigationService.back(result: true);
         snackBarService.showSnackbar(message: res.message);
         notifyListeners();
         setBusy(false);

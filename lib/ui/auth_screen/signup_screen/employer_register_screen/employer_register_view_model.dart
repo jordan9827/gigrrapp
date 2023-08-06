@@ -11,6 +11,7 @@ import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
+import '../../../../domain/reactive_services/state_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../../util/enums/latLng.dart';
 import '../../../../util/extensions/validation_address.dart';
@@ -22,6 +23,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   final businessRepo = locator<BusinessRepo>();
   final businessTypeService = locator<BusinessTypeService>();
+  final stateCityService = locator<StateCityService>();
 
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -133,9 +135,20 @@ class EmployerRegisterViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
+    stateController.text = addressData.state.toUpperCase();
+    cityController.text = addressData.city.toUpperCase();
+    await LocationHelper.setCity(stateController.text);
     pinCodeController.text = addressData.postCode;
     _loading = false;
     notifyListeners();
+  }
+
+  Future<void> setCity() async {
+    for (var i in stateCityService.stateList) {
+      if (i.name == stateController.text) {
+        await authRepo.loadCity(i.id);
+      }
+    }
   }
 
   Future<void> mapBoxPlace() async {

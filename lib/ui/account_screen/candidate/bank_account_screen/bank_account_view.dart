@@ -66,7 +66,7 @@ class BankAccountScreenView extends StatelessWidget {
                             SizeConfig.margin_padding_5,
                           ),
                           Text(
-                            "vxxxx xxxx 1234".tr(),
+                            "XXXXXXXXXX1234".tr(),
                             style: TSB.regularSmall(),
                           ),
                         ],
@@ -137,7 +137,7 @@ class BankAccountScreenView extends StatelessWidget {
               ),
               _buildRichText(
                 key: "account_no",
-                value: viewModel.bankInfoData.accountNumber,
+                value: viewModel.setAccountNo,
               ),
               _buildRichText(
                 key: "ifsc",
@@ -147,10 +147,11 @@ class BankAccountScreenView extends StatelessWidget {
                 SizeConfig.margin_padding_29,
               ),
               LoadingButton(
-                action: () {},
-                title: "remove_account",
-                titleColor: mainPinkColor,
-                backgroundColor: mainPinkColor.withOpacity(0.10),
+                title: "edit_bank_account",
+                titleColor: mainWhiteColor,
+                backgroundColor: independenceColor.withOpacity(0.7),
+                action: () => viewModel.navigationToAddAndEditBankAccountView(
+                    isEdit: true),
               )
             ],
           ),
@@ -191,7 +192,9 @@ class BankAccountScreenView extends StatelessWidget {
     BankAccountViewModel viewModel,
   ) {
     return InkWell(
-      onTap: viewModel.navigationToAddBankAccountView,
+      onTap: () => viewModel.navigationToAddAndEditBankAccountView(
+        isEdit: false,
+      ),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.all(

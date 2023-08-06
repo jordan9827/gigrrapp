@@ -61,7 +61,9 @@ class _SupportEmailScreenViewState extends State<SupportEmailScreenView> {
                 hint: "type_your_message",
                 controller: viewModel.messageController,
               ),
-              _buildSpacer(),
+              _buildSpacer(
+                SizeConfig.margin_padding_35,
+              ),
               _buildSubmitButton(viewModel)
             ],
           ),

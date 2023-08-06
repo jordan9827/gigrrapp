@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart' as loc;
 import 'package:mapbox_search/mapbox_search.dart';
 import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
+import 'package:square_demo_architecture/domain/reactive_services/state_service.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:stacked/stacked.dart';
@@ -23,6 +24,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   final authRepo = locator<Auth>();
   final businessRepo = locator<BusinessRepo>();
   final businessTypeService = locator<BusinessTypeService>();
+  final stateCityService = locator<StateCityService>();
   TextEditingController gigrrTypeController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
   final TextEditingController userExperiencesController =
@@ -178,9 +180,20 @@ class CandidateRegisterViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
+    stateController.text = addressData.state.toUpperCase();
+    cityController.text = addressData.city.toUpperCase();
+    await LocationHelper.setCity(stateController.text);
     pinCodeController.text = addressData.postCode;
     mapBoxLoading = false;
     notifyListeners();
+  }
+
+  Future<void> setCity() async {
+    for (var i in stateCityService.stateList) {
+      if (i.name == stateController.text) {
+        await authRepo.loadCity(i.id);
+      }
+    }
   }
 
   void mapBoxPlace() {

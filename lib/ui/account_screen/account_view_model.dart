@@ -1,4 +1,5 @@
 import 'package:fcm_service/fcm_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/local/preference_keys.dart';
 import 'package:square_demo_architecture/util/exceptions/failures/failure.dart';
@@ -7,9 +8,12 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
+import '../../domain/repos/account_repos.dart';
 import '../../domain/repos/auth_repos.dart';
 import '../../domain/repos/notification_repos.dart';
 import '../../others/constants.dart';
+import '../widgets/delete_acc_dialog_helper.dart';
+import 'dart:io' show Platform;
 
 class AccountViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -17,7 +21,13 @@ class AccountViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final user = locator<UserAuthResponseData>();
   final authRepo = locator<Auth>();
+  final accountRepo = locator<AccountRepo>();
   final notificationRepo = locator<NotificationRepo>();
+
+  bool _loading = false;
+
+  bool get loading => _loading;
+
   bool notificationSwitch = true;
   String platformVersion = "";
 
@@ -120,6 +130,35 @@ class AccountViewModel extends BaseViewModel {
 
   void navigationToTermsAndConditionScreen() {
     navigationService.navigateTo(Routes.termsAndConditionScreenView);
+  }
+
+  void showDeleteAccountDialog(BuildContext context) async {
+    if (Platform.isAndroid) {
+      DeleteAccountDialogHelper.dialogBoxAndroid(
+        context,
+        action: loadRemoveAccount,
+      );
+    } else if (Platform.isIOS) {
+      DeleteAccountDialogHelper.dialogBoxIOS(
+        context,
+        action: loadRemoveAccount,
+      );
+    }
+    notifyListeners();
+  }
+
+  Future<void> loadRemoveAccount() async {
+    navigationService.back();
+    setBusy(true);
+    final response = await accountRepo.removeUserAccount();
+    response.fold((failure) {
+      setBusy(false);
+    }, (response) async {
+      await logOut();
+      snackBarService.showSnackbar(message: response.message);
+      setBusy(false);
+    });
+    notifyListeners();
   }
 
   Future<void> logOut() async {
