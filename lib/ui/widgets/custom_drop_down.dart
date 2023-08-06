@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../../util/others/text_styles.dart';
 
 class CustomDropDownWidget extends StatelessWidget {
@@ -17,12 +17,14 @@ class CustomDropDownWidget extends StatelessWidget {
   final bool enableMultiSelected;
   final String groupValue;
   final double? size;
+  final bool isLoading;
 
   CustomDropDownWidget({
     Key? key,
     required this.itemList,
     this.onVisible,
     this.visible = false,
+    this.isLoading = false,
     this.enableMultiSelected = false,
     this.hintText = "",
     this.groupValue = "",
@@ -59,13 +61,20 @@ class CustomDropDownWidget extends StatelessWidget {
             children: [
               if (enableMultiSelected) _buildSelectedContainList(),
               if (!enableMultiSelected) _buildSelectedView(groupValue),
-              InkWell(
-                onTap: onVisible,
-                child: Icon(
-                  visible ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                  color: independenceColor,
-                ),
-              ),
+              isLoading
+                  ? SpinKitCircle(
+                      size: SizeConfig.margin_padding_20,
+                      color: independenceColor,
+                    )
+                  : InkWell(
+                      onTap: onVisible,
+                      child: Icon(
+                        visible
+                            ? Icons.keyboard_arrow_up
+                            : Icons.keyboard_arrow_down,
+                        color: independenceColor,
+                      ),
+                    ),
             ],
           ),
         ),
@@ -119,6 +128,10 @@ class CustomDropDownWidget extends StatelessWidget {
                               activeColor: mainPinkColor,
                               groupValue: groupValue,
                               onChanged: selectSingleItemsAction,
+                              visualDensity: VisualDensity(
+                                horizontal: VisualDensity.minimumDensity,
+                                vertical: VisualDensity.minimumDensity,
+                              ),
                             ),
                         ],
                       ),

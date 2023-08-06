@@ -61,15 +61,17 @@ class EmployerRegisterViewModel extends BaseViewModel {
           businessTypeService.businessTypeList.first.id.toString();
     }
   }
+
   Future<void> initial() async {
     await businessTypeCategoryApiCall();
     acquireCurrentLocation();
+    await authRepo.loadState();
+    setBusy(false);
   }
 
   Future<void> businessTypeCategoryApiCall() async {
     setBusy(true);
     await businessRepo.businessTypeCategory();
-    setBusy(false);
   }
 
   bool onWillPop() {
@@ -131,11 +133,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    cityController.text = addressData.city;
-    stateController.text = "${addressData.state}, ${addressData.country}";
     pinCodeController.text = addressData.postCode;
     _loading = false;
-    mapBoxLoading = false;
     notifyListeners();
   }
 
@@ -227,8 +226,9 @@ class EmployerRegisterViewModel extends BaseViewModel {
 
   void employerCompleteProfileApiCall() async {
     setBusy(true);
-    final response = await authRepo
-        .employerCompleteProfile(await _getRequestForEmployerCompleteProfile());
+    final response = await authRepo.employerCompleteProfile(
+      await _getRequestForEmployerCompleteProfile(),
+    );
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);

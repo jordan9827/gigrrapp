@@ -19,10 +19,15 @@ class UserTokenInterceptor extends RequestInterceptor {
         (value) => 'Bearer $token',
         ifAbsent: () => 'Bearer $token',
       );
+      headers.update(
+        'language',
+        (value) => languageCode,
+        ifAbsent: () => languageCode,
+      );
     }
 
     log.i(
-        "<------------------------------------------------------------\nAPI ${request.url}\nRequest body ${request.body}\nHeaders ${request.headers}\nQuery params ${request.parameters}\nMultipart ${request.multipart}\nToken ${headers["Authorization"]}\n---------------------------------------------------------------->");
+        "<------------------------------------------------------------\nAPI ${request.url}\nRequest body ${request.body}\nHeaders ${request.headers}\nQuery params ${request.parameters}\nMultipart ${request.multipart}\nLanguage ${headers["language"]}\nToken ${headers["Authorization"]}\n---------------------------------------------------------------->");
 
     return request.copyWith(
       headers: headers,

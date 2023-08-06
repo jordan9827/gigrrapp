@@ -1,6 +1,8 @@
 import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/upload_image_response.dart';
 import '../dtos/base_response.dart';
+import '../dtos/city_response.dart';
+import '../dtos/state_response.dart';
 import '../dtos/user_auth_response_data.dart';
 
 part 'auth_service.chopper.dart';
@@ -63,6 +65,14 @@ abstract class AuthService extends ChopperService {
   @multipart
   Future<Response<UploadImageResponse>> uploadImages(
     @PartFile("image[]") String path,
+  );
+
+  @Get(path: "state")
+  Future<Response<StateResponse>> getStateApi();
+
+  @Get(path: "city")
+  Future<Response<CityResponse>> getCityApi(
+    @Query('state_id') int stateId,
   );
 
   @Post(path: "logout", optionalBody: true)

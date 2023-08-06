@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,12 +19,29 @@ class AddBankAccountViewModel extends BaseViewModel {
   final TextEditingController accountTypeController = TextEditingController();
   final TextEditingController ifscCodeController = TextEditingController();
   final accountRepo = locator<AccountRepo>();
+  bool isVisible = false;
+
+  final List<String> accountTypeList = [
+    "saving_acc",
+    "current_acc",
+    "recurring_dep"
+  ];
 
   void navigationToBack() {
     if (!isBusy) {
       navigationService.back();
     }
     return;
+  }
+
+  void onVisibleAction() {
+    isVisible = !isVisible;
+    notifyListeners();
+  }
+
+  void onItemSelectForAccountType(String? val) {
+    accountTypeController.text = val ?? "";
+    notifyListeners();
   }
 
   bool validationAddBankAccount() {
@@ -37,9 +53,6 @@ class AddBankAccountViewModel extends BaseViewModel {
       return false;
     } else if (accountNumberController.text.isEmpty) {
       snackBarService.showSnackbar(message: "plz_enter_acc_no".tr());
-      return false;
-    } else if (accountNumberController.text.length <= 15) {
-      snackBarService.showSnackbar(message: "plz_enter_valid_acc_no".tr());
       return false;
     } else if (ifscCodeController.text.isEmpty) {
       snackBarService.showSnackbar(message: "plz_enter_ifsc_code".tr());
@@ -57,6 +70,7 @@ class AddBankAccountViewModel extends BaseViewModel {
 
   Future<void> addBankAccount() async {
     if (validationAddBankAccount()) {
+      setBusy(true);
       var result = await accountRepo.addBankAccount(
         await _getRequestForAddBankAccount(),
       );
@@ -80,7 +94,6 @@ class AddBankAccountViewModel extends BaseViewModel {
     request['account_number'] = accountNumberController.text;
     request['ifsc_code'] = ifscCodeController.text;
     request['account_type'] = accountTypeController.text;
-    log("Body Add Bank Account>>> $request");
     return request;
   }
 }

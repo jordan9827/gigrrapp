@@ -21,6 +21,7 @@ import '../data/repos/account_impl.dart';
 import '../data/repos/business_impl.dart';
 import '../data/repos/candidate_impl.dart';
 import '../domain/reactive_services/business_type_service.dart';
+import '../domain/reactive_services/state_service.dart';
 import '../domain/repos/account_repos.dart';
 import '../domain/repos/auth_repos.dart';
 import '../domain/repos/business_repos.dart';
@@ -133,6 +134,9 @@ import '../ui/widgets/giggr_request_view.dart';
     ),
     LazySingleton(
       classType: BusinessTypeService,
+    ),
+    LazySingleton(
+      classType: StateCityService,
     ),
     LazySingleton(
       classType: DialogService,

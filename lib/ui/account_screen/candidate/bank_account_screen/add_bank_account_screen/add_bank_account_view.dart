@@ -1,9 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
+import '../../../../../util/others/text_styles.dart';
+import '../../../../widgets/custom_drop_down.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
 import 'add_bank_account_view_model.dart';
 
@@ -22,10 +25,10 @@ class AddBankAccountScreenView extends StatelessWidget {
           onBackPressed: viewModel.navigationToBack,
         ),
         body: ListView(
-          padding: edgeInsetsMargin,
+          padding: edgeInsetsMargin.copyWith(top: 0),
           children: [
             SizedBox(
-              height: SizeConfig.margin_padding_20,
+              height: SizeConfig.margin_padding_15,
             ),
             CVMTextFormField(
               title: "holder_name",
@@ -49,13 +52,9 @@ class AddBankAccountScreenView extends StatelessWidget {
               controller: viewModel.ifscCodeController,
               textCapitalization: TextCapitalization.characters,
             ),
-            CVMTextFormField(
-              title: "account_type",
-              hintForm: "i.e. Saving",
-              controller: viewModel.accountTypeController,
-            ),
+            _buildAccountTypeView(viewModel),
             SizedBox(
-              height: SizeConfig.margin_padding_35,
+              height: SizeConfig.margin_padding_40,
             ),
             LoadingButton(
               loading: viewModel.isBusy,
@@ -68,6 +67,32 @@ class AddBankAccountScreenView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAccountTypeView(AddBankAccountViewModel viewModel) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            bottom: SizeConfig.margin_padding_8,
+          ),
+          child: Text(
+            "account_type".tr(),
+            style: TSB.regularSmall(),
+          ),
+        ),
+        CustomDropDownWidget(
+          hintText: "i.e. Saving",
+          visible: viewModel.isVisible,
+          itemList: viewModel.accountTypeList,
+          size: SizeConfig.margin_padding_50 * 2.5,
+          onVisible: viewModel.onVisibleAction,
+          groupValue: viewModel.accountTypeController.text,
+          selectSingleItemsAction: viewModel.onItemSelectForAccountType,
+        ),
+      ],
     );
   }
 }

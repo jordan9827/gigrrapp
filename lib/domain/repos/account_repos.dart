@@ -4,6 +4,7 @@ import 'package:square_demo_architecture/data/network/dtos/get_address_response.
 
 import '../../data/network/dtos/base_response.dart';
 import '../../data/network/dtos/faq_response.dart';
+import '../../data/network/dtos/fetch_bank_detail_response.dart';
 import '../../data/network/dtos/get_chat_response.dart';
 import '../../data/network/dtos/payment_history_response.dart';
 import '../../data/network/dtos/web_view_response.dart';
@@ -17,6 +18,8 @@ abstract class AccountRepo {
   Future<Either<Failure, WebViewResponseData>> aboutUs();
 
   Future<Either<Failure, List<FAQResponseData>>> faq();
+
+  Future<Either<Failure, GetBankDetailResponseData>> fetchCandidateBankDetail();
 
   Future<Either<Failure, List<GetAddressResponseData>>> fetchAddress();
 

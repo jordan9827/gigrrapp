@@ -10,6 +10,7 @@ import '../../util/exceptions/failures/failure.dart';
 import '../network/api_services/account_service.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/chat_response.dart';
+import '../network/dtos/fetch_bank_detail_response.dart';
 import '../network/dtos/get_chat_response.dart';
 import '../network/dtos/payment_history_response.dart';
 import '../network/dtos/web_view_response.dart';
@@ -75,6 +76,26 @@ class AccountImpl extends AccountRepo {
         throw Exception(response.error);
       }
       // log.i("saveChat Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetBankDetailResponseData>>
+      fetchCandidateBankDetail() async {
+    try {
+      final response = await accountService.fetchCandidateBankDetailApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
       return response.body!.map(success: (res) async {
         return Right(res.data);
       }, error: (error) {

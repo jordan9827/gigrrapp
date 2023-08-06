@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:square_demo_architecture/data/network/dtos/city_response.dart';
 import 'package:square_demo_architecture/data/network/dtos/upload_image_response.dart';
 import 'package:square_demo_architecture/util/extensions/object_extension.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
+import '../../domain/reactive_services/state_service.dart';
 import '../../domain/repos/auth_repos.dart';
 import '../../util/exceptions/failures/failure.dart';
 import '../local/preference_keys.dart';
@@ -12,6 +14,7 @@ import '../network/api_services/auth_service.dart';
 import '../network/api_services/notification_service.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/base_response.dart';
+import '../network/dtos/state_response.dart';
 import '../network/dtos/user_auth_response_data.dart';
 
 class AuthImpl extends Auth {
@@ -169,6 +172,48 @@ class AuthImpl extends Auth {
       return response.body!.map(success: (user) async {
         var data = await setUserResponse(user.data);
         return Right(data);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<StateResponseData>>> loadState() async {
+    try {
+      final response = await authService.getStateApi();
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Login Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        locator<StateCityService>().updateState(res.list);
+        return Right(res.list);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<CityResponseData>>> loadCity(int id) async {
+    try {
+      final response = await authService.getCityApi(id);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("Login Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        locator<StateCityService>().updateCity(res.list);
+        return Right(res.list);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

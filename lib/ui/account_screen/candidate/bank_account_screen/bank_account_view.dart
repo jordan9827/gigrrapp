@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/common_app_bar.dart';
 import 'package:square_demo_architecture/others/loading_button.dart';
+import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
@@ -16,6 +17,7 @@ class BankAccountScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
+      onViewModelReady: (viewModel) => viewModel.fetchAccountInfo(),
       viewModelBuilder: () => BankAccountViewModel(),
       builder: (_, viewModel, child) => Scaffold(
         backgroundColor: mainGrayColor,
@@ -25,74 +27,68 @@ class BankAccountScreenView extends StatelessWidget {
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
-        body: Container(
-          margin: edgeInsetsMargin,
-          child: ListView(
-            children: [
-              _buildSpacer(),
-              Text(
-                "your_upi_bank_acc".tr(),
-                style: TSB.semiBoldMedium(
-                  textColor: independenceColor,
-                ),
-              ),
-              _buildSpacer(),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(
-                  SizeConfig.margin_padding_15,
-                ),
-                decoration: BoxDecoration(
-                  color: mainWhiteColor,
-                  borderRadius: BorderRadius.circular(
-                    SizeConfig.margin_padding_10,
+        body: LoadingScreen(
+          loading: viewModel.isBusy,
+          child: Container(
+            margin: edgeInsetsMargin,
+            child: ListView(
+              children: [
+                _buildSpacer(),
+                Text(
+                  "your_upi_bank_acc".tr(),
+                  style: TSB.semiBoldMedium(
+                    textColor: independenceColor,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "HDFC Bank".tr(),
-                          style: TSB.semiBoldSmall(),
-                        ),
-                        _buildSpacer(
-                          SizeConfig.margin_padding_5,
-                        ),
-                        Text(
-                          "vxxxx xxxx 1234".tr(),
-                          style: TSB.regularSmall(),
-                        ),
-                      ],
+                _buildSpacer(),
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(
+                    SizeConfig.margin_padding_15,
+                  ),
+                  decoration: BoxDecoration(
+                    color: mainWhiteColor,
+                    borderRadius: BorderRadius.circular(
+                      SizeConfig.margin_padding_10,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          ic_arrow_grey,
-                          scale: 2.5,
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "HDFC Bank".tr(),
+                            style: TSB.semiBoldSmall(),
+                          ),
+                          _buildSpacer(
+                            SizeConfig.margin_padding_5,
+                          ),
+                          Text(
+                            "vxxxx xxxx 1234".tr(),
+                            style: TSB.regularSmall(),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            ic_arrow_grey,
+                            scale: 2.5,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
-              _buildSpacer(),
-              Text(
-                "your_save_bank_acc".tr(),
-                style: TSB.semiBoldMedium(
-                  textColor: independenceColor,
-                ),
-              ),
-              _buildSpacer(),
-              _buildAccountListView(viewModel),
-              _buildSpacer(
-                SizeConfig.margin_padding_15,
-              ),
-              _buildAddAccountView(viewModel)
-            ],
+                _buildSpacer(),
+                _buildAccountListView(viewModel),
+                if (viewModel.bankInfoData.id == 0)
+                  _buildAddAccountView(viewModel)
+              ],
+            ),
           ),
         ),
       ),
@@ -108,50 +104,86 @@ class BankAccountScreenView extends StatelessWidget {
   Widget _buildAccountListView(
     BankAccountViewModel viewModel,
   ) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(
-        SizeConfig.margin_padding_15,
-      ),
-      decoration: BoxDecoration(
-        color: mainWhiteColor,
-        borderRadius: BorderRadius.circular(
-          SizeConfig.margin_padding_10,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "your_save_bank_acc".tr(),
+          style: TSB.semiBoldMedium(
+            textColor: independenceColor,
+          ),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Axis Bank".tr(),
-            style: TSB.semiBoldMedium(),
+        _buildSpacer(),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(
+            SizeConfig.margin_padding_15,
           ),
-          _buildSpacer(
-            SizeConfig.margin_padding_8,
-          ),
-          Text(
-            "account_no".tr(),
-            style: TSB.regularSmall(
-              textColor: independenceColor,
+          decoration: BoxDecoration(
+            color: mainWhiteColor,
+            borderRadius: BorderRadius.circular(
+              SizeConfig.margin_padding_10,
             ),
           ),
-          Text(
-            "ifsc".tr(),
-            style: TSB.regularSmall(
-              textColor: independenceColor,
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                viewModel.bankInfoData.bankName,
+                style: TSB.semiBoldMedium(),
+              ),
+              _buildSpacer(
+                SizeConfig.margin_padding_8,
+              ),
+              _buildRichText(
+                key: "account_no",
+                value: viewModel.bankInfoData.accountNumber,
+              ),
+              _buildRichText(
+                key: "ifsc",
+                value: viewModel.bankInfoData.ifscCode,
+              ),
+              _buildSpacer(
+                SizeConfig.margin_padding_29,
+              ),
+              LoadingButton(
+                action: () {},
+                title: "remove_account",
+                titleColor: mainPinkColor,
+                backgroundColor: mainPinkColor.withOpacity(0.10),
+              )
+            ],
           ),
-          _buildSpacer(
-            SizeConfig.margin_padding_29,
+        ),
+        _buildSpacer(
+          SizeConfig.margin_padding_15,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRichText({
+    String key = "",
+    String value = "",
+  }) {
+    return Row(
+      children: [
+        Text(
+          key.tr(),
+          style: TSB.regularSmall(
+            textColor: independenceColor,
           ),
-          LoadingButton(
-            action: () {},
-            title: "remove_account",
-            titleColor: mainPinkColor,
-            backgroundColor: mainPinkColor.withOpacity(0.10),
-          )
-        ],
-      ),
+        ),
+        SizedBox(
+          width: SizeConfig.margin_padding_5,
+        ),
+        Text(
+          value,
+          style: TSB.regularSmall(
+            textColor: mainBlackColor,
+          ),
+        ),
+      ],
     );
   }
 

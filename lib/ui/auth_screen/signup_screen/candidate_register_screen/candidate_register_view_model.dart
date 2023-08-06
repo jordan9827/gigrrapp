@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:location/location.dart' as loc;
@@ -70,7 +72,14 @@ class CandidateRegisterViewModel extends BaseViewModel {
     this.isSocialLogin = isSocial;
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
+    init();
+  }
+
+  Future<void> init() async {
+    mapBoxLoading = true;
     acquireCurrentLocation();
+    await authRepo.loadState();
+    mapBoxLoading = false;
   }
 
   String get userExperience => "$experienceYear year $experienceMonth month";
@@ -159,7 +168,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
     mapBoxLoading = true;
     var location = await LocationHelper.acquireCurrentLocation();
     await setAddressPlace(location);
-    mapBoxLoading = false;
   }
 
   Future<void> setAddressPlace(LocationDataUpdate data) async {
@@ -170,8 +178,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    cityController.text = addressData.city;
-    stateController.text = "${addressData.state}, ${addressData.country}";
     pinCodeController.text = addressData.postCode;
     mapBoxLoading = false;
     notifyListeners();

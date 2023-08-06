@@ -4,6 +4,7 @@ import '../../../util/enums/latLng.dart';
 import '../../../util/others/size_config.dart';
 import '../cvm_text_form_field.dart';
 import '../map_box/google_map_box_view.dart';
+import '../state_city_widget_view/state_city_widget_view.dart';
 
 class MapBoxAddressFormViewWidget extends StatelessWidget {
   final TextEditingController addressController;
@@ -38,15 +39,9 @@ class MapBoxAddressFormViewWidget extends StatelessWidget {
             color: mainPinkColor,
           ),
         ),
-        CVMTextFormField(
-          title: "city",
-          controller: cityController,
-          hintForm: "i.e. Indore",
-        ),
-        CVMTextFormField(
-          title: "state",
-          controller: stateController,
-          hintForm: "i.e. Madhya Pradesh",
+        StateCityWidgetView(
+          cityController: cityController,
+          stateController: stateController,
         ),
         CVMTextFormField(
           title: "pinCode",
