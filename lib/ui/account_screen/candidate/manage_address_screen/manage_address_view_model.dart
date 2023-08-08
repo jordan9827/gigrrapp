@@ -6,12 +6,13 @@ import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/account_repos.dart';
+import '../../../../domain/repos/common_repos.dart';
 
 class ManageAddressViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final user = locator<UserAuthResponseData>();
-  final accountRepo = locator<AccountRepo>();
+  final commonRepo = locator<CommonRepo>();
 
   List<GetAddressResponseData> addressList = [];
 
@@ -52,7 +53,7 @@ class ManageAddressViewModel extends BaseViewModel {
   Future<void> fetchAddress() async {
     addressList = [];
     setBusy(true);
-    final response = await accountRepo.fetchAddress();
+    final response = await commonRepo.fetchAddress();
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);

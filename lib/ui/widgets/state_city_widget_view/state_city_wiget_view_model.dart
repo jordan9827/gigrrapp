@@ -40,6 +40,7 @@ class StateCityWidgetViewModel extends BaseViewModel {
 
   Future<void> onItemSelectForState(String? val) async {
     stateController.text = val ?? "";
+    cityController.clear();
     for (var i in stateCityService.stateList) {
       if (i.name.toLowerCase() == stateController.text.toLowerCase()) {
         setBusy(true);

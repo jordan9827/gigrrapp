@@ -7,6 +7,7 @@ import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import '../../../../../app/app.locator.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../domain/repos/account_repos.dart';
+import '../../../../../domain/repos/common_repos.dart';
 import '../../../../../others/constants.dart';
 import '../../../../../util/enums/latLng.dart';
 import '../../../../../util/extensions/validation_address.dart';
@@ -16,7 +17,7 @@ class AddAddressViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final user = locator<UserAuthResponseData>();
-  final accountRepo = locator<AccountRepo>();
+  final commonRepo = locator<CommonRepo>();
 
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -116,7 +117,7 @@ class AddAddressViewModel extends BaseViewModel {
   Future<void> loadSaveAddress() async {
     if (validationSaveAddress()) {
       setBusy(true);
-      final response = await accountRepo.saveAddress(
+      final response = await commonRepo.saveAddress(
         await _getRequestForSaveAddress(),
       );
       response.fold(

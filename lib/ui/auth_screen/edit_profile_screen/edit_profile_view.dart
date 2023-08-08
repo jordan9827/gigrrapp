@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
+import 'package:square_demo_architecture/others/loading_screen.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../others/common_app_bar.dart';
@@ -28,16 +29,20 @@ class EditProfileScreenView extends StatelessWidget {
           showBack: true,
           onBackPressed: viewModel.navigationToBack,
         ),
-        body: Container(
-          padding: edgeInsetsMargin,
-          child: ListView(
-            children: [
-              _buildEditProfileForm(viewModel),
-              _buildSpacer(),
-              _buildSaveButton(viewModel),
-              _buildSpacer(),
-              _buildSpacer(),
-            ],
+        body: LoadingScreen(
+          loading: viewModel.isBusy,
+          showDialogLoading: true,
+          child: Container(
+            padding: edgeInsetsMargin,
+            child: ListView(
+              children: [
+                _buildEditProfileForm(viewModel),
+                _buildSpacer(),
+                _buildSaveButton(viewModel),
+                _buildSpacer(),
+                _buildSpacer(),
+              ],
+            ),
           ),
         ),
       ),

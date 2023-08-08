@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io' show Platform;
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -16,7 +17,7 @@ const String localBaseURL = "";
 
 String languageCode =
     locator<SharedPreferences>().getString(PreferenceKeys.APP_LANGUAGE.text) ??
-        "en";
+        "hi";
 
 const String countryType = "in";
 
@@ -140,4 +141,17 @@ Future<String> fcmToken() async {
 Future<String> appVersion() async {
   PackageInfo packageInfo = await PackageInfo.fromPlatform();
   return packageInfo.version;
+}
+
+double setHeightOfDrop(int length) {
+  log("setHeightOfDrop $length");
+  double size = SizeConfig.margin_padding_50 * 5;
+  if (length <= 2) {
+    return SizeConfig.margin_padding_50 * 1.5;
+  } else if (length <= 3) {
+    return SizeConfig.margin_padding_50 * 2.5;
+  } else if (length <= 4) {
+    return SizeConfig.margin_padding_50 * 3.5;
+  }
+  return size;
 }

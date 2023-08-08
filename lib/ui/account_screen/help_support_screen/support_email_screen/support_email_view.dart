@@ -6,8 +6,10 @@ import '../../../../others/common_app_bar.dart';
 import '../../../../others/constants.dart';
 import '../../../../others/loading_button.dart';
 import '../../../../others/text_field_widget.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
+import '../../../widgets/custom_drop_down.dart';
 import 'support_email_view_model.dart';
 
 class SupportEmailScreenView extends StatefulWidget {
@@ -23,6 +25,7 @@ class _SupportEmailScreenViewState extends State<SupportEmailScreenView> {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => SupportEmailViewModel(),
+      onViewModelReady: (viewModel) => viewModel.loadContactSubject(),
       builder: (_, viewModel, child) => Scaffold(
         appBar: getAppBar(
           context,
@@ -44,9 +47,16 @@ class _SupportEmailScreenViewState extends State<SupportEmailScreenView> {
               _buildSpacer(
                 SizeConfig.margin_padding_5,
               ),
-              InputFieldWidget(
-                hint: "select_subject",
-                controller: viewModel.subjectController,
+              CustomDropDownWidget(
+                size: setHeightOfDrop(2),
+                hintText: "select_subject",
+                itemList: viewModel.contactSubjectList
+                    .map((e) => e.name.toUpperCase())
+                    .toList(),
+                visible: viewModel.isVisible,
+                groupValue: viewModel.subjectController.text,
+                onVisible: viewModel.onVisibleAction,
+                selectSingleItemsAction: viewModel.onItemSelect,
               ),
               _buildSpacer(),
               Text(

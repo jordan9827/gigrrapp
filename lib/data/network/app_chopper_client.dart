@@ -7,6 +7,7 @@ import '../JWTAuthenticator.dart';
 import 'api_services/auth_service.dart';
 import 'api_services/business_service.dart';
 import 'api_services/candidate_service.dart';
+import 'api_services/common_service.dart';
 import 'api_services/notification_service.dart';
 import 'interceptors/user_token_interceptor.dart';
 
@@ -21,6 +22,7 @@ class AppChopperClient extends ChopperClient {
           converter: JsonToTypeConverter(),
           services: [
             AuthService.create(),
+            CommonService.create(),
             AccountService.create(),
             BusinessService.create(),
             CandidateService.create(),

@@ -34,43 +34,10 @@ abstract class AccountService extends ChopperService {
     @Query('page') int page,
   );
 
-  @Get(path: "privacy-policy")
-  Future<Response<WebViewResponse>> privacyPolicyApi();
-
-  @Get(path: "terms-condition")
-  Future<Response<WebViewResponse>> termsAndConditionApi();
-
-  @Get(path: "about-us")
-  Future<Response<WebViewResponse>> aboutUsApi();
-
-  @Get(path: "faq")
-  Future<Response<FAQResponse>> faqApi();
-
-  @Get(path: "address")
-  Future<Response<GetAddressResponse>> fetchAddressApi();
-
-  @Post(path: "send-contactus")
-  Future<Response<BaseResponse>> contactSupportApi(
-    @Body() Map<String, dynamic> body,
-  );
-
-  @Post(path: "save-chat")
-  Future<Response<ChatResponse>> saveChatApi(
-    @Body() Map<String, dynamic> body,
-  );
-
-  @Post(path: "save-address")
-  Future<Response<BaseResponse>> saveAddressApi(
-    @Body() Map<String, dynamic> body,
-  );
-
   @Post(path: "gigs-candidate-payment")
   Future<Response<BaseResponse>> gigsCandidatePaymentApi(
     @Body() Map<String, dynamic> body,
   );
-
-  @Get(path: "get-chat")
-  Future<Response<GetChatResponse>> getChatApi();
 
   @Delete(path: "account/delete")
   Future<Response<BaseResponse>> removeUserAccountApi();

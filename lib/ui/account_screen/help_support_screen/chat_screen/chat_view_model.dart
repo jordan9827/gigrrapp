@@ -7,11 +7,12 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/account_repos.dart';
+import '../../../../domain/repos/common_repos.dart';
 
 class ChatViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
-  final accountRepo = locator<AccountRepo>();
+  final commonRepo = locator<CommonRepo>();
   final user = locator<UserAuthResponseData>();
 
   TextEditingController chatTextController = TextEditingController();
@@ -36,7 +37,7 @@ class ChatViewModel extends BaseViewModel {
   Future<void> fetchChatList() async {
     // setBusy(true);
     _isLoading = true;
-    final response = await accountRepo.getChat();
+    final response = await commonRepo.getChat();
 
     response.fold((failure) {
       setBusy(false);
@@ -54,7 +55,7 @@ class ChatViewModel extends BaseViewModel {
     if (validateInput()) {
       setBusy(true);
       final response =
-          await accountRepo.saveChat(await _getRequestForSendChat());
+          await commonRepo.saveChat(await _getRequestForSendChat());
 
       response.fold((failure) {
         setBusy(false);

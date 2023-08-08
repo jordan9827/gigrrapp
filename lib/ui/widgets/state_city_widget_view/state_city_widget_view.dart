@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../others/constants.dart';
 import '../../../util/others/size_config.dart';
 import '../../../util/others/text_styles.dart';
 import '../custom_drop_down.dart';
@@ -40,6 +41,7 @@ class StateCityWidgetView extends StatelessWidget {
           _buildSpacer(),
           _buildTitle("city"),
           CustomDropDownWidget(
+            size: setHeightOfDrop(viewModel.stateCityService.cityList.length),
             isLoading: viewModel.isBusy,
             hintText: "i.e. Indore",
             itemList: viewModel.stateCityService.cityList

@@ -36,7 +36,7 @@ class EditProfileViewModel extends BaseViewModel {
     setInitData();
   }
 
-  void setInitData() {
+  Future<void> setInitData() async {
     fullNameController.text = user.fullName;
     mobileController.text = user.mobile;
     addressController.text = user.address;
@@ -44,6 +44,9 @@ class EditProfileViewModel extends BaseViewModel {
       double.parse(user.latitude),
       double.parse(user.longitude),
     );
+    setBusy(true);
+    await authRepo.loadState();
+    setBusy(false);
   }
 
   void navigationToBack() {

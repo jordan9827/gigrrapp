@@ -2,11 +2,12 @@ import 'package:square_demo_architecture/domain/repos/account_repos.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
+import '../../../domain/repos/common_repos.dart';
 
 class AboutUsViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
-  final accountRepo = locator<AccountRepo>();
+  final commonRepo = locator<CommonRepo>();
 
   String _content = "";
 
@@ -20,7 +21,7 @@ class AboutUsViewModel extends BaseViewModel {
 
   Future<void> getAboutUs() async {
     setBusy(true);
-    final response = await accountRepo.aboutUs();
+    final response = await commonRepo.aboutUs();
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);

@@ -4,11 +4,12 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../domain/repos/account_repos.dart';
+import '../../../domain/repos/common_repos.dart';
 
 class HelpSupportScreenViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
-  final accountRepo = locator<AccountRepo>();
+  final commonRepo = locator<CommonRepo>();
 
   List<FAQResponseData> faqData = [];
   bool isVisible = false;
@@ -39,7 +40,7 @@ class HelpSupportScreenViewModel extends BaseViewModel {
 
   Future<void> fetchFAQ() async {
     setBusy(true);
-    final response = await accountRepo.faq();
+    final response = await commonRepo.faq();
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);
