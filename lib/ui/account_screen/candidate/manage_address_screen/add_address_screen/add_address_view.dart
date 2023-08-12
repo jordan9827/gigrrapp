@@ -100,7 +100,6 @@ class AddAddressScreenView extends StatelessWidget {
         CustomDropDownWidget(
           hintText: "i.e. hourly",
           visible: viewModel.isVisible,
-          size: SizeConfig.margin_padding_50 * 3,
           itemList: viewModel.addressTypeList,
           groupValue: viewModel.addressTypeValue,
           onVisible: viewModel.onVisibleAction,

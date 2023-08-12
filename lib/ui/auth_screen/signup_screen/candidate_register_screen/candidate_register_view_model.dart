@@ -15,6 +15,7 @@ import '../../../../app/app.router.dart';
 import '../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../domain/repos/auth_repos.dart';
 import '../../../../util/enums/latLng.dart';
+import '../../../../util/extensions/state_city_extension.dart';
 import '../../../../util/extensions/validation_address.dart';
 import '../../../widgets/location_helper.dart';
 
@@ -52,8 +53,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
   String initialShift = "day";
   List<String> myAvailableList = ["weekdays", "weekends"];
   List<String> myAvailableSelectList = [];
-  double latitude = 0.0;
-  double longitude = 0.0;
   bool mapBoxLoading = false;
 
   loc.Location location = loc.Location();
@@ -289,14 +288,24 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   Future<Map<String, String>> _getRequestForCompleteCandidateProfile() async {
+    var stateId = StateCityHelper.findId(
+      value: stateController.text,
+    );
+    var cityId = StateCityHelper.findId(
+      isState: false,
+      value: cityController.text,
+    );
     Map<String, String> request = Map();
     request['full_name'] = fullNameController.text;
     request['country_code'] = countryCode;
     request['mobile_no'] = mobileController.text;
     request['email'] = "";
     request['address'] = addressController.text;
-    request['latitude'] = latitude.toString();
-    request['longitude'] = longitude.toString();
+    request['state'] = stateId;
+    request['city'] = cityId;
+    request['pincode'] = pinCodeController.text;
+    request['latitude'] = latLng.lat.toString();
+    request['longitude'] = latLng.lng.toString();
     request['gender'] = initialGender.toLowerCase();
     request['dob'] = dobController.text;
     request['experience_year'] = "$experienceYear";
@@ -309,7 +318,6 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['shift'] = initialShift.toLowerCase();
     request['images'] = imageList.join(',');
     request['profile_image'] = imageList.first;
-    print(" body --------$request");
     return request;
   }
 }

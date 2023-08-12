@@ -18,6 +18,7 @@ abstract class NetworkException implements Exception {
   }
 
   String _getErrorMsg() {
+    print("statusCodeType ${statusCodeType}");
     if (statusCodeType == StatusCodeType.UNAUTHORIZED) {
       return "Unauthorized user";
     } else if (_statusCode == StatusCodeType.SERVER_ERROR) {

@@ -59,7 +59,10 @@ class SupportEmailViewModel extends BaseViewModel {
   }
 
   bool validateInput() {
-    if (messageController.text.isEmpty) {
+    if (subjectController.text.isEmpty) {
+      snackBarService.showSnackbar(message: "plz_sel_contact_type".tr());
+      return false;
+    } else if (messageController.text.isEmpty) {
       snackBarService.showSnackbar(message: "plz_enter_msg".tr());
       return false;
     }

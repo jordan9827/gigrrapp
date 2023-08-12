@@ -55,13 +55,6 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
               ),
             ),
           ),
-          Text(
-            "i_will_to_pay".tr(),
-            style: TSB.semiBoldSmall(),
-          ),
-          SizedBox(
-            height: SizeConfig.margin_padding_8,
-          ),
           _buildPriceCriteriaView(viewModel),
           SizedBox(
             height: SizeConfig.margin_padding_5,
@@ -115,9 +108,21 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
   }
 
   Widget _buildPriceCriteriaView(AddGigsViewModel viewModel) {
-    return PriceCriteriaView(
-      title: false,
-      controller: viewModel.priceTypeController,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "i_will_to_pay".tr(),
+          style: TSB.semiBoldSmall(),
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_8,
+        ),
+        PriceCriteriaView(
+          title: false,
+          controller: viewModel.priceTypeController,
+        ),
+      ],
     );
   }
 }

@@ -81,11 +81,14 @@ class CustomDropDownWidget extends StatelessWidget {
         Visibility(
           visible: visible,
           child: Container(
-            height: size ?? SizeConfig.margin_padding_50 * 5,
+            height: setHeightOfDrop(itemList.length),
             decoration: BoxDecoration(
               color: mainGrayColor,
               border: Border(
-                top: BorderSide(color: Colors.black38, width: 1),
+                top: BorderSide(
+                  color: Colors.black38,
+                  width: 1,
+                ),
               ),
             ),
             padding: EdgeInsets.symmetric(

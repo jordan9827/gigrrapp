@@ -96,7 +96,6 @@ class AddBankAccountScreenView extends StatelessWidget {
           hintText: "i.e. Saving",
           visible: viewModel.isVisible,
           itemList: viewModel.accountTypeList,
-          size: SizeConfig.margin_padding_50 * 2.5,
           onVisible: viewModel.onVisibleAction,
           groupValue: viewModel.accountTypeController.text,
           selectSingleItemsAction: viewModel.onItemSelectForAccountType,

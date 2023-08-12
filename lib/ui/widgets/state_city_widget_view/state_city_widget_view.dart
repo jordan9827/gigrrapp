@@ -41,7 +41,6 @@ class StateCityWidgetView extends StatelessWidget {
           _buildSpacer(),
           _buildTitle("city"),
           CustomDropDownWidget(
-            size: setHeightOfDrop(viewModel.stateCityService.cityList.length),
             isLoading: viewModel.isBusy,
             hintText: "i.e. Indore",
             itemList: viewModel.stateCityService.cityList

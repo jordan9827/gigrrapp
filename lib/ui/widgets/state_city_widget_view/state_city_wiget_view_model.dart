@@ -30,7 +30,7 @@ class StateCityWidgetViewModel extends BaseViewModel {
   }
 
   void onVisibleActionForCity() {
-    if (stateCityService.cityList.isNotEmpty) {
+    if (stateCityService.stateList.isNotEmpty) {
       isVisibleForCity = !isVisibleForCity;
     } else {
       snackBarService.showSnackbar(message: "plz_sel_state_first".tr());

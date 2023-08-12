@@ -10,7 +10,8 @@ part 'fetch_bank_detail_response.g.dart';
 class GetBankDetailResponse with _$GetBankDetailResponse {
   @JsonSerializable()
   const factory GetBankDetailResponse.success(
-    @JsonKey(name: "data") GetBankDetailResponseData data,
+    @JsonKey(name: "data", defaultValue: GetBankDetailResponseData.init)
+        GetBankDetailResponseData data,
     @JsonKey(name: "message", defaultValue: "") String message,
   ) = _GetBankDetailResponse;
 

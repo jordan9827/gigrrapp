@@ -19,79 +19,35 @@ class BankAccountScreenView extends StatelessWidget {
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) => viewModel.fetchAccountInfo(),
       viewModelBuilder: () => BankAccountViewModel(),
-      builder: (_, viewModel, child) => Scaffold(
-        backgroundColor: mainGrayColor,
-        appBar: getAppBar(
-          context,
-          "bank_account",
-          showBack: true,
-          onBackPressed: viewModel.navigationToBack,
-        ),
-        body: LoadingScreen(
-          loading: viewModel.isBusy,
-          child: Container(
-            margin: edgeInsetsMargin,
-            child: ListView(
-              children: [
-                _buildSpacer(),
-                Text(
-                  "your_upi_bank_acc".tr(),
-                  style: TSB.semiBoldMedium(
-                    textColor: independenceColor,
-                  ),
-                ),
-                _buildSpacer(),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(
-                    SizeConfig.margin_padding_15,
-                  ),
-                  decoration: BoxDecoration(
-                    color: mainWhiteColor,
-                    borderRadius: BorderRadius.circular(
-                      SizeConfig.margin_padding_10,
-                    ),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "HDFC Bank".tr(),
-                            style: TSB.semiBoldSmall(),
-                          ),
-                          _buildSpacer(
-                            SizeConfig.margin_padding_5,
-                          ),
-                          Text(
-                            "XXXXXXXXXX1234".tr(),
-                            style: TSB.regularSmall(),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Image.asset(
-                            ic_arrow_grey,
-                            scale: 2.5,
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-                _buildSpacer(),
-                _buildAccountListView(viewModel),
-                if (viewModel.bankInfoData.id == 0)
-                  _buildAddAccountView(viewModel)
-              ],
+      builder: (_, viewModel, child) {
+        var isAccount = (viewModel.bankInfoData.id != 0 &&
+            viewModel.bankInfoData.bankName.isNotEmpty);
+        return Scaffold(
+          backgroundColor: mainGrayColor,
+          appBar: getAppBar(
+            context,
+            "bank_account",
+            showBack: true,
+            onBackPressed: viewModel.navigationToBack,
+          ),
+          body: LoadingScreen(
+            loading: viewModel.isBusy,
+            child: Container(
+              margin: edgeInsetsMargin,
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  _buildSpacer(),
+                  _buildUPIView(),
+                  _buildSpacer(),
+                  if (isAccount) _buildAccountDetailView(viewModel),
+                  if (!isAccount) _buildAddAccountView(viewModel)
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -101,19 +57,82 @@ class BankAccountScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountListView(
+  Widget _buildUPIView() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSpacer(),
+        Text(
+          "your_upi_bank_acc".tr(),
+          style: TSB.semiBoldMedium(
+            textColor: independenceColor,
+          ),
+        ),
+        _buildSpacer(
+          SizeConfig.margin_padding_8,
+        ),
+        Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(
+            SizeConfig.margin_padding_15,
+          ),
+          decoration: BoxDecoration(
+            color: mainWhiteColor,
+            borderRadius: BorderRadius.circular(
+              SizeConfig.margin_padding_10,
+            ),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "HDFC Bank".tr(),
+                    style: TSB.semiBoldSmall(),
+                  ),
+                  _buildSpacer(
+                    SizeConfig.margin_padding_5,
+                  ),
+                  Text(
+                    "XXXXXXXXXX1234".tr(),
+                    style: TSB.regularSmall(),
+                  ),
+                ],
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset(
+                    ic_arrow_grey,
+                    scale: 2.5,
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAccountDetailView(
     BankAccountViewModel viewModel,
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _buildSpacer(),
         Text(
           "your_save_bank_acc".tr(),
           style: TSB.semiBoldMedium(
             textColor: independenceColor,
           ),
         ),
-        _buildSpacer(),
+        _buildSpacer(
+          SizeConfig.margin_padding_8,
+        ),
         Container(
           width: double.infinity,
           padding: EdgeInsets.all(

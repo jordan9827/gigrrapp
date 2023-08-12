@@ -1,11 +1,15 @@
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/util/enums/latLng.dart';
 import 'package:square_demo_architecture/util/extensions/validation_address.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.locator.dart';
+import '../../../app/app.router.dart';
+import '../../../data/local/preference_keys.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import 'package:mapbox_search/mapbox_search.dart';
 import '../../../domain/repos/auth_repos.dart';
@@ -15,6 +19,7 @@ import '../../widgets/location_helper.dart';
 class EditProfileViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
+  final sharedPreferences = locator<SharedPreferences>();
   final user = locator<UserAuthResponseData>();
   final authRepo = locator<Auth>();
 
@@ -37,16 +42,23 @@ class EditProfileViewModel extends BaseViewModel {
   }
 
   Future<void> setInitData() async {
+    mapBoxLoading = true;
     fullNameController.text = user.fullName;
     mobileController.text = user.mobile;
     addressController.text = user.address;
+    stateController.text = user.stateName;
+    cityController.text = user.cityName;
+    imageList.add(user.imageUrl);
     latLng = LatLng(
       double.parse(user.latitude),
       double.parse(user.longitude),
     );
+    log("latLng ${latLng.lat} && ${latLng.lng}");
+
     setBusy(true);
     await authRepo.loadState();
     setBusy(false);
+    mapBoxLoading = false;
   }
 
   void navigationToBack() {
@@ -131,8 +143,8 @@ class EditProfileViewModel extends BaseViewModel {
           snackBarService.showSnackbar(message: fail.errorMsg);
           setBusy(false);
         },
-        (resp) {
-          navigationService.back();
+        (resp) async {
+          await loadSuccessRes();
           snackBarService.showSnackbar(message: resp.message);
           setBusy(false);
         },
@@ -152,5 +164,15 @@ class EditProfileViewModel extends BaseViewModel {
     request['mobile_no'] = mobileController.text;
     log("Edit Profile Request : $request");
     return request;
+  }
+
+  Future<void> loadSuccessRes() async {
+    await sharedPreferences.clear();
+    await locator.reset();
+    await setupLocator();
+    locator<FCMService>().deleteToken();
+    await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
+    navigationService.clearStackAndShow(Routes.loginView);
+    setBusy(false);
   }
 }

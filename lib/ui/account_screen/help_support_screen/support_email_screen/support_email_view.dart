@@ -48,7 +48,6 @@ class _SupportEmailScreenViewState extends State<SupportEmailScreenView> {
                 SizeConfig.margin_padding_5,
               ),
               CustomDropDownWidget(
-                size: setHeightOfDrop(2),
                 hintText: "select_subject",
                 itemList: viewModel.contactSubjectList
                     .map((e) => e.name.toUpperCase())

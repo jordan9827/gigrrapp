@@ -144,14 +144,18 @@ Future<String> appVersion() async {
 }
 
 double setHeightOfDrop(int length) {
-  log("setHeightOfDrop $length");
-  double size = SizeConfig.margin_padding_50 * 5;
-  if (length <= 2) {
+  // log("setHeightOfDrop $length");
+  double size = SizeConfig.margin_padding_50 * 4.5;
+  if (length <= 1) {
+    return SizeConfig.margin_padding_50 * 1.1;
+  } else if (length <= 2) {
     return SizeConfig.margin_padding_50 * 1.5;
   } else if (length <= 3) {
-    return SizeConfig.margin_padding_50 * 2.5;
+    return SizeConfig.margin_padding_50 * 2.2;
   } else if (length <= 4) {
-    return SizeConfig.margin_padding_50 * 3.5;
+    return SizeConfig.margin_padding_50 * 3;
+  } else if (length <= 5) {
+    return SizeConfig.margin_padding_50 * 3.8;
   }
   return size;
 }

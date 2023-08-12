@@ -65,6 +65,10 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "aadhar_number", defaultValue: "") String aadhaarNumber,
     // @JsonKey(name: "age", defaultValue: "") String age,
     @JsonKey(name: "employer", defaultValue: false) bool isEmployer,
+    @JsonKey(name: "city_id", defaultValue: "") String cityId,
+    @JsonKey(name: "state_id", defaultValue: "") String stateId,
+    @JsonKey(name: "city_name", defaultValue: "") String cityName,
+    @JsonKey(name: "state_name", defaultValue: "") String stateName,
   ) = _UserAuthResponseData;
 
   factory UserAuthResponseData.fromJson(Map<String, dynamic> json) =>
@@ -80,7 +84,37 @@ class UserAuthResponseData with _$UserAuthResponseData {
   }
 
   static Future<UserAuthResponseData> getEmptyUser() async {
-    return const UserAuthResponseData("", 0, 0, "", "", "", "", "", "", "", "",
-        "", "", "", "", "", 0, 0, "", "", "", "", "", "", "", "", false);
+    return const UserAuthResponseData(
+        "",
+        0,
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        0,
+        0,
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        "",
+        false,
+        "",
+        "",
+        "",
+        "");
   }
 }

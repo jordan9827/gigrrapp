@@ -23,68 +23,65 @@ class CandidateKYCScreenView extends StatelessWidget {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => CandidateKYCViewModel(social: isSocial),
-      builder: (_, viewModel, child) => LoadingScreen(
-        loading: viewModel.isBusy,
-        showDialogLoading: true,
-        child: Scaffold(
-          appBar: getAppBar(
-            context,
-            "upload_kyc_document",
-            actions: [
-              InkWell(
-                onTap: viewModel.navigationToHomeScreen,
-                child: Container(
-                  margin: EdgeInsets.only(
-                    right: SizeConfig.margin_padding_15,
-                  ),
-                  height: SizeConfig.margin_padding_15,
-                  width: SizeConfig.margin_padding_15,
-                  child: Image.asset(ic_close_whit),
+      builder: (_, viewModel, child) => Scaffold(
+        appBar: getAppBar(
+          context,
+          "upload_kyc_document",
+          actions: [
+            InkWell(
+              onTap: viewModel.navigationToHomeScreen,
+              child: Container(
+                margin: EdgeInsets.only(
+                  right: SizeConfig.margin_padding_15,
                 ),
+                height: SizeConfig.margin_padding_15,
+                width: SizeConfig.margin_padding_15,
+                child: Image.asset(ic_close_whit),
+              ),
+            ),
+          ],
+        ),
+        body: Container(
+          padding: edgeInsetsMargin,
+          child: ListView(
+            children: [
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              CVMTextFormField(
+                maxLength: 12,
+                title: "enter_aadhaar_no",
+                hintForm: "i.e. 1234 1234 1234",
+                controller: viewModel.aadhaarController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+              ),
+              _buildPickedImageWidget(
+                context,
+                viewModel: viewModel,
+                title: "upload_front_pic_aadhaar",
+                subTitle: "upload_front_pic_aadhaar",
+                image: viewModel.frontAadhaarImage,
+              ),
+              _buildPickedImageWidget(
+                context,
+                viewModel: viewModel,
+                title: "upload_back_pic_aadhaar",
+                subTitle: "upload_back_pic_aadhaar",
+                image: viewModel.backAadhaarImage,
+                isFont: false,
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              LoadingButton(
+                loading: viewModel.isBusy,
+                action: viewModel.candidateKYCApi,
+                title: 'submit',
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
               ),
             ],
-          ),
-          body: Container(
-            padding: edgeInsetsMargin,
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: SizeConfig.margin_padding_20,
-                ),
-                CVMTextFormField(
-                  maxLength: 12,
-                  title: "enter_aadhaar_no",
-                  hintForm: "i.e. 1234 1234 1234",
-                  controller: viewModel.aadhaarController,
-                  keyboardType: TextInputType.numberWithOptions(decimal: true),
-                ),
-                _buildPickedImageWidget(
-                  context,
-                  viewModel: viewModel,
-                  title: "upload_front_pic_aadhaar",
-                  subTitle: "upload_front_pic_aadhaar",
-                  image: viewModel.frontAadhaarImage,
-                ),
-                _buildPickedImageWidget(
-                  context,
-                  viewModel: viewModel,
-                  title: "upload_back_pic_aadhaar",
-                  subTitle: "upload_back_pic_aadhaar",
-                  image: viewModel.backAadhaarImage,
-                  isFont: false,
-                ),
-                SizedBox(
-                  height: SizeConfig.margin_padding_20,
-                ),
-                LoadingButton(
-                  action: viewModel.candidateKYCApi,
-                  title: 'submit',
-                ),
-                SizedBox(
-                  height: SizeConfig.margin_padding_20,
-                ),
-              ],
-            ),
           ),
         ),
       ),

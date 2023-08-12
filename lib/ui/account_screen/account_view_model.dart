@@ -49,6 +49,7 @@ class AccountViewModel extends BaseViewModel {
   }
 
   Future<void> notificationSwitchAction(bool val) async {
+    setBusy(true);
     notificationSwitch = !notificationSwitch;
     notifyListeners();
     var data = notificationSwitch ? "on" : "off";
@@ -154,7 +155,7 @@ class AccountViewModel extends BaseViewModel {
     response.fold((failure) {
       setBusy(false);
     }, (response) async {
-      await logOut();
+      await loadSuccessRes();
       snackBarService.showSnackbar(message: response.message);
       setBusy(false);
     });
@@ -165,14 +166,19 @@ class AccountViewModel extends BaseViewModel {
     setBusy(true);
     var res = await authRepo.logout();
     res.fold((l) => failRes(l), (r) async {
-      await sharedPreferences.clear();
-      await locator.reset();
-      await setupLocator();
-      locator<FCMService>().deleteToken();
-      await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
-      navigationService.clearStackAndShow(Routes.loginView);
+      loadSuccessRes();
       setBusy(false);
     });
     notifyListeners();
+  }
+
+  Future<void> loadSuccessRes() async {
+    await sharedPreferences.clear();
+    await locator.reset();
+    await setupLocator();
+    locator<FCMService>().deleteToken();
+    await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
+    navigationService.clearStackAndShow(Routes.loginView);
+    setBusy(false);
   }
 }

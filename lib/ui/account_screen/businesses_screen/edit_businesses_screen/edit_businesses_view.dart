@@ -59,9 +59,6 @@ class EditBusinessesScreenView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: SizeConfig.margin_padding_24,
-        ),
         BusinessTypeDropDownView(
           controller: viewModel.businessTypeController,
         ),

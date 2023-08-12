@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -79,7 +78,9 @@ class OTPVerifyScreenModel extends BaseViewModel {
 
   Future<void> sendOTP() async {
     setBusy(true);
-    final response = await authRepo.sendOTP(await _getRequestForSendOtp());
+    final response = await authRepo.sendOTP(
+      await _getRequestForSendOtp(),
+    );
     response.fold(
       (fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);
@@ -109,7 +110,9 @@ class OTPVerifyScreenModel extends BaseViewModel {
   void verifyOTP() async {
     FocusManager.instance.primaryFocus?.unfocus();
     setBusy(true);
-    final response = await authRepo.verifyOTP(await _getRequestForVerifyOtp());
+    final response = await authRepo.verifyOTP(
+      await _getRequestForVerifyOtp(),
+    );
     response.fold(
       (fail) {
         pinController.clear();
@@ -140,7 +143,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
     request['device_token'] = (await fcmToken());
     request['device_type'] = getDeviceType();
     request['certification_type'] = "development";
-    log('Body Verify OTP :: $request');
     return request;
   }
 
@@ -150,7 +152,6 @@ class OTPVerifyScreenModel extends BaseViewModel {
     request['country_code'] = countryCode;
     request['mobile_no'] = mobileNumber;
     request['otp_type'] = getOTPType();
-    log('Body Send OTP :: $request');
     return request;
   }
 

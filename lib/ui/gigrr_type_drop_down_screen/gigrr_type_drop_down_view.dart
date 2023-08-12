@@ -3,15 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../../util/others/text_styles.dart';
+import '../../others/constants.dart';
 import '../widgets/custom_drop_down.dart';
 import 'gigrr_type_drop_down_view_model.dart';
 
 class GigrrTypeDropDownView extends StatelessWidget {
   final TextEditingController controller;
   final String title;
-  GigrrTypeDropDownView(
-      {Key? key, required this.controller, required this.title})
-      : super(key: key);
+  GigrrTypeDropDownView({
+    Key? key,
+    required this.controller,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,6 @@ class GigrrTypeDropDownView extends StatelessWidget {
             onMultiSelectedList: viewModel.selectedItemList,
             selectMultipleItemsAction: viewModel.onItemSelect,
           ),
-
         ],
       ),
     );

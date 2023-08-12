@@ -21,12 +21,18 @@ class BusinessesViewModel extends BaseViewModel {
 
   BusinessesViewModel() {
     fetchAllBusinessesApi();
+    businessTypeCategoryApiCall();
   }
 
   void navigatorToBack() {
     if (!isBusy) {
       navigationService.back();
     }
+  }
+
+  Future<void> businessTypeCategoryApiCall() async {
+    setBusy(true);
+    await businessRepo.businessTypeCategory();
   }
 
   Future<void> refreshScreen() async {

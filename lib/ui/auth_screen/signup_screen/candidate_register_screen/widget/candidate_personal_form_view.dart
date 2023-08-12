@@ -58,9 +58,14 @@ class CandidatePersonalInfoFormView
                   : viewModel.dobController.text,
             ),
             suffixIcon: InkWell(
-              onTap: () => selectDatePicker(context, viewModel: viewModel),
+              onTap: () => selectDatePicker(
+                context,
+                viewModel: viewModel,
+              ),
               child: Container(
-                padding: EdgeInsets.all(SizeConfig.margin_padding_10),
+                padding: EdgeInsets.all(
+                  SizeConfig.margin_padding_10,
+                ),
                 height: SizeConfig.margin_padding_15,
                 width: SizeConfig.margin_padding_15,
                 child: Image.asset(
