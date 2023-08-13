@@ -49,6 +49,10 @@ class EmployerPersonalInfoFormView
             pinController: viewModel.pinCodeController,
             mapBoxPlace: viewModel.mapBoxPlace,
           ),
+          CVMTextFormField(
+            title: "add_pin_map",
+            formWidget: _buildGoogleMap(viewModel),
+          ),
           LoadingButton(
             action: viewModel.navigationToBusinessFormView,
             title: "next_add_business",
@@ -59,5 +63,14 @@ class EmployerPersonalInfoFormView
         ],
       ),
     );
+  }
+
+  Widget _buildGoogleMap(EmployerRegisterViewModel viewModel) {
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+            lat: viewModel.latLng.lat,
+            lng: viewModel.latLng.lng,
+          );
   }
 }

@@ -24,6 +24,7 @@
  "pinCode": "Pin code",
  "add_pin_map": "Address Pin on Map",
  "address": "Address",
+ "set_default_address": "Set Default Address",
  "mobile_number": "Mobile Number",
  "full_name": "Full Name",
  "upload_business_pictures": "Upload Business Pictures",

@@ -55,6 +55,11 @@ class GetBusinessesData with _$GetBusinessesData {
     @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "longitude", defaultValue: "") String longitude,
     @JsonKey(name: "status", defaultValue: "") String status,
+    @JsonKey(name: "city", defaultValue: 0) int cityId,
+    @JsonKey(name: "state", defaultValue: 0) int stateId,
+    @JsonKey(name: "city_name", defaultValue: "") String cityName,
+    @JsonKey(name: "state_name", defaultValue: "") String stateName,
+    @JsonKey(name: "pincode", defaultValue: 0) int postCode,
     @JsonKey(name: "category", defaultValue: CategoryResp.getEmptyCategory)
         CategoryResp categoryResp,
     @JsonKey(name: "business_images", defaultValue: [])

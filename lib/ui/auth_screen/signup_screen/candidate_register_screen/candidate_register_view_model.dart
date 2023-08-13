@@ -181,8 +181,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
     addressController.text = data.mapBoxPlace.placeName;
     stateController.text = addressData.state.toUpperCase();
     cityController.text = addressData.city.toUpperCase();
-    await LocationHelper.setCity(stateController.text);
     pinCodeController.text = addressData.postCode;
+    await LocationHelper.setCity(addressData.state);
     mapBoxLoading = false;
     notifyListeners();
   }

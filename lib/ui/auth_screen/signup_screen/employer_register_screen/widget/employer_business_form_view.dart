@@ -7,6 +7,8 @@ import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../widgets/custom_image_picker/custom_image_picker_view.dart';
 import '../../../../widgets/cvm_text_form_field.dart';
+import '../../../../widgets/map_box/google_map_box_view.dart';
+import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import '../employer_register_view_model.dart';
 
 class EmployerBusinessInfoFormView
@@ -36,27 +38,17 @@ class EmployerBusinessInfoFormView
           BusinessTypeDropDownView(
             controller: viewModel.businessTypeController,
           ),
-          CVMTextFormField(
-            title: "address",
-            readOnly: true,
-            controller: viewModel.addressController,
-            hintForm: "i.e. House no., Street name, Area",
-            onTap: viewModel.mapBoxPlace,
+          MapBoxAddressFormViewWidget(
+            latLng: viewModel.latLng,
+            cityController: viewModel.cityController,
+            addressController: viewModel.addressController,
+            stateController: viewModel.stateController,
+            pinController: viewModel.pinCodeController,
+            mapBoxPlace: viewModel.mapBoxPlace,
           ),
           CVMTextFormField(
-            title: "city",
-            hintForm: "i.e. Indore",
-            controller: viewModel.cityController,
-          ),
-          CVMTextFormField(
-            title: "state",
-            hintForm: "i.e. Madhya Pradesh",
-            controller: viewModel.stateController,
-          ),
-          CVMTextFormField(
-            title: "pinCode",
-            hintForm: "i.e. 452001",
-            controller: viewModel.pinCodeController,
+            title: "add_pin_map",
+            formWidget: _buildGoogleMap(viewModel),
           ),
           CVMTextFormField(
             title: "upload_business_pictures",
@@ -91,5 +83,14 @@ class EmployerBusinessInfoFormView
     return SizedBox(
       height: size ?? SizeConfig.margin_padding_10,
     );
+  }
+
+  Widget _buildGoogleMap(EmployerRegisterViewModel viewModel) {
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+            lat: viewModel.latLng.lat,
+            lng: viewModel.latLng.lng,
+          );
   }
 }

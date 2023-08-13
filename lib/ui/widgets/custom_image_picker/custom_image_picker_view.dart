@@ -174,8 +174,9 @@ class CustomImagePickerView extends StatelessWidget {
       margin: EdgeInsets.only(
         right: SizeConfig.margin_padding_8,
       ),
+      padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: mainGrayColor,
         borderRadius: const BorderRadius.all(
           Radius.circular(15),
         ),

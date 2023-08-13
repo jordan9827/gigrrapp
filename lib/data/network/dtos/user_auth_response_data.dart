@@ -45,6 +45,7 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "country_code", defaultValue: "") String countryCode,
     @JsonKey(name: "status", defaultValue: "") String status,
     @JsonKey(name: "profile_status", defaultValue: "") String profileStatus,
+    @JsonKey(name: "profile_image", defaultValue: "") String profileImage,
     @JsonKey(name: "email", defaultValue: "") String email,
     @JsonKey(name: "access_token", defaultValue: "") String accessToken,
     @JsonKey(name: "token", defaultValue: "") String token,
@@ -69,6 +70,10 @@ class UserAuthResponseData with _$UserAuthResponseData {
     @JsonKey(name: "state_id", defaultValue: "") String stateId,
     @JsonKey(name: "city_name", defaultValue: "") String cityName,
     @JsonKey(name: "state_name", defaultValue: "") String stateName,
+    @JsonKey(name: "pincode", defaultValue: 0) int postCode,
+    @JsonKey(name: "state", defaultValue: UserStateResponse.emptyData)
+        UserStateResponse state,
+    @JsonKey(name: "city", defaultValue: []) List<UserCityResponse> cityList,
   ) = _UserAuthResponseData;
 
   factory UserAuthResponseData.fromJson(Map<String, dynamic> json) =>
@@ -84,37 +89,73 @@ class UserAuthResponseData with _$UserAuthResponseData {
   }
 
   static Future<UserAuthResponseData> getEmptyUser() async {
-    return const UserAuthResponseData(
-        "",
-        0,
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        0,
-        0,
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        "",
-        false,
-        "",
-        "",
-        "",
-        "");
+    return UserAuthResponseData(
+      "",
+      0,
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      0,
+      0,
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      false,
+      "",
+      "",
+      "",
+      "",
+      0,
+      UserStateResponse.emptyData(),
+      [],
+    );
   }
+}
+
+@freezed
+@JsonToType()
+class UserStateResponse with _$UserStateResponse {
+  @JsonSerializable(explicitToJson: true)
+  const factory UserStateResponse(
+    @JsonKey(name: "id", defaultValue: 0) int id,
+    @JsonKey(name: "name", defaultValue: "") String name,
+    @JsonKey(name: "country_id", defaultValue: 0) int countryId,
+  ) = _UserStateResponse;
+
+  factory UserStateResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserStateResponseFromJson(json);
+
+  static UserStateResponse emptyData() => UserStateResponse.fromJson({});
+}
+
+@freezed
+@JsonToType()
+class UserCityResponse with _$UserCityResponse {
+  @JsonSerializable(explicitToJson: true)
+  const factory UserCityResponse(
+    @JsonKey(name: "id", defaultValue: 0) int id,
+    @JsonKey(name: "name", defaultValue: "") String name,
+    @JsonKey(name: "state_id", defaultValue: 0) int countryId,
+  ) = _UserCityResponse;
+
+  factory UserCityResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserCityResponseFromJson(json);
+  static UserCityResponse emptyData() => UserCityResponse.fromJson({});
 }

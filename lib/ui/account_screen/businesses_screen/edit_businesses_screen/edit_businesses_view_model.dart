@@ -1,7 +1,5 @@
-import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
@@ -11,6 +9,10 @@ import '../../../../domain/repos/business_repos.dart';
 import '../../../../others/constants.dart';
 import 'package:mapbox_search/mapbox_search.dart' as auto;
 
+import '../../../../util/enums/latLng.dart';
+import '../../../../util/extensions/state_city_extension.dart';
+import '../../../widgets/location_helper.dart';
+
 class EditBusinessesViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
@@ -18,11 +20,13 @@ class EditBusinessesViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   bool mapBoxLoading = false;
 
-  TextEditingController businessNameController = TextEditingController();
-  TextEditingController businessTypeController = TextEditingController();
-  TextEditingController mobileController = TextEditingController();
-  TextEditingController addressController =
-      TextEditingController(text: "House no., Street name, Area");
+  final TextEditingController addressController = TextEditingController();
+  final TextEditingController cityController = TextEditingController();
+  final TextEditingController stateController = TextEditingController();
+  final TextEditingController pinCodeController = TextEditingController();
+  final TextEditingController businessNameController = TextEditingController();
+  final TextEditingController businessTypeController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
   int businessId = 0;
   LatLng latLng = const LatLng(14.508, 46.048);
 
@@ -38,6 +42,9 @@ class EditBusinessesViewModel extends BaseViewModel {
   void initialDataLoad(GetBusinessesData e) {
     businessNameController.text = e.businessName;
     addressController.text = e.businessAddress;
+    stateController.text = e.stateName;
+    cityController.text = e.cityName;
+    pinCodeController.text = e.postCode.toString();
     businessTypeController.text = e.categoryResp.id.toString();
     businessId = e.id;
     for (var i in e.businessesImage) imageList!.add(i.imageUrl);
@@ -45,7 +52,7 @@ class EditBusinessesViewModel extends BaseViewModel {
 
   void navigationToBack() {
     if (!isBusy) {
-      navigationService.back();
+      navigationService.back(result: false);
     }
     return;
   }
@@ -59,10 +66,14 @@ class EditBusinessesViewModel extends BaseViewModel {
         language: languageCode,
         country: countryType,
         onSelect: (place) async {
-          addressController.text = place.placeName;
-          latLng = LatLng(
-            place.coordinates!.latitude,
-            place.coordinates!.longitude,
+          setAddressPlace(
+            LocationDataUpdate(
+              mapBoxPlace: place,
+              latLng: LatLng(
+                place.coordinates!.latitude,
+                place.coordinates!.longitude,
+              ),
+            ),
           );
           setBusy(false);
           notifyListeners();
@@ -72,6 +83,21 @@ class EditBusinessesViewModel extends BaseViewModel {
     );
     await Future.delayed(Duration(milliseconds: 500));
     mapBoxLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> setAddressPlace(LocationDataUpdate data) async {
+    var coordinates = data.latLng;
+    latLng = LatLng(
+      coordinates.lat,
+      coordinates.lng,
+    );
+    var addressData = data.mapBoxPlace.placeContext;
+    addressController.text = data.mapBoxPlace.placeName;
+    stateController.text = addressData.state.toUpperCase();
+    cityController.text = addressData.city.toUpperCase();
+    pinCodeController.text = addressData.postCode;
+    await LocationHelper.setCity(addressData.state);
     notifyListeners();
   }
 
@@ -102,7 +128,7 @@ class EditBusinessesViewModel extends BaseViewModel {
           setBusy(false);
         },
         (resp) {
-          navigationService.back();
+          navigationService.back(result: true);
           snackBarService.showSnackbar(message: resp.message);
         },
       );
@@ -112,14 +138,24 @@ class EditBusinessesViewModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForUpdateBusiness() async {
     Map<String, String> request = {};
+    var stateId = StateCityHelper.findId(
+      value: stateController.text,
+    );
+    var cityId = StateCityHelper.findId(
+      isState: false,
+      value: cityController.text,
+    );
     request['business_id'] = businessId.toString();
     request['business_type'] = businessTypeController.text;
     request['business_name'] = businessNameController.text;
     request['business_address'] = addressController.text;
-    request['business_latitude'] = latLng.latitude.toString();
-    request['business_longitude'] = latLng.longitude.toString();
+    request['state'] = stateId;
+    request['city'] = cityId;
+    request['pincode'] = pinCodeController.text;
+    request['business_latitude'] = latLng.lat.toString();
+    request['business_longitude'] = latLng.lng.toString();
     request['images'] = imageList!.join(', ');
-    log("getRequestForCompleteProfile :: $request");
+    // log("getRequestForCompleteProfile :: $request");
     return request;
   }
 }

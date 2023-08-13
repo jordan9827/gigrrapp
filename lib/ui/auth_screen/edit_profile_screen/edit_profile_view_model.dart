@@ -15,6 +15,7 @@ import 'package:mapbox_search/mapbox_search.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 import '../../widgets/location_helper.dart';
+import '../../../../util/extensions/state_city_extension.dart';
 
 class EditProfileViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -46,14 +47,16 @@ class EditProfileViewModel extends BaseViewModel {
     fullNameController.text = user.fullName;
     mobileController.text = user.mobile;
     addressController.text = user.address;
-    stateController.text = user.stateName;
-    cityController.text = user.cityName;
+    stateController.text = user.state.name;
+    if (user.cityList.isNotEmpty)
+      cityController.text = user.cityList.first.name;
+    pinCodeController.text = user.postCode.toString();
     imageList.add(user.imageUrl);
     latLng = LatLng(
       double.parse(user.latitude),
       double.parse(user.longitude),
     );
-    log("latLng ${latLng.lat} && ${latLng.lng}");
+    log("profileImage ${user.profileImage}");
 
     setBusy(true);
     await authRepo.loadState();
@@ -127,8 +130,8 @@ class EditProfileViewModel extends BaseViewModel {
     addressController.text = data.mapBoxPlace.placeName;
     stateController.text = addressData.state.toUpperCase();
     cityController.text = addressData.city.toUpperCase();
-    await LocationHelper.setCity(stateController.text);
     pinCodeController.text = addressData.postCode;
+    await LocationHelper.setCity(addressData.state);
     mapBoxLoading = false;
     notifyListeners();
   }
@@ -136,8 +139,9 @@ class EditProfileViewModel extends BaseViewModel {
   Future<void> editProfileApiCall() async {
     if (validationCompleteProfile()) {
       setBusy(true);
-      final response =
-          await authRepo.editProfile(await _getRequestForEditProfile());
+      final response = await authRepo.editProfile(
+        await _getRequestForEditProfile(),
+      );
       response.fold(
         (fail) {
           snackBarService.showSnackbar(message: fail.errorMsg);
@@ -154,10 +158,20 @@ class EditProfileViewModel extends BaseViewModel {
   }
 
   Future<Map<String, String>> _getRequestForEditProfile() async {
+    var stateId = StateCityHelper.findId(
+      value: stateController.text,
+    );
+    var cityId = StateCityHelper.findId(
+      isState: false,
+      value: cityController.text,
+    );
     Map<String, String> request = {};
     request['full_name'] = fullNameController.text;
     request['profile_image'] = imageList.first;
     request['address'] = addressController.text;
+    request['state'] = stateId;
+    request['city'] = cityId;
+    request['pincode'] = pinCodeController.text;
     request['latitude'] = latLng.lat.toString();
     request['longitude'] = latLng.lng.toString();
     request['country_code'] = "+91";
@@ -171,8 +185,13 @@ class EditProfileViewModel extends BaseViewModel {
     await locator.reset();
     await setupLocator();
     locator<FCMService>().deleteToken();
-    await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
-    navigationService.clearStackAndShow(Routes.loginView);
+    await sharedPreferences.setBool(
+      PreferenceKeys.FIRST_TIME.text,
+      false,
+    );
+    navigationService.clearStackAndShow(
+      Routes.loginView,
+    );
     setBusy(false);
   }
 }

@@ -12,6 +12,7 @@ import '../../../business_type_drop_down_screen/business_type_drop_down_view.dar
 import '../../../widgets/custom_image_picker/custom_image_picker_view.dart';
 import '../../../widgets/cvm_text_form_field.dart';
 import '../../../widgets/map_box/google_map_box_view.dart';
+import '../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import 'edit_businesses_view_model.dart';
 
 class EditBusinessesScreenView extends StatelessWidget {
@@ -67,16 +68,13 @@ class EditBusinessesScreenView extends StatelessWidget {
           hintForm: "i.e. Jack Milton",
           controller: viewModel.businessNameController,
         ),
-        CVMTextFormField(
-          title: "enter_business_address",
-          readOnly: true,
-          controller: viewModel.addressController,
-          hintForm: "i.e. House no., Street name, Area",
-          onTap: viewModel.mapBoxPlace,
-        ),
-        CVMTextFormField(
-          title: "add_pin_map",
-          formWidget: _buildGoogleMap(viewModel),
+        MapBoxAddressFormViewWidget(
+          latLng: viewModel.latLng,
+          cityController: viewModel.cityController,
+          addressController: viewModel.addressController,
+          stateController: viewModel.stateController,
+          pinController: viewModel.pinCodeController,
+          mapBoxPlace: viewModel.mapBoxPlace,
         ),
         CVMTextFormField(
           title: "upload_Profile_pictures",
@@ -119,15 +117,6 @@ class EditBusinessesScreenView extends StatelessWidget {
         )
       ],
     );
-  }
-
-  Widget _buildGoogleMap(EditBusinessesViewModel viewModel) {
-    return viewModel.mapBoxLoading
-        ? MapBoxShimmerWidget()
-        : GoogleMapBoxScreen(
-            lat: viewModel.latLng.latitude,
-            lng: viewModel.latLng.longitude,
-          );
   }
 
   Widget _buildSaveButton(EditBusinessesViewModel viewModel) {

@@ -1,11 +1,9 @@
 import 'package:square_demo_architecture/data/network/dtos/get_address_response.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
-import '../../../../domain/repos/account_repos.dart';
 import '../../../../domain/repos/common_repos.dart';
 
 class ManageAddressViewModel extends BaseViewModel {
@@ -24,28 +22,29 @@ class ManageAddressViewModel extends BaseViewModel {
   }
 
   Future<void> navigationToAddAddressView() async {
-    bool isCheck = await navigationService.navigateTo(
+    var isCheck = await navigationService.navigateTo(
       Routes.addAddressScreenView,
+      arguments: AddAddressScreenViewArguments(
+        isEdit: true,
+        addressData: GetAddressResponseData.emptyData(),
+      ),
     );
-    if (isCheck) {
+    if (isCheck ?? false) {
       fetchAddress();
     }
   }
 
-  Future<void> navigationToEditAddressView(GetAddressResponseData data) async {
-    bool isCheck = false;
-    isCheck = await navigationService.navigateTo(
+  Future<void> navigationToEditAddressView(
+    GetAddressResponseData data,
+  ) async {
+    var isCheck = await navigationService.navigateTo(
       Routes.addAddressScreenView,
       arguments: AddAddressScreenViewArguments(
         isEdit: true,
-        state: data.state,
-        pinCode: data.pincode,
-        address: data.address,
-        city: data.city,
-        addressType: data.addressType,
+        addressData: data,
       ),
     );
-    if (isCheck) {
+    if (isCheck ?? false) {
       fetchAddress();
     }
   }

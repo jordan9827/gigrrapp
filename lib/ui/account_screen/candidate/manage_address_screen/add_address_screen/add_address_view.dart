@@ -7,24 +7,19 @@ import 'package:stacked/stacked.dart';
 import '../../../../../others/common_app_bar.dart';
 import '../../../../../util/others/text_styles.dart';
 import '../../../../widgets/custom_drop_down.dart';
+import '../../../../widgets/cvm_text_form_field.dart';
+import '../../../../widgets/map_box/google_map_box_view.dart';
 import '../../../../widgets/mapbox_address_form_screen/mapbox_address_form_view.dart';
 import 'add_address_view_model.dart';
+import 'package:square_demo_architecture/data/network/dtos/get_address_response.dart';
 
 class AddAddressScreenView extends StatelessWidget {
-  final String addressType;
-  final String address;
-  final String city;
-  final String state;
-  final String pinCode;
+  final GetAddressResponseData addressData;
   final bool isEdit;
   const AddAddressScreenView({
     Key? key,
-    this.addressType = "",
-    this.address = "",
-    this.city = "",
-    this.state = "",
+    required this.addressData,
     this.isEdit = false,
-    this.pinCode = "",
   }) : super(key: key);
 
   @override
@@ -33,11 +28,8 @@ class AddAddressScreenView extends StatelessWidget {
     var appTitle = isEdit ? "edit_address" : "add_address";
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => AddAddressViewModel(
-        address: address,
-        addressType: addressType,
-        city: city,
-        pinCode: pinCode,
-        state: state,
+        data: addressData,
+        isEdit: isEdit,
       ),
       builder: (_, viewModel, child) => Scaffold(
         appBar: getAppBar(
@@ -62,6 +54,11 @@ class AddAddressScreenView extends StatelessWidget {
                 pinController: viewModel.pinCodeController,
                 mapBoxPlace: viewModel.mapBoxPlace,
               ),
+              CVMTextFormField(
+                title: "add_pin_map",
+                formWidget: _buildGoogleMap(viewModel),
+              ),
+              _buildDefaultAddressView(viewModel),
               _buildSpacer(),
               LoadingButton(
                 loading: viewModel.isBusy,
@@ -79,6 +76,30 @@ class AddAddressScreenView extends StatelessWidget {
   Widget _buildSpacer([double? size]) {
     return SizedBox(
       height: size ?? SizeConfig.margin_padding_24,
+    );
+  }
+
+  Widget _buildDefaultAddressView(
+    AddAddressViewModel viewModel,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(
+            bottom: SizeConfig.margin_padding_8,
+          ),
+          child: Text(
+            "set_default_address".tr(),
+            style: TSB.regularSmall(),
+          ),
+        ),
+        Switch(
+          value: viewModel.defaultAddressSwitch,
+          activeColor: mainPinkColor,
+          onChanged: viewModel.defaultSwitchAction,
+        ),
+      ],
     );
   }
 
@@ -110,5 +131,14 @@ class AddAddressScreenView extends StatelessWidget {
         )
       ],
     );
+  }
+
+  Widget _buildGoogleMap(AddAddressViewModel viewModel) {
+    return viewModel.mapBoxLoading
+        ? MapBoxShimmerWidget()
+        : GoogleMapBoxScreen(
+            lat: viewModel.latLng.lat,
+            lng: viewModel.latLng.lng,
+          );
   }
 }

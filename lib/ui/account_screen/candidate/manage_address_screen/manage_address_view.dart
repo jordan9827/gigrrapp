@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/get_address_response.dart';
 import '../../../../others/common_app_bar.dart';
 import '../../../../others/loading_screen.dart';
+import '../../../widgets/empty_data_screen.dart';
 import 'manage_address_view_model.dart';
 
 class ManageAddressScreenView extends StatelessWidget {
@@ -48,13 +49,8 @@ class ManageAddressScreenView extends StatelessWidget {
                 SizedBox(
                   height: SizeConfig.margin_padding_15,
                 ),
-                Column(
-                  children: viewModel.addressList
-                      .map(
-                        (e) => _buildAddressView(viewModel, e),
-                      )
-                      .toList(),
-                )
+                _buildAddressList(viewModel),
+                if (viewModel.addressList.isEmpty) EmptyDataScreenView()
               ],
             ),
           ),
@@ -63,8 +59,23 @@ class ManageAddressScreenView extends StatelessWidget {
     );
   }
 
+  Widget _buildAddressList(
+    ManageAddressViewModel viewModel,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: viewModel.addressList
+          .map(
+            (e) => _buildAddressView(viewModel, e),
+          )
+          .toList(),
+    );
+  }
+
   Widget _buildAddressView(
-      ManageAddressViewModel viewModel, GetAddressResponseData data) {
+    ManageAddressViewModel viewModel,
+    GetAddressResponseData data,
+  ) {
     return Container(
       padding: EdgeInsets.all(
         SizeConfig.margin_padding_10,
@@ -98,6 +109,8 @@ class ManageAddressScreenView extends StatelessWidget {
                 SizedBox(height: 3),
                 Text(
                   data.address,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TSB.regularVSmall(
                     textColor: textRegularColor,
                   ),

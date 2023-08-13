@@ -6,6 +6,7 @@ import '../../../app/app.locator.dart';
 import '../../../app/app.router.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../domain/repos/auth_repos.dart';
 import '../../../domain/repos/business_repos.dart';
 
 final GlobalKey<RefreshIndicatorState> businessRefreshKey =
@@ -17,6 +18,8 @@ class BusinessesViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final user = locator<UserAuthResponseData>();
   final businessRepo = locator<BusinessRepo>();
+  final authRepo = locator<Auth>();
+
   List<GetBusinessesData> businessesList = <GetBusinessesData>[];
 
   BusinessesViewModel() {
@@ -33,6 +36,7 @@ class BusinessesViewModel extends BaseViewModel {
   Future<void> businessTypeCategoryApiCall() async {
     setBusy(true);
     await businessRepo.businessTypeCategory();
+    await authRepo.loadState();
   }
 
   Future<void> refreshScreen() async {
@@ -41,19 +45,23 @@ class BusinessesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void navigationToAddBusinessView() {
-    navigationService.navigateTo(Routes.addBusinessesScreenView);
+  Future<void> navigationToAddBusinessView() async {
+    var isCheck = await navigationService.navigateTo(
+      Routes.addBusinessesScreenView,
+    );
+    if (isCheck ?? false) await fetchAllBusinessesApi();
   }
 
   Future<void> navigatorToEditBusinessesView(GetBusinessesData e) async {
-    await navigationService.navigateTo(
+    var isCheck = await navigationService.navigateTo(
       Routes.editBusinessesScreenView,
       arguments: EditBusinessesScreenViewArguments(businessData: e),
     );
-    await fetchAllBusinessesApi();
+    if (isCheck ?? false) await fetchAllBusinessesApi();
   }
 
   Future<void> fetchAllBusinessesApi() async {
+    businessesList.clear();
     setBusy(true);
     final response = await businessRepo.fetchAllBusinessesApi();
     response.fold(

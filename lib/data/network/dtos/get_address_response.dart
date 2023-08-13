@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
+import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 
 part 'get_address_response.freezed.dart';
 
@@ -34,11 +35,19 @@ class GetAddressResponseData with _$GetAddressResponseData {
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
     @JsonKey(name: "address_type", defaultValue: "") String addressType,
     @JsonKey(name: "address", defaultValue: "") String address,
-    @JsonKey(name: "pincode", defaultValue: "") String pincode,
-    @JsonKey(name: "state", defaultValue: "") String state,
-    @JsonKey(name: "faq_status", defaultValue: "") String city,
+    @JsonKey(name: "pincode", defaultValue: "") String postCode,
+    @JsonKey(name: "default_address", defaultValue: 0) int defaultAddress,
+    @JsonKey(name: "state_id", defaultValue: 0) int stateId,
+    @JsonKey(name: "city_id", defaultValue: 0) int cityId,
+    @JsonKey(name: "state", defaultValue: UserStateResponse.emptyData)
+        UserStateResponse state,
+    @JsonKey(name: "city", defaultValue: UserCityResponse.emptyData)
+        UserCityResponse city,
   ) = _GetAddressResponseData;
 
   factory GetAddressResponseData.fromJson(Map<String, dynamic> json) =>
       _$GetAddressResponseDataFromJson(json);
+
+  static GetAddressResponseData emptyData() =>
+      GetAddressResponseData.fromJson({});
 }

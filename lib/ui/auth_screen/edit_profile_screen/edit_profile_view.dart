@@ -90,7 +90,9 @@ class EditProfileScreenView extends StatelessWidget {
 
   Widget _buildTitle(String val) {
     return Padding(
-      padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
+      padding: EdgeInsets.only(
+        bottom: SizeConfig.margin_padding_8,
+      ),
       child: Text(
         val.tr(),
         style: TSB.regularSmall(),

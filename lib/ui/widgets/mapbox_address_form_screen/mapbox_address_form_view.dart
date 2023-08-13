@@ -48,9 +48,6 @@ class MapBoxAddressFormViewWidget extends StatelessWidget {
           controller: pinController,
           hintForm: "i.e. 452001",
         ),
-        SizedBox(
-          height: SizeConfig.margin_padding_10,
-        ),
       ],
     );
   }

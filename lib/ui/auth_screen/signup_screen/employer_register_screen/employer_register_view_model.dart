@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:flutter/cupertino.dart';
+import '../../../../util/extensions/state_city_extension.dart';
 import 'package:location/location.dart';
 import 'package:square_demo_architecture/domain/repos/business_repos.dart';
 import 'package:square_demo_architecture/others/constants.dart';
@@ -137,8 +138,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
     addressController.text = data.mapBoxPlace.placeName;
     stateController.text = addressData.state.toUpperCase();
     cityController.text = addressData.city.toUpperCase();
-    await LocationHelper.setCity(stateController.text);
     pinCodeController.text = addressData.postCode;
+    await LocationHelper.setCity(addressData.state);
     _loading = false;
     notifyListeners();
   }
@@ -282,10 +283,20 @@ class EmployerRegisterViewModel extends BaseViewModel {
   }
 
   Future<Map<String, String>> _getRequestForAddBusiness() async {
+    var stateId = StateCityHelper.findId(
+      value: stateController.text,
+    );
+    var cityId = StateCityHelper.findId(
+      isState: false,
+      value: cityController.text,
+    );
     Map<String, String> request = {};
     request['business_type'] = businessTypeController.text.toString();
     request['business_name'] = businessNameController.text;
     request['business_address'] = addressController.text;
+    request['state'] = stateId;
+    request['city'] = cityId;
+    request['pincode'] = pinCodeController.text;
     request['business_latitude'] = latLng.lat.toString();
     request['business_longitude'] = latLng.lng.toString();
     request['images'] = imageList.join(', ');
@@ -294,11 +305,21 @@ class EmployerRegisterViewModel extends BaseViewModel {
   }
 
   Future<Map<String, String>> _getRequestForEmployerCompleteProfile() async {
+    var stateId = StateCityHelper.findId(
+      value: stateController.text,
+    );
+    var cityId = StateCityHelper.findId(
+      isState: false,
+      value: cityController.text,
+    );
     Map<String, String> request = {};
     request['full_name'] = fullNameController.text;
     request['country_code'] = "+91";
     request['mobile_no'] = mobileController.text;
     request['address'] = addressController.text;
+    request['state'] = stateId;
+    request['city'] = cityId;
+    request['pincode'] = pinCodeController.text;
     request['latitude'] = latLng.lat.toString();
     request['longitude'] = latLng.lng.toString();
     log("Body Complete Profile >>> $request");

@@ -93,9 +93,16 @@ class BusinessesViewWidget extends StatelessWidget {
             (e) => Container(
               height: SizeConfig.margin_padding_40 * 1.9,
               width: SizeConfig.margin_padding_50 * 1.1,
+              decoration: BoxDecoration(
+                color: mainGrayColor,
+                borderRadius: BorderRadius.circular(
+                  SizeConfig.margin_padding_10,
+                ),
+              ),
               margin: EdgeInsets.only(
                 right: SizeConfig.margin_padding_8,
               ),
+              padding: EdgeInsets.all(3),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
                   SizeConfig.margin_padding_10,

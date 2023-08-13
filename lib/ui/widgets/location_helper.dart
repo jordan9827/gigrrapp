@@ -14,7 +14,7 @@ class LocationHelper {
 
   static Future<void> setCity(String stateController) async {
     for (var i in stateCityService.stateList) {
-      if (i.name == stateController) {
+      if (i.name.toUpperCase() == stateController.toUpperCase()) {
         await authRepo.loadCity(i.id);
       }
     }
