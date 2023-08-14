@@ -61,7 +61,7 @@ class BusinessesViewModel extends BaseViewModel {
   }
 
   Future<void> fetchAllBusinessesApi() async {
-    businessesList.clear();
+    businessesList = [];
     setBusy(true);
     final response = await businessRepo.fetchAllBusinessesApi();
     response.fold(

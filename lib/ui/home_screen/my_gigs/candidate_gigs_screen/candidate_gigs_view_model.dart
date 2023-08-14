@@ -173,9 +173,11 @@ class CandidateGigsViewModel extends BaseViewModel {
     var bankStatus = (user.bankStatus == 1 ? true : false);
     for (var i in gigs.gigsRequestData) {
       if (i.status == "roster") {
-        if (!bankStatus) {
+        if (bankStatus) {
           await updateJobStatus(gigs, "start", viewModel);
-        } else {}
+        } else {
+          navigationService.navigateTo(Routes.bankAccountScreenView);
+        }
       } else if (i.status == "start") {
         await updateJobStatus(gigs, "complete", viewModel);
       } else if (i.paymentStatus == "pending") {
@@ -282,9 +284,11 @@ class CandidateGigsViewModel extends BaseViewModel {
 
   String statusForShortList(List<GigsRequestData> list) {
     String status = "";
+    var bankStatus = (user.bankStatus == 1 ? true : false);
     for (var i in list) {
       if (i.status == "roster") {
-        status = "start_job";
+        if (bankStatus) status = "start_job";
+        if (!bankStatus) status = "add_bank";
       } else if (i.status == "start") {
         status = "complete";
       } else if (i.paymentStatus == "pending") {

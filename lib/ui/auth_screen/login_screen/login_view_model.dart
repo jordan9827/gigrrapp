@@ -83,6 +83,7 @@ class LoginViewViewModel extends BaseViewModel {
         ),
       );
       print("OTPVerifyScreenArguments $result");
+      setBusy(true);
       if (result["isCheck"]) {
         _navigationToStatusLogin(result["profile_status"]);
       }
@@ -91,7 +92,6 @@ class LoginViewViewModel extends BaseViewModel {
 
   void _navigationToStatusLogin(String value) {
     var employer = (roleId == "3" ? true : false);
-    print("_navigationToStatusLogin $employer");
     switch (value) {
       case "otp-verify":
         if (employer) {

@@ -129,6 +129,11 @@ class OTPVerifyScreenModel extends BaseViewModel {
             "profile_status": res.profileStatus,
           },
         );
+        var notificationType = (res.notificationType == "on" ? true : false);
+        sharedPreferences.setBool(
+          PreferenceKeys.NOTIFICATION_SWITCH.text,
+          notificationType,
+        );
       },
     );
     notifyListeners();
