@@ -1,12 +1,16 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../../../app/app.locator.dart';
 import '../../../../../../app/app.router.dart';
+import '../../../../../../data/local/preference_keys.dart';
+import '../../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../../domain/repos/auth_repos.dart';
 import '../../../../../../others/constants.dart';
 import '../../../../../widgets/image_picker_util.dart';
@@ -15,11 +19,14 @@ class CandidateKYCViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();
+  final sharedPreferences = locator<SharedPreferences>();
+
   final TextEditingController aadhaarController = TextEditingController();
   String frontAadhaarImage = "";
   String backAadhaarImage = "";
   XFile? _imageFile;
   bool isSocialLogin = false;
+  final user = locator<UserAuthResponseData>();
 
   XFile? get imageFile => _imageFile;
 
@@ -83,6 +90,9 @@ class CandidateKYCViewModel extends BaseViewModel {
             }
           } else {
             navigationToHomeView();
+            if (user.profileStatus == "profile-completed") {
+              updateBankStatusToLocal();
+            }
           }
           setBusy(false);
         },
@@ -94,6 +104,16 @@ class CandidateKYCViewModel extends BaseViewModel {
   void navigationToHomeView() {
     navigationService.navigateTo(
       Routes.homeView,
+    );
+  }
+
+  Future<void> updateBankStatusToLocal() async {
+    UserAuthResponseData data = user.copyWith(profileStatus: "completed");
+    locator.unregister<UserAuthResponseData>();
+    locator.registerSingleton<UserAuthResponseData>(data);
+    await sharedPreferences.setString(
+      PreferenceKeys.USER_DATA.text,
+      json.encode(data),
     );
   }
 

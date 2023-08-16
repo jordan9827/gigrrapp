@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
+import '../../../../data/local/preference_keys.dart';
 import '../../../../data/network/dtos/fetch_bank_detail_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/account_repos.dart';
@@ -50,10 +53,23 @@ class BankAccountViewModel extends BaseViewModel {
     final response = await accountRepo.fetchCandidateBankDetail();
     response.fold((failure) {
       setBusy(false);
-    }, (bank) {
+    }, (bank) async {
       bankInfoData = bank;
+      if (user.bankStatus == 0) await updateBankStatusToLocal(bank);
       setBusy(false);
       notifyListeners();
     });
+  }
+
+  Future<void> updateBankStatusToLocal(GetBankDetailResponseData bank) async {
+    if (bank.id != 0 && bank.accountNumber.isNotEmpty) {
+      UserAuthResponseData data = user.copyWith(bankStatus: 1);
+      locator.unregister<UserAuthResponseData>();
+      locator.registerSingleton<UserAuthResponseData>(data);
+      await sharedPreferences.setString(
+        PreferenceKeys.USER_DATA.text,
+        json.encode(data),
+      );
+    }
   }
 }
