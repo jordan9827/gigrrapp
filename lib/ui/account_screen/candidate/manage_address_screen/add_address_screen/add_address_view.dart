@@ -83,21 +83,23 @@ class AddAddressScreenView extends StatelessWidget {
     AddAddressViewModel viewModel,
   ) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Padding(
-          padding: EdgeInsets.only(
-            bottom: SizeConfig.margin_padding_8,
-          ),
-          child: Text(
-            "set_default_address".tr(),
-            style: TSB.regularSmall(),
-          ),
-        ),
-        Switch(
+        Checkbox(
+          onChanged: viewModel.defaultSwitchAction,
           value: viewModel.defaultAddressSwitch,
           activeColor: mainPinkColor,
-          onChanged: viewModel.defaultSwitchAction,
+          visualDensity: VisualDensity(
+            horizontal: VisualDensity.minimumDensity,
+            vertical: VisualDensity.minimumDensity,
+          ),
+        ),
+        SizedBox(
+          width: SizeConfig.margin_padding_8,
+        ),
+        Text(
+          "make_default_add".tr(),
+          style: TSB.regularSmall(),
         ),
       ],
     );

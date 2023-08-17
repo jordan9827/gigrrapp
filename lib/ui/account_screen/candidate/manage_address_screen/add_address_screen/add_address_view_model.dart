@@ -72,7 +72,7 @@ class AddAddressViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> defaultSwitchAction(bool val) async {
+  Future<void> defaultSwitchAction(bool? val) async {
     defaultAddressSwitch = !defaultAddressSwitch;
     defaultAddressType = defaultAddressSwitch ? 1 : 0;
     notifyListeners();
