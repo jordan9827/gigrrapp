@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:fcm_service/fcm_service.dart';
 import 'package:location/location.dart' as l;
@@ -162,8 +163,8 @@ class MyAppViewModel extends BaseViewModel {
     try {
       handleNotification(message, false);
       openGiggrOTPDialog(message);
-      log.i(
-          "Foreground message ${message.data}\nForeground details ${message.from}");
+      log.w(
+          "Foreground message:- ${message.data}\nForeground details ${message.from}");
     } catch (e, stack) {
       FirebaseCrashlytics.instance.recordError(e, stack, fatal: true);
     }
@@ -171,15 +172,17 @@ class MyAppViewModel extends BaseViewModel {
 
   void openGiggrOTPDialog(RemoteMessage message) {
     String type = message.data["type"];
-    if (type == "JOB_START_OTP_CODE" || type == "JOB_COMPLETE_OTP_CODE") {
+    if (!dialogService.isDialogOpen!) if (type == "JOB_START_OTP_CODE" ||
+        type == "JOB_COMPLETE_OTP_CODE") {
       bool isStartOTP = (type == "JOB_START_OTP_CODE");
-      var title = message.data["message"];
-      var splitTitleF = title.split("otp code")[1];
-      var gigrOTP = splitTitleF.split("to")[0];
+      String otp = message.data["otp"].toString();
+      var user = jsonDecode(message.data["user"]);
       final builders = {
         DialogType.OTPViewStartORStop: (_, request, completer) =>
             GiggrOTPStartStopView(
-              otp: gigrOTP,
+              otp: otp,
+              profileUrl: user["profile_image"],
+              candidateName: user["first_name"],
               title: isStartOTP ? "your_gigrr_is_here" : "gig_over",
             ),
       };

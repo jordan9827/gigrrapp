@@ -75,6 +75,7 @@ class LoginViewViewModel extends BaseViewModel {
   Future<void> login() async {
     mobileNoValidation();
     if (mobileMessage.isEmpty) {
+      setBusy(true);
       var result = await navigationService.navigateTo(
         Routes.oTPVerifyScreen,
         arguments: OTPVerifyScreenArguments(
@@ -82,12 +83,11 @@ class LoginViewViewModel extends BaseViewModel {
           roleId: roleId,
         ),
       );
-      print("OTPVerifyScreenArguments $result");
-      setBusy(true);
       if (result["isCheck"]) {
         _navigationToStatusLogin(result["profile_status"]);
       }
     }
+    notifyListeners();
   }
 
   void _navigationToStatusLogin(String value) {
