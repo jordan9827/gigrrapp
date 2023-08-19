@@ -39,13 +39,16 @@ class EditBusinessesViewModel extends BaseViewModel {
     );
   }
 
-  void initialDataLoad(GetBusinessesData e) {
+  Future<void> initialDataLoad(GetBusinessesData e) async {
     businessNameController.text = e.businessName;
     addressController.text = e.businessAddress;
-    stateController.text = e.stateName;
-    cityController.text = e.cityName;
+    stateController.text = e.state.name.toUpperCase();
+    cityController.text = e.cityList.first.name;
     pinCodeController.text = e.postCode.toString();
     businessTypeController.text = e.categoryResp.id.toString();
+    await LocationHelper.setCity(
+      e.state.name.toUpperCase(),
+    );
     businessId = e.id;
     for (var i in e.businessesImage) imageList!.add(i.imageUrl);
   }

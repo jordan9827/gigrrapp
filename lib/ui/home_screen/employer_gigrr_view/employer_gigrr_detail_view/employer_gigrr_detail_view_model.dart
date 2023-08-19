@@ -19,11 +19,7 @@ class EmployerGigrrDetailViewModel extends BaseViewModel {
     navigationServices.back();
   }
 
-  List<String> listOfAvailability = [
-    "Weekends",
-    "Day Shift",
-    "Night Shift",
-  ];
+  List<String> listOfAvailability = [];
   Future<void> navigatorToGiggrRequestView({
     int id = 0,
     int candidateId = 0,

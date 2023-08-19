@@ -1,4 +1,5 @@
 import 'package:square_demo_architecture/data/network/dtos/get_address_response.dart';
+import 'package:square_demo_architecture/domain/reactive_services/state_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
@@ -11,8 +12,7 @@ class ManageAddressViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final user = locator<UserAuthResponseData>();
   final commonRepo = locator<CommonRepo>();
-
-  List<GetAddressResponseData> addressList = [];
+  final stateCityService = locator<StateCityService>();
 
   void navigationToBack() {
     if (!isBusy) {
@@ -50,20 +50,9 @@ class ManageAddressViewModel extends BaseViewModel {
   }
 
   Future<void> fetchAddress() async {
-    addressList = [];
     setBusy(true);
-    final response = await commonRepo.fetchAddress();
-    response.fold(
-      (fail) {
-        snackBarService.showSnackbar(message: fail.errorMsg);
-        setBusy(false);
-      },
-      (list) async {
-        addressList = list;
-        notifyListeners();
-        setBusy(false);
-      },
-    );
+    await commonRepo.fetchAddress();
+    setBusy(false);
     notifyListeners();
   }
 }

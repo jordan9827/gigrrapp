@@ -80,7 +80,7 @@ class CandidateGigsRequestData with _$CandidateGigsRequestData {
     @JsonKey(name: "gender", defaultValue: "") String gender,
     @JsonKey(name: "state_id", defaultValue: 0) int stateId,
     @JsonKey(name: "roster_count", defaultValue: 0) int rosterCount,
-    @JsonKey(name: "city_id") int cityId,
+    @JsonKey(name: "city_id", defaultValue: 0) int cityId,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "created_at", defaultValue: "") String createdAt,
   ) = _CandidateGigsRequestData;

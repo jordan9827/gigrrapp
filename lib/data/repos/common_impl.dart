@@ -5,6 +5,7 @@ import 'package:square_demo_architecture/data/network/dtos/get_address_response.
 import 'package:square_demo_architecture/util/extensions/object_extension.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
+import '../../domain/reactive_services/state_service.dart';
 import '../../domain/repos/common_repos.dart';
 import '../../util/exceptions/failures/failure.dart';
 import '../network/api_services/common_service.dart';
@@ -164,6 +165,7 @@ class CommonImpl extends CommonRepo {
         throw Exception(response.error);
       }
       return response.body!.map(success: (res) async {
+        locator<StateCityService>().fetchAddressList(res.addressList);
         return Right(res.addressList);
       }, error: (error) {
         return Left(Failure(200, error.message));

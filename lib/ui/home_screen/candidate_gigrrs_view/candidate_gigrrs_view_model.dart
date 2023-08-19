@@ -5,6 +5,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../app/app.router.dart';
 import '../../../data/network/dtos/candidate_gigs_request.dart';
+import '../../../data/network/dtos/get_address_response.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/candidate_repos.dart';
@@ -14,6 +15,7 @@ class CandidateGigrrsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
+  final defaultAddress = locator<GetAddressResponseData>();
   final fCMService = locator<FCMService>();
 
   final PageController pageController = PageController();

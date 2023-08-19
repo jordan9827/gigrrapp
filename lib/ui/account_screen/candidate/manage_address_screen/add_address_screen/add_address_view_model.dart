@@ -39,14 +39,26 @@ class AddAddressViewModel extends BaseViewModel {
     bool isEdit = false,
   }) {
     if (isEdit) {
-      addressTypeValue = data.addressType;
-      addressController.text = data.address;
-      cityController.text = data.city.name;
-      stateController.text = data.state.name;
-      defaultAddressSwitch = (data.defaultAddress == 1) ? true : false;
-      pinCodeController.text = data.postCode;
+      setEditAddressData(data);
     }
     loadState();
+  }
+
+  setEditAddressData(GetAddressResponseData data) async {
+    latLng = LatLng(
+      double.parse(data.latitude),
+      double.parse(data.longitude),
+    );
+    addressTypeValue = data.addressType;
+    addressController.text = data.address;
+    cityController.text = data.city.name;
+    stateController.text = data.state.name;
+    defaultAddressType = data.defaultAddress;
+    defaultAddressSwitch = (data.defaultAddress == 1) ? true : false;
+    pinCodeController.text = data.postCode;
+    await LocationHelper.setCity(
+      data.state.name.toUpperCase(),
+    );
   }
 
   Future<void> loadState() async {
@@ -170,6 +182,8 @@ class AddAddressViewModel extends BaseViewModel {
     request['address'] = addressController.text;
     request['city_id'] = cityId;
     request['state_id'] = stateId;
+    request['latitude'] = latLng.lat.toString();
+    request['longitude'] = latLng.lng.toString();
     request['pincode'] = pinCodeController.text;
     request['is_default'] = "$defaultAddressType";
     return request;

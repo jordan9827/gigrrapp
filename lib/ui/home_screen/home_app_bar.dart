@@ -1,6 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:square_demo_architecture/app/app.locator.dart';
-import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../others/constants.dart';
 import '../../util/others/image_constants.dart';
 import '../../util/others/size_config.dart';
@@ -8,9 +7,14 @@ import '../widgets/notification_icon.dart';
 
 class HomeGigrrsAppBarView extends StatelessWidget {
   final Function() actionToAddress;
+  final String addressType;
+  final String address;
+
   const HomeGigrrsAppBarView({
     Key? key,
     required this.actionToAddress,
+    this.addressType = "",
+    this.address = "",
   }) : super(key: key);
 
   @override
@@ -43,7 +47,7 @@ class HomeGigrrsAppBarView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Shop",
+                        addressType.tr(),
                         style: TextStyle(
                           color: mainBlackColor,
                           fontWeight: FontWeight.w900,
@@ -57,7 +61,7 @@ class HomeGigrrsAppBarView extends StatelessWidget {
                     ],
                   ),
                   Text(
-                    locator<UserAuthResponseData>().address,
+                    address,
                     style: TextStyle(
                       color: mainBlackColor,
                       fontSize: SizeConfig.textSizeVerySmall * 0.95,

@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
+
+import '../../../app/app.locator.dart';
+import '../../local/preference_keys.dart';
 
 part 'get_address_response.freezed.dart';
 
@@ -35,6 +41,8 @@ class GetAddressResponseData with _$GetAddressResponseData {
     @JsonKey(name: "user_id", defaultValue: 0) int userId,
     @JsonKey(name: "address_type", defaultValue: "") String addressType,
     @JsonKey(name: "address", defaultValue: "") String address,
+    @JsonKey(name: "longitude", defaultValue: "0.0") String longitude,
+    @JsonKey(name: "latitude", defaultValue: "0.0") String latitude,
     @JsonKey(name: "pincode", defaultValue: "") String postCode,
     @JsonKey(name: "default_address", defaultValue: 0) int defaultAddress,
     @JsonKey(name: "state_id", defaultValue: 0) int stateId,
@@ -50,4 +58,16 @@ class GetAddressResponseData with _$GetAddressResponseData {
 
   static GetAddressResponseData emptyData() =>
       GetAddressResponseData.fromJson({});
+
+  static Future<GetAddressResponseData> getUserAddressData() async {
+    var data = locator<SharedPreferences>().getString(
+      PreferenceKeys.USER_ADDRESS_DATA.text,
+    );
+    if (data != null) {
+      return GetAddressResponseData.fromJson(
+        jsonDecode(data),
+      );
+    }
+    return emptyData();
+  }
 }

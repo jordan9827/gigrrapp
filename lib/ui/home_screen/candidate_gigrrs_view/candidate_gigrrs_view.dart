@@ -21,6 +21,8 @@ class CandidateGigrrsView extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: HomeGigrrsAppBarView(
+              address: viewModel.defaultAddress.address,
+              addressType: viewModel.defaultAddress.addressType,
               actionToAddress: viewModel.navigateToManageAddressView,
             ),
           ),

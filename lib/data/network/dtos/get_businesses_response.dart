@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:json_to_type/json_to_type.dart';
+import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 
 part 'get_businesses_response.freezed.dart';
 
@@ -55,8 +56,9 @@ class GetBusinessesData with _$GetBusinessesData {
     @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "longitude", defaultValue: "") String longitude,
     @JsonKey(name: "status", defaultValue: "") String status,
-    @JsonKey(name: "city", defaultValue: 0) int cityId,
-    @JsonKey(name: "state", defaultValue: 0) int stateId,
+    @JsonKey(name: "state", defaultValue: UserStateResponse.emptyData)
+        UserStateResponse state,
+    @JsonKey(name: "city", defaultValue: []) List<UserCityResponse> cityList,
     @JsonKey(name: "city_name", defaultValue: "") String cityName,
     @JsonKey(name: "state_name", defaultValue: "") String stateName,
     @JsonKey(name: "pincode", defaultValue: 0) int postCode,

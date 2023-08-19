@@ -54,6 +54,8 @@ class EmployerGigsDetailView extends StatelessWidget {
             profile: e.candidate.imageURL,
             price: viewModel.price(gigs),
             gigrrActionName: 'offer_send',
+            distance: e.distance,
+            experience: e.availabilityResp.experience,
             skillList: gigs.skillsTypeCategoryList.map((e) => e.name).toList(),
             acceptedGigsRequest: () =>
                 viewModel.navigationToCandidateOfferRequest(gigs, e),

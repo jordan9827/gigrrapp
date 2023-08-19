@@ -262,12 +262,13 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
         _buildSpacing(
           width: SizeConfig.margin_padding_5,
         ),
-        Text(
-          "8 Years Experience",
-          style: TextStyle(
-            color: mainWhiteColor,
+        if (widget.experience.isNotEmpty)
+          Text(
+            "${widget.experience} " "experience".tr(),
+            style: TextStyle(
+              color: mainWhiteColor,
+            ),
           ),
-        ),
       ],
     );
   }

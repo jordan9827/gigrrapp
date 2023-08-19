@@ -8,11 +8,14 @@ import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/repos/business_repos.dart';
+import '../../domain/repos/common_repos.dart';
 
 class HomeViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   BottomNavBarService bottomNavBarService = locator<BottomNavBarService>();
   final user = locator<UserAuthResponseData>();
+  final commonRepo = locator<CommonRepo>();
+
   final log = getLogger("HomeScreenViewModel");
   final businessRepo = locator<BusinessRepo>();
   int initialIndex = 0;
@@ -42,6 +45,9 @@ class HomeViewModel extends BaseViewModel {
   Future<void> gigrrTypeApiCall() async {
     setBusy(true);
     await businessRepo.gigrrTypeCategory();
+    if (user.accessToken.isNotEmpty && !user.isEmployer) {
+      await commonRepo.fetchAddress();
+    }
     notifyListeners();
   }
 

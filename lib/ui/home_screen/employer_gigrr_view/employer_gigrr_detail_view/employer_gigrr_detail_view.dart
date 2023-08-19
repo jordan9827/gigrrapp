@@ -33,7 +33,13 @@ class EmployerGigrrDetailView extends StatelessWidget {
     double outerPadding = SizeConfig.margin_padding_15;
     return ViewModelBuilder.nonReactive(
         viewModelBuilder: () => EmployerGigrrDetailViewModel(),
+        onViewModelReady: (viewModel) {
+          viewModel.listOfAvailability.add(
+            gigsRequestData.availabilityResp.availability,
+          );
+        },
         builder: (context, viewModel, child) {
+          var availability = gigsRequestData.availabilityResp;
           return Scaffold(
             body: Stack(
               children: [
@@ -95,21 +101,27 @@ class EmployerGigrrDetailView extends StatelessWidget {
                               ),
                               _buildExPriceWidget(
                                 outerPadding: outerPadding,
-                                valueText: "1-3 " + "years".tr(),
+                                valueText: availability.experience.isNotEmpty
+                                    ? availability.experience
+                                    : "0 " + "years".tr(),
                                 titleText: "experience",
                               ),
                             ],
                           ),
                           _buildSpacing(),
-                          _buildOtherDetailView(
-                            title: "availability",
-                            infoList: viewModel.listOfAvailability,
-                          ),
+                          if (availability.availability.isNotEmpty)
+                            _buildOtherDetailView(
+                              title: "availability",
+                              infoList: viewModel.listOfAvailability,
+                            ),
                           _buildSpacing(),
-                          _buildOtherDetailView(
-                            title: "required_skill",
-                            infoList: skillList.map((e) => e.name).toList(),
-                          ),
+                          if (gigsRequestData.skillsList.isNotEmpty)
+                            _buildOtherDetailView(
+                              title: "required_skill",
+                              infoList: gigsRequestData.skillsList
+                                  .map((e) => e.name)
+                                  .toList(),
+                            ),
                         ],
                       ),
                     ),

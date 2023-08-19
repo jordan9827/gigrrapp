@@ -50,7 +50,8 @@ class ManageAddressScreenView extends StatelessWidget {
                   height: SizeConfig.margin_padding_15,
                 ),
                 _buildAddressList(viewModel),
-                if (viewModel.addressList.isEmpty) EmptyDataScreenView()
+                if (viewModel.stateCityService.addressList.isEmpty)
+                  EmptyDataScreenView()
               ],
             ),
           ),
@@ -64,7 +65,7 @@ class ManageAddressScreenView extends StatelessWidget {
   ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: viewModel.addressList
+      children: viewModel.stateCityService.addressList
           .map(
             (e) => _buildAddressView(viewModel, e),
           )
@@ -92,7 +93,7 @@ class ManageAddressScreenView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Icon(
-            iconsWidget("office"),
+            iconsWidget(data.addressType),
             color: independenceColor,
           ),
           SizedBox(
@@ -137,7 +138,7 @@ class ManageAddressScreenView extends StatelessWidget {
     if (text == "home") {
       return Icons.home_outlined;
     } else if (text == "office") {
-      return Icons.location_city_outlined;
+      return Icons.business_sharp;
     } else {
       return Icons.location_on_outlined;
     }

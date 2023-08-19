@@ -69,7 +69,8 @@ class MyGigsData with _$MyGigsData {
     @JsonKey(name: "gigs_endtime", defaultValue: "") String gigsEndTime,
     @JsonKey(name: "price_criteria", defaultValue: "") String priceCriteria,
     @JsonKey(name: "gigs_request_count", defaultValue: 0) int gigsRequestCount,
-    @JsonKey(name: "skills") List<GigrrTypeCategoryData> skillsTypeCategoryList,
+    @JsonKey(name: "skills", defaultValue: [])
+        List<GigrrTypeCategoryData> skillsTypeCategoryList,
     @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
         GetBusinessesData businessList,
     @JsonKey(name: "gigs_request", defaultValue: [])
@@ -78,7 +79,7 @@ class MyGigsData with _$MyGigsData {
     @JsonKey(name: "gender", defaultValue: "") String gender,
     @JsonKey(name: "state_id", defaultValue: 0) int stateId,
     @JsonKey(name: "roster_count", defaultValue: 0) int rosterCount,
-    @JsonKey(name: "city_id") int cityId,
+    @JsonKey(name: "city_id", defaultValue: 0) int cityId,
     @JsonKey(name: "updated_at", defaultValue: "") String updatedAt,
     @JsonKey(name: "created_at", defaultValue: "") String createdAt,
   ) = _MyGigsData;
@@ -112,8 +113,12 @@ class GigsRequestData with _$GigsRequestData {
         String ratingFromEmployer,
     @JsonKey(name: "candidate_images", defaultValue: [])
         List<CandidateImage> candidateImageList,
+    @JsonKey(name: "avaliability", defaultValue: AvailabilityResp.getEmptyAvailability)
+        AvailabilityResp availabilityResp,
     @JsonKey(name: "candidate", defaultValue: Candidate.getEmptyCandidate)
-        final Candidate candidate,
+        Candidate candidate,
+    @JsonKey(name: "skills", defaultValue: [])
+        List<GigrrTypeCategoryData> skillsList,
     @JsonKey(name: "rating_to_employer", defaultValue: "")
         String ratingToEmployer,
   ) = _GigsRequestData;
@@ -155,5 +160,28 @@ class Candidate with _$Candidate {
 
   static getEmptyCandidate() {
     return Candidate.fromJson({});
+  }
+}
+
+@freezed
+@JsonToType()
+class AvailabilityResp with _$AvailabilityResp {
+  @JsonSerializable(explicitToJson: true)
+  const factory AvailabilityResp(
+    @JsonKey(name: "id", defaultValue: 0) int id,
+    @JsonKey(name: "user_id", defaultValue: 0) int userId,
+    @JsonKey(name: "availibility", defaultValue: "") String availability,
+    @JsonKey(name: "shift", defaultValue: "") String shift,
+    @JsonKey(name: "experience", defaultValue: "") String experience,
+    @JsonKey(name: "experience_year", defaultValue: "") String experienceYear,
+    @JsonKey(name: "experience_month", defaultValue: "") String experienceMonth,
+    @JsonKey(name: "distance", defaultValue: "") String distance,
+  ) = _AvailabilityResp;
+
+  factory AvailabilityResp.fromJson(Map<String, dynamic> json) =>
+      _$AvailabilityRespFromJson(json);
+
+  static getEmptyAvailability() {
+    return AvailabilityResp.fromJson({});
   }
 }
