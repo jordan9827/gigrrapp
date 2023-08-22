@@ -51,7 +51,7 @@ class EmployerGigsDetailView extends StatelessWidget {
             .map((e) {
           return GiggrCardWidget(
             title: e.employeeName,
-            profile: e.candidate.imageURL,
+            profileList: e.candidateImageList.map((e) => e.imageURL).toList(),
             price: viewModel.price(gigs),
             gigrrActionName: 'offer_send',
             distance: e.distance,

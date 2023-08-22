@@ -9,11 +9,15 @@ import '../../../../data/network/dtos/candidate_gigs_request.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
 import '../candidate_gigrrs_view_model.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
   final CandidateGigsRequestData data;
-  const CandidateGigrrDetailView({Key? key, required this.data})
-      : super(key: key);
+  CandidateGigrrDetailView({
+    Key? key,
+    required this.data,
+  }) : super(key: key);
+  final controller = PageController(keepPage: true);
 
   @override
   Widget builder(
@@ -22,23 +26,40 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
     MediaQueryData mediaQueryData = context.mediaQueryData;
     double outerPadding = SizeConfig.margin_padding_15;
     var price =
-        "₹ ${double.parse(data.fromAmount).toStringAsFixed(1)}-${double.parse(data.toAmount).toStringAsFixed(0)}/${data.priceCriteria}";
+        "₹ ${double.parse(data.fromAmount).toStringAsFixed(0)}-${double.parse(data.toAmount).toStringAsFixed(0)}/${data.priceCriteria}";
     return Scaffold(
       body: Stack(
         children: [
           ListView(
             children: [
-              Container(
+              SizedBox(
                 height: mediaQueryData.size.height * 0.5,
-                width: mediaQueryData.size.width,
                 child: Stack(
+                  alignment: Alignment.topCenter,
+                  fit: StackFit.expand,
                   children: [
-                    SizedBox(
-                      height: double.infinity,
-                      width: double.infinity,
-                      child: Image.asset(
-                        "assets/images/home_slide_demo.png",
-                        fit: BoxFit.fill,
+                    PageView(
+                      controller: controller,
+                      children: data.business.businessesImage
+                          .map(
+                            (e) => Image.network(
+                              e.imageUrl,
+                              fit: BoxFit.fill,
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    Positioned(
+                      bottom: 10,
+                      child: SmoothPageIndicator(
+                        controller: controller,
+                        count: data.business.businessesImage.length,
+                        effect: const WormEffect(
+                          activeDotColor: mainPinkColor,
+                          dotHeight: 10,
+                          dotWidth: 10,
+                          type: WormType.thinUnderground,
+                        ),
                       ),
                     ),
                     Positioned(
@@ -83,12 +104,19 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
                         fontSize: SizeConfig.textSizeXLarge,
                       ),
                     ),
+                    SizedBox(
+                      height: SizeConfig.margin_padding_3,
+                    ),
                     Row(
-                      // mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.asset(ic_location, height: 23),
-                        SizedBox(width: SizeConfig.margin_padding_3),
+                        Image.asset(
+                          ic_location,
+                          height: 23,
+                        ),
+                        SizedBox(
+                          width: SizeConfig.margin_padding_3,
+                        ),
                         Expanded(
                           child: Text(
                             data.gigAddress,

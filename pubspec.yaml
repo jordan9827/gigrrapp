@@ -167,7 +167,7 @@ dev_dependencies:
 
   # Generator for chopper
   chopper_generator: 6.0.0
-
+  smooth_page_indicator: ^1.1.0
 
   #JsonToType generator
   json_to_type_generator:

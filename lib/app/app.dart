@@ -16,6 +16,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../data/network/app_chopper_client.dart';
+import '../data/network/dtos/get_address_response.dart';
 import '../data/network/dtos/user_auth_response_data.dart';
 import '../data/repos/account_impl.dart';
 import '../data/repos/business_impl.dart';
@@ -137,6 +138,10 @@ import '../ui/widgets/giggr_request_view.dart';
     Presolve(
       classType: UserAuthResponseData,
       presolveUsing: UserAuthResponseData.getUserData,
+    ),
+    Presolve(
+      classType: GetAddressResponseData,
+      presolveUsing: GetAddressResponseData.getUserAddressData,
     ),
     LazySingleton(
       classType: BusinessTypeService,

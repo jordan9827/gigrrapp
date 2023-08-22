@@ -1,13 +1,7 @@
 import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/base_response.dart';
-import '../dtos/chat_response.dart';
-import '../dtos/faq_response.dart';
 import '../dtos/fetch_bank_detail_response.dart';
-import '../dtos/get_address_response.dart';
-import '../dtos/get_chat_response.dart';
 import '../dtos/payment_history_response.dart';
-import '../dtos/web_view_response.dart';
-
 part 'account_service.chopper.dart';
 
 @ChopperApi(baseUrl: "/api/")

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:square_demo_architecture/data/network/dtos/state_response.dart';
+import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 import 'package:stacked/stacked.dart';
 import '../../app/app.locator.dart';
 import '../../data/local/preference_keys.dart';
@@ -14,6 +15,7 @@ class StateCityService with ListenableServiceMixin {
   final _stateList = <StateResponseData>[];
   final _cityList = <CityResponseData>[];
   final _addressList = <GetAddressResponseData>[];
+  final sharedPreferences = locator<SharedPreferences>();
   final authRepo = locator<Auth>();
 
   List<StateResponseData> get stateList => _stateList;
@@ -39,14 +41,37 @@ class StateCityService with ListenableServiceMixin {
   ) async {
     _addressList.clear();
     _addressList.addAll(addressList);
-    GetAddressResponseData data =
-        addressList.firstWhere((element) => element.defaultAddress == 1);
+    if (addressList.isNotEmpty) {
+      GetAddressResponseData data = addressList.firstWhere(
+        (element) => element.defaultAddress == 1,
+      );
+      locator.unregister<GetAddressResponseData>();
+      locator.registerSingleton<GetAddressResponseData>(data);
+      await sharedPreferences.setString(
+        PreferenceKeys.USER_ADDRESS_DATA.text,
+        json.encode(data),
+      );
+    }
+    if (addressList.isEmpty) await updateAddressDataToCandidate();
+    notifyListeners();
+  }
+
+  Future<void> updateAddressDataToCandidate() async {
+    var user = locator<UserAuthResponseData>();
+    var addressUser = locator<GetAddressResponseData>();
+    GetAddressResponseData data = addressUser.copyWith(
+      address: user.address,
+      addressType: "home",
+      state: user.state,
+      city: user.cityList.first,
+      latitude: user.latitude,
+      longitude: user.longitude,
+    );
     locator.unregister<GetAddressResponseData>();
     locator.registerSingleton<GetAddressResponseData>(data);
-    await locator<SharedPreferences>().setString(
+    await sharedPreferences.setString(
       PreferenceKeys.USER_ADDRESS_DATA.text,
       json.encode(data),
     );
-    notifyListeners();
   }
 }

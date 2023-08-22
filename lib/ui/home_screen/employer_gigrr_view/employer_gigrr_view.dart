@@ -18,6 +18,8 @@ class EmployerGigrrsView extends StatelessWidget {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: HomeGigrrsAppBarView(
+              address: viewModel.user.address,
+              addressType: "Shop",
               actionToAddress: viewModel.navigateToBusiness,
             ),
           ),
@@ -38,6 +40,7 @@ class EmployerGigrrsView extends StatelessWidget {
                         skillList: e.employeeSkills.map((e) => e.name).toList(),
                         gigrrActionButton: () =>
                             viewModel.navigateToGigrrDetailScreen(e),
+                        profileList: [],
                       );
                     },
                   ),

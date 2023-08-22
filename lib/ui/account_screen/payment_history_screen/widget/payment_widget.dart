@@ -22,9 +22,8 @@ class PaymentHistoryWidget extends StatelessWidget {
     var user = locator<UserAuthResponseData>();
     var name =
         user.isEmployer ? data.candidate.firstName : data.employer.firstName;
-    var profileImage = user.isEmployer
-        ? data.candidate.profileImage
-        : data.employer.profileImage;
+    var profileImage =
+        user.isEmployer ? data.candidate.imageUrl : data.employer.imageUrl;
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: SizeConfig.margin_padding_5,

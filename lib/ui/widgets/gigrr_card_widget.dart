@@ -9,6 +9,7 @@ import '../../util/others/text_styles.dart';
 class GiggrCardWidget extends StatefulWidget {
   final String title;
   final String profile;
+  final List<String> profileList;
   final List<String> skillList;
   final String price;
   final int distance;
@@ -23,8 +24,9 @@ class GiggrCardWidget extends StatefulWidget {
     Key? key,
     required this.gigrrActionButton,
     required this.title,
-    required this.profile,
+    this.profile = "",
     required this.skillList,
+    required this.profileList,
     required this.price,
     this.distance = 0,
     this.experience = "",
@@ -64,12 +66,14 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
             onPageChanged: (index) {
               print(index);
             },
-            children: [
-              Image.network(
-                widget.profile,
-                fit: BoxFit.fill,
-              )
-            ],
+            children: widget.profileList
+                .map(
+                  (e) => Image.network(
+                    e,
+                    fit: BoxFit.fill,
+                  ),
+                )
+                .toList(),
           ),
           Positioned(
             bottom: 0,

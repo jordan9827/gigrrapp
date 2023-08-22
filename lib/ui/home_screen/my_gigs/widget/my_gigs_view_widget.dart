@@ -66,7 +66,9 @@ class MyGigsViewWidget extends StatelessWidget {
                   address,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TSB.regularSmall(textColor: textNoticeColor),
+                  style: TSB.regularSmall(
+                    textColor: textNoticeColor,
+                  ),
                 ),
               ),
             ],
@@ -76,7 +78,9 @@ class MyGigsViewWidget extends StatelessWidget {
           ),
           Text(
             price,
-            style: TSB.semiBoldLarge(textColor: independenceColor),
+            style: TSB.semiBoldLarge(
+              textColor: independenceColor,
+            ),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_10,

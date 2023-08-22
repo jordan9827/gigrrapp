@@ -107,7 +107,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
             gigs: gigs,
           ),
         ),
-        if (!isCheckAcceptCount && isCheckOfferReceivedCount)
+        if (isCheckOfferReceivedCount && isCheckAcceptCount)
           SizedBox(
             height: SizeConfig.margin_padding_5,
           ),
@@ -118,7 +118,8 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
             viewModel: viewModel,
           ),
         ),
-        if (isCheckOfferReceivedCount && !isCheckAcceptCount)
+        if ((isCheckOfferSentCount || isCheckRoasterCount) &&
+            isCheckAcceptCount)
           SizedBox(
             height: SizeConfig.margin_padding_5,
           ),
@@ -195,8 +196,10 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
             ),
             Text(
               viewModel.setResponseCount,
-              style: TSB.regularSmall(textColor: independenceColor),
-            )
+              style: TSB.regularSmall(
+                textColor: independenceColor,
+              ),
+            ),
           ],
         ),
         _buildDetailView(
@@ -213,7 +216,9 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
     required MyGigsData gigs,
     required EmployerGigsViewModel viewModel,
   }) {
-    var count = viewModel.getOfferReceivedCount(gigs.gigsRequestData);
+    var count = viewModel.getOfferReceivedCount(
+      gigs.gigsRequestData,
+    );
     return Row(
       children: [
         Text(

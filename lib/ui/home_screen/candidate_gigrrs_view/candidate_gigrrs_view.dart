@@ -17,12 +17,14 @@ class CandidateGigrrsView extends StatelessWidget {
       onViewModelReady: (viewModel) => viewModel.fetchGigsRequest(),
       viewModelBuilder: () => CandidateGigrrsViewModel(),
       builder: (context, viewModel, child) {
+        var address = viewModel.defaultAddress.address;
+        var addressType = viewModel.defaultAddress.addressType;
         return Scaffold(
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(kToolbarHeight),
             child: HomeGigrrsAppBarView(
-              address: viewModel.defaultAddress.address,
-              addressType: viewModel.defaultAddress.addressType,
+              address: address.isEmpty ? viewModel.user.address : address,
+              addressType: addressType.isEmpty ? "home" : addressType,
               actionToAddress: viewModel.navigateToManageAddressView,
             ),
           ),
@@ -35,6 +37,9 @@ class CandidateGigrrsView extends StatelessWidget {
                     children: viewModel.gigsData.map((e) {
                       return GiggrCardWidget(
                         title: e.gigName,
+                        profileList: e.business.businessesImage
+                            .map((e) => e.imageUrl)
+                            .toList(),
                         distance: viewModel.setDistance(e),
                         profile: viewModel.profileImage(e.business),
                         price: viewModel.price(e),

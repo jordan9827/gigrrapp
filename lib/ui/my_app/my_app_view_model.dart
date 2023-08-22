@@ -58,13 +58,13 @@ class MyAppViewModel extends BaseViewModel {
     String routes = Routes.loginView;
 
     switch (userData.profileStatus) {
-      case "login":
-        if (userData.isEmployer) {
-          routes = Routes.employerRegisterScreenView;
-        } else {
-          routes = Routes.candidateRegisterScreenView;
-        }
-        break;
+      // case "login":
+      //   if (userData.isEmployer) {
+      //     routes = Routes.employerRegisterScreenView;
+      //   } else {
+      //     routes = Routes.candidateRegisterScreenView;
+      //   }
+      //   break;
       case "profile-completed":
         routes = Routes.candidateKYCScreenView;
         break;
@@ -74,8 +74,12 @@ class MyAppViewModel extends BaseViewModel {
       case "":
         routes = Routes.loginView;
         break;
-      default:
+      case "completed":
         routes = Routes.homeView;
+        break;
+      default:
+        routes = Routes.loginView;
+        break;
     }
     return routes;
   }

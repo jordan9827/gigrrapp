@@ -96,6 +96,7 @@ class UserResponse with _$UserResponse {
     // @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "profile_image", defaultValue: "") String profileImage,
+    @JsonKey(name: "image_url", defaultValue: "") String imageUrl,
     // @JsonKey(name: "gender", defaultValue: "") String gender,
   ) = _UserResponse;
 

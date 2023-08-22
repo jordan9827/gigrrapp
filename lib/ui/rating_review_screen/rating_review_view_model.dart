@@ -21,9 +21,14 @@ class RatingReviewViewModel extends BaseViewModel {
 
   void navigatorToBack() {
     if (!isBusy) {
-      navigationService.back();
+      navigationService.back(result: false);
     }
     return;
+  }
+
+  bool onWillPop() {
+    navigationService.back(result: false);
+    return false;
   }
 
   void onRatingUpdate(double rate) {

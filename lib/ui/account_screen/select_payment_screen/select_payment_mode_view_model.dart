@@ -26,11 +26,18 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
   GigsRequestData myGigrrsRequestData = GigsRequestData.fromJson({});
   @override
   void initialise() {
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlePaymentSuccessResponse);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR,
-        RazorPayPaymentHelper.handlePaymentErrorResponse);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET,
-        RazorPayPaymentHelper.handleExternalWalletSelected);
+    _razorpay.on(
+      Razorpay.EVENT_PAYMENT_SUCCESS,
+      handlePaymentSuccessResponse,
+    );
+    _razorpay.on(
+      Razorpay.EVENT_PAYMENT_ERROR,
+      RazorPayPaymentHelper.handlePaymentErrorResponse,
+    );
+    _razorpay.on(
+      Razorpay.EVENT_EXTERNAL_WALLET,
+      RazorPayPaymentHelper.handleExternalWalletSelected,
+    );
   }
 
   void navigationToBack() {

@@ -9,6 +9,7 @@ import '../../../data/network/dtos/get_address_response.dart';
 import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/candidate_repos.dart';
+import '../../../domain/repos/common_repos.dart';
 import 'candidate_gigrr_detail_view/candidate_gigrr_detail_view.dart';
 
 class CandidateGigrrsViewModel extends BaseViewModel {
@@ -22,9 +23,17 @@ class CandidateGigrrsViewModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
   final candidateRepo = locator<CandidateRepo>();
   List<CandidateGigsRequestData> gigsData = [];
+  final commonRepo = locator<CommonRepo>();
 
   CandidateGigrrsViewModel() {
     fCMService.listenForegroundMessage((p0) => fetchGigsRequest());
+    setDefaultAddress();
+  }
+
+  Future<void> setDefaultAddress() async {
+    if (defaultAddress.address.isEmpty) {
+      await commonRepo.fetchAddress();
+    }
   }
 
   List<String> listOfAvailability = [
@@ -32,6 +41,7 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     "Day Shift",
     "Night Shift",
   ];
+
   void navigateBack() {
     navigationService.back();
   }
@@ -95,7 +105,7 @@ class CandidateGigrrsViewModel extends BaseViewModel {
   }
 
   String price(CandidateGigsRequestData e) {
-    return "₹ ${double.parse(e.fromAmount).toStringAsFixed(1)}-${double.parse(e.toAmount).toStringAsFixed(0)}/${e.priceCriteria}";
+    return "₹ ${double.parse(e.fromAmount).toStringAsFixed(0)}-${double.parse(e.toAmount).toStringAsFixed(0)}/${e.priceCriteria}";
   }
 
   String profileImage(GetBusinessesData image) {

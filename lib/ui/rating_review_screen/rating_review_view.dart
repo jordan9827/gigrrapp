@@ -29,75 +29,84 @@ class RatingReviewScreenView extends StatelessWidget {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       viewModelBuilder: () => RatingReviewViewModel(),
-      builder: (_, viewModel, child) => Scaffold(
-        appBar: getAppBar(
-          context,
-          "rating",
-          showBack: true,
-          onBackPressed: viewModel.navigatorToBack,
-        ),
-        body: ListView(
-          padding: EdgeInsets.all(
-            SizeConfig.margin_padding_20,
+      builder: (_, viewModel, child) => WillPopScope(
+        onWillPop: () => Future.sync(viewModel.onWillPop),
+        child: Scaffold(
+          appBar: getAppBar(
+            context,
+            "rating",
+            showBack: true,
+            onBackPressed: viewModel.navigatorToBack,
           ),
-          children: [
-            SizedBox(
-              height: SizeConfig.margin_padding_10,
+          body: ListView(
+            padding: EdgeInsets.all(
+              SizeConfig.margin_padding_20,
             ),
-            Text(
-              textAlign: TextAlign.center,
-              "how_was_the_gigrr".tr(),
-              style: TSB.boldHeading(),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            CircleAvatar(
-              backgroundImage: NetworkImage(profile),
-              radius: SizeConfig.margin_padding_18 * 2.5,
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            Text(
-              textAlign: TextAlign.center,
-              name,
-              style: TSB.boldLarge(),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            Text(
-              textAlign: TextAlign.center,
-              "tap_to_rate_gigrr".tr(),
-              style: TSB.semiBoldLarge(),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_10,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: RatingBar(
-                minRating: 1,
-                itemCount: 5,
-                allowHalfRating: true,
-                updateOnDrag: true,
-                initialRating: viewModel.initialRating,
-                itemSize: 30,
-                ratingWidget: RatingWidget(
-                  full: Image.asset(ic_select_rating),
-                  half: Image.asset(ic_select_rating),
-                  empty: Image.asset(ic_unselect_rating),
-                ),
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                onRatingUpdate: viewModel.onRatingUpdate,
+            children: [
+              SizedBox(
+                height: SizeConfig.margin_padding_10,
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_20,
-            ),
-            _buildCommentView(viewModel)
-          ],
+              Text(
+                textAlign: TextAlign.center,
+                "how_was_the_gigrr".tr(),
+                style: TSB.boldHeading(),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              CircleAvatar(
+                radius: SizeConfig.margin_padding_50,
+                backgroundColor: independenceColor.withOpacity(0.5),
+                child: Padding(
+                  padding: const EdgeInsets.all(3), // Border radius
+                  child: ClipOval(
+                    child: Image.network(profile),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                name,
+                style: TSB.boldLarge(),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              Text(
+                textAlign: TextAlign.center,
+                "tap_to_rate_gigrr".tr(),
+                style: TSB.semiBoldLarge(),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_10,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: RatingBar(
+                  minRating: 1,
+                  itemCount: 5,
+                  allowHalfRating: true,
+                  updateOnDrag: true,
+                  initialRating: viewModel.initialRating,
+                  itemSize: 30,
+                  ratingWidget: RatingWidget(
+                    full: Image.asset(ic_select_rating),
+                    half: Image.asset(ic_select_rating),
+                    empty: Image.asset(ic_unselect_rating),
+                  ),
+                  itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                  onRatingUpdate: viewModel.onRatingUpdate,
+                ),
+              ),
+              SizedBox(
+                height: SizeConfig.margin_padding_20,
+              ),
+              _buildCommentView(viewModel)
+            ],
+          ),
         ),
       ),
     );

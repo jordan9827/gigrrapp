@@ -105,7 +105,7 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
               SizeConfig.margin_padding_10,
             ),
             child: Image.network(
-              data.candidateImageList.first.imageURL,
+              data.candidate.imageURL,
               fit: BoxFit.fill,
             ),
           ),

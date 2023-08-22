@@ -177,15 +177,14 @@ class CandidateGigsViewModel extends BaseViewModel {
         await updateJobStatus(gigs, "complete", viewModel);
       } else if (i.paymentStatus == "pending") {
       } else if (i.ratingToEmployer == "no") {
-        var gigsRequest = gigs.gigsRequestData.first;
-        var image = gigs.business.businessesImage.first.imageUrl;
+        var image = i.candidate.imageURL;
         await navigationService.navigateTo(
           Routes.ratingReviewScreenView,
           arguments: RatingReviewScreenViewArguments(
             gigsId: gigs.id.toString(),
             name: gigs.business.businessName,
             profile: image,
-            candidateId: gigsRequest.employeId.toString(),
+            candidateId: i.employeId.toString(),
           ),
         );
         refreshScreen();
