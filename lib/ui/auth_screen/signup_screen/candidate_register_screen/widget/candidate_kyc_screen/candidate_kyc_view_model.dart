@@ -20,7 +20,6 @@ class CandidateKYCViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final authRepo = locator<Auth>();
   final sharedPreferences = locator<SharedPreferences>();
-
   final TextEditingController aadhaarController = TextEditingController();
   String frontAadhaarImage = "";
   String backAadhaarImage = "";
@@ -78,18 +77,9 @@ class CandidateKYCViewModel extends BaseViewModel {
         },
         (res) async {
           if (isSocialLogin) {
-            var result = await navigationService.navigateTo(
-              Routes.oTPVerifyScreen,
-              arguments: OTPVerifyScreenArguments(
-                mobile: res.mobile,
-                roleId: res.roleId,
-              ),
-            );
-            if (result["isCheck"]) {
-              navigationToHomeView();
-            }
+            await verifyOTPForSocialLogin(res);
           } else {
-            navigationToHomeView();
+            navigationToHomeScreen();
             if (user.profileStatus == "profile-completed") {
               updateBankStatusToLocal();
             }
@@ -101,10 +91,18 @@ class CandidateKYCViewModel extends BaseViewModel {
     }
   }
 
-  void navigationToHomeView() {
-    navigationService.navigateTo(
-      Routes.homeView,
+  Future<void> verifyOTPForSocialLogin(UserAuthResponseData res) async {
+    var result = await navigationService.navigateTo(
+      Routes.oTPVerifyScreen,
+      arguments: OTPVerifyScreenArguments(
+        mobile: res.mobile,
+        roleId: res.roleId,
+        loginType: "social",
+      ),
     );
+    if (result["isCheck"] ?? false) {
+      navigationToHomeScreen();
+    }
   }
 
   Future<void> updateBankStatusToLocal() async {

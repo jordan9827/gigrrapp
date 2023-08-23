@@ -27,6 +27,7 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
     double outerPadding = SizeConfig.margin_padding_15;
     var price =
         "₹ ${double.parse(data.fromAmount).toStringAsFixed(0)}-${double.parse(data.toAmount).toStringAsFixed(0)}/${data.priceCriteria}";
+
     return Scaffold(
       body: Stack(
         children: [
@@ -140,16 +141,17 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
                         ),
                         _buildExPriceWidget(
                           outerPadding: outerPadding,
-                          valueText: "1-3 Years",
+                          valueText: data.availabilityResp.experience,
                           titleText: "experience",
                         ),
                       ],
                     ),
                     _buildSpacing(),
-                    _buildOtherDetailView(
-                      title: "availability",
-                      infoList: viewModel.listOfAvailability,
-                    ),
+                    if (viewModel.listOfAvailability(data).isNotEmpty)
+                      _buildOtherDetailView(
+                        title: "availability",
+                        infoList: viewModel.listOfAvailability(data),
+                      ),
                     _buildSpacing(),
                     _buildOtherDetailView(
                       title: "required_skill",

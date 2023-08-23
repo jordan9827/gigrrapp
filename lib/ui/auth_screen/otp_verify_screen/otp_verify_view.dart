@@ -12,11 +12,12 @@ import 'otp_verify_view_model.dart';
 class OTPVerifyScreen extends StatefulWidget {
   final String mobile;
   final String roleId;
-
+  final String loginType;
   const OTPVerifyScreen({
     Key? key,
     required this.mobile,
     this.roleId = "",
+    this.loginType = "",
   }) : super(key: key);
 
   @override
@@ -32,23 +33,27 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
       viewModelBuilder: () => OTPVerifyScreenModel(
         mobile: widget.mobile,
         roleId: widget.roleId,
+        loginType: widget.loginType,
       ),
       builder: (context, viewModel, child) {
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: _buildHeadingVerifyOTP(viewModel),
-                  ),
-                  Expanded(
-                    flex: 4,
-                    child: _buildOTPField(viewModel),
-                  ),
-                ],
+        return WillPopScope(
+          onWillPop: () => Future.sync(viewModel.onWillPop),
+          child: Scaffold(
+            body: SingleChildScrollView(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: _buildHeadingVerifyOTP(viewModel),
+                    ),
+                    Expanded(
+                      flex: 4,
+                      child: _buildOTPField(viewModel),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

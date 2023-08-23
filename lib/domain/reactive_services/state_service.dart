@@ -63,7 +63,9 @@ class StateCityService with ListenableServiceMixin {
       address: user.address,
       addressType: "home",
       state: user.state,
-      city: user.cityList.first,
+      city: user.cityList.isNotEmpty
+          ? user.cityList.first
+          : UserCityResponse.emptyData(),
       latitude: user.latitude,
       longitude: user.longitude,
     );

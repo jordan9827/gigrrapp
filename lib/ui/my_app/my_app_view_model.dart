@@ -26,7 +26,6 @@ class MyAppViewModel extends BaseViewModel {
   final businessRepo = locator<BusinessRepo>();
   final fCMService = locator<FCMService>();
   final businessTypeService = locator<BusinessTypeService>();
-
   final log = getLogger('My App View');
   final userData = locator<UserAuthResponseData>();
 
@@ -58,13 +57,6 @@ class MyAppViewModel extends BaseViewModel {
     String routes = Routes.loginView;
 
     switch (userData.profileStatus) {
-      // case "login":
-      //   if (userData.isEmployer) {
-      //     routes = Routes.employerRegisterScreenView;
-      //   } else {
-      //     routes = Routes.candidateRegisterScreenView;
-      //   }
-      //   break;
       case "profile-completed":
         routes = Routes.candidateKYCScreenView;
         break;

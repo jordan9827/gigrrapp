@@ -24,6 +24,7 @@ class LoginViewViewModel extends BaseViewModel {
   final loginFormKey = GlobalKey<FormState>();
   final authRepo = locator<Auth>();
   final user = locator<UserAuthResponseData>();
+  String loginType = "mobile";
 
   TextEditingController mobileController = TextEditingController();
   String mobileMessage = "";
@@ -83,14 +84,15 @@ class LoginViewViewModel extends BaseViewModel {
           roleId: roleId,
         ),
       );
-      if (result["isCheck"]) {
-        _navigationToStatusLogin(result["profile_status"]);
+      if (result["isCheck"] ?? false) {
+        await _navigationToStatusLogin(result["profile_status"]);
       }
     }
+    setBusy(false);
     notifyListeners();
   }
 
-  void _navigationToStatusLogin(String value) {
+  Future<void> _navigationToStatusLogin(String value) async {
     var employer = (roleId == "3" ? true : false);
     switch (value) {
       case "otp-verify":
@@ -197,7 +199,9 @@ class LoginViewViewModel extends BaseViewModel {
         if (res.isEmployer) {
           navigationService.navigateTo(
             Routes.employerRegisterScreenView,
-            arguments: EmployerRegisterScreenViewArguments(isSocialLogin: true),
+            arguments: EmployerRegisterScreenViewArguments(
+              isSocialLogin: true,
+            ),
           );
         } else {
           navigationService.navigateTo(
@@ -221,7 +225,7 @@ class LoginViewViewModel extends BaseViewModel {
       case "kyc-completed":
         await navigationToOTPScreen(res);
         break;
-      case "otp-verify":
+      case "completed":
         navigationService.clearStackAndShow(Routes.homeView);
         break;
     }
@@ -235,7 +239,7 @@ class LoginViewViewModel extends BaseViewModel {
         roleId: res.roleId,
       ),
     );
-    if (data["isCheck"]) {
+    if (data["isCheck"] ?? false) {
       navigationService.clearStackAndShow(Routes.homeView);
     }
   }

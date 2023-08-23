@@ -74,6 +74,8 @@ class CandidateGigsRequestData with _$CandidateGigsRequestData {
         List<GigrrTypeCategoryData> skillsCategoryList,
     @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
         GetBusinessesData business,
+    @JsonKey(name: "avaliability", defaultValue: AvailabilityResp.getEmptyAvailability)
+        AvailabilityResp availabilityResp,
     @JsonKey(name: "gigs_request", defaultValue: [])
         List<GigsRequestData> gigsRequestData,
     @JsonKey(name: "duration", defaultValue: 0) int duration,

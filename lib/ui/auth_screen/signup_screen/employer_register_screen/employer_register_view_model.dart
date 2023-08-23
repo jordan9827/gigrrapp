@@ -261,11 +261,13 @@ class EmployerRegisterViewModel extends BaseViewModel {
     UserAuthResponseData res,
   ) async {
     if (isSocialLogin) {
+      print("navigationToEmployerComplete");
       var result = await navigationService.navigateTo(
         Routes.oTPVerifyScreen,
         arguments: OTPVerifyScreenArguments(
           mobile: res.mobile,
           roleId: res.roleId,
+          loginType: "social",
         ),
       );
       if (result["isCheck"]) {

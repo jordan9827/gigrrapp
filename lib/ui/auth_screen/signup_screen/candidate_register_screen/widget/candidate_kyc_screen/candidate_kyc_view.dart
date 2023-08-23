@@ -1,5 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/app/app.locator.dart';
+import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../../../others/common_app_bar.dart';
@@ -29,7 +31,9 @@ class CandidateKYCScreenView extends StatelessWidget {
           "upload_kyc_document",
           actions: [
             InkWell(
-              onTap: viewModel.navigationToHomeScreen,
+              onTap: () => viewModel.verifyOTPForSocialLogin(
+                viewModel.user,
+              ),
               child: Container(
                 margin: EdgeInsets.only(
                   right: SizeConfig.margin_padding_15,

@@ -36,11 +36,12 @@ class CandidateGigrrsViewModel extends BaseViewModel {
     }
   }
 
-  List<String> listOfAvailability = [
-    "Weekends",
-    "Day Shift",
-    "Night Shift",
-  ];
+  List<String> listOfAvailability(CandidateGigsRequestData data) {
+    List<String> listOfAvailability = [];
+    if (data.availabilityResp.availability.isNotEmpty)
+      listOfAvailability.add(data.availabilityResp.availability);
+    return listOfAvailability;
+  }
 
   void navigateBack() {
     navigationService.back();

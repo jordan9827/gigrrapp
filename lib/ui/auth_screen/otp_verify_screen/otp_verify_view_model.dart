@@ -22,22 +22,33 @@ class OTPVerifyScreenModel extends BaseViewModel {
   Timer? timer;
   var seconds = 0;
   String mobileNumber = "";
+  String loginType = "";
   String roleId = "";
   String isVerificationId = "";
 
   TextEditingController pinController = TextEditingController();
 
-  OTPVerifyScreenModel({required String mobile, String roleId = ""}) {
+  OTPVerifyScreenModel({
+    required String mobile,
+    String roleId = "",
+    String loginType = "",
+  }) {
     this.mobileNumber = mobile;
     this.roleId = roleId;
+    this.loginType = loginType;
     notifyListeners();
   }
 
   void navigationToBack() {
     if (!isBusy) {
-      navigationService.back();
+      navigationService.back(result: {"isCheck": false});
     }
     return;
+  }
+
+  bool onWillPop() {
+    navigationService.back(result: {"isCheck": false});
+    return false;
   }
 
   bool validateInput() {
@@ -143,6 +154,7 @@ class OTPVerifyScreenModel extends BaseViewModel {
     request['country_code'] = countryCode;
     request['otp'] = pinController.text;
     request['mobile_no'] = mobileNumber;
+    request['login_type'] = loginType;
     request['device_token'] = (await fcmToken());
     request['device_type'] = getDeviceType();
     request['certification_type'] = "development";
