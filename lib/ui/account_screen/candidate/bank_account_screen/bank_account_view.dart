@@ -17,7 +17,10 @@ class BankAccountScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.fetchAccountInfo(),
+      onViewModelReady: (viewModel) {
+        viewModel.fetchAccountInfo();
+        viewModel.fetchUpiInfo();
+      },
       viewModelBuilder: () => BankAccountViewModel(),
       builder: (_, viewModel, child) {
         var isAccount = (viewModel.bankInfoData.id != 0 &&
@@ -38,7 +41,7 @@ class BankAccountScreenView extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 children: [
                   _buildSpacer(),
-                  _buildUPIView(),
+                  _buildUPIView(viewModel),
                   _buildSpacer(),
                   if (isAccount) _buildAccountDetailView(viewModel),
                   if (!isAccount) _buildAddAccountView(viewModel)
@@ -57,63 +60,66 @@ class BankAccountScreenView extends StatelessWidget {
     );
   }
 
-  Widget _buildUPIView() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildSpacer(),
-        Text(
-          "your_upi_bank_acc".tr(),
-          style: TSB.semiBoldMedium(
-            textColor: independenceColor,
-          ),
-        ),
-        _buildSpacer(
-          SizeConfig.margin_padding_8,
-        ),
-        Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(
-            SizeConfig.margin_padding_15,
-          ),
-          decoration: BoxDecoration(
-            color: mainWhiteColor,
-            borderRadius: BorderRadius.circular(
-              SizeConfig.margin_padding_10,
+  Widget _buildUPIView(BankAccountViewModel viewModel) {
+    return InkWell(
+      onTap: viewModel.navigationToAddUpiView,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSpacer(),
+          Text(
+            "your_upi_bank_acc".tr(),
+            style: TSB.semiBoldMedium(
+              textColor: independenceColor,
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "HDFC Bank".tr(),
-                    style: TSB.semiBoldSmall(),
-                  ),
-                  _buildSpacer(
-                    SizeConfig.margin_padding_5,
-                  ),
-                  Text(
-                    "XXXXXXXXXX1234".tr(),
-                    style: TSB.regularSmall(),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(
-                    ic_arrow_grey,
-                    scale: 2.5,
-                  ),
-                ],
-              )
-            ],
+          _buildSpacer(
+            SizeConfig.margin_padding_8,
           ),
-        ),
-      ],
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.all(
+              SizeConfig.margin_padding_13,
+            ),
+            decoration: BoxDecoration(
+              color: mainWhiteColor,
+              borderRadius: BorderRadius.circular(
+                SizeConfig.margin_padding_10,
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      viewModel.bankInfoData.bankName,
+                      style: TSB.semiBoldSmall(),
+                    ),
+                    _buildSpacer(
+                      SizeConfig.margin_padding_5,
+                    ),
+                    Text(
+                      viewModel.upiInfoData.upiId,
+                      style: TSB.regularSmall(),
+                    ),
+                  ],
+                ),
+                Center(
+                  child: SizedBox(
+                    width: SizeConfig.margin_padding_65,
+                    height: SizeConfig.margin_padding_24,
+                    child: Image.asset(
+                      ic_upi_logo,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

@@ -76,17 +76,17 @@ class NotificationScreenView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: SizeConfig.margin_padding_15,
+              height: SizeConfig.margin_padding_10,
             ),
-            Text(
-              title,
-              style: TSB.semiBoldSmall(
-                textColor: independenceColor,
-              ),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_5,
-            ),
+            // Text(
+            //   title,
+            //   style: TSB.semiBoldSmall(
+            //     textColor: independenceColor,
+            //   ),
+            // ),
+            // SizedBox(
+            //   height: SizeConfig.margin_padding_5,
+            // ),
             Column(
               children: list
                   .map(

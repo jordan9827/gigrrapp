@@ -119,9 +119,9 @@ class CandidateGigrrsViewModel extends BaseViewModel {
 
   Future<Map<String, String>> _getRequestForGig() async {
     Map<String, String> request = {};
-    request["address"] = user.address;
-    request["latitude"] = user.latitude;
-    request["longitude"] = user.longitude;
+    request["address"] = defaultAddress.address;
+    request["latitude"] = defaultAddress.latitude;
+    request["longitude"] = defaultAddress.longitude;
     notifyListeners();
     return request;
   }

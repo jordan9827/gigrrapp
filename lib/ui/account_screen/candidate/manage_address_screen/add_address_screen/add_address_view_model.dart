@@ -44,11 +44,12 @@ class AddAddressViewModel extends BaseViewModel {
     loadState();
   }
 
-  setEditAddressData(GetAddressResponseData data) async {
+  void setEditAddressData(GetAddressResponseData data) async {
     latLng = LatLng(
       double.parse(data.latitude),
       double.parse(data.longitude),
     );
+    print("GetAddressResponseData ${data.city}");
     addressTypeValue = data.addressType;
     addressController.text = data.address;
     cityController.text = data.city.name;

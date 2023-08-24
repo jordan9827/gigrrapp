@@ -94,6 +94,9 @@ bool validatePassword(String password) => RegExp(
 bool validateIFSC(String ifsc) =>
     RegExp(r"^[A-Z]{4}0[A-Z0-9]{6}$").hasMatch(ifsc);
 
+bool validateUpi(String upi) =>
+    RegExp(r"^[a-zA-Z0-9.-]{2, 256}@[a-zA-Z][a-zA-Z]{2, 64}$").hasMatch(upi);
+
 bool validateAadhaarCard(String aadhaar) =>
     RegExp(r'^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$').hasMatch(aadhaar);
 

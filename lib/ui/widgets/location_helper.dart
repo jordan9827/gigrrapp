@@ -28,7 +28,6 @@ class LocationHelper {
     bool serviceEnabled = await location.serviceEnabled();
     if (serviceEnabled) {
       final locationData = await location.getLocation();
-      print("locationData ${locationData.latitude}");
       var lat = locationData.latitude ?? 0.0;
       var lng = locationData.longitude ?? 0.0;
       var map = MapBoxGeoCoding(

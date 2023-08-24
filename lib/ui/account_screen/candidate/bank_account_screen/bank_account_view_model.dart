@@ -7,8 +7,10 @@ import '../../../../app/app.locator.dart';
 import '../../../../app/app.router.dart';
 import '../../../../data/local/preference_keys.dart';
 import '../../../../data/network/dtos/fetch_bank_detail_response.dart';
+import '../../../../data/network/dtos/fetch_upi_detail_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/account_repos.dart';
+import 'add_upi_screen/add_upi_view.dart';
 
 class BankAccountViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -17,12 +19,24 @@ class BankAccountViewModel extends BaseViewModel {
   final user = locator<UserAuthResponseData>();
   final accountRepo = locator<AccountRepo>();
   GetBankDetailResponseData bankInfoData = GetBankDetailResponseData.init();
+  GetUpiDetailResponseData upiInfoData = GetUpiDetailResponseData.init();
 
   void navigationToBack() {
     if (!isBusy) {
       navigationService.back();
     }
     return;
+  }
+
+  Future<void> navigationToAddUpiView() async {
+    var isCheck = await navigationService.navigateToView(
+      AddUpiView(
+        data: upiInfoData,
+      ),
+    );
+    if (isCheck ?? false) {
+      fetchUpiInfo();
+    }
   }
 
   Future<void> navigationToAddAndEditBankAccountView(
@@ -56,6 +70,18 @@ class BankAccountViewModel extends BaseViewModel {
     }, (bank) async {
       bankInfoData = bank;
       if (user.bankStatus == 0) await updateBankStatusToLocal(bank);
+      setBusy(false);
+      notifyListeners();
+    });
+  }
+
+  Future<void> fetchUpiInfo() async {
+    setBusy(true);
+    final response = await accountRepo.fetchCandidateUpiDetail();
+    response.fold((failure) {
+      setBusy(false);
+    }, (bank) async {
+      upiInfoData = bank;
       setBusy(false);
       notifyListeners();
     });

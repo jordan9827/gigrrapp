@@ -189,7 +189,7 @@ class AuthImpl extends Auth {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      log.i("Login Response ${response.body}");
+      log.i("State Response ${response.body}");
       return response.body!.map(success: (res) async {
         locator<StateCityService>().updateState(res.list);
         return Right(res.list);
@@ -210,7 +210,7 @@ class AuthImpl extends Auth {
       if (response.body == null) {
         throw Exception(response.error);
       }
-      log.i("Login Response ${response.body}");
+      log.i("City Response ${response.body}");
       return response.body!.map(success: (res) async {
         locator<StateCityService>().updateCity(res.list);
         return Right(res.list);

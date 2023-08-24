@@ -108,12 +108,12 @@ class AccountView extends StatelessWidget {
         if (!isEmployer)
           _buildListTile(
             onTap: viewModel.navigationToManageAddressScreen,
-            leading: ic_share,
+            leading: ic_address,
             title: "manage_address",
           ),
         _buildListTile(
           onTap: viewModel.navigationToLanguageScreen,
-          leading: ic_help,
+          leading: ic_language,
           title: "select_language",
         ),
         _buildListTile(
