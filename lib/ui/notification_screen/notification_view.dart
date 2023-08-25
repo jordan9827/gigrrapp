@@ -47,10 +47,26 @@ class NotificationScreenView extends StatelessWidget {
           loading: viewModel.isBusy,
           child: ListView(
             children: [
-              _buildNotificationData(
-                title: "Today",
-                list: viewModel.notificationList,
-              ),
+              if (viewModel.todayList.isNotEmpty)
+                _buildNotificationData(
+                  title: "today",
+                  list: viewModel.todayList,
+                ),
+              if (viewModel.weekList.isNotEmpty)
+                _buildNotificationData(
+                  title: "week",
+                  list: viewModel.weekList,
+                ),
+              if (viewModel.monthList.isNotEmpty)
+                _buildNotificationData(
+                  title: "month",
+                  list: viewModel.monthList,
+                ),
+              if (viewModel.yearList.isNotEmpty)
+                _buildNotificationData(
+                  title: "year",
+                  list: viewModel.yearList,
+                ),
               SizedBox(
                 height: SizeConfig.margin_padding_20,
               ),
@@ -78,15 +94,15 @@ class NotificationScreenView extends StatelessWidget {
             SizedBox(
               height: SizeConfig.margin_padding_10,
             ),
-            // Text(
-            //   title,
-            //   style: TSB.semiBoldSmall(
-            //     textColor: independenceColor,
-            //   ),
-            // ),
-            // SizedBox(
-            //   height: SizeConfig.margin_padding_5,
-            // ),
+            Text(
+              title.tr(),
+              style: TSB.semiBoldSmall(
+                textColor: independenceColor,
+              ),
+            ),
+            SizedBox(
+              height: SizeConfig.margin_padding_5,
+            ),
             Column(
               children: list
                   .map(

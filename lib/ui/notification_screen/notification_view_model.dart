@@ -9,7 +9,10 @@ class NotificationScreenViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final notificationRepo = locator<NotificationRepo>();
-  List<NotificationList> notificationList = <NotificationList>[];
+  List<NotificationList> todayList = <NotificationList>[];
+  List<NotificationList> weekList = <NotificationList>[];
+  List<NotificationList> monthList = <NotificationList>[];
+  List<NotificationList> yearList = <NotificationList>[];
 
   NotificationScreenViewModel() {
     fetchAllNotificationApi();
@@ -31,7 +34,7 @@ class NotificationScreenViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
       },
       (response) async {
-        notificationList = response.notificationList;
+        await getSortedDateList(response.notificationList);
         notifyListeners();
         setBusy(false);
       },
@@ -48,10 +51,29 @@ class NotificationScreenViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
       },
       (response) async {
-        notificationList.clear();
         setBusy(false);
       },
     );
+    notifyListeners();
+  }
+
+  Future<void> getSortedDateList(
+    List<NotificationList> list,
+  ) async {
+    DateTime currentDate = DateTime.now();
+    for (var e in list) {
+      var date = DateTime.parse(e.createdAt);
+      if (currentDate.difference(date).inDays < 1) {
+        todayList.add(e);
+      } else if (currentDate.difference(date).inDays <= 7) {
+        weekList.add(e);
+      } else if (currentDate.difference(date).inDays <= 30 &&
+          !weekList.contains(date)) {
+        monthList.add(e);
+      } else {
+        yearList.add(e);
+      }
+    }
     notifyListeners();
   }
 }
