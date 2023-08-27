@@ -23,7 +23,10 @@ class PaymentHistoryViewModel extends BaseViewModel {
   TextEditingController toDateController = TextEditingController();
   var timeNow = DateFormat('hh:mm a').format(DateTime.now());
 
-  // var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
+  List<PaymentHistoryData> todayList = <PaymentHistoryData>[];
+  List<PaymentHistoryData> weekList = <PaymentHistoryData>[];
+  List<PaymentHistoryData> monthList = <PaymentHistoryData>[];
+  List<PaymentHistoryData> yearList = <PaymentHistoryData>[];
   var dateNow = DateFormat("yyyy-MM-dd").format(DateTime.now());
   DateTime selectedDate = DateTime.now();
   var _pageNumber = 0;
@@ -120,9 +123,10 @@ class PaymentHistoryViewModel extends BaseViewModel {
       paymentList = [];
       snackBarService.showSnackbar(message: fail.errorMsg);
       setBusy(false);
-    }, (res) {
+    }, (res) async {
       paymentList.addAll(res.paymentHistoryData);
       paymentList.sort((b, a) => a.updatedAt.compareTo(b.updatedAt));
+      await getSortedDateList(paymentList);
       _loading = false;
       setBusy(false);
     });
@@ -187,5 +191,25 @@ class PaymentHistoryViewModel extends BaseViewModel {
 
     log("Request Candidate Payment :: $request");
     return request;
+  }
+
+  Future<void> getSortedDateList(
+    List<PaymentHistoryData> list,
+  ) async {
+    DateTime currentDate = DateTime.now();
+    for (var e in list) {
+      var date = DateTime.parse(e.createdAt);
+      if (currentDate.difference(date).inDays < 1) {
+        todayList.add(e);
+      } else if (currentDate.difference(date).inDays <= 7) {
+        weekList.add(e);
+      } else if (currentDate.difference(date).inDays <= 30 &&
+          !weekList.contains(date)) {
+        monthList.add(e);
+      } else {
+        yearList.add(e);
+      }
+    }
+    notifyListeners();
   }
 }

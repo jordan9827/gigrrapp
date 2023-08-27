@@ -3,11 +3,14 @@ import 'package:square_demo_architecture/data/network/dtos/business_profile_resp
 import '../dtos/base_response.dart';
 import '../dtos/business_type_category.dart';
 import '../dtos/calender_wise_response.dart';
+import '../dtos/employer_find_gigrr_response.dart';
 import '../dtos/employer_gigs_request.dart';
+import '../dtos/find_gigrr_profile_response.dart';
 import '../dtos/get_businesses_response.dart';
 import '../dtos/gigrr_type_response.dart';
 import '../dtos/my_gigrrs_roster_response.dart';
 import '../dtos/my_gigs_response.dart';
+
 part 'business_service.chopper.dart';
 
 @ChopperApi(baseUrl: "/api/")
@@ -47,7 +50,12 @@ abstract class BusinessService extends ChopperService {
   );
 
   @Post(path: "search-candidate-via-gigs")
-  Future<Response<EmployerGigsRequestResponse>> employerGigsRequest(
+  Future<Response<FindGigrrsProfileResponse>> employerSearchCandidateGigsApi(
+    @Body() Map<String, dynamic> body,
+  );
+
+  @Post(path: "find-gigrr")
+  Future<Response<EmployerFindGigrrsResponse>> employerFindGigrrApi(
     @Body() Map<String, dynamic> body,
   );
 

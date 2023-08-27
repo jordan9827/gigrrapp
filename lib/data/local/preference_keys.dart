@@ -30,6 +30,8 @@ class PreferenceKeys {
       const PreferenceKeys._("APP_LANGUAGE");
   static const PreferenceKeys FIRST_TIME = const PreferenceKeys._("FIRST_TIME");
   static const PreferenceKeys GIGRR_TYPE = const PreferenceKeys._("GIGRR_TYPE");
+  static const PreferenceKeys GIGRR_PREFERENCES =
+      const PreferenceKeys._("GIGRR_PREFERENCES");
   static const PreferenceKeys FIRST_TIME_ACCESS_LOCATION =
       const PreferenceKeys._("FIRST_TIME_ACCESS_LOCATION");
   static const PreferenceKeys GUEST_USER = const PreferenceKeys._("GUEST_USER");

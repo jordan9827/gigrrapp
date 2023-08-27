@@ -11,7 +11,8 @@ import '../../util/exceptions/failures/failure.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/base_response.dart';
 import '../network/dtos/business_type_category.dart';
-import '../network/dtos/employer_gigs_request.dart';
+import '../network/dtos/employer_find_gigrr_response.dart';
+import '../network/dtos/find_gigrr_profile_response.dart';
 import '../network/dtos/get_businesses_response.dart';
 import '../network/dtos/gigrr_type_response.dart';
 import '../network/dtos/my_gigrrs_roster_response.dart';
@@ -163,15 +164,37 @@ class BusinessImpl extends BusinessRepo {
   }
 
   @override
-  Future<Either<Failure, EmployerGigsRequestResponseData>> employerGigsRequest(
-      Map<String, dynamic> data) async {
+  Future<Either<Failure,  List<FindGigrrsProfileData>>>
+      employerSearchCandidateGigs(Map<String, dynamic> data) async {
     try {
-      final response = await businessService.employerGigsRequest(data);
+      final response =
+          await businessService.employerSearchCandidateGigsApi(data);
 
       if (response.body == null) {
         throw Exception(response.error);
       }
-      log.i("EmployerGigsRequest Response ${response.body}");
+      log.i("EmployerSearchCandidateGigs Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res.data);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, EmployerFindGigrrsResponseData>> employerFindGigrr(
+      Map<String, dynamic> data) async {
+    try {
+      final response = await businessService.employerFindGigrrApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("EmployerFindGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res.data);
       }, error: (error) {

@@ -91,46 +91,54 @@ class ProfileWidgetScreen extends StatelessWidget {
   }
 
   Widget _buildBusinessView(AccountViewModel viewModel) {
-    return Container(
-      padding: EdgeInsets.all(SizeConfig.margin_padding_10),
-      width: double.infinity,
-      color: mainPinkColor.withOpacity(0.10),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            "your_businesses".tr(),
-            style: TSB.regularMedium(),
-          ),
-          InkWell(
-            onTap: viewModel.navigationToBusinessesScreen,
-            child: Image.asset(
-              ic_pink_arrow_forword,
-              height: SizeConfig.margin_padding_15,
-            ),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        _buildPreferencesView(
+          isEmployer: true,
+          title: "giggr_preference",
+          onTap: viewModel.navigationToEmployerPreferenceScreen,
+        ),
+        _buildPreferencesView(
+          isEmployer: true,
+          title: "your_businesses",
+          onTap: viewModel.navigationToBusinessesScreen,
+        ),
+      ],
     );
   }
 
   Widget _buildGigPreferencesView(AccountViewModel viewModel) {
+    return _buildPreferencesView(
+      title: "gig_preference",
+      onTap: viewModel.navigationToBusinessesScreen,
+    );
+  }
+
+  Widget _buildPreferencesView({
+    Function()? onTap,
+    String title = "",
+    bool isEmployer = false,
+  }) {
+    Color iconColor = isEmployer ? mainPinkColor : mainWhiteColor;
+    Color textColor = isEmployer ? mainBlackColor : mainWhiteColor;
     return Container(
       padding: EdgeInsets.all(SizeConfig.margin_padding_10),
       width: double.infinity,
-      color: independenceColor,
+      color: isEmployer ? mainPinkColor.withOpacity(0.10) : independenceColor,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "gig_preference".tr(),
-            style: TSB.regularMedium(textColor: mainWhiteColor),
+            title.tr(),
+            style: TSB.regularMedium(
+              textColor: textColor,
+            ),
           ),
           InkWell(
-            onTap: viewModel.navigationToCandidatePreferencesScreen,
+            onTap: onTap,
             child: Image.asset(
               ic_pink_arrow_forword,
-              color: mainWhiteColor,
+              color: iconColor,
               height: SizeConfig.margin_padding_15,
             ),
           )

@@ -26,7 +26,7 @@ class EmployerGigrrsView extends StatelessWidget {
           body: LoadingScreen(
             loading: viewModel.isBusy,
             child: viewModel.gigsData.isEmpty
-                ? EmptyDataScreenView()
+                ? _buildEmptyView(viewModel)
                 : PageView.builder(
                     scrollDirection: Axis.vertical,
                     controller: viewModel.pageController,
@@ -34,19 +34,30 @@ class EmployerGigrrsView extends StatelessWidget {
                       var e = viewModel.gigsData[index];
                       return GiggrCardWidget(
                         title: e.firstName,
-                        profile: "",
                         price: viewModel.price(e),
                         gigrrActionName: 'apply_now',
                         skillList: e.employeeSkills.map((e) => e.name).toList(),
                         gigrrActionButton: () =>
                             viewModel.navigateToGigrrDetailScreen(e),
-                        profileList: [],
+                        profileList:
+                            e.employerImageList.map((e) => e.imageUrl).toList(),
                       );
                     },
                   ),
           ),
         );
       },
+    );
+  }
+
+  Widget _buildEmptyView(EmployerGigrrsViewModel viewModel) {
+    bool isBusiness = viewModel.employerGigrrsPref.businessId.isNotEmpty;
+    bool isEmptyData = isBusiness && viewModel.gigsData.isEmpty;
+    return EmptyDataScreenView(
+      title: isEmptyData ? "txt_no_data" : "txt_no_data_for_gigrrs",
+      enableBackButton: !isEmptyData,
+      actionText: "find_gigrrs",
+      action: viewModel.navigateToEmployerPrefView,
     );
   }
 }

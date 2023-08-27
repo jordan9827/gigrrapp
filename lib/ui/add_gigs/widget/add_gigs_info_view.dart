@@ -87,7 +87,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
         Padding(
           padding: EdgeInsets.only(bottom: SizeConfig.margin_padding_8),
           child: Text(
-            "business_type".tr(),
+            "your_businesses".tr(),
             style: TSB.regularSmall(),
           ),
         ),

@@ -67,7 +67,6 @@ class CandidateGigrrsViewModel extends BaseViewModel {
       setBusy(false);
     }, (res) {
       gigsData = res.gigsRequestData;
-      setBusy(false);
       notifyListeners();
     });
     setBusy(false);

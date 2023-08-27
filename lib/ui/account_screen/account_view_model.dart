@@ -15,6 +15,8 @@ import '../../others/constants.dart';
 import '../widgets/delete_acc_dialog_helper.dart';
 import 'dart:io' show Platform;
 
+import 'employer/employer_preferences_screen/employer_preferences_view.dart';
+
 class AccountViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
@@ -87,6 +89,10 @@ class AccountViewModel extends BaseViewModel {
 
   void navigationToEditProfileScreen() {
     navigationService.navigateTo(Routes.editProfileScreenView);
+  }
+
+  void navigationToEmployerPreferenceScreen() {
+    navigationService.navigateToView(EmployerPreferenceScreenView());
   }
 
   void navigationToBusinessesScreen() {

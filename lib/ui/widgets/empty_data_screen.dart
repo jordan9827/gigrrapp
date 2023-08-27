@@ -7,9 +7,15 @@ import '../../util/others/text_styles.dart';
 
 class EmptyDataScreenView extends StatelessWidget {
   final bool enableBackButton;
+  final String actionText;
+  final String title;
+  final Function()? action;
   const EmptyDataScreenView({
     Key? key,
     this.enableBackButton = false,
+    this.actionText = "go_to_home",
+    this.title = "txt_no_data",
+    this.action,
   }) : super(key: key);
 
   @override
@@ -33,7 +39,7 @@ class EmptyDataScreenView extends StatelessWidget {
             ),
             Text(
               textAlign: TextAlign.center,
-              "txt_no_data".tr(),
+              title.tr(),
               style: TSB.regularMedium(),
             ),
             SizedBox(
@@ -41,8 +47,8 @@ class EmptyDataScreenView extends StatelessWidget {
             ),
             if (enableBackButton)
               LoadingButton(
-                action: () => Navigator.of(context).pop(),
-                title: "go_to_home",
+                action: action ?? () => Navigator.of(context).pop(),
+                title: actionText,
               )
           ],
         ),

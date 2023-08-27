@@ -15,6 +15,10 @@ extension StringExtensions on String {
   }
 
   String capitalize() {
-    return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    if (this.isNotEmpty) {
+      return "${this[0].toUpperCase()}${this.substring(1).toLowerCase()}";
+    } else {
+      return "";
+    }
   }
 }
