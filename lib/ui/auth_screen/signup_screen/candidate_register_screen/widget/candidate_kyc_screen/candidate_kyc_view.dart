@@ -15,8 +15,12 @@ import 'candidate_kyc_view_model.dart';
 
 class CandidateKYCScreenView extends StatelessWidget {
   final bool isSocial;
+  final String socialId;
+  final String socialType;
   const CandidateKYCScreenView({
     Key? key,
+    this.socialId = "",
+    this.socialType = "",
     this.isSocial = false,
   }) : super(key: key);
 
@@ -24,7 +28,11 @@ class CandidateKYCScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => CandidateKYCViewModel(social: isSocial),
+      viewModelBuilder: () => CandidateKYCViewModel(
+        social: isSocial,
+        socialType: socialType,
+        socialId: socialId,
+      ),
       builder: (_, viewModel, child) => Scaffold(
         appBar: getAppBar(
           context,

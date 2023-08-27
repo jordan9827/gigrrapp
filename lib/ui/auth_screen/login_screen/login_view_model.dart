@@ -24,7 +24,7 @@ class LoginViewViewModel extends BaseViewModel {
   final loginFormKey = GlobalKey<FormState>();
   final authRepo = locator<Auth>();
   final user = locator<UserAuthResponseData>();
-  String loginType = "mobile";
+  String loginType = LoginType.MOBILE.name.toLowerCase();
 
   TextEditingController mobileController = TextEditingController();
   String mobileMessage = "";
@@ -116,7 +116,9 @@ class LoginViewViewModel extends BaseViewModel {
         navigationService.clearStackAndShow(Routes.homeView);
         break;
       case "profile-completed":
-        navigationService.clearStackAndShow(Routes.candidateKYCScreenView);
+        navigationService.clearStackAndShow(
+          Routes.candidateKYCScreenView,
+        );
         break;
     }
   }
@@ -133,7 +135,7 @@ class LoginViewViewModel extends BaseViewModel {
         email: account.email,
         googleId: account.id,
         name: account.displayName ?? "",
-        socialMediaType: LoginType.GOOGLE.name.toLowerCase(),
+        socialMediaType: SocialType.GOOGLE.name.toLowerCase(),
       );
       await socialApiCall(log);
     }
@@ -150,6 +152,17 @@ class LoginViewViewModel extends BaseViewModel {
     );
     switch (facebookLoginResult.status) {
       case FacebookLoginStatus.success:
+        final profile = await facebookLogin.getUserProfile();
+
+        if (profile!.userId.isNotEmpty) {
+          var log = SocialSignInData(
+            email: await facebookLogin.getUserEmail() ?? "",
+            name: profile.name ?? "",
+            facebookId: profile.userId,
+            socialMediaType: SocialType.FACEBOOK.name.toLowerCase(),
+          );
+          await socialApiCall(log);
+        }
         break;
       case FacebookLoginStatus.error:
         break;
@@ -167,7 +180,9 @@ class LoginViewViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> socialApiCall(SocialSignInData signInData) async {
+  Future<void> socialApiCall(
+    SocialSignInData signInData,
+  ) async {
     setBusy(true);
     final response = await authRepo.socialLogin(
       await _getRequestForLogIn(signInData),
@@ -182,16 +197,22 @@ class LoginViewViewModel extends BaseViewModel {
           PreferenceKeys.USER_DATA.text,
           json.encode(res),
         );
-        _navigationToStatusSocialLogin(res);
+        await _navigationToStatusSocialLogin(
+          res: res,
+          socialId: signInData.googleId,
+          socialType: signInData.socialMediaType,
+        );
         setBusy(false);
       },
     );
     notifyListeners();
   }
 
-  void navigationToSignup(UserAuthResponseData res) {}
-
-  Future<void> _navigationToStatusSocialLogin(UserAuthResponseData res) async {
+  Future<void> _navigationToStatusSocialLogin({
+    required UserAuthResponseData res,
+    String socialType = "",
+    String socialId = "",
+  }) async {
     var value = res.profileStatus.toLowerCase();
     print("checkStatus --- ${res.isEmployer}");
     switch (value) {
@@ -200,6 +221,8 @@ class LoginViewViewModel extends BaseViewModel {
           navigationService.navigateTo(
             Routes.employerRegisterScreenView,
             arguments: EmployerRegisterScreenViewArguments(
+              socialType: socialType,
+              socialId: socialId,
               isSocialLogin: true,
             ),
           );
@@ -207,6 +230,8 @@ class LoginViewViewModel extends BaseViewModel {
           navigationService.navigateTo(
             Routes.candidateRegisterScreenView,
             arguments: CandidateRegisterScreenViewArguments(
+              socialType: socialType,
+              socialId: socialId,
               isSocialLogin: true,
             ),
           );
@@ -214,16 +239,28 @@ class LoginViewViewModel extends BaseViewModel {
         break;
       case "profile-completed":
         if (res.isEmployer) {
-          await navigationToOTPScreen(res);
+          await navigationToOTPScreen(
+            res: res,
+            socialType: socialType,
+            socialId: socialId,
+          );
         } else {
           navigationService.clearStackAndShow(
             Routes.candidateKYCScreenView,
-            arguments: CandidateKYCScreenViewArguments(isSocial: true),
+            arguments: CandidateKYCScreenViewArguments(
+              isSocial: true,
+              socialType: socialType,
+              socialId: socialId,
+            ),
           );
         }
         break;
       case "kyc-completed":
-        await navigationToOTPScreen(res);
+        await navigationToOTPScreen(
+          res: res,
+          socialType: socialType,
+          socialId: socialId,
+        );
         break;
       case "completed":
         navigationService.clearStackAndShow(Routes.homeView);
@@ -231,12 +268,19 @@ class LoginViewViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> navigationToOTPScreen(UserAuthResponseData res) async {
+  Future<void> navigationToOTPScreen({
+    required UserAuthResponseData res,
+    String socialType = "",
+    String socialId = "",
+  }) async {
     var data = await navigationService.navigateTo(
       Routes.oTPVerifyScreen,
       arguments: OTPVerifyScreenArguments(
         mobile: res.mobile,
         roleId: res.roleId,
+        socialType: socialType,
+        socialId: socialId,
+        loginType: LoginType.SOCIAL.name.toLowerCase(),
       ),
     );
     if (data["isCheck"] ?? false) {
@@ -261,9 +305,9 @@ class LoginViewViewModel extends BaseViewModel {
   }
 
   String socialType(SocialSignInData data) {
-    if (data.socialMediaType == LoginType.GOOGLE.name.toLowerCase())
+    if (data.socialMediaType == SocialType.GOOGLE.name.toLowerCase())
       return data.googleId;
-    if (data.socialMediaType == LoginType.FACEBOOK.name.toLowerCase())
+    if (data.socialMediaType == SocialType.FACEBOOK.name.toLowerCase())
       return data.facebookId;
     return data.appleId;
   }

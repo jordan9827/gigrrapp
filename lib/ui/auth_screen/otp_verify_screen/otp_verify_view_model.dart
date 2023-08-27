@@ -24,6 +24,8 @@ class OTPVerifyScreenModel extends BaseViewModel {
   String mobileNumber = "";
   String loginType = "";
   String roleId = "";
+  String socialType = "";
+  String socialId = "";
   String isVerificationId = "";
 
   TextEditingController pinController = TextEditingController();
@@ -31,11 +33,16 @@ class OTPVerifyScreenModel extends BaseViewModel {
   OTPVerifyScreenModel({
     required String mobile,
     String roleId = "",
-    String loginType = "",
+    String loginType = "mobile",
+    String socialType = "",
+    String socialId = "",
   }) {
     this.mobileNumber = mobile;
     this.roleId = roleId;
     this.loginType = loginType;
+    this.socialType = socialType;
+    this.socialId = socialId;
+    init();
     notifyListeners();
   }
 
@@ -167,6 +174,9 @@ class OTPVerifyScreenModel extends BaseViewModel {
     request['country_code'] = countryCode;
     request['mobile_no'] = mobileNumber;
     request['otp_type'] = getOTPType();
+    request['login_type'] = loginType;
+    request['social_id'] = socialId;
+    request['social_type'] = socialType;
     return request;
   }
 

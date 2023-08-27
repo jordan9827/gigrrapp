@@ -24,12 +24,20 @@ class CandidateKYCViewModel extends BaseViewModel {
   String frontAadhaarImage = "";
   String backAadhaarImage = "";
   XFile? _imageFile;
+  String socialType = "";
+  String socialId = "";
   bool isSocialLogin = false;
   final user = locator<UserAuthResponseData>();
 
   XFile? get imageFile => _imageFile;
 
-  CandidateKYCViewModel({bool social = false}) {
+  CandidateKYCViewModel({
+    String socialType = "",
+    String socialId = "",
+    bool social = false,
+  }) {
+    this.socialType = socialType;
+    this.socialId = socialId;
     isSocialLogin = social;
   }
 
@@ -97,6 +105,8 @@ class CandidateKYCViewModel extends BaseViewModel {
       arguments: OTPVerifyScreenArguments(
         mobile: res.mobile,
         roleId: res.roleId,
+        socialType: socialType,
+        socialId: socialId,
         loginType: "social",
       ),
     );

@@ -8,9 +8,13 @@ import 'widget/employer_personal_form_view.dart';
 class EmployerRegisterScreenView extends StatelessWidget {
   final bool isSocialLogin;
   final String phoneNumber;
+  final String socialType;
+  final String socialId;
   const EmployerRegisterScreenView({
     Key? key,
     this.phoneNumber = "",
+    this.socialType = "",
+    this.socialId = "",
     this.isSocialLogin = false,
   }) : super(key: key);
 
@@ -21,6 +25,8 @@ class EmployerRegisterScreenView extends StatelessWidget {
         mobile: phoneNumber,
         isSocial: isSocialLogin,
         isMobileRead: phoneNumber.isNotEmpty,
+        socialId: socialId,
+        socialType: socialType,
       ),
       builder: (_, viewModel, child) => WillPopScope(
         onWillPop: () => Future.sync(viewModel.onWillPop),

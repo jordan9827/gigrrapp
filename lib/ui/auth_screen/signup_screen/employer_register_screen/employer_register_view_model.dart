@@ -47,17 +47,23 @@ class EmployerRegisterViewModel extends BaseViewModel {
   bool isMobileRead = false;
   bool _loading = true;
   bool isSocialLogin = false;
+  String socialType = "";
+  String socialId = "";
 
   bool get loading => _loading;
 
   EmployerRegisterViewModel({
     String mobile = "",
     bool isMobileRead = false,
+    String socialType = "",
+    String socialId = "",
     bool isSocial = false,
   }) {
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
     this.isSocialLogin = isSocial;
+    this.socialType = socialType;
+    this.socialId = socialId;
     initial();
     if (businessTypeService.businessTypeList.isNotEmpty) {
       businessTypeController.text =
@@ -267,6 +273,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
         arguments: OTPVerifyScreenArguments(
           mobile: res.mobile,
           roleId: res.roleId,
+          socialId: socialId,
+          socialType: socialType,
           loginType: "social",
         ),
       );

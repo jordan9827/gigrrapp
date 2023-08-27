@@ -217,7 +217,7 @@ class HomeView extends StatelessWidget {
       _buildBottomBarTab(
         onTap: () => viewModel.changeScreenIndex(3),
         image: ic_account,
-        title: "account",
+        title: "txt_account",
         isSelected: 3 == viewModel.bottomNavBarService.currentIndex,
       ),
     ];

@@ -9,31 +9,32 @@ import '../../../util/others/text_styles.dart';
 import '../../widgets/pin_code_field.dart';
 import 'otp_verify_view_model.dart';
 
-class OTPVerifyScreen extends StatefulWidget {
+class OTPVerifyScreen extends StatelessWidget {
   final String mobile;
   final String roleId;
+  final String socialId;
+  final String socialType;
   final String loginType;
   const OTPVerifyScreen({
     Key? key,
     required this.mobile,
     this.roleId = "",
-    this.loginType = "",
+    this.socialId = "",
+    this.socialType = "",
+    this.loginType = "mobile",
   }) : super(key: key);
 
-  @override
-  State<OTPVerifyScreen> createState() => _OTPVerifyScreenState();
-}
-
-class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.init(),
+      // onViewModelReady: (viewModel) => viewModel.init(),
       viewModelBuilder: () => OTPVerifyScreenModel(
-        mobile: widget.mobile,
-        roleId: widget.roleId,
-        loginType: widget.loginType,
+        mobile: mobile,
+        roleId: roleId,
+        loginType: loginType,
+        socialId: socialId,
+        socialType: socialType,
       ),
       builder: (context, viewModel, child) {
         return WillPopScope(
@@ -46,7 +47,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
                   children: [
                     Expanded(
                       flex: 2,
-                      child: _buildHeadingVerifyOTP(viewModel),
+                      child: _buildHeadingVerifyOTP(context, viewModel),
                     ),
                     Expanded(
                       flex: 4,
@@ -62,7 +63,10 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
     );
   }
 
-  Widget _buildHeadingVerifyOTP(OTPVerifyScreenModel viewModel) {
+  Widget _buildHeadingVerifyOTP(
+    BuildContext context,
+    OTPVerifyScreenModel viewModel,
+  ) {
     return Container(
       padding: edgeInsetsMargin,
       width: MediaQuery.of(context).size.width,
@@ -93,7 +97,7 @@ class _OTPVerifyScreenState extends State<OTPVerifyScreen> {
           Row(
             children: [
               Text(
-                "$countryCode ${widget.mobile}",
+                "$countryCode $mobile",
                 style: TSB.semiBoldSmall(),
               ),
               SizedBox(

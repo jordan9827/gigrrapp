@@ -52,7 +52,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
   List<String> myAvailableList = ["weekdays", "weekends"];
   List<String> myAvailableSelectList = [];
   bool mapBoxLoading = false;
-
+  String socialType = "";
+  String socialId = "";
   loc.Location location = loc.Location();
   PageController controller = PageController();
 
@@ -67,10 +68,14 @@ class CandidateRegisterViewModel extends BaseViewModel {
     String mobile = "",
     bool isMobileRead = false,
     bool isSocial = false,
+    String socialType = "",
+    String socialId = "",
   }) {
     this.isSocialLogin = isSocial;
     mobileController.text = mobile;
     this.isMobileRead = isMobileRead;
+    this.socialType = socialType;
+    this.socialId = socialId;
     init();
   }
 
@@ -276,10 +281,12 @@ class CandidateRegisterViewModel extends BaseViewModel {
   Future<void> navigationToCandidateComplete(
     UserAuthResponseData res,
   ) async {
-    print("isSocialLogin $isSocialLogin");
-    navigationService.navigateTo(
+    print("isSocialLogin $res");
+    navigationService.clearStackAndShow(
       Routes.candidateKYCScreenView,
       arguments: CandidateKYCScreenViewArguments(
+        socialType: socialType,
+        socialId: socialId,
         isSocial: isSocialLogin,
       ),
     );
