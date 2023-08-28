@@ -133,25 +133,29 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              nameBusiness.capitalize(),
-              style: TSB.semiBoldLarge(
-                textColor: independenceColor,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                nameBusiness.capitalize(),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TSB.semiBoldLarge(
+                  textColor: independenceColor,
+                ),
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_5,
-            ),
-            Text(
-              status.tr(),
-              style: TSB.regularSmall(
-                textColor: mainPinkColor,
+              SizedBox(
+                height: SizeConfig.margin_padding_5,
               ),
-            ),
-          ],
+              Text(
+                status.tr(),
+                style: TSB.regularSmall(
+                  textColor: mainPinkColor,
+                ),
+              ),
+            ],
+          ),
         ),
         if (viewModel.statusSlug == "sent-offer")
           _buildActionButton(
@@ -208,46 +212,53 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              gigs.business.businessName.capitalize(),
-              style: TSB.semiBoldLarge(
-                textColor: independenceColor,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                gigs.business.businessName.capitalize(),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: TSB.semiBoldLarge(
+                  textColor: independenceColor,
+                ),
               ),
-            ),
-            SizedBox(
-              height: SizeConfig.margin_padding_5,
-            ),
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      SizeConfig.margin_padding_10,
+              SizedBox(
+                height: SizeConfig.margin_padding_5,
+              ),
+              Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(
+                        SizeConfig.margin_padding_10,
+                      ),
+                      color: mainGreenColor,
                     ),
-                    color: mainGreenColor,
+                    padding: EdgeInsets.all(2),
+                    child: Icon(
+                      Icons.check,
+                      color: mainWhiteColor,
+                      size: SizeConfig.margin_padding_10,
+                    ),
                   ),
-                  padding: EdgeInsets.all(2),
-                  child: Icon(
-                    Icons.check,
-                    color: mainWhiteColor,
-                    size: SizeConfig.margin_padding_10,
+                  SizedBox(
+                    width: SizeConfig.margin_padding_5,
                   ),
-                ),
-                SizedBox(
-                  width: SizeConfig.margin_padding_5,
-                ),
-                Text(
-                  status.tr(),
-                  style: TSB.regularSmall(
-                    textColor: mainGreenColor,
+                  Text(
+                    status.tr(),
+                    style: TSB.regularSmall(
+                      textColor: mainGreenColor,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          width: SizeConfig.margin_padding_8,
         ),
         _buildActionButton(
           buttonText: buttonText.tr(),

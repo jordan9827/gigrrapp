@@ -98,6 +98,7 @@ class ProfileWidgetScreen extends StatelessWidget {
           title: "giggr_preference",
           onTap: viewModel.navigationToEmployerPreferenceScreen,
         ),
+        Divider(height: 0),
         _buildPreferencesView(
           isEmployer: true,
           title: "your_businesses",

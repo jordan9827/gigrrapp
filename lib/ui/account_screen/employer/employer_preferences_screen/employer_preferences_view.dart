@@ -81,6 +81,7 @@ class EmployerPreferenceScreenView extends StatelessWidget {
       padding: SizeConfig.margin_padding_8,
       child: CustomDropDownWidget(
         hintText: "i.e. Shopping Store",
+        emptyList: "plz_add_business",
         itemList: viewModel.businessesList.map((e) => e.businessName).toList(),
         visible: viewModel.isVisible,
         groupValue: viewModel.businessController.text,

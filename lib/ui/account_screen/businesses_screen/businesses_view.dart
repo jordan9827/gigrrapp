@@ -56,7 +56,10 @@ class BusinessesScreenView extends StatelessWidget {
     return Container(
       child: ListView(
         children: [
-          if (viewModel.businessesList.isEmpty) EmptyDataScreenView(),
+          if (viewModel.businessesList.isEmpty)
+            EmptyDataScreenView(
+              enableBackButton: true,
+            ),
           Column(
             children: viewModel.businessesList
                 .map(

@@ -93,6 +93,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
         ),
         CustomDropDownWidget(
           hintText: "i.e. Shopping Store",
+          emptyList: "plz_add_business",
           itemList:
               viewModel.businessesList.map((e) => e.businessName).toList(),
           visible: viewModel.isVisible,

@@ -33,8 +33,10 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
   ) async {
     await navigationService.navigateTo(
       Routes.candidateOfferView,
-      arguments:
-          CandidateOfferViewArguments(gigs: gigs, requestData: requestData),
+      arguments: CandidateOfferViewArguments(
+        gigs: gigs,
+        requestData: requestData,
+      ),
     );
   }
 

@@ -10,6 +10,7 @@ import 'package:square_demo_architecture/util/enums/latLng.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
+import '../../../../app/app.router.dart';
 import '../../../../data/local/preference_keys.dart';
 import '../../../../data/network/dtos/employer_request_preferences_model.dart';
 import '../../../../data/network/dtos/get_businesses_response.dart';
@@ -64,7 +65,7 @@ class EmployerPreferenceViewModel extends BaseViewModel {
 
   void navigationToBack() {
     if (!isBusy) {
-      navigationService.back();
+      navigationService.back(result: false);
     }
     return;
   }
@@ -209,7 +210,8 @@ class EmployerPreferenceViewModel extends BaseViewModel {
         PreferenceKeys.GIGRR_PREFERENCES.text,
         json.encode(data),
       );
-      navigationService.back();
+      await Future.delayed(Duration(milliseconds: 1200));
+      navigationService.clearStackAndShow(Routes.homeView);
       setBusy(false);
     }
     notifyListeners();

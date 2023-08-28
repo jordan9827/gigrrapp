@@ -25,24 +25,27 @@ class EmployerGigrrsView extends StatelessWidget {
           ),
           body: LoadingScreen(
             loading: viewModel.isBusy,
-            child: viewModel.gigsData.isEmpty
+            child: (viewModel.gigsData.isEmpty && !viewModel.isBusy)
                 ? _buildEmptyView(viewModel)
-                : PageView.builder(
+                : PageView(
                     scrollDirection: Axis.vertical,
                     controller: viewModel.pageController,
-                    itemBuilder: (BuildContext context, int index) {
-                      var e = viewModel.gigsData[index];
-                      return GiggrCardWidget(
-                        title: e.firstName,
-                        price: viewModel.price(e),
-                        gigrrActionName: 'apply_now',
-                        skillList: e.employeeSkills.map((e) => e.name).toList(),
-                        gigrrActionButton: () =>
-                            viewModel.navigateToGigrrDetailScreen(e),
-                        profileList:
-                            e.employerImageList.map((e) => e.imageUrl).toList(),
-                      );
-                    },
+                    children: viewModel.gigsData
+                        .map(
+                          (e) => GiggrCardWidget(
+                            title: e.firstName,
+                            price: viewModel.price(e),
+                            gigrrActionName: 'shortlist_gigrr',
+                            skillList:
+                                e.employeeSkills.map((e) => e.name).toList(),
+                            gigrrActionButton: () =>
+                                viewModel.navigateToGigrrDetailScreen(e),
+                            profileList: e.employerImageList
+                                .map((e) => e.imageUrl)
+                                .toList(),
+                          ),
+                        )
+                        .toList(),
                   ),
           ),
         );

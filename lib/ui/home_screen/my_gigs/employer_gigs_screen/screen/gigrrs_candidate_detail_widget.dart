@@ -111,11 +111,18 @@ class GigrrsCandidateWidget
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          "offer_accept_by_candidate".tr(),
-          style: TSB.regularSmall(
-            textColor: mainPinkColor,
+        Expanded(
+          child: Text(
+            "offer_accept_by_candidate".tr(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TSB.regularSmall(
+              textColor: mainPinkColor,
+            ),
           ),
+        ),
+        SizedBox(
+          width: SizeConfig.margin_padding_8,
         ),
         _buildDetailView(
           onTap: () => viewModel.navigationToShortListedDetailView(

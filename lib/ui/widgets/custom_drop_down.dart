@@ -9,6 +9,7 @@ class CustomDropDownWidget extends StatelessWidget {
   final List<String> itemList;
   final List<String>? onMultiSelectedList;
   final String hintText;
+  final String emptyList;
   final Function()? onVisible;
   final Function(String?)? selectSingleItemsAction;
   final Function(int)? removeItems;
@@ -23,6 +24,7 @@ class CustomDropDownWidget extends StatelessWidget {
     Key? key,
     required this.itemList,
     this.onVisible,
+    this.emptyList = "no_data",
     this.visible = false,
     this.isLoading = false,
     this.enableMultiSelected = false,
@@ -81,6 +83,7 @@ class CustomDropDownWidget extends StatelessWidget {
         Visibility(
           visible: visible,
           child: Container(
+            width: SizeConfig.screenWidth,
             height: setHeightOfDrop(itemList.length),
             decoration: BoxDecoration(
               color: mainGrayColor,
@@ -94,54 +97,62 @@ class CustomDropDownWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(
               horizontal: SizeConfig.margin_padding_8,
             ),
-            child: ListView(
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              children: itemList
-                  .map(
-                    (e) => Container(
-                      margin: EdgeInsets.only(bottom: 5, top: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              e.tr(),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                              style: TSB.regularSmall(),
-                            ),
-                          ),
-                          if (enableMultiSelected)
-                            Checkbox(
-                              onChanged: (val) => selectMultipleItemsAction!(
-                                val ?? false,
-                                itemList.indexOf(e),
-                              ),
-                              value: onMultiSelectedList!.contains(e),
-                              activeColor: mainPinkColor,
-                              visualDensity: VisualDensity(
-                                horizontal: VisualDensity.minimumDensity,
-                                vertical: VisualDensity.minimumDensity,
-                              ),
-                            ),
-                          if (!enableMultiSelected)
-                            Radio(
-                              value: e,
-                              activeColor: mainPinkColor,
-                              groupValue: groupValue,
-                              onChanged: selectSingleItemsAction,
-                              visualDensity: VisualDensity(
-                                horizontal: VisualDensity.minimumDensity,
-                                vertical: VisualDensity.minimumDensity,
-                              ),
-                            ),
-                        ],
-                      ),
+            child: itemList.isEmpty
+                ? Center(
+                    child: Text(
+                      emptyList.tr(),
+                      style: TSB.regularSmall(),
                     ),
                   )
-                  .toList(),
-            ),
+                : ListView(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    children: itemList
+                        .map(
+                          (e) => Container(
+                            margin: EdgeInsets.only(bottom: 5, top: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    e.tr(),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 2,
+                                    style: TSB.regularSmall(),
+                                  ),
+                                ),
+                                if (enableMultiSelected)
+                                  Checkbox(
+                                    onChanged: (val) =>
+                                        selectMultipleItemsAction!(
+                                      val ?? false,
+                                      itemList.indexOf(e),
+                                    ),
+                                    value: onMultiSelectedList!.contains(e),
+                                    activeColor: mainPinkColor,
+                                    visualDensity: VisualDensity(
+                                      horizontal: VisualDensity.minimumDensity,
+                                      vertical: VisualDensity.minimumDensity,
+                                    ),
+                                  ),
+                                if (!enableMultiSelected)
+                                  Radio(
+                                    value: e,
+                                    activeColor: mainPinkColor,
+                                    groupValue: groupValue,
+                                    onChanged: selectSingleItemsAction,
+                                    visualDensity: VisualDensity(
+                                      horizontal: VisualDensity.minimumDensity,
+                                      vertical: VisualDensity.minimumDensity,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
           ),
         ),
       ],

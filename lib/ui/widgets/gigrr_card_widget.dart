@@ -115,6 +115,8 @@ class _GiggrCardWidgetState extends State<GiggrCardWidget> {
                         .map(
                           (e) => Text(
                             "$e, ",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: mainWhiteColor,
                             ),

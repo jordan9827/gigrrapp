@@ -39,7 +39,7 @@ class CandidateKYCScreenView extends StatelessWidget {
           "upload_kyc_document",
           actions: [
             InkWell(
-              onTap: () => viewModel.verifyOTPForSocialLogin(
+              onTap: () => viewModel.loadSkipKYC(
                 viewModel.user,
               ),
               child: Container(

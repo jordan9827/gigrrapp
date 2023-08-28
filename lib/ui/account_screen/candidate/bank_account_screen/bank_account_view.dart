@@ -90,22 +90,28 @@ class BankAccountScreenView extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      viewModel.bankInfoData.bankName,
-                      style: TSB.semiBoldSmall(),
-                    ),
-                    _buildSpacer(
-                      SizeConfig.margin_padding_5,
-                    ),
-                    Text(
-                      viewModel.upiInfoData.upiId,
-                      style: TSB.regularSmall(),
-                    ),
-                  ],
-                ),
+                if (viewModel.upiInfoData.name.isNotEmpty)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        viewModel.bankInfoData.bankName,
+                        style: TSB.semiBoldSmall(),
+                      ),
+                      _buildSpacer(
+                        SizeConfig.margin_padding_5,
+                      ),
+                      Text(
+                        viewModel.upiInfoData.upiId,
+                        style: TSB.regularSmall(),
+                      ),
+                    ],
+                  ),
+                if (viewModel.upiInfoData.name.isEmpty)
+                  Text(
+                    "Add UPI",
+                    style: TSB.regularMedium(),
+                  ),
                 Center(
                   child: SizedBox(
                     width: SizeConfig.margin_padding_65,

@@ -24,7 +24,7 @@ class EmployerGigrrsViewModel extends BaseViewModel {
 
   EmployerGigrrsViewModel() {
     if (employerGigrrsPref.businessId.isNotEmpty) {
-      fetchFindGigrrsId();
+      // fetchFindGigrrsId();
     }
   }
 
@@ -36,8 +36,8 @@ class EmployerGigrrsViewModel extends BaseViewModel {
     );
   }
 
-  void navigateToEmployerPrefView() {
-    navigationService.navigateToView(
+  Future<void> navigateToEmployerPrefView() async {
+    await navigationService.navigateToView(
       EmployerPreferenceScreenView(),
     );
   }

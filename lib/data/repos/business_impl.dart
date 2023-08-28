@@ -164,7 +164,7 @@ class BusinessImpl extends BusinessRepo {
   }
 
   @override
-  Future<Either<Failure,  List<FindGigrrsProfileData>>>
+  Future<Either<Failure, List<FindGigrrsProfileData>>>
       employerSearchCandidateGigs(Map<String, dynamic> data) async {
     try {
       final response =

@@ -99,6 +99,14 @@ class CandidateKYCViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> loadSkipKYC(UserAuthResponseData res) async {
+    if (isSocialLogin) {
+      await verifyOTPForSocialLogin(res);
+    } else {
+      navigationToHomeScreen();
+    }
+  }
+
   Future<void> verifyOTPForSocialLogin(UserAuthResponseData res) async {
     var result = await navigationService.navigateTo(
       Routes.oTPVerifyScreen,

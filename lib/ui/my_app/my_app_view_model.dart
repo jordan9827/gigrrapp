@@ -58,7 +58,7 @@ class MyAppViewModel extends BaseViewModel {
 
     switch (userData.profileStatus) {
       case "profile-completed":
-        routes = Routes.candidateKYCScreenView;
+        routes = Routes.homeView;
         break;
       case "otp-verify":
         routes = Routes.loginView;
@@ -177,7 +177,7 @@ class MyAppViewModel extends BaseViewModel {
         DialogType.OTPViewStartORStop: (_, request, completer) =>
             GiggrOTPStartStopView(
               otp: otp,
-              profileUrl: user["profile_image"],
+              profileUrl: user["image_url"],
               candidateName: user["first_name"],
               title: isStartOTP ? "your_gigrr_is_here" : "gig_over",
             ),
