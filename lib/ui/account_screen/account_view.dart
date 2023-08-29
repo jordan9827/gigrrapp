@@ -31,6 +31,7 @@ class AccountView extends StatelessWidget {
                   padding: edgeInsetsMargin,
                   child: Column(
                     children: [
+                      _buildBusinessesView(viewModel),
                       _buildAccountView(viewModel, context),
                       _buildHelpAndSupportView(viewModel),
                     ],
@@ -70,8 +71,7 @@ class AccountView extends StatelessWidget {
     );
   }
 
-  Widget _buildAccountView(AccountViewModel viewModel, BuildContext context) {
-    var isEmployer = viewModel.user.isEmployer;
+  Widget _buildBusinessesView(AccountViewModel viewModel) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -79,11 +79,36 @@ class AccountView extends StatelessWidget {
           SizeConfig.margin_padding_15,
         ),
         Text(
+          "businesses".tr(),
+          style: TSB.semiBoldMedium(),
+        ),
+        _buildSpacer(
+          SizeConfig.margin_padding_13,
+        ),
+        _buildListTile(
+          padding: SizeConfig.margin_padding_3 * 2,
+          leading: ic_businesses_2,
+          title: "your_businesses",
+          onTap: viewModel.navigationToBusinessesScreen,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildAccountView(AccountViewModel viewModel, BuildContext context) {
+    var isEmployer = viewModel.user.isEmployer;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildSpacer(
+          SizeConfig.margin_padding_13,
+        ),
+        Text(
           "account".tr(),
           style: TSB.semiBoldMedium(),
         ),
         _buildSpacer(
-          SizeConfig.margin_padding_15,
+          SizeConfig.margin_padding_13,
         ),
         _buildListTile(
           leading: ic_notification,
@@ -174,6 +199,7 @@ class AccountView extends StatelessWidget {
     required String title,
     Widget? trailingWidget,
     Color? color,
+    double? padding,
     Function()? onTap,
   }) {
     return ListTile(
@@ -182,7 +208,7 @@ class AccountView extends StatelessWidget {
       ),
       leading: Container(
         padding: EdgeInsets.all(
-          SizeConfig.margin_padding_10,
+          padding ?? SizeConfig.margin_padding_10,
         ),
         height: SizeConfig.margin_padding_24 * 1.8,
         width: SizeConfig.margin_padding_24 * 1.8,

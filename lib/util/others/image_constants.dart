@@ -61,5 +61,7 @@ const String razor_pay = _baseUrl + "razo_pay.png";
 const String ic_address = _baseUrl + "ic_address.png";
 const String ic_language = _baseUrl + "ic_language.png";
 const String ic_upi_logo = _baseUrl + "ic_upi_logo.png";
+const String ic_businesses_1 = _baseUrl + "ic_businesses_1.png";
+const String ic_businesses_2 = _baseUrl + "ic_businesses_2.png";
 const String ic_congratutation = _baseUrl + "ic_congratutation.png";
 const String ic_obj_no_internet = _baseUrl + "ic_obj_no_internet.png";

@@ -84,34 +84,28 @@ class ProfileWidgetScreen extends StatelessWidget {
         SizedBox(
           height: 1,
         ),
-        if (isEmployer) _buildBusinessView(viewModel),
-        if (!isEmployer) _buildGigPreferencesView(viewModel)
+        _buildPreferencesWidget(viewModel)
       ],
     );
   }
 
-  Widget _buildBusinessView(AccountViewModel viewModel) {
+  Widget _buildPreferencesWidget(AccountViewModel viewModel) {
+    var isEmployer = viewModel.user.isEmployer;
+
     return Column(
       children: [
-        _buildPreferencesView(
-          isEmployer: true,
-          title: "giggr_preference",
-          onTap: viewModel.navigationToEmployerPreferenceScreen,
-        ),
-        Divider(height: 0),
-        _buildPreferencesView(
-          isEmployer: true,
-          title: "your_businesses",
-          onTap: viewModel.navigationToBusinessesScreen,
-        ),
+        if (isEmployer)
+          _buildPreferencesView(
+            isEmployer: true,
+            title: "giggr_preference",
+            onTap: viewModel.navigationToEmployerPreferenceScreen,
+          ),
+        if (!isEmployer)
+          _buildPreferencesView(
+            title: "gig_preference",
+            onTap: viewModel.navigationToCandidatePreferencesScreen,
+          ),
       ],
-    );
-  }
-
-  Widget _buildGigPreferencesView(AccountViewModel viewModel) {
-    return _buildPreferencesView(
-      title: "gig_preference",
-      onTap: viewModel.navigationToBusinessesScreen,
     );
   }
 
