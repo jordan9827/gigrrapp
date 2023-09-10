@@ -22,17 +22,4 @@ https://gigrr.in/admin/api/candidates/gigs-offer-accepted
 https://api.mapbox.com/styles/v1/mapbox/streets-v12/static/url-https%3A%2F%2Fdocs.mapbox.com%2Fapi%2Fimg%2Fcustom-marker.png(75.88211,22.76275)/75.88211,22.76275,12/500x300?access_token=pk.eyJ1IjoibmlraGlsLXJhdGhvcmUiLCJhIjoiY2xoMDdyZGhsMHI0YzNlcnppM2gyZjhmciJ9.xM2KCkQbgCpV8z4EbS7Jkg
 
 
-
-void navigatorToGiggrRequestView(String name) {
-navigationServices.navigateTo(
-Routes.gigrrCustomRequestView,
-arguments: GigrrCustomRequestViewArguments(
-title: name,
-priceController: priceController,
-selectPriceTypeController: priceTypeController,
-isEmployer: user.isEmployer,
-),
-);
-}
-{gigs_id: 508, candidate_id: 105, status: roster}
 https://api.mapbox.com/geocoding/v5/mapbox.places/76.0340933,22.9570476.json?access_token=pk.eyJ1IjoidGFyY2gwNyIsImEiOiJja3luczY0cGwxemd3Mm9xb213Mnp3aW4zIn0.X0dvxOdFnXbdjX97wgM7Ig
