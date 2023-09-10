@@ -34,15 +34,10 @@ abstract class BusinessRepo {
 
   Future<Either<Failure, GetBusinessesResponseData>> fetchAllBusinessesApi();
 
-  Future<Either<Failure, List<FindGigrrsProfileData>>>
-      employerSearchCandidateGigs(
-    Map<String, dynamic> body,
-  );
-
   Future<Either<Failure, BaseResponse>> shortListedCandidate(
     Map<String, dynamic> body,
   );
-  Future<Either<Failure, EmployerFindGigrrsResponseData>> employerFindGigrr(
+  Future<Either<Failure, List<FindGigrrsProfileData>>> employerFindGigrr(
     Map<String, dynamic> body,
   );
 
@@ -51,6 +46,10 @@ abstract class BusinessRepo {
   );
 
   Future<Either<Failure, BaseResponse>> gigsCandidateOffer(
+    Map<String, dynamic> body,
+  );
+
+  Future<Either<Failure, BaseResponse>> createGigrrToCandidateOffer(
     Map<String, dynamic> body,
   );
 }

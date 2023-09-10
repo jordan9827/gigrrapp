@@ -25,16 +25,33 @@ class NotificationScreenViewModel extends BaseViewModel {
     return;
   }
 
+  Future<void> clearList() async {
+    todayList.clear();
+    weekList.clear();
+    monthList.clear();
+    yearList.clear();
+  }
+
+  Future<void> refreshScreen() async {
+    await clearList();
+    await fetchAllNotificationApi();
+    notifyListeners();
+  }
+
   Future<void> fetchAllNotificationApi() async {
     setBusy(true);
     final response = await notificationRepo.fetchNotifications();
     response.fold(
       (fail) {
         setBusy(false);
-        snackBarService.showSnackbar(message: fail.errorMsg);
+        snackBarService.showSnackbar(
+          message: fail.errorMsg,
+        );
       },
       (response) async {
-        await getSortedDateList(response.notificationList);
+        await getSortedDateList(
+          response.notificationList,
+        );
         notifyListeners();
         setBusy(false);
       },
@@ -48,7 +65,9 @@ class NotificationScreenViewModel extends BaseViewModel {
     response.fold(
       (fail) {
         setBusy(false);
-        snackBarService.showSnackbar(message: fail.errorMsg);
+        snackBarService.showSnackbar(
+          message: fail.errorMsg,
+        );
       },
       (response) async {
         setBusy(false);

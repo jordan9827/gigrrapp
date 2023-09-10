@@ -103,6 +103,12 @@ class EmployerGigsViewModel extends BaseViewModel {
     return count;
   }
 
+  Future<void> refreshScreen() async {
+    myGigsList = [];
+    await fetchMyGigsList();
+    notifyListeners();
+  }
+
   Future<void> fetchMyGigsList() async {
     setBusy(true);
     var result = await businessRepo.fetchMyGigs();

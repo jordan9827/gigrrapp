@@ -11,7 +11,6 @@ import '../../util/exceptions/failures/failure.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/base_response.dart';
 import '../network/dtos/business_type_category.dart';
-import '../network/dtos/employer_find_gigrr_response.dart';
 import '../network/dtos/find_gigrr_profile_response.dart';
 import '../network/dtos/get_businesses_response.dart';
 import '../network/dtos/gigrr_type_response.dart';
@@ -164,29 +163,7 @@ class BusinessImpl extends BusinessRepo {
   }
 
   @override
-  Future<Either<Failure, List<FindGigrrsProfileData>>>
-      employerSearchCandidateGigs(Map<String, dynamic> data) async {
-    try {
-      final response =
-          await businessService.employerSearchCandidateGigsApi(data);
-
-      if (response.body == null) {
-        throw Exception(response.error);
-      }
-      log.i("EmployerSearchCandidateGigs Response ${response.body}");
-      return response.body!.map(success: (res) async {
-        return Right(res.data);
-      }, error: (error) {
-        return Left(Failure(error.status, error.message));
-      });
-    } catch (e) {
-      log.e(e);
-      return Left(e.handleException());
-    }
-  }
-
-  @override
-  Future<Either<Failure, EmployerFindGigrrsResponseData>> employerFindGigrr(
+  Future<Either<Failure, List<FindGigrrsProfileData>>> employerFindGigrr(
       Map<String, dynamic> data) async {
     try {
       final response = await businessService.employerFindGigrrApi(data);
@@ -319,6 +296,28 @@ class BusinessImpl extends BusinessRepo {
         throw Exception(response.error);
       }
       log.i("MyGigrrsRoster Response ${response.body}");
+      return response.body!.map(success: (res) async {
+        return Right(res);
+      }, error: (error) {
+        return Left(Failure(error.status, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, BaseResponse>> createGigrrToCandidateOffer(
+      Map<String, dynamic> data) async {
+    try {
+      final response =
+          await businessService.createGigrrToCandidateOfferApi(data);
+
+      if (response.body == null) {
+        throw Exception(response.error);
+      }
+      log.i("CreateGigrrToCandidateOffer Response ${response.body}");
       return response.body!.map(success: (res) async {
         return Right(res);
       }, error: (error) {

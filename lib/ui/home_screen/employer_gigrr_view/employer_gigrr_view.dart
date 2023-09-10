@@ -34,12 +34,16 @@ class EmployerGigrrsView extends StatelessWidget {
                         .map(
                           (e) => GiggrCardWidget(
                             title: e.firstName,
+                            distance: e.distance.toInt(),
                             price: viewModel.price(e),
-                            gigrrActionName: 'shortlist_gigrr',
+                            experience: e.employerProfile.experience,
+                            gigrrActionName: 'offer_send',
                             skillList:
                                 e.employeeSkills.map((e) => e.name).toList(),
-                            gigrrActionButton: () =>
-                                viewModel.navigateToGigrrDetailScreen(e),
+                            gigrrActionButton: () => viewModel
+                                .navigationToSendOfferDetailView(gigs: e),
+                            acceptedGigsRequest: () =>
+                                viewModel.navigationToCandidateOfferRequest(e),
                             profileList: e.employerImageList
                                 .map((e) => e.imageUrl)
                                 .toList(),
@@ -54,7 +58,7 @@ class EmployerGigrrsView extends StatelessWidget {
   }
 
   Widget _buildEmptyView(EmployerGigrrsViewModel viewModel) {
-    bool isBusiness = viewModel.employerGigrrsPref.businessId.isNotEmpty;
+    bool isBusiness = viewModel.gigrrsPref.businessId.isNotEmpty;
     bool isEmptyData = isBusiness && viewModel.gigsData.isEmpty;
     return EmptyDataScreenView(
       title: isEmptyData ? "txt_no_data" : "txt_no_data_for_gigrrs",

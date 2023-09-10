@@ -50,9 +50,17 @@ class PaymentHistoryViewModel extends BaseViewModel {
     return;
   }
 
+  Future<void> clearList() async {
+    paymentList.clear();
+    todayList.clear();
+    weekList.clear();
+    monthList.clear();
+    yearList.clear();
+  }
+
   Future<void> refreshScreen() async {
     setBusy(true);
-    paymentList = [];
+    await clearList();
     _pageNumber = 0;
     itemCount = 0;
     await fetchPayment();

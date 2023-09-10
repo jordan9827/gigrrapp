@@ -49,13 +49,8 @@ abstract class BusinessService extends ChopperService {
     @Body() Map<String, dynamic> body,
   );
 
-  @Post(path: "search-candidate-via-gigs")
-  Future<Response<FindGigrrsProfileResponse>> employerSearchCandidateGigsApi(
-    @Body() Map<String, dynamic> body,
-  );
-
-  @Post(path: "find-gigrr")
-  Future<Response<EmployerFindGigrrsResponse>> employerFindGigrrApi(
+  @Post(path: "v2/find-gigrr")
+  Future<Response<FindGigrrsProfileResponse>> employerFindGigrrApi(
     @Body() Map<String, dynamic> body,
   );
 
@@ -66,6 +61,10 @@ abstract class BusinessService extends ChopperService {
 
   @Post(path: "gigs-candidate-offer")
   Future<Response<BaseResponse>> gigsCandidateOfferApi(
+    @Body() Map<String, dynamic> body,
+  );
+  @Post(path: "v2/send-candidate-gigs-offer")
+  Future<Response<BaseResponse>> createGigrrToCandidateOfferApi(
     @Body() Map<String, dynamic> body,
   );
 

@@ -44,7 +44,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
             loading: viewModel.isBusy,
             child: RefreshIndicator(
               color: independenceColor,
-              onRefresh: viewModel.fetchMyGigsList,
+              onRefresh: viewModel.refreshScreen,
               child: _buildMyGigsList(viewModel),
             ),
           ),

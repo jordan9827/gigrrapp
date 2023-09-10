@@ -9,7 +9,7 @@ class InputFieldWidget extends StatelessWidget {
   final String hint;
   final String errorMsgValidation;
   final bool isMobileNumber;
-  final Color? fillColor;
+  final Color fillColor;
   final double borderRadius;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
@@ -71,7 +71,7 @@ class InputFieldWidget extends StatelessWidget {
     this.horizontalPadding = 6.5,
     this.hideIconTextDivider = false,
     this.keyboardType,
-    this.fillColor,
+    this.fillColor = mainGrayColor,
     this.maxInputLength,
     this.onChanged,
   }) : super(key: key);
@@ -100,7 +100,7 @@ class InputFieldWidget extends StatelessWidget {
             contentPadding: const EdgeInsets.all(10),
             hintText: hint.tr(),
             filled: true,
-            fillColor: mainGrayColor,
+            fillColor: fillColor,
             hintStyle: TextStyle(
               color: textRegularColor,
             ),
@@ -109,13 +109,13 @@ class InputFieldWidget extends StatelessWidget {
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: readOnly ? mainGrayColor : independenceColor,
+                color: readOnly ? fillColor : independenceColor,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
-                color: mainGrayColor,
+                color: fillColor,
               ),
             ),
           ),

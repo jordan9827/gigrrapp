@@ -30,7 +30,7 @@ class EditBusinessesViewModel extends BaseViewModel {
   int businessId = 0;
   LatLng latLng = const LatLng(14.508, 46.048);
 
-  List<String>? imageList = [];
+  List<String> imageList = [];
 
   EditBusinessesViewModel(GetBusinessesData data) {
     latLng = LatLng(
@@ -40,6 +40,7 @@ class EditBusinessesViewModel extends BaseViewModel {
   }
 
   Future<void> initialDataLoad(GetBusinessesData e) async {
+    imageList = e.businessesImage.map((e) => e.imageUrl).toList();
     businessNameController.text = e.businessName;
     addressController.text = e.businessAddress;
     stateController.text = e.state.name.toUpperCase();
@@ -50,7 +51,8 @@ class EditBusinessesViewModel extends BaseViewModel {
       e.state.name.toUpperCase(),
     );
     businessId = e.id;
-    for (var i in e.businessesImage) imageList!.add(i.imageUrl);
+    print("imageList ${imageList.length}");
+    notifyListeners();
   }
 
   void navigationToBack() {
@@ -110,7 +112,7 @@ class EditBusinessesViewModel extends BaseViewModel {
         message: "msg_enter_businessName".tr(),
       );
       return false;
-    } else if (imageList!.isEmpty) {
+    } else if (imageList.isEmpty) {
       snackBarService.showSnackbar(
         message: "msg_upload_image".tr(),
       );
@@ -157,7 +159,7 @@ class EditBusinessesViewModel extends BaseViewModel {
     request['pincode'] = pinCodeController.text;
     request['business_latitude'] = latLng.lat.toString();
     request['business_longitude'] = latLng.lng.toString();
-    request['images'] = imageList!.join(', ');
+    request['images'] = imageList.join(', ');
     // log("getRequestForCompleteProfile :: $request");
     return request;
   }

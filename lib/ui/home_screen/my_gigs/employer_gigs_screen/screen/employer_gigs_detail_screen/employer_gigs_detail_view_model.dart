@@ -48,7 +48,13 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
     await navigationService.navigateTo(
       Routes.employerGigrrDetailView,
       arguments: EmployerGigrrDetailViewArguments(
-        gigsRequestData: data,
+        gigsId: data.gigsId,
+        candidateId: data.candidate.id,
+        address: data.candidate.address,
+        candidateName: data.employeeName,
+        imageURL: data.candidate.imageURL,
+        experience: data.availabilityResp.experience,
+        availability: data.availabilityResp.availability,
         isShortListed: isShortListed,
         price: price(gigs),
         skillList: gigs.skillsTypeCategoryList,
@@ -72,7 +78,6 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
         setBusy(false);
         snackBarService.showSnackbar(message: fail.errorMsg);
       }, (myGigs) async {
-        navigationService.back(result: true);
         navigationService.back(result: true);
         setBusy(false);
       });

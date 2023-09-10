@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:square_demo_architecture/others/constants.dart';
@@ -104,7 +105,7 @@ class ManageAddressScreenView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  data.addressType.capitalize(),
+                  data.addressType.tr(),
                   style: TSB.semiBoldMedium(),
                 ),
                 SizedBox(height: 3),

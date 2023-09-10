@@ -103,7 +103,9 @@ class AddGigsOperationalInfoScreenView
               ),
             ),
           ),
-          _buildSpacer(),
+          _buildSpacer(
+            SizeConfig.margin_padding_35,
+          ),
           LoadingButton(
             loading: viewModel.isBusy,
             action: viewModel.addGigrrApiCall,

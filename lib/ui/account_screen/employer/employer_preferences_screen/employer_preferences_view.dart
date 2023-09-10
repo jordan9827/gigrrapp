@@ -7,11 +7,13 @@ import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../others/comman_util.dart';
 import '../../../../others/loading_button.dart';
+import '../../../../others/text_field_widget.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/size_config.dart';
 import '../../../../util/others/text_styles.dart';
 import '../../../widgets/custom_date_picker.dart';
 import '../../../widgets/custom_drop_down.dart';
+import '../../../widgets/cvm_text_form_field.dart';
 import 'employer_preferences_view_model.dart';
 import 'preference_custom_ui_widget.dart';
 
@@ -55,6 +57,7 @@ class EmployerPreferenceScreenView extends StatelessWidget {
             padding: edgeInsetsMargin,
             child: ListView(
               children: [
+                _buildGigrrInputField(viewModel),
                 _buildBusinessTypeView(viewModel),
                 _buildLocationView(viewModel),
                 _buildDistanceView(viewModel),
@@ -71,6 +74,18 @@ class EmployerPreferenceScreenView extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildGigrrInputField(EmployerPreferenceViewModel viewModel) {
+    return EmployerPreferenceCustomUIWidget(
+      padding: 0,
+      title: 'gig_name',
+      child: InputFieldWidget(
+        fillColor: Colors.white,
+        controller: viewModel.nameController,
+        hint: "i.e. Kirana Shop Delivery Boy",
       ),
     );
   }

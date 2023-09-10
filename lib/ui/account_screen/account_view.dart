@@ -31,7 +31,8 @@ class AccountView extends StatelessWidget {
                   padding: edgeInsetsMargin,
                   child: Column(
                     children: [
-                      _buildBusinessesView(viewModel),
+                      if (viewModel.user.isEmployer)
+                        _buildBusinessesView(viewModel),
                       _buildAccountView(viewModel, context),
                       _buildHelpAndSupportView(viewModel),
                     ],

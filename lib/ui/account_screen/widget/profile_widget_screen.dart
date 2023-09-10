@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/cli_commands.dart';
 import 'package:square_demo_architecture/ui/account_screen/account_view_model.dart';
 
 import '../../../others/constants.dart';
@@ -35,7 +36,7 @@ class ProfileWidgetScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    viewModel.user.fullName,
+                    viewModel.user.fullName.capitalize(),
                     style: TSB.boldXLarge(textColor: textColor),
                   ),
                   _buildEditProfile(

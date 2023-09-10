@@ -40,14 +40,15 @@ class FindGigrrsProfileData with _$FindGigrrsProfileData {
     @JsonKey(name: "mobile", defaultValue: "") String mobile,
     @JsonKey(name: "gender", defaultValue: "") String gender,
     @JsonKey(name: "profile_image", defaultValue: "") String profileImage,
+    @JsonKey(name: "image_url", defaultValue: "") String imageUrl,
     @JsonKey(name: "distance", defaultValue: 0) double distance,
     @JsonKey(name: "dob", defaultValue: "") String dob,
     @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "longitude", defaultValue: "") String longitude,
     @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "age", defaultValue: 0) int age,
-    @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
-        GetBusinessesData business,
+    // @JsonKey(name: "gigrr_business", defaultValue: GetBusinessesData.getEmptyBusinesses)
+    //     GetBusinessesData business,
     @JsonKey(name: "employee_images", defaultValue: [])
         List<EmployerImageList> employerImageList,
     @JsonKey(name: "employee_skills", defaultValue: [])

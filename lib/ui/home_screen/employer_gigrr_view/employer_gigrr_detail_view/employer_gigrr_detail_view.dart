@@ -5,7 +5,6 @@ import 'package:square_demo_architecture/util/extensions/build_context_extension
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:stacked/stacked.dart';
 import '../../../../data/network/dtos/gigrr_type_response.dart';
-import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../others/loading_button.dart';
 import '../../../../util/others/image_constants.dart';
 import '../../../../util/others/text_styles.dart';
@@ -14,7 +13,13 @@ import 'employer_gigrr_detail_view_model.dart';
 
 class EmployerGigrrDetailView extends StatelessWidget {
   final String price;
-  final GigsRequestData gigsRequestData;
+  final String imageURL;
+  final String candidateName;
+  final String experience;
+  final int candidateId;
+  final int gigsId;
+  final String address;
+  final String availability;
   final List<GigrrTypeCategoryData> skillList;
   final bool isShortListed;
 
@@ -22,8 +27,14 @@ class EmployerGigrrDetailView extends StatelessWidget {
     Key? key,
     this.isShortListed = false,
     this.price = "",
+    this.candidateId = 0,
+    this.gigsId = 0,
+    this.candidateName = "",
+    this.experience = "",
+    this.availability = "",
+    this.address = "",
+    this.imageURL = "",
     required this.skillList,
-    required this.gigsRequestData,
   }) : super(key: key);
 
   @override
@@ -32,117 +43,116 @@ class EmployerGigrrDetailView extends StatelessWidget {
     MediaQueryData mediaQueryData = context.mediaQueryData;
     double outerPadding = SizeConfig.margin_padding_15;
     return ViewModelBuilder.nonReactive(
-        viewModelBuilder: () => EmployerGigrrDetailViewModel(),
-        onViewModelReady: (viewModel) {
-          viewModel.listOfAvailability.add(
-            gigsRequestData.availabilityResp.availability,
-          );
-        },
-        builder: (context, viewModel, child) {
-          var availability = gigsRequestData.availabilityResp;
-          return Scaffold(
-            body: Stack(
-              children: [
-                ListView(
-                  children: [
-                    Container(
-                      height: mediaQueryData.size.height * 0.5,
-                      width: mediaQueryData.size.width,
-                      child: Image.network(
-                        gigsRequestData.candidate.imageURL,
-                        fit: BoxFit.fill,
-                      ),
+      viewModelBuilder: () => EmployerGigrrDetailViewModel(),
+      onViewModelReady: (viewModel) {
+        viewModel.listOfAvailability.add(
+          availability,
+        );
+      },
+      builder: (context, viewModel, child) {
+        // var availability = gigsRequestData.availabilityResp;
+        return Scaffold(
+          body: Stack(
+            children: [
+              ListView(
+                children: [
+                  Container(
+                    height: mediaQueryData.size.height * 0.5,
+                    width: mediaQueryData.size.width,
+                    child: Image.network(
+                      imageURL,
+                      fit: BoxFit.fill,
                     ),
-                    Container(
-                      width: mediaQueryData.size.width,
-                      padding: EdgeInsets.all(outerPadding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            gigsRequestData.employeeName,
-                            textAlign: TextAlign.start,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                              fontSize: SizeConfig.textSizeXLarge,
+                  ),
+                  Container(
+                    width: mediaQueryData.size.width,
+                    padding: EdgeInsets.all(outerPadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          candidateName,
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                            fontSize: SizeConfig.textSizeXLarge,
+                          ),
+                        ),
+                        SizedBox(
+                          height: SizeConfig.margin_padding_3,
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(ic_location, height: 23),
+                            SizedBox(
+                              width: SizeConfig.margin_padding_3,
                             ),
-                          ),
-                          SizedBox(
-                            height: SizeConfig.margin_padding_3,
-                          ),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Image.asset(ic_location, height: 23),
-                              SizedBox(
-                                width: SizeConfig.margin_padding_3,
-                              ),
-                              Expanded(
-                                child: Text(
-                                  gigsRequestData.candidate.address,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TSB.regularSmall(
-                                    textColor: textNoticeColor,
-                                  ),
+                            Expanded(
+                              child: Text(
+                                address,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: TSB.regularSmall(
+                                  textColor: textNoticeColor,
                                 ),
                               ),
-                            ],
-                          ),
-                          _buildSpacing(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              _buildExPriceWidget(
-                                outerPadding: outerPadding,
-                                valueText: price,
-                                titleText: "normal_price",
-                              ),
-                              _buildExPriceWidget(
-                                outerPadding: outerPadding,
-                                valueText: availability.experience.isNotEmpty
-                                    ? availability.experience
-                                    : "0 " + "years".tr(),
-                                titleText: "experience",
-                              ),
-                            ],
-                          ),
-                          _buildSpacing(),
-                          if (availability.availability.isNotEmpty)
-                            _buildOtherDetailView(
-                              title: "availability",
-                              infoList: viewModel.listOfAvailability,
                             ),
-                          _buildSpacing(),
-                          if (gigsRequestData.skillsList.isNotEmpty)
-                            _buildOtherDetailView(
-                              title: "required_skill",
-                              infoList: gigsRequestData.skillsList
-                                  .map((e) => e.name)
-                                  .toList(),
+                          ],
+                        ),
+                        _buildSpacing(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _buildExPriceWidget(
+                              outerPadding: outerPadding,
+                              valueText: price,
+                              titleText: "normal_price",
                             ),
-                        ],
-                      ),
+                            _buildExPriceWidget(
+                              outerPadding: outerPadding,
+                              valueText: experience.isNotEmpty
+                                  ? experience
+                                  : "0 " + "years".tr(),
+                              titleText: "experience",
+                            ),
+                          ],
+                        ),
+                        _buildSpacing(),
+                        if (viewModel.listOfAvailability.isNotEmpty)
+                          _buildOtherDetailView(
+                            title: "availability",
+                            infoList: viewModel.listOfAvailability,
+                          ),
+                        _buildSpacing(),
+                        if (skillList.isNotEmpty)
+                          _buildOtherDetailView(
+                            title: "required_skill",
+                            infoList: skillList.map((e) => e.name).toList(),
+                          ),
+                      ],
                     ),
-                    SizedBox(
-                      height: SizeConfig.margin_padding_50 * 1.8,
-                    )
-                  ],
-                ),
-                Positioned(
-                  top: SizeConfig.margin_padding_24,
-                  child: DetailAppBar(),
-                ),
-                if (isShortListed)
-                  ShortListView(
-                    gigsId: gigsRequestData.gigsId,
-                    candidateId: gigsRequestData.candidate.id,
                   ),
-              ],
-            ),
-          );
-        });
+                  SizedBox(
+                    height: SizeConfig.margin_padding_50 * 1.8,
+                  )
+                ],
+              ),
+              Positioned(
+                top: SizeConfig.margin_padding_24,
+                child: DetailAppBar(),
+              ),
+              if (isShortListed)
+                ShortListView(
+                  gigsId: gigsId,
+                  candidateId: candidateId,
+                ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildSpacing({

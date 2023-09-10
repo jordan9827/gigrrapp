@@ -45,15 +45,18 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
           horizontal: SizeConfig.margin_padding_20,
           vertical: SizeConfig.margin_padding_15,
         ),
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              _buildHeadingView(),
-              _buildUserProfileView(data: request),
-              _buildCheckoutView(data: request)
-            ],
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              children: [
+                _buildHeadingView(),
+                _buildUserProfileView(data: request),
+                _buildCheckoutView(data: request)
+              ],
+            ),
+            _buildPayNowButton(),
+          ],
         ),
       ),
     );
@@ -95,14 +98,14 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
           backgroundColor: Colors.transparent,
         ),
         SizedBox(
-          height: SizeConfig.margin_padding_5,
+          height: SizeConfig.margin_padding_8,
         ),
         Text(
           widget.gigrrsData.employeeName,
           style: TSB.semiBoldMedium(),
         ),
         SizedBox(
-          height: SizeConfig.margin_padding_20,
+          height: SizeConfig.margin_padding_10,
         ),
       ],
     );
@@ -130,15 +133,20 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
             textColor: mainPinkColor,
           ),
         ),
-        SizedBox(
-          height: SizeConfig.margin_padding_15,
-        ),
+      ],
+    );
+  }
+
+  Widget _buildPayNowButton() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
         LoadingButton(
           action: widget.onTap,
           title: "pay_now",
         ),
         SizedBox(
-          height: SizeConfig.margin_padding_10,
+          height: SizeConfig.margin_padding_15,
         ),
         InkWell(
           onTap: () => locator<NavigationService>().back(),
@@ -148,6 +156,9 @@ class _PaymentDialogViewState extends State<PaymentDialogView> {
               textColor: textRegularColor,
             ),
           ),
+        ),
+        SizedBox(
+          height: SizeConfig.margin_padding_10,
         ),
       ],
     );

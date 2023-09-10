@@ -45,32 +45,36 @@ class NotificationScreenView extends StatelessWidget {
         ),
         body: LoadingScreen(
           loading: viewModel.isBusy,
-          child: ListView(
-            children: [
-              if (viewModel.todayList.isNotEmpty)
-                _buildNotificationData(
-                  title: "today",
-                  list: viewModel.todayList,
+          child: RefreshIndicator(
+            color: independenceColor,
+            onRefresh: viewModel.refreshScreen,
+            child: ListView(
+              children: [
+                if (viewModel.todayList.isNotEmpty)
+                  _buildNotificationData(
+                    title: "today",
+                    list: viewModel.todayList,
+                  ),
+                if (viewModel.weekList.isNotEmpty)
+                  _buildNotificationData(
+                    title: "week",
+                    list: viewModel.weekList,
+                  ),
+                if (viewModel.monthList.isNotEmpty)
+                  _buildNotificationData(
+                    title: "month",
+                    list: viewModel.monthList,
+                  ),
+                if (viewModel.yearList.isNotEmpty)
+                  _buildNotificationData(
+                    title: "year",
+                    list: viewModel.yearList,
+                  ),
+                SizedBox(
+                  height: SizeConfig.margin_padding_20,
                 ),
-              if (viewModel.weekList.isNotEmpty)
-                _buildNotificationData(
-                  title: "week",
-                  list: viewModel.weekList,
-                ),
-              if (viewModel.monthList.isNotEmpty)
-                _buildNotificationData(
-                  title: "month",
-                  list: viewModel.monthList,
-                ),
-              if (viewModel.yearList.isNotEmpty)
-                _buildNotificationData(
-                  title: "year",
-                  list: viewModel.yearList,
-                ),
-              SizedBox(
-                height: SizeConfig.margin_padding_20,
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

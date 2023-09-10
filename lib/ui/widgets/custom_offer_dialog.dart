@@ -48,6 +48,7 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
         ),
         width: MediaQuery.of(context).size.width,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             _buildSpacer(
               size: SizeConfig.margin_padding_15,
@@ -61,6 +62,7 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
             _buildSpacer(),
             Text(
               widget.businessName,
+              textAlign: TextAlign.center,
               style: TSB.semiBoldHeading(),
             ),
             _buildSpacer(
@@ -71,24 +73,36 @@ class CustomOfferDialogState extends State<CustomOfferDialog> {
               textAlign: TextAlign.center,
               style: TSB.regularMedium(),
             ),
-            _buildSpacer(),
-            LoadingButton(
-              title: widget.buttonText,
-              action: widget.onTap,
-            ),
-            _buildSpacer(),
-            InkWell(
-              onTap: () => Navigator.pop(context),
-              child: Text(
-                "cancel".tr(),
-                style: TSB.regularMedium(
-                  textColor: independenceColor,
-                ),
-              ),
-            ),
+            Spacer(),
+            _buildActionButton(),
+            _buildSpacer(
+              size: SizeConfig.margin_padding_15,
+            )
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildActionButton() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        LoadingButton(
+          title: widget.buttonText,
+          action: widget.onTap,
+        ),
+        _buildSpacer(),
+        InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Text(
+            "cancel".tr(),
+            style: TSB.regularMedium(
+              textColor: independenceColor,
+            ),
+          ),
+        ),
+      ],
     );
   }
 

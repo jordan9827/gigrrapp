@@ -30,7 +30,6 @@ class JWTAuthenticator extends Authenticator {
       locator<SnackbarService>().showSnackbar(message: "Session Expire");
       await locator<SharedPreferences>().clear();
       locator<NavigationService>().clearStackAndShow(Routes.loginView);
-
       final requestBodyMap = _bodyMap(request.body);
 
       /*

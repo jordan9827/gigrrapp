@@ -65,7 +65,7 @@ class AddGigsInfoScreenView extends ViewModelWidget<AddGigsViewModel> {
             rangeText: viewModel.payRangeText,
           ),
           SizedBox(
-            height: SizeConfig.margin_padding_29,
+            height: SizeConfig.margin_padding_35,
           ),
           LoadingButton(
             loading: viewModel.isBusy,

@@ -86,12 +86,28 @@ class EmployerPreferenceViewModel extends BaseViewModel {
     businessController.text = getBusinessName(gigrrsPref.businessId);
     addressController.text = gigrrsPref.address;
     initialGender = gigrrsPref.gender;
+    addSkillItemList = setSkillItem(gigrrsPref.skills.split(","));
     latLng = LatLng(
       double.parse(gigrrsPref.latitude),
       double.parse(gigrrsPref.longitude),
     );
     formDateController.text = gigrrsPref.startDate;
     toDateController.text = gigrrsPref.endDate;
+    setBusy(false);
+  }
+
+  List<GigrrTypeCategoryData> setSkillItem(
+    List<String> splitList,
+  ) {
+    List<GigrrTypeCategoryData> list = [];
+    for (var i in businessTypeService.gigrrTypeList) {
+      for (var j in splitList) {
+        if (i.id == int.parse(j)) {
+          list.add(i);
+        }
+      }
+    }
+    return list;
   }
 
   void setDistance(double? value) {

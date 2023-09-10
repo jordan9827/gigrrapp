@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/app/app.router.dart';
@@ -6,25 +7,29 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../data/network/dtos/employer_gigs_request.dart';
 import '../../../data/network/dtos/employer_request_preferences_model.dart';
 import '../../../data/network/dtos/find_gigrr_profile_response.dart';
+import '../../../data/network/dtos/my_gigs_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/business_repos.dart';
 import '../../../domain/repos/candidate_repos.dart';
 import '../../account_screen/employer/employer_preferences_screen/employer_preferences_view.dart';
+import 'candidate_offer_create_gigrr_view.dart';
 
 class EmployerGigrrsViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final snackBarService = locator<SnackbarService>();
   final dialogService = locator<DialogService>();
-  final employerGigrrsPref = locator<EmployerRequestPreferencesResp>();
+  final gigrrsPref = locator<EmployerRequestPreferencesResp>();
   final PageController pageController = PageController();
   final user = locator<UserAuthResponseData>();
   final candidateRepo = locator<CandidateRepo>();
   final businessRepo = locator<BusinessRepo>();
   List<FindGigrrsProfileData> gigsData = <FindGigrrsProfileData>[];
+  TextEditingController offerPriceController = TextEditingController();
+  TextEditingController priceTypeController = TextEditingController();
 
   EmployerGigrrsViewModel() {
-    if (employerGigrrsPref.businessId.isNotEmpty) {
-      // fetchFindGigrrsId();
+    if (gigrrsPref.businessId.isNotEmpty) {
+      fetchFindGigrrsProfile();
     }
   }
 
@@ -42,27 +47,10 @@ class EmployerGigrrsViewModel extends BaseViewModel {
     );
   }
 
-  Future<void> fetchFindGigrrsId() async {
+  Future<void> fetchFindGigrrsProfile() async {
     setBusy(true);
     var result = await businessRepo.employerFindGigrr(
       await _getRequestForFindGigrrs(),
-    );
-    result.fold((fail) {
-      snackBarService.showSnackbar(message: fail.errorMsg);
-      setBusy(false);
-    }, (res) async {
-      await fetchFindGigrrsProfile(res.id);
-      setBusy(false);
-      notifyListeners();
-    });
-    setBusy(false);
-    notifyListeners();
-  }
-
-  Future<void> fetchFindGigrrsProfile(int id) async {
-    setBusy(true);
-    var result = await businessRepo.employerSearchCandidateGigs(
-      await _getRequestForGig(gigrrId: id),
     );
     result.fold((fail) {
       snackBarService.showSnackbar(message: fail.errorMsg);
@@ -76,19 +64,83 @@ class EmployerGigrrsViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  Future<void> navigationToCandidateOfferRequest(
+    FindGigrrsProfileData e,
+  ) async {
+    var isCheck = await navigationService.navigateToView(
+      CandidateOfferToCreateGigrrView(data: e),
+    );
+    if (isCheck ?? false) {
+      fetchFindGigrrsProfile();
+    }
+  }
+
+  Future<void> navigationToSendOfferDetailView({
+    required FindGigrrsProfileData gigs,
+  }) async {
+    await navigationService.navigateTo(
+      Routes.employerGigrrDetailView,
+      arguments: EmployerGigrrDetailViewArguments(
+        gigsId: gigs.id,
+        candidateId: gigs.employerProfile.userId,
+        isShortListed: false,
+        price: price(gigs),
+        address: gigs.address,
+        imageURL: gigs.imageUrl,
+        candidateName: gigs.firstName,
+        experience: gigs.employerProfile.experience,
+        availability: gigs.employerProfile.availibility,
+        skillList: gigs.employeeSkills.first.skills,
+      ),
+    );
+  }
+
   String price(FindGigrrsProfileData e) {
     var p = e.employerProfile;
     return "₹ ${p.priceFrom.toStringAsFixed(0)}-${p.priceFrom.toStringAsFixed(0)}/${p.priceCriteria}";
   }
 
-  Future<Map<String, String>> _getRequestForGig({int gigrrId = 0}) async {
-    Map<String, String> request = {};
-    request["gigs_id"] = "$gigrrId";
-    notifyListeners();
-    return request;
-  }
-
   Future<Map<String, dynamic>> _getRequestForFindGigrrs() async {
     return locator<EmployerRequestPreferencesResp>().toJson();
+  }
+
+  Future<void> loadGigsCandidateOffer({
+    int candidateId = 0,
+  }) async {
+    if (offerPriceController.text.isNotEmpty) {
+      setBusy(true);
+      var result = await businessRepo.createGigrrToCandidateOffer(
+        await _getRequestGigsCandidateOffer(
+          candidateId: candidateId,
+        ),
+      );
+      result.fold((fail) {
+        setBusy(false);
+        snackBarService.showSnackbar(message: fail.errorMsg);
+      }, (myGigs) async {
+        navigationService.back(result: true);
+        setBusy(false);
+      });
+    } else {
+      snackBarService.showSnackbar(message: "msg_plz_enter_offer".tr());
+    }
+    notifyListeners();
+  }
+
+  Future<Map<String, String>> _getRequestGigsCandidateOffer({
+    int candidateId = 0,
+  }) async {
+    Map<String, String> request = {};
+    request['candidate_id'] = "$candidateId";
+    request['gig_name'] = gigrrsPref.gigName;
+    request['business_id'] = gigrrsPref.businessId;
+    request['address'] = gigrrsPref.address;
+    request['start_date'] = gigrrsPref.startDate;
+    request['latitude'] = gigrrsPref.latitude;
+    request['longitude'] = gigrrsPref.longitude;
+    request['skills'] = gigrrsPref.skills;
+    request['gender'] = gigrrsPref.gender;
+    request['offer_amount'] = offerPriceController.text;
+    return request;
   }
 }

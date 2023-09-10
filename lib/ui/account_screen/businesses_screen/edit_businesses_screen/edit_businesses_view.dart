@@ -24,7 +24,9 @@ class EditBusinessesScreenView extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.initialDataLoad(businessData),
+      onViewModelReady: (viewModel) async {
+        await viewModel.initialDataLoad(businessData);
+      },
       viewModelBuilder: () => EditBusinessesViewModel(businessData),
       builder: (context, viewModel, child) => Scaffold(
         appBar: getAppBar(
@@ -77,7 +79,7 @@ class EditBusinessesScreenView extends StatelessWidget {
           mapBoxPlace: viewModel.mapBoxPlace,
         ),
         CVMTextFormField(
-          title: "upload_Profile_pictures",
+          title: "upload_profile_pictures",
           formWidget: CustomImagePickerView(
             title: "add_picture_of_your_profile",
             imageList: viewModel.imageList,

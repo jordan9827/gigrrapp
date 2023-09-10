@@ -47,8 +47,8 @@ class _LoginViewState extends State<LoginView>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    height: SizeConfig.margin_padding_50 * 2.8,
+                  Expanded(
+                    // height: SizeConfig.margin_padding_50 * 2.9,
                     child: _buildHeading(),
                   ),
                   Expanded(
