@@ -10,7 +10,7 @@ class UserTokenInterceptor extends RequestInterceptor {
 
   @override
   FutureOr<Request> onRequest(Request request) async {
-    final user = locator<UserAuthResponseData>();
+    UserAuthResponseData user = locator<UserAuthResponseData>();
     Map<String, String> headers = Map.from(request.headers);
     if (user.accessToken.isNotEmpty) {
       headers.update(
