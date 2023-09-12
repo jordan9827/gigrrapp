@@ -42,8 +42,8 @@ class EmployerGigrrsViewModel extends BaseViewModel {
   }
 
   Future<void> navigateToEmployerPrefView() async {
-    await navigationService.navigateToView(
-      EmployerPreferenceScreenView(),
+    await navigationService.navigateTo(
+      Routes.employerPreferenceScreenView,
     );
   }
 
@@ -67,8 +67,9 @@ class EmployerGigrrsViewModel extends BaseViewModel {
   Future<void> navigationToCandidateOfferRequest(
     FindGigrrsProfileData e,
   ) async {
-    var isCheck = await navigationService.navigateToView(
-      CandidateOfferToCreateGigrrView(data: e),
+    var isCheck = await navigationService.navigateTo(
+      Routes.candidateOfferToCreateGigrrView,
+      arguments: CandidateOfferToCreateGigrrViewArguments(data: e),
     );
     if (isCheck ?? false) {
       fetchFindGigrrsProfile();

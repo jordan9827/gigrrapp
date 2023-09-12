@@ -79,6 +79,7 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
         snackBarService.showSnackbar(message: fail.errorMsg);
       }, (myGigs) async {
         navigationService.back(result: true);
+        navigationService.back(result: true);
         setBusy(false);
       });
     } else {

@@ -85,6 +85,7 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   void setGigrrPreference() {
     businessController.text = getBusinessName(gigrrsPref.businessId);
     addressController.text = gigrrsPref.address;
+    nameController.text = gigrrsPref.gigName;
     initialGender = gigrrsPref.gender;
     addSkillItemList = setSkillItem(gigrrsPref.skills.split(","));
     latLng = LatLng(
@@ -207,9 +208,19 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   }
 
   bool validationAddPreference() {
-    if (businessController.text.isEmpty) {
+    if (nameController.text.isEmpty) {
+      snackBarService.showSnackbar(
+        message: "plz_enter_gig_name".tr(),
+      );
+      return false;
+    } else if (businessController.text.isEmpty) {
       snackBarService.showSnackbar(
         message: "plz_sel_pref_business".tr(),
+      );
+      return false;
+    } else if (addSkillItemList.isEmpty) {
+      snackBarService.showSnackbar(
+        message: "plz_sel_pref_skill".tr(),
       );
       return false;
     }

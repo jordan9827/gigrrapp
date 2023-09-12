@@ -11,13 +11,12 @@ class UserTokenInterceptor extends RequestInterceptor {
   @override
   FutureOr<Request> onRequest(Request request) async {
     final user = locator<UserAuthResponseData>();
-    String token = user.accessToken;
     Map<String, String> headers = Map.from(request.headers);
     if (user.accessToken.isNotEmpty) {
       headers.update(
         'Authorization',
-        (value) => 'Bearer $token',
-        ifAbsent: () => 'Bearer $token',
+        (value) => 'Bearer ${user.accessToken}',
+        ifAbsent: () => 'Bearer ${user.accessToken}',
       );
       headers.update(
         'language',

@@ -100,12 +100,15 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
       );
       if (result) fetchMyGigrrRoster();
     } else if (status == "pay_candidate") {
-      navigationService.navigateTo(
+      var check = await navigationService.navigateTo(
         Routes.selectPaymentModeView,
         arguments: SelectPaymentModeViewArguments(
           data: request,
         ),
       );
+      if (check ?? false) {
+        fetchMyGigrrRoster();
+      }
     }
   }
 }

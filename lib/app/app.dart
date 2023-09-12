@@ -36,10 +36,12 @@ import '../ui/account_screen/businesses_screen/add_businesses_screen/add_busines
 import '../ui/account_screen/businesses_screen/businesses_view.dart';
 import '../ui/account_screen/businesses_screen/edit_businesses_screen/edit_businesses_view.dart';
 import '../ui/account_screen/candidate/bank_account_screen/add_bank_account_screen/add_bank_account_view.dart';
+import '../ui/account_screen/candidate/bank_account_screen/add_upi_screen/add_upi_view.dart';
 import '../ui/account_screen/candidate/bank_account_screen/bank_account_view.dart';
 import '../ui/account_screen/candidate/candidate_preferences_screen/candidate_preferences_view.dart';
 import '../ui/account_screen/candidate/manage_address_screen/add_address_screen/add_address_view.dart';
 import '../ui/account_screen/candidate/manage_address_screen/manage_address_view.dart';
+import '../ui/account_screen/employer/employer_preferences_screen/employer_preferences_view.dart';
 import '../ui/account_screen/help_support_screen/support_email_screen/support_email_view.dart';
 import '../ui/account_screen/privacy_policy/privacy_policy_view.dart';
 import '../ui/account_screen/select_payment_screen/select_payment_mode_view.dart';
@@ -52,6 +54,7 @@ import '../ui/auth_screen/signup_screen/candidate_register_screen/candidate_regi
 import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candidate_kyc_screen/candidate_kyc_view.dart';
 import '../ui/auth_screen/signup_screen/candidate_register_screen/widget/candidate_role_form_view.dart';
 import '../ui/auth_screen/signup_screen/employer_register_screen/employer_register_view.dart';
+import '../ui/home_screen/employer_gigrr_view/candidate_offer_create_gigrr_view.dart';
 import '../ui/home_screen/employer_gigrr_view/employer_gigrr_detail_view/employer_gigrr_detail_view.dart';
 import '../ui/home_screen/home_view.dart';
 import '../ui/home_screen/my_gigrrs/screen/my_gigrrs_detail_view.dart';
@@ -73,15 +76,18 @@ import '../ui/widgets/giggr_request_view.dart';
 
     ///// Businesses /////
     MaterialRoute(page: MyGigrrsDetailView),
+    MaterialRoute(page: EmployerPreferenceScreenView),
     MaterialRoute(page: EmployerGigrrDetailView),
     MaterialRoute(page: CandidateOfferView),
     MaterialRoute(page: SelectPaymentModeView),
     MaterialRoute(page: BusinessesScreenView),
     MaterialRoute(page: AddBusinessesScreenView),
     MaterialRoute(page: EditBusinessesScreenView),
+    MaterialRoute(page: CandidateOfferToCreateGigrrView),
 
     ///// Account /////
     MaterialRoute(page: CandidateRoleFormView),
+    MaterialRoute(page: AddUpiView),
     MaterialRoute(page: AccountView),
     MaterialRoute(page: ChatScreenView),
     MaterialRoute(page: AboutUsScreenView),

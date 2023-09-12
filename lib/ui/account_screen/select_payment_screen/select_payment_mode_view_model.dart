@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../../../app/app.locator.dart';
-import '../../../data/network/dtos/my_gigrrs_roster_response.dart';
 import '../../../data/network/dtos/my_gigs_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../util/enums/dialog_type.dart';
@@ -42,7 +41,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
 
   void navigationToBack() {
     if (!isBusy) {
-      navigationService.back();
+      navigationService.back(result: false);
     }
     return;
   }
@@ -157,8 +156,7 @@ class SelectPaymentModelViewModel extends BaseViewModel with Initialisable {
       setBusy(false);
     }, (res) {
       setBusy(false);
-      navigationService.back();
-      navigationService.back();
+      navigationService.back(result: true);
     });
     notifyListeners();
   }

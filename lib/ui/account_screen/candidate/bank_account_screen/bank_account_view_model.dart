@@ -29,8 +29,9 @@ class BankAccountViewModel extends BaseViewModel {
   }
 
   Future<void> navigationToAddUpiView() async {
-    var isCheck = await navigationService.navigateToView(
-      AddUpiView(
+    var isCheck = await navigationService.navigateTo(
+      Routes.addUpiView,
+      arguments: AddUpiViewArguments(
         data: upiInfoData,
       ),
     );

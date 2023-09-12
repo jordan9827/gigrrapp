@@ -9,7 +9,7 @@ class RazorPayPaymentHelper {
   static final navigationService = locator<NavigationService>();
 
   static void handlePaymentErrorResponse(PaymentFailureResponse response) {
-    navigationService.back(result: "Vinay 123 Ghodela");
+    navigationService.back(result: "");
     snackBarService.showSnackbar(message: response.message.toString());
   }
 

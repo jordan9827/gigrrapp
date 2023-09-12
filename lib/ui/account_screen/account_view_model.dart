@@ -92,8 +92,8 @@ class AccountViewModel extends BaseViewModel {
   }
 
   void navigationToEmployerPreferenceScreen() {
-    navigationService.navigateToView(
-      EmployerPreferenceScreenView(),
+    navigationService.navigateTo(
+      Routes.employerPreferenceScreenView,
     );
   }
 
