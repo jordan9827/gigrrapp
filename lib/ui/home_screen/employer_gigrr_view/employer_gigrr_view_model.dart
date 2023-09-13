@@ -67,13 +67,10 @@ class EmployerGigrrsViewModel extends BaseViewModel {
   Future<void> navigationToCandidateOfferRequest(
     FindGigrrsProfileData e,
   ) async {
-    var isCheck = await navigationService.navigateTo(
+    await navigationService.navigateTo(
       Routes.candidateOfferToCreateGigrrView,
       arguments: CandidateOfferToCreateGigrrViewArguments(data: e),
     );
-    if (isCheck ?? false) {
-      fetchFindGigrrsProfile();
-    }
   }
 
   Future<void> navigationToSendOfferDetailView({
@@ -119,7 +116,13 @@ class EmployerGigrrsViewModel extends BaseViewModel {
         setBusy(false);
         snackBarService.showSnackbar(message: fail.errorMsg);
       }, (myGigs) async {
-        navigationService.back(result: true);
+        navigationService.clearStackAndShow(
+          Routes.homeView,
+          arguments: HomeViewArguments(
+            initialIndex: 1,
+            isInitial: false,
+          ),
+        );
         setBusy(false);
       });
     } else {
@@ -137,6 +140,9 @@ class EmployerGigrrsViewModel extends BaseViewModel {
     request['business_id'] = gigrrsPref.businessId;
     request['address'] = gigrrsPref.address;
     request['start_date'] = gigrrsPref.startDate;
+    request['end_date'] = gigrrsPref.endDate;
+    request['from_amount'] = gigrrsPref.fromAmount.toString();
+    request['to_amount'] = gigrrsPref.toAmount.toString();
     request['latitude'] = gigrrsPref.latitude;
     request['longitude'] = gigrrsPref.longitude;
     request['skills'] = gigrrsPref.skills;

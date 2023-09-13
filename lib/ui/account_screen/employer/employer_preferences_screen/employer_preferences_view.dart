@@ -14,6 +14,7 @@ import '../../../../util/others/text_styles.dart';
 import '../../../widgets/custom_date_picker.dart';
 import '../../../widgets/custom_drop_down.dart';
 import '../../../widgets/cvm_text_form_field.dart';
+import '../../../widgets/range_filter_view.dart';
 import 'employer_preferences_view_model.dart';
 import 'preference_custom_ui_widget.dart';
 
@@ -61,6 +62,7 @@ class EmployerPreferenceScreenView extends StatelessWidget {
                 _buildBusinessTypeView(viewModel),
                 _buildLocationView(viewModel),
                 _buildDistanceView(viewModel),
+                _buildPriceRange(viewModel),
                 _buildAvailabilityShiftView(viewModel),
                 _buildAvailabilityDateView(viewModel),
                 _buildSkillsView(viewModel),
@@ -93,8 +95,9 @@ class EmployerPreferenceScreenView extends StatelessWidget {
   Widget _buildBusinessTypeView(EmployerPreferenceViewModel viewModel) {
     return EmployerPreferenceCustomUIWidget(
       title: "your_businesses",
-      padding: SizeConfig.margin_padding_8,
+      padding: 0,
       child: CustomDropDownWidget(
+        color: mainWhiteColor,
         hintText: "i.e. Shopping Store",
         emptyList: "plz_add_business",
         itemList: viewModel.businessesList.map((e) => e.businessName).toList(),
@@ -193,6 +196,19 @@ class EmployerPreferenceScreenView extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget _buildPriceRange(
+    EmployerPreferenceViewModel viewModel,
+  ) {
+    return EmployerPreferenceCustomUIWidget(
+      title: "price_range",
+      child: PriceRangeFilterView(
+        rangeValues: viewModel.currentRangeValues,
+        onChanged: viewModel.setPayRange,
+        rangeText: viewModel.payRangeText,
       ),
     );
   }

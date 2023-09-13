@@ -21,6 +21,8 @@ class EmployerRequestPreferencesResp with _$EmployerRequestPreferencesResp {
     @JsonKey(name: "skills", defaultValue: "") String skills,
     @JsonKey(name: "gig_name", defaultValue: "") String gigName,
     @JsonKey(name: "address", defaultValue: "") String address,
+    @JsonKey(name: "from_amount", defaultValue: "") String fromAmount,
+    @JsonKey(name: "to_amount", defaultValue: "") String toAmount,
     @JsonKey(name: "radius", defaultValue: "") String radius,
     @JsonKey(name: "latitude", defaultValue: "") String latitude,
     @JsonKey(name: "longitude", defaultValue: "") String longitude,

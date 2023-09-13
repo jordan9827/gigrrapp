@@ -29,7 +29,6 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
   final sharedPreferences = locator<SharedPreferences>();
   final gigrrsPref = locator<EmployerRequestPreferencesResp>();
-
   final user = locator<UserAuthResponseData>();
   final businessTypeService = locator<BusinessTypeService>();
   final businessRepo = locator<BusinessRepo>();
@@ -38,24 +37,23 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   int maxDiscount = 20;
   double max = 1000;
   List<GigrrTypeCategoryData> addSkillItemList = [];
-  RangeValues currentRangeValues = const RangeValues(100, 400);
-  final List<String> availShitList = ["day", "evening", "night"];
+  List<GetBusinessesData> businessesList = <GetBusinessesData>[];
   List<String> genderList = ["male", "female", "other"];
-  var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
-
+  LatLng latLng = const LatLng(14.508, 46.048);
+  Location location = Location();
   String initialGender = "male";
-  TextEditingController addressController =
-      TextEditingController(text: "i.e. House no., Street name, Area");
+
   TextEditingController formDateController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController toDateController = TextEditingController();
   TextEditingController businessController = TextEditingController();
+  TextEditingController addressController =
+      TextEditingController(text: "i.e. House no., Street name, Area");
+  var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
   DateTime selectedDate = DateTime.now();
-  List<GetBusinessesData> businessesList = <GetBusinessesData>[];
-  bool isVisible = false;
+  RangeValues currentRangeValues = const RangeValues(100, 1000);
 
-  LatLng latLng = const LatLng(14.508, 46.048);
-  Location location = Location();
+  bool isVisible = false;
 
   Future<void> refreshScreen() async {
     businessesList = [];
@@ -86,6 +84,10 @@ class EmployerPreferenceViewModel extends BaseViewModel {
     businessController.text = getBusinessName(gigrrsPref.businessId);
     addressController.text = gigrrsPref.address;
     nameController.text = gigrrsPref.gigName;
+    currentRangeValues = RangeValues(
+      double.parse(gigrrsPref.fromAmount),
+      double.parse(gigrrsPref.toAmount),
+    );
     initialGender = gigrrsPref.gender;
     addSkillItemList = setSkillItem(gigrrsPref.skills.split(","));
     latLng = LatLng(
@@ -162,7 +164,7 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   }
 
   String get payRangeText =>
-      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}/$initialGender";
+      "₹ ${currentRangeValues.start.toInt()} - ${currentRangeValues.end.toInt()}";
 
   Future<void> acquireCurrentLocation() async {
     setBusy(true);
@@ -273,6 +275,8 @@ class EmployerPreferenceViewModel extends BaseViewModel {
     request['distance'] = maxDiscount.toString();
     request['start_date'] = formDateController.text;
     request['end_date'] = toDateController.text;
+    request['from_amount'] = currentRangeValues.start.toString();
+    request['to_amount'] = currentRangeValues.end.toString();
     request['gender'] = initialGender;
     request['skills'] = addSkillItemList.map((e) => e.id).join(",");
 

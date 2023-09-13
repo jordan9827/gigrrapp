@@ -259,6 +259,7 @@
  "job_status": "Job Status",
  "roster": "Roster",
  "start": "Start",
+ "price_range": "Price Range",
  "sent_offer": "Sent-Offer",
  "offer_accept_by_candidate": "Offer Accepted By Candidate",
  "msg_plz_enter_offer": "Please enter offer",

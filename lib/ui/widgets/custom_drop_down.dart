@@ -19,6 +19,7 @@ class CustomDropDownWidget extends StatelessWidget {
   final String groupValue;
   final double? size;
   final bool isLoading;
+  final Color color;
 
   CustomDropDownWidget({
     Key? key,
@@ -33,6 +34,7 @@ class CustomDropDownWidget extends StatelessWidget {
     this.onMultiSelectedList,
     this.removeItems,
     this.selectSingleItemsAction,
+    this.color=mainGrayColor,
     this.selectMultipleItemsAction,
     this.size,
   }) : super(key: key);
@@ -50,7 +52,7 @@ class CustomDropDownWidget extends StatelessWidget {
             horizontal: SizeConfig.margin_padding_10,
           ),
           decoration: BoxDecoration(
-            color: mainGrayColor,
+            color: color,
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
@@ -86,7 +88,7 @@ class CustomDropDownWidget extends StatelessWidget {
             width: SizeConfig.screenWidth,
             height: setHeightOfDrop(itemList.length),
             decoration: BoxDecoration(
-              color: mainGrayColor,
+              color: color,
               border: Border(
                 top: BorderSide(
                   color: Colors.black38,
