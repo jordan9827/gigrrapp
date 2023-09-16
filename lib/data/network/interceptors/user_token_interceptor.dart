@@ -12,7 +12,7 @@ class UserTokenInterceptor extends RequestInterceptor {
   FutureOr<Request> onRequest(Request request) async {
     UserAuthResponseData user = locator<UserAuthResponseData>();
     Map<String, String> headers = Map.from(request.headers);
-    if (user.accessToken.isNotEmpty) {
+    // if (user.accessToken.isNotEmpty) {
       headers.update(
         'Authorization',
         (value) => 'Bearer ${user.accessToken}',
@@ -23,7 +23,7 @@ class UserTokenInterceptor extends RequestInterceptor {
         (value) => languageCode,
         ifAbsent: () => languageCode,
       );
-    }
+    //}
 
     log.i(
         "<------------------------------------------------------------\nAPI ${request.url}\nRequest body ${request.body}\nHeaders ${request.headers}\nQuery params ${request.parameters}\nMultipart ${request.multipart}\nLanguage ${headers["language"]}\nToken ${headers["Authorization"]}\n---------------------------------------------------------------->");

@@ -275,7 +275,7 @@ class EmployerPreferenceViewModel extends BaseViewModel {
     request['distance'] = maxDiscount.toString();
     request['start_date'] = formDateController.text;
     request['end_date'] = toDateController.text;
-    request['from_amount'] = currentRangeValues.start.toString();
+    request['form_amount'] = currentRangeValues.start.toString();
     request['to_amount'] = currentRangeValues.end.toString();
     request['gender'] = initialGender;
     request['skills'] = addSkillItemList.map((e) => e.id).join(",");
