@@ -51,7 +51,7 @@ Future<void> main() async {
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('hi')],
       useOnlyLangCode: true,
-      startLocale: Locale(languageCode),
+      startLocale: Locale(languageCode.isNotEmpty ? languageCode : "en"),
       path: "assets/translations",
       child: MyAppView(
         initialThemeMode: initialThemeMode,

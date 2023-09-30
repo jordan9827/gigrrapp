@@ -7,14 +7,21 @@ import 'package:stacked/stacked.dart';
 import '../home_app_bar.dart';
 import 'candidate_gigrrs_view_model.dart';
 
-class CandidateGigrrsView extends StatelessWidget {
+class CandidateGigrrsView extends StatefulWidget {
   const CandidateGigrrsView({Key? key}) : super(key: key);
 
+  @override
+  State<CandidateGigrrsView> createState() => _CandidateGigrrsViewState();
+}
+
+class _CandidateGigrrsViewState extends State<CandidateGigrrsView> {
   @override
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.fetchGigsRequest(),
+      onViewModelReady: (viewModel) async {
+        // await viewModel.fetchGigsRequest();
+      },
       viewModelBuilder: () => CandidateGigrrsViewModel(),
       builder: (context, viewModel, child) {
         var address = viewModel.defaultAddress.address;

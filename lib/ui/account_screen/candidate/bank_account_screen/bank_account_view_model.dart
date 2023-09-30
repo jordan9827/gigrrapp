@@ -36,20 +36,20 @@ class BankAccountViewModel extends BaseViewModel {
       ),
     );
     if (isCheck ?? false) {
-      fetchUpiInfo();
+      await fetchUpiInfo();
     }
   }
 
   Future<void> navigationToAddAndEditBankAccountView(
       {bool isEdit = false}) async {
-    var isCheck = await navigationService.navigateTo(
+    bool isCheck = await navigationService.navigateTo(
       Routes.addBankAccountScreenView,
       arguments: AddBankAccountScreenViewArguments(
         data: bankInfoData,
         isEdit: isEdit,
       ),
     );
-    if (isCheck ?? false) {
+    if (isCheck) {
       fetchAccountInfo();
     }
   }

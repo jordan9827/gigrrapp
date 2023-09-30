@@ -225,7 +225,7 @@ class AddGigsViewModel extends BaseViewModel {
       },
     );
     if (picked != null) {
-      selectedTime = picked;
+      // selectedTime = picked;
       textController.text = picked.format(context).toUpperCase();
       notifyListeners();
     }
@@ -251,7 +251,7 @@ class AddGigsViewModel extends BaseViewModel {
           );
           gigrrNameController.clear();
           priceController.clear();
-          snackBarService.showSnackbar(message: gigs.message);
+          // snackBarService.showSnackbar(message: gigs.message);
           notifyListeners();
           setBusy(false);
         },

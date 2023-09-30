@@ -17,6 +17,7 @@ import '../../util/enums/dialog_type.dart';
 import '../../util/others/fcm_notification_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
+import '../home_screen/my_gigs/candidate_gigs_screen/candidate_gigs_view.dart';
 import '../widgets/giggr_otp_start_stop_view.dart';
 
 class MyAppViewModel extends BaseViewModel {
@@ -83,13 +84,20 @@ class MyAppViewModel extends BaseViewModel {
   Future<bool> routeUser() async {
     print(
         "setInitialRoute  \n${userData.accessToken}\n${userData.profileStatus}");
-    if (icCheckIntroScreen() && userData.accessToken.isEmpty) {
+    if (getLanguageStatus.isEmpty) {
+      initialRoute = Routes.selectDefaultLanguageView;
+    } else if (icCheckIntroScreen() && userData.accessToken.isEmpty) {
       initialRoute = Routes.introScreenView;
     } else if (userData.accessToken.isNotEmpty) {
       initialRoute = _buildInitialCurrentRoutes();
     }
     return true;
   }
+
+  String get getLanguageStatus =>
+      locator<SharedPreferences>()
+          .getString(PreferenceKeys.APP_LANGUAGE.text) ??
+      "";
 
   Future<void> businessTypeCategoryApiCall() async {
     setBusy(true);
@@ -185,6 +193,12 @@ class MyAppViewModel extends BaseViewModel {
       dialogService.registerCustomDialogBuilders(builders);
       dialogService.showCustomDialog(
         variant: DialogType.OTPViewStartORStop,
+      );
+    } else if (type.toUpperCase() == "EMPLOYER_ADD_ROSTER_TO_CANDIDATE") {
+      navigationService.clearStackAndShowView(
+        CandidateGigsView(
+          initial: 1,
+        ),
       );
     }
   }

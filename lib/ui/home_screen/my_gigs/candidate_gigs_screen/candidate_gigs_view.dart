@@ -16,7 +16,11 @@ import '../widget/my_gigs_view_widget.dart';
 import 'candidate_gigs_view_model.dart';
 
 class CandidateGigsView extends StatefulWidget {
-  const CandidateGigsView({Key? key}) : super(key: key);
+  final int initial;
+  const CandidateGigsView({
+    Key? key,
+    this.initial = 0,
+  }) : super(key: key);
 
   @override
   State<CandidateGigsView> createState() => _CandidateGigsViewState();
@@ -31,7 +35,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     _tabController = TabController(
       length: 2,
       vsync: this,
-      initialIndex: 0,
+      initialIndex: widget.initial,
     );
     super.initState();
   }
@@ -47,7 +51,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
       onViewModelReady: (viewModel) => viewModel.init(),
-      viewModelBuilder: () => CandidateGigsViewModel(),
+      viewModelBuilder: () => CandidateGigsViewModel(widget.initial),
       builder: (context, viewModel, child) {
         return Scaffold(
           resizeToAvoidBottomInset: false,

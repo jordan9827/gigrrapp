@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:square_demo_architecture/others/constants.dart';
+import 'package:square_demo_architecture/others/loading_button.dart';
 import 'package:square_demo_architecture/ui/no_internet_screen/no_internet_view_model.dart';
 import 'package:square_demo_architecture/util/extensions/build_context_extension.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
@@ -52,30 +53,10 @@ class NoInternetView extends StatelessWidget {
                             ),
                       ),
                       _buildSpace(),
-                      InkWell(
-                        onTap: viewModel.checkInterNetStatus,
-                        child: Container(
-                          height: kToolbarHeight * 0.75,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: mainPinkColor,
-                            borderRadius: BorderRadius.circular(
-                              SizeConfig.margin_padding_10,
-                            ),
-                          ),
-                          child: Center(
-                            child: viewModel.isBusy
-                                ? CircularProgressIndicator(
-                                    color: mainWhiteColor,
-                                  )
-                                : Text(
-                                    "try_again".tr(),
-                                    style: TSB.regularMedium(
-                                      textColor: mainWhiteColor,
-                                    ),
-                                  ),
-                          ),
-                        ),
+                      LoadingButton(
+                        title: "try_again".tr(),
+                        loading: viewModel.isBusy,
+                        action: viewModel.checkInterNetStatus,
                       ),
                     ],
                   ),

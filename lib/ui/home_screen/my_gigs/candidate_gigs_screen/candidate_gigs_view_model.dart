@@ -34,7 +34,8 @@ class CandidateGigsViewModel extends BaseViewModel {
   List<CandidateRosterData> shortListGigsList = [];
   var scrollController = ScrollController();
 
-  CandidateGigsViewModel() {
+  CandidateGigsViewModel(int index) {
+    this.initialIndex = index;
     fCMService.listenForegroundMessage((p0) => refreshScreen());
   }
 
@@ -56,8 +57,8 @@ class CandidateGigsViewModel extends BaseViewModel {
     setBusy(false);
   }
 
-  void init() {
-    fetchAppliedGigs();
+  Future<void> init() async {
+    await refreshScreen();
     scrollController.addListener(_scrollListener);
   }
 
@@ -79,9 +80,11 @@ class CandidateGigsViewModel extends BaseViewModel {
             businessName: gigs.businessData.businessName,
             onTap: () => acceptedGigsOffer(gigs.id),
             title: "accept_this_offer",
-            subTitle: "has_offer_you".tr(args: [
-              " ${gigs.priceCriteria} \n" + "price_of".tr() + " ₹ $offerPrice"
-            ]),
+            subTitle: "has_offer_you".tr(
+              args: [
+                " ${gigs.priceCriteria} \n" + "price_of".tr() + " ₹ $offerPrice"
+              ],
+            ),
             buttonText: "accept_this_offer",
           ),
     };
@@ -94,7 +97,10 @@ class CandidateGigsViewModel extends BaseViewModel {
 
   Future<void> fetchAppliedGigs() async {
     _pageNumber = _pageNumber + 1;
-    if (_pageNumber == 1) setBusy(true);
+    if (_pageNumber == 1) {
+      setBusy(true);
+      appliedGigsList.clear();
+    }
     var result = await candidateRepo.acceptedGigs(_pageNumber);
     result.fold((fail) {
       setBusy(false);
@@ -103,7 +109,6 @@ class CandidateGigsViewModel extends BaseViewModel {
       appliedGigsList.addAll(res.gigsAcceptedData);
       itemCount = res.gigsAcceptedData.length;
       _loading = false;
-
       setBusy(false);
       notifyListeners();
     });
@@ -203,9 +208,9 @@ class CandidateGigsViewModel extends BaseViewModel {
     if (bankStatus && aadhaarStatus) {
       await updateJobStatus(gigs, "start", viewModel);
     } else if (!bankStatus) {
-      navigationService.navigateTo(Routes.bankAccountScreenView);
+      navigationService.clearStackAndShow(Routes.bankAccountScreenView);
     } else if (!aadhaarStatus) {
-      navigationService.navigateTo(Routes.candidateKYCScreenView);
+      navigationService.clearStackAndShow(Routes.candidateKYCScreenView);
     }
   }
 

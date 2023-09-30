@@ -26,6 +26,7 @@ class CandidateGigrrsViewModel extends BaseViewModel {
   final commonRepo = locator<CommonRepo>();
 
   CandidateGigrrsViewModel() {
+    fetchGigsRequest();
     fCMService.listenForegroundMessage((p0) => fetchGigsRequest());
     setDefaultAddress();
   }

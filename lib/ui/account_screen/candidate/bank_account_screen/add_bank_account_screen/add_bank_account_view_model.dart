@@ -89,9 +89,7 @@ class AddBankAccountViewModel extends BaseViewModel {
         setBusy(false);
       }, (res) {
         navigationService.back(result: true);
-        snackBarService.showSnackbar(message: res.message);
-        notifyListeners();
-        setBusy(false);
+        // snackBarService.showSnackbar(message: res.message);
       });
       notifyListeners();
     }

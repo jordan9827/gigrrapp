@@ -7,6 +7,8 @@ flutter pub get
 flutter pub run build_runner build --delete-conflicting-outputs
 
 
+EMPLOYER_ADD_ROSTER_TO_CANDIDATE
+RECEIVED_NEW_GIG_REQUEST
 #swagger
 https://gigrr.in/admin/swagger
 
