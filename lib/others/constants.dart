@@ -16,7 +16,7 @@ const String localBaseURL = "";
 
 String languageCode =
     locator<SharedPreferences>().getString(PreferenceKeys.APP_LANGUAGE.text) ??
-        "";
+"";
 
 const String countryType = "in";
 
