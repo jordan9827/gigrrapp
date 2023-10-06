@@ -9,6 +9,7 @@ import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../data/network/dtos/candidate_roster_gigs_response.dart';
+import '../../../../data/network/dtos/fetch_bank_detail_response.dart';
 import '../../../../data/network/dtos/gigs_accepted_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../util/enums/dialog_type.dart';
@@ -208,7 +209,17 @@ class CandidateGigsViewModel extends BaseViewModel {
     if (bankStatus && aadhaarStatus) {
       await updateJobStatus(gigs, "start", viewModel);
     } else if (!bankStatus) {
-      navigationService.clearStackAndShow(Routes.bankAccountScreenView);
+      var isTrue = await navigationService.clearStackAndShow(
+        Routes.addBankAccountScreenView,
+        arguments: AddBankAccountScreenViewArguments(
+          navigatorShortList: true,
+          data: GetBankDetailResponseData.init(),
+          isEdit: false,
+        ),
+      );
+      if (isTrue ?? false) {
+        await refreshScreen();
+      }
     } else if (!aadhaarStatus) {
       navigationService.clearStackAndShow(Routes.candidateKYCScreenView);
     }

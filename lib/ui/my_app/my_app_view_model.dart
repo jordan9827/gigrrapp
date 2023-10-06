@@ -84,7 +84,7 @@ class MyAppViewModel extends BaseViewModel {
   Future<bool> routeUser() async {
     print(
         "setInitialRoute  \n${userData.accessToken}\n${userData.profileStatus}");
-    if (getLanguageStatus.isEmpty) {
+    if (getLanguageStatus.isEmpty && userData.accessToken.isEmpty) {
       initialRoute = Routes.selectDefaultLanguageView;
     } else if (icCheckIntroScreen() && userData.accessToken.isEmpty) {
       initialRoute = Routes.introScreenView;

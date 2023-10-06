@@ -22,7 +22,7 @@ abstract class AccountRepo {
     required int page,
   });
 
-  Future<Either<Failure, BaseResponse>> addBankAccount(
+  Future<Either<Failure, GetBankDetailResponseData>> addBankAccount(
     Map<String, dynamic> data,
   );
 

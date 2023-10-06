@@ -233,7 +233,7 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
         InkWell(
           onTap: () => viewModel.navigationToCandidateDetail(
             gigs: gigs,
-            gigsStatus: "shortList",
+            gigsStatus: "received-offer",
           ),
           child: Text(
             "see_details".tr(),

@@ -35,7 +35,8 @@ class EmployerGigsDetailView extends StatelessWidget {
         body: Column(
           children: [
             if (status == "accepted") _buildGigsAcceptedView(viewModel),
-            if (status != "accepted") _buildGigsOfferAndShortListDetailView()
+            if (status == "received-offer") _buildGigsOfferDetailView(),
+            if (status == "shortListed") _buildShortListDetailView()
           ],
         ),
       ),
@@ -71,17 +72,37 @@ class EmployerGigsDetailView extends StatelessWidget {
     );
   }
 
-  Widget _buildGigsOfferAndShortListDetailView() {
-    return ListView(
-      shrinkWrap: true,
-      children: gigs.gigsRequestData
-          .map(
-            (e) => GigrrsCandidateWidget(
-              gigsData: gigs,
-              data: e,
-            ),
-          )
-          .toList(),
+  Widget _buildGigsOfferDetailView() {
+    return Expanded(
+      child: ListView(
+        shrinkWrap: true,
+        children: gigs.gigsRequestData
+            .where((element) => element.status == "received-offer")
+            .map(
+              (e) => GigrrsCandidateWidget(
+                gigsData: gigs,
+                data: e,
+              ),
+            )
+            .toList(),
+      ),
+    );
+  }
+
+  Widget _buildShortListDetailView() {
+    return Expanded(
+      child: ListView(
+        shrinkWrap: true,
+        children: gigs.gigsRequestData
+            .where((element) => element.status == "roster")
+            .map(
+              (e) => GigrrsCandidateWidget(
+                gigsData: gigs,
+                data: e,
+              ),
+            )
+            .toList(),
+      ),
     );
   }
 }

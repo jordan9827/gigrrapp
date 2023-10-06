@@ -6,7 +6,8 @@ import 'employer_gigs_screen/employer_gigs_view.dart';
 import 'my_gigs_view_model.dart';
 
 class MyGigs extends StatelessWidget {
-  const MyGigs({Key? key}) : super(key: key);
+  final int initial;
+  const MyGigs({Key? key,  this.initial=0}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,7 @@ class MyGigs extends StatelessWidget {
           onWillPop: () => Future.sync(viewModel.onWillPop),
           child: viewModel.user.isEmployer
               ? EmployerGigsView()
-              : CandidateGigsView(),
+              : CandidateGigsView(initial: initial),
         );
       },
     );

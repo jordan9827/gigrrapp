@@ -103,7 +103,7 @@ class AccountImpl extends AccountRepo {
   }
 
   @override
-  Future<Either<Failure, BaseResponse>> addBankAccount(
+  Future<Either<Failure, GetBankDetailResponseData>> addBankAccount(
       Map<String, dynamic> data) async {
     try {
       final response = await accountService.addBankAccountApi(data);
@@ -112,7 +112,7 @@ class AccountImpl extends AccountRepo {
         throw Exception(response.error);
       }
       return response.body!.map(success: (res) async {
-        return Right(res);
+        return Right(res.data);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

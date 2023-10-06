@@ -135,12 +135,15 @@ class CandidateKYCViewModel extends BaseViewModel {
 
   Future pickImage(BuildContext context, {bool isFontImage = true}) async {
     XFile pickImage = await _showImagePicker(context);
-    final imageFile =
-        await ImagePickerUtil.cropImage(PickedFile(pickImage.path));
+    final imageFile = await ImagePickerUtil.cropImage(
+      PickedFile(pickImage.path),
+    );
     if (imageFile != null) {
       _imageFile = XFile(imageFile.path);
       await uploadMediaForBusiness(
-          imagePath: imageFile.path, pickImage: isFontImage);
+        imagePath: imageFile.path,
+        pickImage: isFontImage,
+      );
       setBusy(false);
       notifyListeners();
     }

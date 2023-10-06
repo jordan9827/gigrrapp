@@ -12,10 +12,12 @@ import '../../../../widgets/cvm_text_form_field.dart';
 import 'add_bank_account_view_model.dart';
 
 class AddBankAccountScreenView extends StatelessWidget {
+  final bool navigatorShortList;
   final GetBankDetailResponseData data;
   final bool isEdit;
   const AddBankAccountScreenView({
     Key? key,
+    this.navigatorShortList = false,
     this.isEdit = false,
     required this.data,
   }) : super(key: key);
@@ -67,7 +69,7 @@ class AddBankAccountScreenView extends StatelessWidget {
             ),
             LoadingButton(
               loading: viewModel.isBusy,
-              action: viewModel.addBankAccount,
+              action: () => viewModel.addBankAccount(navigatorShortList),
               title: "submit",
             ),
             SizedBox(

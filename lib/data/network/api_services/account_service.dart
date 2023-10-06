@@ -11,7 +11,7 @@ abstract class AccountService extends ChopperService {
   static AccountService create() => _$AccountService();
 
   @Post(path: "candidates/save-bank-account")
-  Future<Response<BaseResponse>> addBankAccountApi(
+  Future<Response<GetBankDetailResponse>> addBankAccountApi(
     @Body() Map<String, dynamic> body,
   );
 

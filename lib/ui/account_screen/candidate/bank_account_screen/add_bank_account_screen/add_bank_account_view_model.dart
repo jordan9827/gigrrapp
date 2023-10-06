@@ -1,13 +1,18 @@
+import 'dart:convert';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../../../../app/app.locator.dart';
+import '../../../../../app/app.router.dart';
+import '../../../../../data/local/preference_keys.dart';
 import '../../../../../data/network/dtos/fetch_bank_detail_response.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../../domain/repos/account_repos.dart';
 import '../../../../../others/constants.dart';
+import '../../../../home_screen/my_gigs/my_gigs_view.dart';
 
 class AddBankAccountViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
@@ -31,6 +36,7 @@ class AddBankAccountViewModel extends BaseViewModel {
       ifscCodeController.text = data.ifscCode;
     }
   }
+
   final List<String> accountTypeList = [
     "saving_acc",
     "current_acc",
@@ -78,7 +84,7 @@ class AddBankAccountViewModel extends BaseViewModel {
     return true;
   }
 
-  Future<void> addBankAccount() async {
+  Future<void> addBankAccount(bool isShortList) async {
     if (validationAddBankAccount()) {
       setBusy(true);
       var result = await accountRepo.addBankAccount(
@@ -87,11 +93,30 @@ class AddBankAccountViewModel extends BaseViewModel {
       result.fold((fail) {
         snackBarService.showSnackbar(message: fail.errorMsg);
         setBusy(false);
-      }, (res) {
-        navigationService.back(result: true);
+      }, (res) async {
+        if (isShortList) {
+          if (user.bankStatus == 0) await updateBankStatusToLocal(res);
+          navigationService.clearStackAndShowView(
+            MyGigs(initial: 1),
+          );
+        } else {
+          navigationService.back(result: true);
+        }
         // snackBarService.showSnackbar(message: res.message);
       });
       notifyListeners();
+    }
+  }
+
+  Future<void> updateBankStatusToLocal(GetBankDetailResponseData bank) async {
+    if (bank.id != 0 && bank.accountNumber.isNotEmpty) {
+      UserAuthResponseData data = user.copyWith(bankStatus: 1);
+      locator.unregister<UserAuthResponseData>();
+      locator.registerSingleton<UserAuthResponseData>(data);
+      await sharedPreferences.setString(
+        PreferenceKeys.USER_DATA.text,
+        json.encode(data),
+      );
     }
   }
 

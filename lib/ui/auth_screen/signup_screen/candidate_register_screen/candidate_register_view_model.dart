@@ -224,6 +224,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   }
 
   void setPickDate(DateTime picked) {
+    FocusManager.instance.primaryFocus?.unfocus();
     selectedDate = picked;
     dobController.text = DateFormat("yyyy-MM-dd").format(selectedDate);
     mapBoxLoading = false;

@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:fcm_service/fcm_service.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -10,13 +11,13 @@ import 'package:timezone/timezone.dart' as tz;
 const ID = "FCM_SERVICE_CLASS";
 const TITLE = "Default Notification";
 const DESCRIPTION = "This channel is used for all default notifications";
-const NOTIFICATION_CHANNEL_ID = "BASE_CHANNEL";
-const NOTIFICATION_CHANNEL_DESCRIPTION = "Base channel for notification";
 
 class FCMService {
   bool isOpenFromNotification = false;
   final _messaging = FirebaseMessaging.instance;
   static final _flutterNotificationPlugin = FlutterLocalNotificationsPlugin();
+  final NOTIFICATION_CHANNEL_ID = "BASE_CHANNEL";
+  final NOTIFICATION_CHANNEL_DESCRIPTION = "Base channel for notification";
 
   static Future<FCMService> getInstance() async {
     await Firebase.initializeApp();
@@ -40,12 +41,12 @@ class FCMService {
       description: DESCRIPTION,
     ),
     alert = true,
-    announcement = false,
-    badge = true,
-    carPlay = false,
-    criticalAlert = false,
-    provisional = false,
-    sound = true,
+    announcement: false,
+    badge: true,
+    carPlay: false,
+    criticalAlert: false,
+    provisional: false,
+    sound: true,
   }) async {
     // Request permission of web, iOS and macOS
     if (kIsWeb || Platform.isIOS || Platform.isMacOS) {
@@ -58,28 +59,16 @@ class FCMService {
         provisional: provisional,
         sound: sound,
       );
-      if (!authorized) {
+      if (!authorized)
         throw PlatformException(
             code: "Permission not granted for notification");
-      }
     }
-    // _flutterNotificationPlugin.initialize(
-    //   InitializationSettings(
-    //     android: AndroidInitializationSettings("app_icon"),
-    //   ),
-    //   onSelectNotification: (string) {
-    //     print("$string local notifcation data");
-    //   },
-    // );
-    // await _flutterNotificationPlugin
-    //     .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-    //     ?.createNotificationChannel(androidNotificationChannel);
 
     FirebaseMessaging.onBackgroundMessage(onBackgroundHandler);
     await _messaging.setForegroundNotificationPresentationOptions(
-      alert: alert,
+      alert: true,
       badge: badge,
-      sound: sound,
+      sound: true,
     );
   }
 
@@ -93,9 +82,9 @@ class FCMService {
       description: DESCRIPTION,
     );
     _flutterNotificationPlugin.initialize(
-      const InitializationSettings(
-        iOS: IOSInitializationSettings(),
+      InitializationSettings(
         android: AndroidInitializationSettings("app_icon"),
+        iOS: IOSInitializationSettings(),
       ),
       onSelectNotification: onSelectNotificationAction,
     );
@@ -148,7 +137,6 @@ class FCMService {
     required NotificationDetails notificationDetails,
     required String payload,
   }) async {
-    print("payload : $payload");
     await _flutterNotificationPlugin.show(
       id,
       title,

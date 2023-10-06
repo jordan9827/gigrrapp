@@ -111,10 +111,17 @@ class CandidateKYCScreenView extends StatelessWidget {
     return CVMTextFormField(
       title: title,
       formWidget: image.isNotEmpty
-          ? _buildImageView(image: image, viewModel: viewModel, isFont: isFont)
+          ? _buildImageView(
+              image: image,
+              viewModel: viewModel,
+              isFont: isFont,
+            )
           : _buildImagePickerView(
               title: subTitle,
-              onPick: () => viewModel.pickImage(context, isFontImage: isFont),
+              onPick: () => viewModel.pickImage(
+                context,
+                isFontImage: isFont,
+              ),
             ),
     );
   }

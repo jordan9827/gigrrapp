@@ -50,7 +50,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
   Widget build(BuildContext context) {
     SizeConfig.init(context);
     return ViewModelBuilder.reactive(
-      onViewModelReady: (viewModel) => viewModel.init(),
+      onViewModelReady: (viewModel) => viewModel.refreshScreen(),
       viewModelBuilder: () => CandidateGigsViewModel(widget.initial),
       builder: (context, viewModel, child) {
         return Scaffold(
@@ -70,7 +70,7 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
             loading: viewModel.isBusy,
             child: RefreshIndicator(
               color: independenceColor,
-              onRefresh: viewModel.refreshScreen,
+              onRefresh: viewModel.init,
               child: _buildCandidateView(viewModel),
             ),
           ),
