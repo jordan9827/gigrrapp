@@ -153,6 +153,8 @@ class Candidate with _$Candidate {
     @JsonKey(name: "address", defaultValue: "") String address,
     @JsonKey(name: "full_name", defaultValue: "") String fullName,
     @JsonKey(name: "image_url", defaultValue: "") String imageURL,
+    @JsonKey(name: "latitude", defaultValue: "") String latitude,
+    @JsonKey(name: "longitude", defaultValue: "") String longitude,
   ) = _Candidate;
 
   factory Candidate.fromJson(Map<String, dynamic> json) =>

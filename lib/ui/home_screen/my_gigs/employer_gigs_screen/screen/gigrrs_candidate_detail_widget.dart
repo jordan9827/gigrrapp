@@ -189,20 +189,31 @@ class GigrrsCandidateWidget
               SizedBox(
                 height: SizeConfig.margin_padding_4,
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Image.asset(ic_location, height: 25),
-                  SizedBox(width: SizeConfig.margin_padding_3),
-                  Expanded(
-                    child: Text(
-                      gigrr.candidate.address,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TSB.regularSmall(textColor: textNoticeColor),
+              InkWell(
+                onTap: () => viewModel.navigationToGoogleMap(
+                  lat: gigrr.candidate.latitude,
+                  lng: gigrr.candidate.longitude,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      ic_location,
+                      height: 25,
                     ),
-                  )
-                ],
+                    SizedBox(width: SizeConfig.margin_padding_3),
+                    Expanded(
+                      child: Text(
+                        gigrr.candidate.address,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TSB.regularSmall(
+                          textColor: textNoticeColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               )
             ],
           ),

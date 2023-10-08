@@ -85,6 +85,19 @@ class MyGigrrsDetailViewModel extends BaseViewModel {
     return status;
   }
 
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    navigationService.navigateTo(
+      Routes.googleMapViewScreen,
+      arguments: GoogleMapViewScreenArguments(
+        lat: double.parse(lat),
+        lng: double.parse(lng),
+      ),
+    );
+  }
+
   Future<void> navigationToStatusForGigs(GigsRequestData request) async {
     bool result = false;
     var status = statusForMyGigrrsAction(request).toLowerCase();

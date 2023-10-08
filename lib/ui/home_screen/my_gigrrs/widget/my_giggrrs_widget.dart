@@ -13,6 +13,7 @@ import '../screen/my_gigrrs_detail_view_model.dart';
 class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
   final GigsRequestData data;
   final Widget statusView;
+
   const MyGigrrsWidget({
     required this.data,
     required this.statusView,
@@ -76,7 +77,10 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
           _buildSpacer(
             SizeConfig.margin_padding_5,
           ),
-          _buildAddressView(data.candidate.address),
+          _buildAddressView(
+            data: data,
+            viewModel: viewModel,
+          ),
           _buildSpacer(),
           statusView
         ],
@@ -131,23 +135,37 @@ class MyGigrrsWidget extends ViewModelWidget<MyGigrrsDetailViewModel> {
     );
   }
 
-  Widget _buildAddressView(String value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image.asset(ic_location, height: 25),
-        SizedBox(width: SizeConfig.margin_padding_3),
-        Expanded(
-          child: Text(
-            value,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: TSB.regularSmall(
-              textColor: textNoticeColor,
+  Widget _buildAddressView({
+    required GigsRequestData data,
+    required MyGigrrsDetailViewModel viewModel,
+  }) {
+    return InkWell(
+      onTap: () => viewModel.navigationToGoogleMap(
+        lat: data.candidate.latitude,
+        lng: data.candidate.longitude,
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            ic_location,
+            height: 25,
+          ),
+          SizedBox(
+            width: SizeConfig.margin_padding_3,
+          ),
+          Expanded(
+            child: Text(
+              data.candidate.address,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: TSB.regularSmall(
+                textColor: textNoticeColor,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

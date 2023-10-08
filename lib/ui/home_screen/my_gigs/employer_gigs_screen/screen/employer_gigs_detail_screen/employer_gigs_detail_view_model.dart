@@ -58,6 +58,21 @@ class EmployerGigsDetailViewModel extends BaseViewModel {
         isShortListed: isShortListed,
         price: price(gigs),
         skillList: gigs.skillsTypeCategoryList,
+        longitude: gigs.gigsLongitude,
+        latitude: gigs.gigsLatitude,
+      ),
+    );
+  }
+
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    navigationService.navigateTo(
+      Routes.googleMapViewScreen,
+      arguments: GoogleMapViewScreenArguments(
+        lat: double.parse(lat),
+        lng: double.parse(lng),
       ),
     );
   }

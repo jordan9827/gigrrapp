@@ -1,10 +1,14 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:square_demo_architecture/others/constants.dart';
 import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:square_demo_architecture/util/others/image_constants.dart';
 import 'package:square_demo_architecture/util/others/size_config.dart';
 import 'package:square_demo_architecture/util/others/text_styles.dart';
+import 'package:stacked_services/stacked_services.dart';
+
+import '../../../widgets/map_view.dart';
 
 class MyGigsViewWidget extends StatelessWidget {
   final String title;
@@ -15,12 +19,16 @@ class MyGigsViewWidget extends StatelessWidget {
   final Widget bottomView;
   final bool isEmptyModel;
   final bool isShortListed;
+  final String lat;
+  final String lng;
   const MyGigsViewWidget({
     Key? key,
     required this.bottomView,
     required this.title,
     required this.address,
     required this.price,
+    this.lat = "",
+    this.lng = "",
     this.isEmptyModel = true,
     this.isShortListed = false,
     required this.jobDuration,
@@ -54,24 +62,27 @@ class MyGigsViewWidget extends StatelessWidget {
           SizedBox(
             height: SizeConfig.margin_padding_8,
           ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Image.asset(ic_location, scale: 2.8),
-              SizedBox(
-                width: SizeConfig.margin_padding_5,
-              ),
-              Expanded(
-                child: Text(
-                  address,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: TSB.regularSmall(
-                    textColor: textNoticeColor,
+          InkWell(
+            onTap: () => navigationToGoogleMap(lat: lat, lng: lng),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset(ic_location, scale: 2.8),
+                SizedBox(
+                  width: SizeConfig.margin_padding_5,
+                ),
+                Expanded(
+                  child: Text(
+                    address,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TSB.regularSmall(
+                      textColor: textNoticeColor,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           SizedBox(
             height: SizeConfig.margin_padding_15,
@@ -153,5 +164,15 @@ class MyGigsViewWidget extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    locator<NavigationService>().navigateToView(GoogleMapViewScreen(
+      lat: double.parse(lat),
+      lng: double.parse(lng),
+    ));
   }
 }

@@ -10,6 +10,7 @@ import '../../../data/network/dtos/get_businesses_response.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../domain/repos/candidate_repos.dart';
 import '../../../domain/repos/common_repos.dart';
+import '../../widgets/map_view.dart';
 import 'candidate_gigrr_detail_view/candidate_gigrr_detail_view.dart';
 
 class CandidateGigrrsViewModel extends BaseViewModel {
@@ -50,6 +51,19 @@ class CandidateGigrrsViewModel extends BaseViewModel {
 
   void navigateToManageAddressView() {
     navigationService.navigateTo(Routes.manageAddressScreenView);
+  }
+
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    navigationService.navigateTo(
+      Routes.googleMapViewScreen,
+      arguments: GoogleMapViewScreenArguments(
+        lat: double.parse(lat),
+        lng: double.parse(lng),
+      ),
+    );
   }
 
   void navigateToGigrrDetailScreen(CandidateGigsRequestData e) {

@@ -50,24 +50,32 @@ class BusinessesViewWidget extends StatelessWidget {
             SizedBox(
               height: SizeConfig.margin_padding_8,
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Image.asset(ic_location, scale: 3),
-                SizedBox(
-                  width: SizeConfig.margin_padding_5,
-                ),
-                Expanded(
-                  child: Text(
-                    businesses.businessAddress,
-                    maxLines: 2,
-                    overflow: TextOverflow.clip,
-                    style: TSB.regularSmall(
-                      textColor: textNoticeColor,
+            InkWell(
+              onTap: () => viewModel.navigationToGoogleMap(
+                lat: businesses.latitude,
+                lng: businesses.longitude,
+              ),
+              child: Row(
+                children: [
+                  Image.asset(
+                    ic_location,
+                    scale: 3,
+                  ),
+                  SizedBox(
+                    width: SizeConfig.margin_padding_5,
+                  ),
+                  Expanded(
+                    child: Text(
+                      businesses.businessAddress,
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+                      style: TSB.regularSmall(
+                        textColor: textNoticeColor,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             SizedBox(
               height: SizeConfig.margin_padding_15,

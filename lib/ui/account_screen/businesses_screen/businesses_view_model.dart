@@ -39,6 +39,19 @@ class BusinessesViewModel extends BaseViewModel {
     await authRepo.loadState();
   }
 
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    navigationService.navigateTo(
+      Routes.googleMapViewScreen,
+      arguments: GoogleMapViewScreenArguments(
+        lat: double.parse(lat),
+        lng: double.parse(lng),
+      ),
+    );
+  }
+
   Future<void> refreshScreen() async {
     businessesList = [];
     await fetchAllBusinessesApi();

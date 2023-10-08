@@ -10,6 +10,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../widgets/map_view.dart';
 import '../../employer_gigrr_view/employer_gigrr_detail_view/employer_gigrr_detail_view.dart';
 
 class EmployerGigsViewModel extends BaseViewModel {
@@ -152,6 +153,19 @@ class EmployerGigsViewModel extends BaseViewModel {
             element.status == "start" ||
             element.status == "end"));
     return !isCheck;
+  }
+
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    navigationService.navigateTo(
+      Routes.googleMapViewScreen,
+      arguments: GoogleMapViewScreenArguments(
+        lat: double.parse(lat),
+        lng: double.parse(lng),
+      ),
+    );
   }
 
   Future<void> navigationToCandidateDetail({

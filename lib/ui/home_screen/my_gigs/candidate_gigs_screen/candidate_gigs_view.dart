@@ -17,6 +17,7 @@ import 'candidate_gigs_view_model.dart';
 
 class CandidateGigsView extends StatefulWidget {
   final int initial;
+
   const CandidateGigsView({
     Key? key,
     this.initial = 0,
@@ -119,6 +120,8 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                     viewModel: viewModel,
                     gigs: gigs,
                   ),
+                  lat: gigs.gigsLatitude,
+                  lng: gigs.gigsLongitude,
                 );
               }
               return SizedBox();
@@ -196,6 +199,8 @@ class _CandidateGigsViewState extends State<CandidateGigsView>
                   price: price,
                   startDate: gigs.gigsStartDate,
                   jobDuration: "${gigs.duration}" + " days".tr(),
+                  lat: gigs.gigsLatitude,
+                  lng: gigs.gigsLongitude,
                   bottomView: _buildShortListGigsStatusView(
                     gigs: gigs,
                     viewModel: viewModel,

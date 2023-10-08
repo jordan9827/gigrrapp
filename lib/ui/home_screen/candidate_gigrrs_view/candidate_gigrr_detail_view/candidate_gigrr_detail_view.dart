@@ -108,27 +108,33 @@ class CandidateGigrrDetailView extends StackedView<CandidateGigrrsViewModel> {
                     SizedBox(
                       height: SizeConfig.margin_padding_3,
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset(
-                          ic_location,
-                          height: 23,
-                        ),
-                        SizedBox(
-                          width: SizeConfig.margin_padding_3,
-                        ),
-                        Expanded(
-                          child: Text(
-                            data.gigAddress,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                            style: TSB.regularSmall(
-                              textColor: textNoticeColor,
+                    InkWell(
+                      onTap: () => viewModel.navigationToGoogleMap(
+                        lat: data.gigsLatitude,
+                        lng: data.gigsLongitude,
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Image.asset(
+                            ic_location,
+                            height: 23,
+                          ),
+                          SizedBox(
+                            width: SizeConfig.margin_padding_3,
+                          ),
+                          Expanded(
+                            child: Text(
+                              data.gigAddress,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: TSB.regularSmall(
+                                textColor: textNoticeColor,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                     _buildSpacing(),
                     Row(

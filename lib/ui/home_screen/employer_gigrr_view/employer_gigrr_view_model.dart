@@ -89,6 +89,8 @@ class EmployerGigrrsViewModel extends BaseViewModel {
         experience: gigs.employerProfile.experience,
         availability: gigs.employerProfile.availibility,
         skillList: gigs.employeeSkills.first.skills,
+        longitude: gigs.longitude,
+        latitude: gigs.latitude,
       ),
     );
   }

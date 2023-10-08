@@ -72,6 +72,8 @@ class _EmployerGigsViewState extends State<EmployerGigsView> {
                       isEmptyModel: viewModel.isEmptyModelCheck(gigs),
                       jobDuration: "${gigs.duration}" + " days".tr(),
                       bottomView: _buildStatusGigsView(viewModel, gigs),
+                      lat: gigs.gigsLatitude,
+                      lng: gigs.gigsLongitude,
                     ),
                   )
                   .toList(),

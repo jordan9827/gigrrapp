@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:square_demo_architecture/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../../app/app.router.dart';
 import '../../../../data/network/dtos/my_gigs_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
 import '../../../../domain/repos/business_repos.dart';
@@ -45,6 +46,19 @@ class EmployerGigrrDetailViewModel extends BaseViewModel {
       profile = i.imageURL;
     }
     return profile;
+  }
+
+  void navigationToGoogleMap({
+    String lat = "0.0",
+    String lng = "0.0",
+  }) {
+    navigationServices.navigateTo(
+      Routes.googleMapViewScreen,
+      arguments: GoogleMapViewScreenArguments(
+        lat: double.parse(lat),
+        lng: double.parse(lng),
+      ),
+    );
   }
 
   Future<Map<String, String>> _getRequestForShortListCandidate({

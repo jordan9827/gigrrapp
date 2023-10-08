@@ -63,6 +63,7 @@ import '../ui/home_screen/my_gigs/employer_gigs_screen/screen/candidate_offer_vi
 import '../ui/into_screen/intro_view.dart';
 import '../ui/rating_review_screen/rating_review_view.dart';
 import '../ui/widgets/giggr_request_view.dart';
+import '../ui/widgets/map_view.dart';
 
 @StackedApp(
   routes: [
@@ -77,6 +78,7 @@ import '../ui/widgets/giggr_request_view.dart';
 
     ///// Businesses /////
     MaterialRoute(page: MyGigrrsDetailView),
+    MaterialRoute(page: GoogleMapViewScreen),
     MaterialRoute(page: EmployerPreferenceScreenView),
     MaterialRoute(page: EmployerGigrrDetailView),
     MaterialRoute(page: CandidateOfferView),
