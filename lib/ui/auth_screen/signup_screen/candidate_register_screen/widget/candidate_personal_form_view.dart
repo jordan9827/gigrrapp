@@ -128,20 +128,23 @@ class CandidatePersonalInfoFormView
                   ),
                   child: Row(
                     children: [
-                      Radio<String>(
+                      Checkbox(
                         visualDensity: const VisualDensity(
                           horizontal: VisualDensity.minimumDensity,
                           vertical: VisualDensity.minimumDensity,
                         ),
                         activeColor: mainPinkColor,
-                        value: e,
-                        groupValue: viewModel.initialGender,
-                        onChanged: viewModel.setGender,
+                        value: viewModel.selectedGender.contains(e),
+                        // groupValue: viewModel.initialGender,
+                        onChanged: (val) => viewModel.setGender(
+                          val ?? false,
+                          viewModel.genderList.indexOf(e),
+                        ),
                       ),
                       Text(
                         e.tr(),
                         style: TSB.regularSmall(
-                          textColor: viewModel.initialGender != e
+                          textColor: !viewModel.selectedGender.contains(e)
                               ? textRegularColor
                               : mainBlackColor,
                         ),

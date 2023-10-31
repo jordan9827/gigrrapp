@@ -226,7 +226,10 @@ class AddGigsViewModel extends BaseViewModel {
     );
     if (picked != null) {
       // selectedTime = picked;
-      textController.text = picked.format(context).toUpperCase();
+
+      final localizations = MaterialLocalizations.of(context);
+      final formattedTimeOfDay = localizations.formatTimeOfDay(picked);
+      textController.text = formattedTimeOfDay;
       notifyListeners();
     }
   }

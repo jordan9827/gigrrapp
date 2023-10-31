@@ -41,7 +41,8 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   List<String> genderList = ["male", "female", "other"];
   LatLng latLng = const LatLng(14.508, 46.048);
   Location location = Location();
-  String initialGender = "male";
+  // String initialGender = "male";
+  List<String> selectedGender = [];
 
   TextEditingController formDateController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -88,7 +89,7 @@ class EmployerPreferenceViewModel extends BaseViewModel {
       double.parse(gigrrsPref.fromAmount),
       double.parse(gigrrsPref.toAmount),
     );
-    initialGender = gigrrsPref.gender;
+    selectedGender = gigrrsPref.gender.split(",");
     addSkillItemList = setSkillItem(gigrrsPref.skills.split(","));
     latLng = LatLng(
       double.parse(gigrrsPref.latitude),
@@ -135,7 +136,12 @@ class EmployerPreferenceViewModel extends BaseViewModel {
   }
 
   void setAvailShit(String value) {
-    initialGender = value;
+    // initialGender = value;
+    if (!selectedGender.contains(value)) {
+      selectedGender.add(value);
+    } else {
+      selectedGender.remove(value);
+    }
     notifyListeners();
   }
 
@@ -277,7 +283,7 @@ class EmployerPreferenceViewModel extends BaseViewModel {
     request['end_date'] = toDateController.text;
     request['form_amount'] = currentRangeValues.start.toString();
     request['to_amount'] = currentRangeValues.end.toString();
-    request['gender'] = initialGender;
+    request['gender'] = selectedGender.join(",");
     request['skills'] = addSkillItemList.map((e) => e.id).join(",");
 
     return EmployerRequestPreferencesResp.fromJson(request);

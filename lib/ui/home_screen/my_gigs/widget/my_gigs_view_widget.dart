@@ -21,6 +21,7 @@ class MyGigsViewWidget extends StatelessWidget {
   final bool isShortListed;
   final String lat;
   final String lng;
+
   const MyGigsViewWidget({
     Key? key,
     required this.bottomView,
@@ -151,7 +152,9 @@ class MyGigsViewWidget extends StatelessWidget {
           children: [
             Text(
               title.tr(),
-              style: TSB.semiBoldSmall(textColor: mainBlueColor),
+              style: TSB.semiBoldSmall(
+                textColor: mainBlueColor,
+              ),
             ),
             SizedBox(
               height: SizeConfig.margin_padding_3,

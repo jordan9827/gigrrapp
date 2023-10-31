@@ -231,7 +231,7 @@ class EmployerPreferenceScreenView extends StatelessWidget {
           Row(
             children: viewModel.genderList.map(
               (e) {
-                var isSelect = viewModel.initialGender == e;
+                var isSelect = viewModel.selectedGender.contains(e);
                 return InkWell(
                   onTap: () => viewModel.setAvailShit(e),
                   child: _buildCustomSelectBox(
