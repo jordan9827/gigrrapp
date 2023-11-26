@@ -171,6 +171,7 @@ class AddGigsViewModel extends BaseViewModel {
       initialDatePickerMode: DatePickerMode.day,
       firstDate: DateTime(2015),
       lastDate: DateTime(2101),
+      locale: const Locale("en"),
       builder: (context, child) {
         return Theme(
           data: Theme.of(context).copyWith(
@@ -226,10 +227,11 @@ class AddGigsViewModel extends BaseViewModel {
     );
     if (picked != null) {
       // selectedTime = picked;
-
-      final localizations = MaterialLocalizations.of(context);
-      final formattedTimeOfDay = localizations.formatTimeOfDay(picked);
-      textController.text = formattedTimeOfDay;
+      //
+      // final localizations = MaterialLocalizations.of(context);
+      // final formattedTimeOfDay = localizations.formatTimeOfDay(picked);
+      textController.text =
+          "${picked.hour}:${picked.minute} ${picked.period.name.toUpperCase()}";
       notifyListeners();
     }
   }

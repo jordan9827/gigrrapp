@@ -1,5 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 
+enum PickedFileType {
+  Document,
+  Video,
+  Image,
+}
+
 extension StringExtensions on String {
   String toDateFormat() =>
       DateFormat("dd MMM, yyyy").format(DateTime.parse(this));
@@ -20,5 +26,17 @@ extension StringExtensions on String {
     } else {
       return "";
     }
+  }
+
+  PickedFileType getFileType() {
+    String fileType = split(".").last.toLowerCase();
+    List<String> image = ["jpeg", "jpg", "png"];
+    List<String> video = ["mp4", "3gp", "mov", "mkv"];
+    if (image.contains(fileType)) {
+      return PickedFileType.Image;
+    } else if (video.contains(fileType)) {
+      return PickedFileType.Video;
+    }
+    return PickedFileType.Document;
   }
 }

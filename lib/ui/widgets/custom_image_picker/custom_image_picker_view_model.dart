@@ -9,6 +9,7 @@ import '../../../../../domain/reactive_services/business_type_service.dart';
 import '../../../../../domain/repos/auth_repos.dart';
 import '../../../../../domain/repos/business_repos.dart';
 import '../../../../../others/constants.dart';
+import '../../../util/extensions/string_extension.dart';
 
 class CustomImagePickerViewModel extends BaseViewModel {
   final snackBarService = locator<SnackbarService>();
@@ -49,22 +50,32 @@ class CustomImagePickerViewModel extends BaseViewModel {
     return await ImagePickerUtil.showCameraOrGalleryChooser(context);
   }
 
-  Future<CroppedFile?> cropImage(PickedFile imageFile) async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarColor: mainWhiteColor,
-        ),
-      ],
-      aspectRatio: const CropAspectRatio(
-        ratioX: 1.0,
-        ratioY: 1.0,
-      ),
-      sourcePath: imageFile.path,
-      maxWidth: 512,
-      maxHeight: 512,
-    );
-    return croppedFile;
+  static Future<CroppedFile?> cropImage(PickedFile imageFile) async {
+    if (imageFile.path.getFileType() == PickedFileType.Image) {
+      CroppedFile? croppedImage = await ImageCropper().cropImage(
+        sourcePath: imageFile.path,
+        aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          // CropAspectRatioPreset.ratio3x2,
+          // CropAspectRatioPreset.original,
+          // CropAspectRatioPreset.ratio4x3,
+          // CropAspectRatioPreset.ratio16x9
+        ],
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: "Cropper",
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(
+            title: "Cropper",
+          ),
+        ],
+      );
+      return croppedImage;
+    }
+    return null;
   }
 
   Future<void> uploadMediaForBusiness(String image) async {

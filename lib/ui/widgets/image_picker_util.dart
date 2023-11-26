@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 
 import '../../others/constants.dart';
 
@@ -32,21 +33,31 @@ class ImagePickerUtil {
   }
 
   static Future<CroppedFile?> cropImage(PickedFile imageFile) async {
-    CroppedFile? croppedFile = await ImageCropper().cropImage(
-      uiSettings: [
-        AndroidUiSettings(
-          toolbarColor: mainWhiteColor,
-        ),
-      ],
-      aspectRatio: const CropAspectRatio(
-        ratioX: 1.0,
-        ratioY: 1.0,
-      ),
-      sourcePath: imageFile.path,
-      maxWidth: 512,
-      maxHeight: 512,
-    );
-    return croppedFile;
+    if (imageFile.path.getFileType() == PickedFileType.Image) {
+      CroppedFile? croppedImage = await ImageCropper().cropImage(
+        sourcePath: imageFile.path,
+        aspectRatio: CropAspectRatio(ratioX: 4, ratioY: 3),
+        aspectRatioPresets: [
+          CropAspectRatioPreset.square,
+          // CropAspectRatioPreset.ratio3x2,
+          // CropAspectRatioPreset.original,
+          // CropAspectRatioPreset.ratio4x3,
+          // CropAspectRatioPreset.ratio16x9
+        ],
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: "Cropper",
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(
+            title: "Cropper",
+          ),
+        ],
+      );
+      return croppedImage;
+    }
+    return null;
   }
 
   static Future<dynamic> showCameraOrGalleryChooser(
