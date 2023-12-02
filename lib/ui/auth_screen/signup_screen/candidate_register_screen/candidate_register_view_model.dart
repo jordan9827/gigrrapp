@@ -46,8 +46,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
   bool isVisible = false;
 
   List<String> genderList = ["male", "female", "other"];
-  // String initialGender = "male";
-  List<String> selectedGender = [];
+  String initialGender = "male";
+  // List<String> selectedGender = [];
   List<String> shiftList = ["day", "evening", "night"];
   String initialShift = "day";
   List<String> myAvailableList = ["weekdays", "weekends"];
@@ -111,14 +111,19 @@ class CandidateRegisterViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void setGender(bool selected, int index) {
-    // $initialGender = val!;
-    if (selected) {
-      selectedGender.add(genderList[index]);
-    } else {
-      selectedGender.remove(genderList[index]);
-    }
-    // print("initialGender $initialGender");
+  // void setGender(bool selected, int index) {
+  //   // $initialGender = val!;
+  //   if (selected) {
+  //     selectedGender.add(genderList[index]);
+  //   } else {
+  //     selectedGender.remove(genderList[index]);
+  //   }
+  //   // print("initialGender $initialGender");
+  //   notifyListeners();
+  // }
+  void setGender(String? val) {
+    initialGender = val!;
+    print("initialGender $initialGender");
     notifyListeners();
   }
 
@@ -318,7 +323,8 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['pincode'] = pinCodeController.text;
     request['latitude'] = latLng.lat.toString();
     request['longitude'] = latLng.lng.toString();
-    request['gender'] = selectedGender.join(",");
+    // request['gender'] = selectedGender.join(",");
+    request['gender'] = initialGender.toLowerCase();
     request['dob'] = dobController.text;
     request['experience_year'] = "$experienceYear";
     request['experience_month'] = "$experienceMonth";

@@ -128,27 +128,45 @@ class CandidatePersonalInfoFormView
                   ),
                   child: Row(
                     children: [
-                      Checkbox(
+                      Radio<String>(
                         visualDensity: const VisualDensity(
                           horizontal: VisualDensity.minimumDensity,
                           vertical: VisualDensity.minimumDensity,
                         ),
                         activeColor: mainPinkColor,
-                        value: viewModel.selectedGender.contains(e),
-                        // groupValue: viewModel.initialGender,
-                        onChanged: (val) => viewModel.setGender(
-                          val ?? false,
-                          viewModel.genderList.indexOf(e),
-                        ),
+                        value: e,
+                        groupValue: viewModel.initialGender,
+                        onChanged: viewModel.setGender,
                       ),
                       Text(
                         e.tr(),
                         style: TSB.regularSmall(
-                          textColor: !viewModel.selectedGender.contains(e)
+                          textColor: viewModel.initialGender != e
                               ? textRegularColor
                               : mainBlackColor,
                         ),
                       )
+                      // Checkbox(
+                      //   visualDensity: const VisualDensity(
+                      //     horizontal: VisualDensity.minimumDensity,
+                      //     vertical: VisualDensity.minimumDensity,
+                      //   ),
+                      //   activeColor: mainPinkColor,
+                      //   value: viewModel.selectedGender.contains(e),
+                      //   // groupValue: viewModel.initialGender,
+                      //   onChanged: (val) => viewModel.setGender(
+                      //     val ?? false,
+                      //     viewModel.genderList.indexOf(e),
+                      //   ),
+                      // ),
+                      // Text(
+                      //   e.tr(),
+                      //   style: TSB.regularSmall(
+                      //     textColor: !viewModel.selectedGender.contains(e)
+                      //         ? textRegularColor
+                      //         : mainBlackColor,
+                      //   ),
+                      // )
                     ],
                   ),
                 ),
