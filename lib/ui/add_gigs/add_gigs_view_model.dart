@@ -230,10 +230,26 @@ class AddGigsViewModel extends BaseViewModel {
       //
       // final localizations = MaterialLocalizations.of(context);
       // final formattedTimeOfDay = localizations.formatTimeOfDay(picked);
-      textController.text =
-          "${picked.hour}:${picked.minute} ${picked.period.name.toUpperCase()}";
+      textController.text = date(picked);
+      date(picked);
       notifyListeners();
     }
+  }
+
+  String date(TimeOfDay picked) {
+    String date = "";
+    String h = "${picked.hour}";
+    String m = "${picked.minute}";
+    if (picked.hour == 0) {
+      h = "12";
+    } else if (picked.hour < 10) {
+      h = "0${picked.hour}";
+    }
+    if (picked.minute < 10) {
+      m = "0${picked.minute}";
+    }
+    date = "$h:$m ${picked.period.name.toUpperCase()}";
+    return date;
   }
 
   Future<void> addGigrrApiCall() async {

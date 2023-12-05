@@ -25,6 +25,11 @@ class NotificationScreenViewModel extends BaseViewModel {
     return;
   }
 
+  bool get isListEmpty => (todayList.isEmpty &&
+      weekList.isEmpty &&
+      monthList.isEmpty &&
+      yearList.isEmpty);
+
   Future<void> clearList() async {
     todayList.clear();
     weekList.clear();
@@ -49,6 +54,7 @@ class NotificationScreenViewModel extends BaseViewModel {
         );
       },
       (response) async {
+        clearList();
         await getSortedDateList(
           response.notificationList,
         );

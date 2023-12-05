@@ -2,7 +2,7 @@ part of mapbox_search;
 
 class CustomTextField extends StatelessWidget {
   final Widget? prefixIcon;
-  final Widget? suffixIcon;
+  final Widget? suffixIcon; 
   final String? initialValue;
   final TextInputType inputType;
   final TextEditingController? textController;

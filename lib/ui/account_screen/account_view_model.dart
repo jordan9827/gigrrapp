@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:fcm_service/fcm_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -181,11 +184,14 @@ class AccountViewModel extends BaseViewModel {
   }
 
   Future<void> loadSuccessRes() async {
+    var lang =
+        sharedPreferences.getString(PreferenceKeys.APP_LANGUAGE.text) ?? "hi";
     await sharedPreferences.clear();
     await locator.reset();
     await setupLocator();
     locator<FCMService>().deleteToken();
     await sharedPreferences.setBool(PreferenceKeys.FIRST_TIME.text, false);
+    await sharedPreferences.setString(PreferenceKeys.APP_LANGUAGE.text, lang);
     navigationService.clearStackAndShow(Routes.loginView);
     setBusy(false);
   }
