@@ -5,6 +5,7 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../../app/app.locator.dart';
 import '../../../../data/network/dtos/get_businesses_response.dart';
 import '../../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../../domain/reactive_services/state_service.dart';
 import '../../../../domain/repos/business_repos.dart';
 import '../../../../others/constants.dart';
 import 'package:mapbox_search/mapbox_search.dart' as auto;
@@ -29,7 +30,7 @@ class EditBusinessesViewModel extends BaseViewModel {
   final TextEditingController mobileController = TextEditingController();
   int businessId = 0;
   LatLng latLng = const LatLng(14.508, 46.048);
-
+  final stateCityService = locator<StateCityService>();
   List<String> imageList = [];
 
   EditBusinessesViewModel(GetBusinessesData data) {
@@ -44,7 +45,7 @@ class EditBusinessesViewModel extends BaseViewModel {
     businessNameController.text = e.businessName;
     addressController.text = e.businessAddress;
     stateController.text = e.state.name.toUpperCase();
-    cityController.text = e.cityList.first.name;
+    cityController.text = e.cityList.first.name.toUpperCase();
     pinCodeController.text = e.postCode.toString();
     businessTypeController.text = e.categoryResp.id.toString();
     await LocationHelper.setCity(
@@ -99,8 +100,8 @@ class EditBusinessesViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    stateController.text = addressData.state.toUpperCase();
-    cityController.text = addressData.city.toUpperCase();
+    stateController.text = stateCityService.containState(addressData.state);
+    cityController.text = stateCityService.containCity(addressData.city);
     pinCodeController.text = addressData.postCode;
     await LocationHelper.setCity(addressData.state);
     notifyListeners();

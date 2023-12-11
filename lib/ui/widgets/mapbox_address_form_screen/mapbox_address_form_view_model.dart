@@ -6,6 +6,7 @@ import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import 'package:stacked_services/stacked_services.dart';
 
 import '../../../app/app.locator.dart';
+import '../../../domain/reactive_services/state_service.dart';
 import '../../../others/constants.dart';
 import '../../../util/enums/latLng.dart';
 import '../location_helper.dart';
@@ -17,6 +18,7 @@ class MapBoxAddressFormViewModel extends BaseViewModel {
   final TextEditingController cityController = TextEditingController();
   final TextEditingController stateController = TextEditingController();
   final TextEditingController pinCodeController = TextEditingController();
+  final stateCityService = locator<StateCityService>();
 
   LatLng latLng = LatLng(0.0, 0.0);
 
@@ -71,8 +73,8 @@ class MapBoxAddressFormViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    cityController.text = addressData.city;
-    stateController.text = "${addressData.state}, ${addressData.country}";
+    stateController.text = stateCityService.containState(addressData.state);
+    cityController.text = stateCityService.containCity(addressData.city);
     pinCodeController.text = addressData.postCode;
     notifyListeners();
   }

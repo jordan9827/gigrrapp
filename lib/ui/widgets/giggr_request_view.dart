@@ -103,7 +103,6 @@ class GigrrCustomRequestView extends StatelessWidget {
         SizedBox(
           height: SizeConfig.margin_padding_5,
         ),
-        _buildSetPriceView(),
         _buildSpace(),
         InputFieldWidget(
           hint: "i.e. ₹ 400",

@@ -24,6 +24,26 @@ class StateCityService with ListenableServiceMixin {
 
   List<CityResponseData> get cityList => _cityList;
 
+  String containState(String state) {
+    String tempState = "";
+    for (var i in stateList) {
+      if (i.name.toUpperCase() == state.toUpperCase()) {
+        tempState = state.toUpperCase();
+      }
+    }
+    return tempState;
+  }
+
+  String containCity(String city) {
+    String tempCity = "";
+    for (var i in cityList) {
+      if (i.name.toUpperCase() == city.toUpperCase()) {
+        tempCity = city.toUpperCase();
+      }
+    }
+    return tempCity;
+  }
+
   void updateState(List<StateResponseData> stateList) {
     _stateList.clear();
     _stateList.addAll(stateList);

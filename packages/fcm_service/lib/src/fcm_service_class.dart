@@ -66,9 +66,9 @@ class FCMService {
 
     FirebaseMessaging.onBackgroundMessage(onBackgroundHandler);
     await _messaging.setForegroundNotificationPresentationOptions(
-      alert: true,
-      badge: badge,
-      sound: true,
+      alert: false,
+      badge: false,
+      sound: false,
     );
   }
 

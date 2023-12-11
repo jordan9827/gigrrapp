@@ -12,6 +12,7 @@ import '../../../app/app.router.dart';
 import '../../../data/local/preference_keys.dart';
 import '../../../data/network/dtos/user_auth_response_data.dart';
 import 'package:mapbox_search/mapbox_search.dart';
+import '../../../domain/reactive_services/state_service.dart';
 import '../../../domain/repos/auth_repos.dart';
 import '../../../others/constants.dart';
 import '../../widgets/location_helper.dart';
@@ -23,6 +24,7 @@ class EditProfileViewModel extends BaseViewModel {
   final sharedPreferences = locator<SharedPreferences>();
   final user = locator<UserAuthResponseData>();
   final authRepo = locator<Auth>();
+  final stateCityService = locator<StateCityService>();
 
   final TextEditingController addressController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
@@ -47,17 +49,15 @@ class EditProfileViewModel extends BaseViewModel {
     fullNameController.text = user.fullName;
     mobileController.text = user.mobile;
     addressController.text = user.address;
-    stateController.text = user.state.name;
+    stateController.text = user.state.name.toUpperCase();
     if (user.cityList.isNotEmpty)
-      cityController.text = user.cityList.first.name;
+      cityController.text = user.cityList.first.name.toUpperCase();
     pinCodeController.text = user.postCode.toString();
     imageList.add(user.imageUrl);
     latLng = LatLng(
       double.parse(user.latitude),
       double.parse(user.longitude),
     );
-    log("profileImage ${user.profileImage}");
-
     setBusy(true);
     await authRepo.loadState();
     setBusy(false);
@@ -128,8 +128,8 @@ class EditProfileViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    stateController.text = addressData.state.toUpperCase();
-    cityController.text = addressData.city.toUpperCase();
+    stateController.text = stateCityService.containState(addressData.state);
+    cityController.text = stateCityService.containCity(addressData.city);
     pinCodeController.text = addressData.postCode;
     await LocationHelper.setCity(addressData.state);
     mapBoxLoading = false;

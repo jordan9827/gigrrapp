@@ -6,6 +6,7 @@ import 'package:mapbox_search/mapbox_search.dart' as mapBox;
 import '../../../../../app/app.locator.dart';
 import '../../../../../data/network/dtos/get_address_response.dart';
 import '../../../../../data/network/dtos/user_auth_response_data.dart';
+import '../../../../../domain/reactive_services/state_service.dart';
 import '../../../../../domain/repos/auth_repos.dart';
 import '../../../../../domain/repos/common_repos.dart';
 import '../../../../../others/constants.dart';
@@ -29,6 +30,7 @@ class AddAddressViewModel extends BaseViewModel {
   bool isVisible = false;
   bool mapBoxLoading = false;
   bool defaultAddressSwitch = false;
+  final stateCityService = locator<StateCityService>();
 
   List<String> addressTypeList = ["home", "office", "other"];
   String addressTypeValue = "";
@@ -52,8 +54,8 @@ class AddAddressViewModel extends BaseViewModel {
     print("GetAddressResponseData ${data.city}");
     addressTypeValue = data.addressType;
     addressController.text = data.address;
-    cityController.text = data.city.name;
-    stateController.text = data.state.name;
+    cityController.text = data.city.name.toUpperCase();
+    stateController.text = data.state.name.toUpperCase();
     defaultAddressType = data.defaultAddress;
     defaultAddressSwitch = (data.defaultAddress == 1) ? true : false;
     pinCodeController.text = data.postCode;
@@ -128,8 +130,8 @@ class AddAddressViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    cityController.text = addressData.city;
-    stateController.text = addressData.state;
+    stateController.text = stateCityService.containState(addressData.state);
+    cityController.text = stateCityService.containCity(addressData.city);
     pinCodeController.text = addressData.postCode;
     await LocationHelper.setCity(addressData.state);
     notifyListeners();

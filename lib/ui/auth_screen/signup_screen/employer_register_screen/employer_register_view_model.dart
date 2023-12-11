@@ -142,8 +142,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
     );
     var addressData = data.mapBoxPlace.placeContext;
     addressController.text = data.mapBoxPlace.placeName;
-    stateController.text = addressData.state.toUpperCase();
-    cityController.text = addressData.city.toUpperCase();
+    stateController.text = stateCityService.containState(addressData.state);
+    cityController.text = stateCityService.containCity(addressData.city);
     pinCodeController.text = addressData.postCode;
     await LocationHelper.setCity(addressData.state);
     _loading = false;
