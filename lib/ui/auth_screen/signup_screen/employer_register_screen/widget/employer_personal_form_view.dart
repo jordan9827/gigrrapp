@@ -50,6 +50,11 @@ class EmployerPersonalInfoFormView
             mapBoxPlace: viewModel.mapBoxPlace,
           ),
           CVMTextFormField(
+            title: "referral_code",
+            hintForm: "i.e. FHR56ER",
+            controller: viewModel.referralCodeController,
+          ),
+          CVMTextFormField(
             title: "add_pin_map",
             formWidget: _buildGoogleMap(viewModel),
           ),

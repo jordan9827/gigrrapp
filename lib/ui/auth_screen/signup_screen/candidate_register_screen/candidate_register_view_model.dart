@@ -35,6 +35,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
   final TextEditingController fullNameController = TextEditingController();
   final TextEditingController costCriteriaController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
+  final TextEditingController referralCodeController = TextEditingController();
   int experienceYear = 1;
   int experienceMonth = 0;
   var dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
@@ -336,6 +337,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['shift'] = initialShift.toLowerCase();
     request['images'] = imageList.join(',');
     request['profile_image'] = imageList.first;
+    request['referral_code'] = referralCodeController.text;
     return request;
   }
 }

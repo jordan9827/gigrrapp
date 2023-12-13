@@ -34,6 +34,8 @@ class EmployerRegisterViewModel extends BaseViewModel {
   final TextEditingController businessNameController = TextEditingController();
   final TextEditingController mobileController = TextEditingController();
   final TextEditingController businessTypeController = TextEditingController();
+  final TextEditingController referralCodeController = TextEditingController();
+
   bool mapBoxLoading = false;
 
   LatLng latLng = const LatLng(14.508, 46.048);
@@ -332,6 +334,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
     request['pincode'] = pinCodeController.text;
     request['latitude'] = latLng.lat.toString();
     request['longitude'] = latLng.lng.toString();
+    request['referral_code'] = referralCodeController.text;
     log("Body Complete Profile >>> $request");
     return request;
   }
