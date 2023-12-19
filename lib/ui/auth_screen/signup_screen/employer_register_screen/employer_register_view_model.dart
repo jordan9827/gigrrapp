@@ -334,7 +334,7 @@ class EmployerRegisterViewModel extends BaseViewModel {
     request['pincode'] = pinCodeController.text;
     request['latitude'] = latLng.lat.toString();
     request['longitude'] = latLng.lng.toString();
-    request['referral_code'] = referralCodeController.text;
+   // request['referral_code'] = referralCodeController.text;
     log("Body Complete Profile >>> $request");
     return request;
   }

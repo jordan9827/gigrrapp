@@ -337,7 +337,7 @@ class CandidateRegisterViewModel extends BaseViewModel {
     request['shift'] = initialShift.toLowerCase();
     request['images'] = imageList.join(',');
     request['profile_image'] = imageList.first;
-    request['referral_code'] = referralCodeController.text;
+  //  request['referral_code'] = referralCodeController.text;
     return request;
   }
 }

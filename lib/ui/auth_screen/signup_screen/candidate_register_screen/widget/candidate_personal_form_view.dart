@@ -83,11 +83,11 @@ class CandidatePersonalInfoFormView
             pinController: viewModel.pinCodeController,
             mapBoxPlace: viewModel.mapBoxPlace,
           ),
-          CVMTextFormField(
-            title: "referral_code",
-            hintForm: "i.e. FHR56ER",
-            controller: viewModel.referralCodeController,
-          ),
+          // CVMTextFormField(
+          //   title: "referral_code",
+          //   hintForm: "i.e. FHR56ER",
+          //   controller: viewModel.referralCodeController,
+          // ),
           CVMTextFormField(
             title: "upload_profile_pictures",
             formWidget: CustomImagePickerView(
