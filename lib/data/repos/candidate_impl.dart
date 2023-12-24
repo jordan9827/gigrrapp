@@ -24,7 +24,7 @@ class CandidateImpl extends CandidateRepo {
           await candidateService.candidateRosterGigs(id.toString());
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Candidate Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
@@ -44,7 +44,7 @@ class CandidateImpl extends CandidateRepo {
       final response = await candidateService.acceptedGigs(id.toString());
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Accepted Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
@@ -65,7 +65,7 @@ class CandidateImpl extends CandidateRepo {
           await candidateService.acceptedGigsRequestApi(id.toString());
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       // log.i("Accepted Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
@@ -86,7 +86,7 @@ class CandidateImpl extends CandidateRepo {
       final response = await candidateService.acceptedGigsOfferApi(body);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       // log.i("Accepted Roster Gigs ${response.body}");
       return response.body!.map(success: (data) async {
@@ -107,7 +107,7 @@ class CandidateImpl extends CandidateRepo {
       final response = await candidateService.candidateGigsRequest(body);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("GigsRequest Gigs ${response.body}");
       return response.body!.map(success: (data) async {
@@ -128,7 +128,7 @@ class CandidateImpl extends CandidateRepo {
       final response = await candidateService.updateJobStatusCandidate(body);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Update Job Status ${response.body}");
       return response.body!.map(success: (data) async {
@@ -149,7 +149,7 @@ class CandidateImpl extends CandidateRepo {
       final response = await candidateService.gigsVerifyOTPCandidate(body);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Update Job Status ${response.body}");
       return response.body!.map(success: (data) async {
@@ -170,7 +170,7 @@ class CandidateImpl extends CandidateRepo {
       final response = await candidateService.candidateSavePreferenceApi(body);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("candidateSavePreference ${response.body}");
       return response.body!.map(success: (data) async {

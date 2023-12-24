@@ -23,9 +23,9 @@ class NotificationImpl extends NotificationRepo {
       final response = await notificationService.notificationSwitch(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
-      log.i("Login Response ${response.body}");
+
       return response.body!.map(success: (user) async {
         return Right(true);
       }, error: (error) {
@@ -44,7 +44,7 @@ class NotificationImpl extends NotificationRepo {
       final response = await notificationService.fetchNotifications();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Notifications Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -64,7 +64,7 @@ class NotificationImpl extends NotificationRepo {
       final response = await notificationService.deleteNotification();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Delete Notifications Response ${response.body}");
       return response.body!.map(success: (user) async {

@@ -28,7 +28,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.addBusinessProfileApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -49,7 +49,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.updateBusinessProfileApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Business Profile Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -75,7 +75,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.businessTypeCategory();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Failure :::: ${response.statusCode}");
 
@@ -105,7 +105,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.gigrrTypeCategory();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("gigrrTypeCategory Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -127,7 +127,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.addGigsApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("addGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -148,7 +148,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.ratingReviewApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("addGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -169,7 +169,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.employerFindGigrrApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("EmployerFindGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -189,7 +189,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.fetchGigsApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("addGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -199,7 +199,7 @@ class BusinessImpl extends BusinessRepo {
       });
     } catch (e) {
       log.e(e);
-      return Left(e.handleException());
+      return Left(Failure(-1, e.handleFailureMessage()));
     }
   }
 
@@ -210,7 +210,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.fetchAllBusinesses();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("addGigrr Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -232,7 +232,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.shortListedCandidateApi(body);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       // log.i("shortListedCandidate Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -252,7 +252,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.getCandidateApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       // log.i("shortListedCandidate Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -272,7 +272,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.myGigrrsRosterApi(id);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("MyGigrrsRoster Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -293,7 +293,7 @@ class BusinessImpl extends BusinessRepo {
       final response = await businessService.gigsCandidateOfferApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("MyGigrrsRoster Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -315,7 +315,7 @@ class BusinessImpl extends BusinessRepo {
           await businessService.createGigrrToCandidateOfferApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("CreateGigrrToCandidateOffer Response ${response.body}");
       return response.body!.map(success: (res) async {

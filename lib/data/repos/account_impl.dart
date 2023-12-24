@@ -10,6 +10,7 @@ import '../network/app_chopper_client.dart';
 import '../network/dtos/fetch_bank_detail_response.dart';
 import '../network/dtos/fetch_upi_detail_response.dart';
 import '../network/dtos/payment_history_response.dart';
+import '../../../util/extensions/string_extension.dart';
 
 class AccountImpl extends AccountRepo {
   final accountService =
@@ -25,7 +26,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.candidatePaymentHistory(data, page);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("PaymentHistory Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -48,7 +49,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.employerPaymentHistory(data, page);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("PaymentHistory Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -69,7 +70,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.fetchCandidateBankDetailApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);
@@ -89,7 +90,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.fetchUpiApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);
@@ -109,7 +110,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.addBankAccountApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);
@@ -129,7 +130,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.addUPIApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res);
@@ -149,7 +150,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.gigsCandidatePaymentApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res);
@@ -168,7 +169,7 @@ class AccountImpl extends AccountRepo {
       final response = await accountService.removeUserAccountApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res);

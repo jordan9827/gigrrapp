@@ -26,7 +26,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.saveChatApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       // log.i("saveChat Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -46,7 +46,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.getChatApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("getChat Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -66,7 +66,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.privacyPolicyApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);
@@ -85,7 +85,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.termsAndConditionApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);
@@ -104,7 +104,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.faqApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.faqData);
@@ -123,7 +123,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.aboutUsApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);
@@ -143,7 +143,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.saveAddressApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res);
@@ -162,7 +162,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.fetchAddressApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         locator<StateCityService>().fetchAddressList(res.addressList);
@@ -184,7 +184,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.contactSupportApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res);
@@ -204,7 +204,7 @@ class CommonImpl extends CommonRepo {
       final response = await commonService.fetchContactSubjectApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       return response.body!.map(success: (res) async {
         return Right(res.data);

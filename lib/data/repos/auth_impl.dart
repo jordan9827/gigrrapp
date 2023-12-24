@@ -32,7 +32,7 @@ class AuthImpl extends Auth {
       final response = await authService.socialLogin(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -54,7 +54,7 @@ class AuthImpl extends Auth {
       final response = await authService.editProfile(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Edit Profile Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -76,7 +76,7 @@ class AuthImpl extends Auth {
       final response = await authService.completeProfileApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -98,7 +98,7 @@ class AuthImpl extends Auth {
       final response = await authService.candidatesProfileApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Candidates Response 22 ${response.body}");
       return response.body!.map(success: (user) async {
@@ -120,7 +120,7 @@ class AuthImpl extends Auth {
       final response = await authService.candidatesKYCApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -142,16 +142,16 @@ class AuthImpl extends Auth {
       final response = await authService.sendOTPApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
-      log.i("Login Response ${response.body}");
+      log.i("OTP Response ${response.body}");
       return response.body!.map(success: (user) async {
         UserAuthResponseData data =
             user.data.copyWith(accessToken: user.data.token);
         await setUserResponse(data);
         return Right(data);
       }, error: (error) {
-        return Left(Failure(200, error.message));
+        return Left(Failure(error.status, error.message));
       });
     } catch (e) {
       log.e(e);
@@ -166,7 +166,7 @@ class AuthImpl extends Auth {
       final response = await authService.verifyOTPApi(data);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -187,7 +187,7 @@ class AuthImpl extends Auth {
       final response = await authService.getStateApi();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("State Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -208,7 +208,7 @@ class AuthImpl extends Auth {
       final response = await authService.getCityApi(id);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("City Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -229,7 +229,7 @@ class AuthImpl extends Auth {
       final response = await authService.deleteImage({"image": data});
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (user) async {
@@ -250,7 +250,7 @@ class AuthImpl extends Auth {
       final response = await authService.uploadImages(imagePath);
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("Login Response ${response.body}");
       return response.body!.map(success: (res) async {
@@ -270,7 +270,7 @@ class AuthImpl extends Auth {
       final response = await authService.logout();
 
       if (response.body == null) {
-        throw Exception(response.error);
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
       }
       log.i("logout Response ${response.body}");
       return response.body!.map(success: (user) async {

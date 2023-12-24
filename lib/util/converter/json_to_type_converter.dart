@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:chopper/chopper.dart';
 
@@ -20,26 +21,19 @@ class JsonToTypeConverter extends JsonConverter {
   T fromJsonData<T, InnerType>(String jsonData, Function? jsonParser) {
     var jsonMap = json.decode(jsonData);
 
-    //Todo: Remove this once backend is giving formatted response for /v1/kyc/add-bank-details
-    if (jsonMap.containsKey('account_number')) {
-      jsonMap = {
-        'type': 'success',
-        'data': jsonMap,
-      };
-    }
-
     /// Convert [type] from response to lower case to ensure it matches dto's constructors.
     if (jsonMap is Map<String, dynamic>) {
       if (jsonMap.containsKey('type')) {
         jsonMap.update("type", (value) => value.toString().toLowerCase());
       } else {
-        if (jsonMap.containsKey("success")) {
-          bool apiStatus = jsonMap["success"];
-          jsonMap["type"] = apiStatus ? "success" : "error";
+        if (jsonMap.containsKey('success')) {
+          bool apiStatus = jsonMap['success'];
+          jsonMap['type'] = apiStatus ? "success" : "error";
         }
-        if (jsonMap.containsKey('data')) {
-          //   jsonMap.addAll({"type": "success"});
-        } else {
+        /* if (jsonMap.containsKey('data')) {
+          jsonMap.addAll({"type": "success"});
+        }*/
+        else {
           final response = {'type': 'error'};
           if (!jsonMap.containsKey('status')) {
             response.addAll({'status': '-1'});
@@ -59,16 +53,22 @@ class JsonToTypeConverter extends JsonConverter {
       }
     }
 
-    if (jsonParser != null) {
-      if (jsonMap is List) {
-        return jsonMap
-            .map(
-                (item) => jsonParser(item as Map<String, dynamic>) as InnerType)
-            .toList() as T;
-      }
+    try {
+      if (jsonParser != null) {
+        if (jsonMap is List) {
+          return jsonMap
+              .map((item) =>
+                  jsonParser(item as Map<String, dynamic>) as InnerType)
+              .toList() as T;
+        }
+        print("jsonMap : ${jsonMap.runtimeType}");
 
-      return jsonParser(jsonMap);
-    } else {
+        return jsonParser(jsonMap);
+      } else {
+        return jsonMap;
+      }
+    } catch (e) {
+      log(e.toString());
       return jsonMap;
     }
   }
