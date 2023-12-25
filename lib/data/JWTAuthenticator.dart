@@ -67,20 +67,11 @@ import 'local/preference_keys.dart';
 
 class JWTAuthenticator extends Authenticator {
   final log = getLogger("JWTAuthenticator");
+
   @override
   FutureOr<Request?> authenticate(Request request, Response response,
       [Request? originalRequest]) async {
-    String responseDetails = "";
-    try {
-      final responseMap = json.decode(response.body) as Map<String, dynamic>;
-      if (responseMap.containsKey('detail') &&
-          responseMap['detail'] is String) {
-        responseDetails = responseMap['detail'];
-      }
-    } catch (e) {
-      return null;
-    }
-    log.w("StatusCode: ${response.statusCode} && ${response.body}");
+    log.w("StatusCode: ${response.statusCode}");
     if (response.statusCode == 401) {
       // locator<SnackbarService>().showSnackbar(message: "Session Expire");
       await logOut();

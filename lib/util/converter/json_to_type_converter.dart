@@ -30,10 +30,9 @@ class JsonToTypeConverter extends JsonConverter {
           bool apiStatus = jsonMap['success'];
           jsonMap['type'] = apiStatus ? "success" : "error";
         }
-        /* if (jsonMap.containsKey('data')) {
+        if (jsonMap.containsKey('data')) {
           jsonMap.addAll({"type": "success"});
-        }*/
-        else {
+        } else {
           final response = {'type': 'error'};
           if (!jsonMap.containsKey('status')) {
             response.addAll({'status': '-1'});
@@ -61,8 +60,6 @@ class JsonToTypeConverter extends JsonConverter {
                   jsonParser(item as Map<String, dynamic>) as InnerType)
               .toList() as T;
         }
-        print("jsonMap : ${jsonMap.runtimeType}");
-
         return jsonParser(jsonMap);
       } else {
         return jsonMap;

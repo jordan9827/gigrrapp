@@ -27,11 +27,6 @@ class MyAppView extends StatelessWidget {
         return FutureBuilder(
           future: viewModel.routeUser(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const MaterialApp(
-                debugShowCheckedModeBanner: false,
-              );
-            }
             return AdaptiveTheme(
               // There is no light theme currently for the app.
               light: lightTheme,
