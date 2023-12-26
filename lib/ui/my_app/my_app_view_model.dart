@@ -1,23 +1,31 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:fcm_service/fcm_service.dart';
 import 'package:location/location.dart' as l;
+import 'package:pub_semver/pub_semver.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:square_demo_architecture/util/extensions/string_extension.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import '../../app/app.locator.dart';
 import '../../app/app.logger.dart';
 import '../../app/app.router.dart';
 import '../../data/local/preference_keys.dart';
+import '../../data/network/api_services/auth_service.dart';
+import '../../data/network/dtos/setting_response.dart';
 import '../../data/network/dtos/user_auth_response_data.dart';
 import '../../domain/reactive_services/business_type_service.dart';
+import '../../domain/repos/auth_repos.dart';
 import '../../domain/repos/business_repos.dart';
+import '../../others/constants.dart';
 import '../../util/enums/dialog_type.dart';
 import '../../util/others/fcm_notification_handler.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import '../home_screen/my_gigs/candidate_gigs_screen/candidate_gigs_view.dart';
+import '../widgets/custom_dialog.dart';
 import '../widgets/giggr_otp_start_stop_view.dart';
 
 class MyAppViewModel extends BaseViewModel {
@@ -26,10 +34,11 @@ class MyAppViewModel extends BaseViewModel {
   final navigationService = locator<NavigationService>();
   final businessRepo = locator<BusinessRepo>();
   final fCMService = locator<FCMService>();
+  final authRepo = locator<Auth>();
   final businessTypeService = locator<BusinessTypeService>();
   final log = getLogger('My App View');
   final userData = locator<UserAuthResponseData>();
-
+  List<SettingResponseData> settingList = [];
   late final bool isFirstTime;
   var initialRoute = Routes.loginView;
   final dialogService = locator<DialogService>();
@@ -39,6 +48,7 @@ class MyAppViewModel extends BaseViewModel {
   }
 
   void init() async {
+    await setting();
     await checkLocation();
     await businessTypeCategoryApiCall();
   }
@@ -201,5 +211,49 @@ class MyAppViewModel extends BaseViewModel {
         ),
       );
     }
+  }
+
+  Future<void> setting() async {
+    setBusy(true);
+    final response = await authRepo.setting();
+    response.fold(
+      (fail) {
+        snackBarService.showSnackbar(message: fail.errorMsg);
+        setBusy(false);
+      },
+      (res) async {
+        checkForceUpdate(res);
+        settingList = res;
+        notifyListeners();
+      },
+    );
+  }
+
+  Future<void> checkForceUpdate(List<SettingResponseData> settingList) async {
+    var appV = (await appVersion()).toVersion();
+    for (var i in settingList) {
+      if (Platform.isAndroid) {
+        if (i.name.toUpperCase() == "FORCE_UPDATE") {
+          if (int.parse(i.value) == 1) {
+            openUpdateDialog(isForce: true);
+          }
+        } else if (i.name.toUpperCase() == "ANDROID_APP_VERSION") {
+          if (appV < i.value.toVersion()) {
+            openUpdateDialog();
+          }
+        }
+      }
+    }
+  }
+
+  void openUpdateDialog({bool isForce = false}) {
+    final builders = {
+      DialogType.forceUpdate: (_, request, completer) =>
+          CMDialog(isForceUpdate: isForce),
+    };
+    dialogService.registerCustomDialogBuilders(builders);
+    dialogService.showCustomDialog(
+      variant: DialogType.forceUpdate,
+    );
   }
 }

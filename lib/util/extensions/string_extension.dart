@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:pub_semver/pub_semver.dart';
 
 enum PickedFileType {
   Document,
@@ -38,5 +39,10 @@ extension StringExtensions on String {
       return PickedFileType.Video;
     }
     return PickedFileType.Document;
+  }
+
+  Version toVersion() {
+    print("toVersion ${Version.parse(this)}");
+    return Version.parse(this);
   }
 }

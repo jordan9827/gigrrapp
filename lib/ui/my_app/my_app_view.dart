@@ -19,8 +19,8 @@ class MyAppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<MyAppViewModel>.nonReactive(
       onViewModelReady: (viewModel) {
-        viewModel.init();
         viewModel.setFcmService();
+        viewModel.init();
       },
       viewModelBuilder: () => MyAppViewModel(),
       builder: (context, viewModel, child) {

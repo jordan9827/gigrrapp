@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:square_demo_architecture/data/network/dtos/upload_image_response.dart';
 import '../dtos/base_response.dart';
 import '../dtos/city_response.dart';
+import '../dtos/setting_response.dart';
 import '../dtos/state_response.dart';
 import '../dtos/user_auth_response_data.dart';
 
@@ -77,4 +78,7 @@ abstract class AuthService extends ChopperService {
 
   @Post(path: "logout", optionalBody: true)
   Future<Response<BaseResponse>> logout();
+
+  @Get(path: "setting")
+  Future<Response<SettingResponse>> settingApi();
 }

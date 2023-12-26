@@ -14,6 +14,7 @@ import '../network/api_services/auth_service.dart';
 import '../network/api_services/notification_service.dart';
 import '../network/app_chopper_client.dart';
 import '../network/dtos/base_response.dart';
+import '../network/dtos/setting_response.dart';
 import '../network/dtos/state_response.dart';
 import '../network/dtos/user_auth_response_data.dart';
 
@@ -275,6 +276,26 @@ class AuthImpl extends Auth {
       log.i("logout Response ${response.body}");
       return response.body!.map(success: (user) async {
         return Right(true);
+      }, error: (error) {
+        return Left(Failure(200, error.message));
+      });
+    } catch (e) {
+      log.e(e);
+      return Left(e.handleException());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<SettingResponseData>>> setting() async {
+    try {
+      final response = await authService.settingApi();
+
+      if (response.body == null) {
+        return Left(Failure(-1, response.error!.handleFailureMessage()));
+      }
+      log.i("setting Response ${response.body}");
+      return response.body!.map(success: (user) async {
+        return Right(user.list);
       }, error: (error) {
         return Left(Failure(200, error.message));
       });

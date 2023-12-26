@@ -5,4 +5,5 @@ enum DialogType {
   OTPVerifyStartJob,
   OTPViewStartORStop,
   candidatePayment,
+  forceUpdate,
 }

@@ -3,6 +3,7 @@ import 'package:square_demo_architecture/data/network/dtos/city_response.dart';
 import 'package:square_demo_architecture/data/network/dtos/user_auth_response_data.dart';
 
 import '../../data/network/dtos/base_response.dart';
+import '../../data/network/dtos/setting_response.dart';
 import '../../data/network/dtos/state_response.dart';
 import '../../data/network/dtos/upload_image_response.dart';
 import '../../util/exceptions/failures/failure.dart';
@@ -39,12 +40,12 @@ abstract class Auth {
   Future<Either<Failure, bool>> logout();
 
   Future<Either<Failure, UploadImageResponseData>> uploadImages(
-    String imagePath,
-  );
+      String imagePath);
 
   Future<Either<Failure, List<StateResponseData>>> loadState();
 
   Future<Either<Failure, List<CityResponseData>>> loadCity(int id);
 
   Future<Either<Failure, bool>> deleteImage(String imagePath);
+  Future<Either<Failure, List<SettingResponseData>>> setting();
 }

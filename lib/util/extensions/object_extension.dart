@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:pub_semver/pub_semver.dart';
+
 import '../../others/constants.dart';
 import '../exceptions/failures/failure.dart';
 
