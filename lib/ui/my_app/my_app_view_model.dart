@@ -38,7 +38,6 @@ class MyAppViewModel extends BaseViewModel {
   final businessTypeService = locator<BusinessTypeService>();
   final log = getLogger('My App View');
   final userData = locator<UserAuthResponseData>();
-  List<SettingResponseData> settingList = [];
   late final bool isFirstTime;
   var initialRoute = Routes.loginView;
   final dialogService = locator<DialogService>();
@@ -222,8 +221,7 @@ class MyAppViewModel extends BaseViewModel {
         setBusy(false);
       },
       (res) async {
-        checkForceUpdate(res);
-        settingList = res;
+        await checkForceUpdate(res);
         notifyListeners();
       },
     );
