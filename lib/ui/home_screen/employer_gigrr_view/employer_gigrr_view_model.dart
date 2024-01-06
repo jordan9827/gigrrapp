@@ -33,8 +33,6 @@ class EmployerGigrrsViewModel extends BaseViewModel {
     }
   }
 
-  void navigateToGigrrDetailScreen(FindGigrrsProfileData e) {}
-
   void navigateToBusiness() {
     navigationService.navigateTo(
       Routes.businessesScreenView,
@@ -130,6 +128,7 @@ class EmployerGigrrsViewModel extends BaseViewModel {
     } else {
       snackBarService.showSnackbar(message: "msg_plz_enter_offer".tr());
     }
+    setBusy(false);
     notifyListeners();
   }
 

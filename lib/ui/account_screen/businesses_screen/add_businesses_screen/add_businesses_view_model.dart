@@ -57,7 +57,7 @@ class AddBusinessesViewModel extends BaseViewModel {
 
   Future<void> initial() async {
     await businessTypeCategoryApiCall();
-    acquireCurrentLocation();
+    await acquireCurrentLocation();
     setBusy(false);
   }
 
@@ -95,7 +95,7 @@ class AddBusinessesViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void acquireCurrentLocation() async {
+  Future<void> acquireCurrentLocation() async {
     mapBoxLoading = true;
     var location = await LocationHelper.acquireCurrentLocation();
     await setAddressPlace(location);
@@ -148,6 +148,7 @@ class AddBusinessesViewModel extends BaseViewModel {
           snackBarService.showSnackbar(message: res.message);
         },
       );
+      setBusy(false);
       notifyListeners();
     }
   }
