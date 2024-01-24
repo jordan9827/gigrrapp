@@ -204,7 +204,7 @@ class AddGigsViewModel extends BaseViewModel {
   }) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
-      initialTime: initialTime,
+      initialTime: initialTime.replacing(hour: initialTime.hourOfPeriod),
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
@@ -230,25 +230,27 @@ class AddGigsViewModel extends BaseViewModel {
       //
       // final localizations = MaterialLocalizations.of(context);
       // final formattedTimeOfDay = localizations.formatTimeOfDay(picked);
-      textController.text = date(picked);
-      date(picked);
+      textController.text = date(picked, context);
       notifyListeners();
     }
   }
 
-  String date(TimeOfDay picked) {
+  String date(TimeOfDay picked, BuildContext context) {
     String date = "";
-    String h = "${picked.hour}";
-    String m = "${picked.minute}";
-    if (picked.hour == 0) {
-      h = "12";
-    } else if (picked.hour < 10) {
-      h = "0${picked.hour}";
+    String hours = "${picked.hour}";
+    String minutes = "${picked.minute}";
+    String period = "${picked.period.name.toUpperCase()}";
+
+    if (picked.hour == 0 || picked.hour == 12) {
+      hours = "12";
+      minutes = (picked.minute < 10) ? "0${picked.minute}" : minutes;
+      date = "$hours:$minutes $period";
+    } else {
+      var df = DateFormat("hh:mm");
+      var dt = df.parse(picked.format(context));
+      var finalTime = DateFormat('HH:mm').format(dt);
+      date = "$finalTime $period";
     }
-    if (picked.minute < 10) {
-      m = "0${picked.minute}";
-    }
-    date = "$h:$m ${picked.period.name.toUpperCase()}";
     return date;
   }
 
