@@ -57,7 +57,7 @@ class LoginViewViewModel extends BaseViewModel {
   void setOTPType(String? val) {
     initialOTPType = val!;
     sharedPreferences.setString(PreferenceKeys.GIGRR_TYPE.text, "$val");
-    print("initialOTPType $initialOTPType");
+   // print("initialOTPType $initialOTPType");
     notifyListeners();
   }
 

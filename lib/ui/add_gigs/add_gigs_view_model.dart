@@ -71,6 +71,7 @@ class AddGigsViewModel extends BaseViewModel {
 
   void onVisibleAction() {
     isVisible = !isVisible;
+    FocusManager.instance.primaryFocus?.unfocus();
     notifyListeners();
   }
 
@@ -248,7 +249,7 @@ class AddGigsViewModel extends BaseViewModel {
     } else {
       var df = DateFormat("hh:mm");
       var dt = df.parse(picked.format(context));
-      var finalTime = DateFormat('HH:mm').format(dt);
+      var finalTime = DateFormat('hh:mm').format(dt);
       date = "$finalTime $period";
     }
     return date;

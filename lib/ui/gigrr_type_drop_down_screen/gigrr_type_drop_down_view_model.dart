@@ -26,6 +26,7 @@ class GigrrTypeDropDownViewModel extends BaseViewModel {
 
   void onVisibleAction() {
     isVisible = !isVisible;
+    FocusManager.instance.primaryFocus?.unfocus();
     notifyListeners();
   }
 
